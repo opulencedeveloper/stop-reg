@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- Favicon -->
+    <!-- <link href="img/favicon.ico" rel="icon"> -->
+    <title>StopReg</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="StopReg" />
+    <meta property="og:description" content="" />
+    <link href="/assets/css/fonts.css" rel="stylesheet" />
+    <link href="/assets/css/variables.css" rel="stylesheet" />
+    <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/landing/header.css" rel="stylesheet" />
+    <link href="/assets/css/landing/index.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Loading Spinner Start -->
+    <div id="spinner-body" class="spinner-body">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <!-- Loading Spinner End -->
+
+    <div id="content">
+      <!-- Mobile Navigation Start -->
+      <div class="nav-menu">
+        <div class="nav-menu-sect-one">
+          <a href="/" class="land-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </a>
+          <div class="nav-icon2-mobile active">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="mobile-nav-items">
+          <a href="#">API</a>
+          <a href="#">WordPress Plugin</a>
+          <a href="#">Pricing</a>
+          <a href="#">Pricing</a>
+          <a href="#">FAQs</a>
+          <a href="#">Documentation</a>
+        </div>
+
+        <div class="mobile-nav-btns">
+          <button>Log In</button>
+          <button>Create an Account</button>
+        </div>
+      </div>
+      <!-- Mobile Navigation End -->
+
+
+      <div id="signup-overlay" class="overlay">
+        <div style="height: 200px; width: 200px; background-color: wheat;" class="overlay-animate"></div>
+        <!-- <div class="dialog-container">
+          <div class="dialog">
+            <div class="succ-img">
+              <img src="assets/images/account-created-success.svg" />
+            </div>
+             <p>Your account was created successfully</p>
+           <p>Please tap the button below to view dashboard</p>
+            <a href="/dashboard/index.html">Continue</a>
+          </div>
+        </div> -->
+      </div>
+
+
+
+
+      <!-- Header Start -->
+      <header class="main-head-wrapper">
+        <a href="/" class="land-logo">
+          <img src="/assets/logo/stopreg-logo.svg" />
+        </a>
+        <nav class="nav-wrapper">
+          <a href="#">API</a>
+          <a href="#">WordPress Plugin</a>
+          <a href="#">Pricing</a>
+          <a href="#">FAQs</a>
+          <a href="#">Documentation</a>
+        </nav>
+        <div class="auth-wrapper">
+          <button>Log In</button>
+          <button id="signup-overlay-btn">Create an Account</button>
+        </div>
+
+        <div class="nav-icon2">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header>
+      <!-- Header End -->
+
+      <!-- Hero Start -->
+      <section class="hero-wrapper">
+        <div class="hero-container">
+          <div class="hero-sect-one">
+            <h1 class="hero-header">
+              <span class="header-inner">Block</span> temporary email addresses
+            </h1>
+            <p class="hero-title">
+              Disposable email address services are often exploited for spam,
+              fake registrations, and free trial abuses. Our service identifies
+              and blocks disposable email addresses in real-time to prevent
+              these issues.
+            </p>
+            <div class="hero-btn-wrapper">
+              <button>Get Free API Token</button>
+              <button>Add to WordPress</button>
+            </div>
+          </div>
+          <div class="hero-sect-two">
+            <div class="hero-sect-two-inner-one"></div>
+            <div class="hero-sect-two-inner-two">
+              <div class="hero-sect-two-inner-two-badge-one">100%</div>
+              <div class="hero-sect-two-inner-two-badge-two-wrapper">
+                <div class="hero-sect-two-inner-two-badge-two-inner-one">
+                  <div>
+                    <p>4.9</p>
+                    <div><img src="/assets/icons/star.svg" /></div>
+                  </div>
+                  <p>32 reviews</p>
+                </div>
+                <div class="hero-sect-two-inner-two-badge-two-inner-two">
+                  <div class="hero-sect-two-inner-two-badge-two-inner-two-item">
+                    <p>5</p>
+                    <div>
+                      <img src="/assets/icons/star.svg" />
+                    </div>
+                    <div>
+                      <div class="hero-review-one"></div>
+                    </div>
+                  </div>
+                  <div class="hero-sect-two-inner-two-badge-two-inner-two-item">
+                    <p>4</p>
+                    <div>
+                      <img src="/assets/icons/star.svg" />
+                    </div>
+                    <div>
+                      <div class="hero-review-two"></div>
+                    </div>
+                  </div>
+                  <div class="hero-sect-two-inner-two-badge-two-inner-two-item">
+                    <p>3</p>
+                    <div>
+                      <img src="/assets/icons/star.svg" />
+                    </div>
+                    <div>
+                      <div class="hero-review-three"></div>
+                    </div>
+                  </div>
+                  <div class="hero-sect-two-inner-two-badge-two-inner-two-item">
+                    <p>2</p>
+                    <div>
+                      <img src="/assets/icons/star.svg" />
+                    </div>
+                    <div>
+                      <div class="hero-review-four"></div>
+                    </div>
+                  </div>
+                  <div class="hero-sect-two-inner-two-badge-two-inner-two-item">
+                    <p>1</p>
+                    <div>
+                      <img src="/assets/icons/star.svg" />
+                    </div>
+                    <div>
+                      <div class="hero-review-five"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="folder-ico-cont">
+                <img src="/assets/icons/folder.svg" />
+              </div>
+              <p class="hero-sect-two-inner-two-title">Block Emails</p>
+              <div class="hero-sect-two-inner-two-cont">
+                <div class="hero-sect-two-inner-two-item">
+                  <div class="hero-sect-two-inner-two-item-img">
+                    <img src="/assets/icons/document.svg" />
+                  </div>
+                  <div class="hero-sect-two-inner-two-item-inner">
+                    <p>Free Email</p>
+                    <div class="hero-sect-two-prog-bar">
+                      <div id="prog-1"></div>
+                    </div>
+                  </div>
+                  <p id="prog-1-label"></p>
+                </div>
+                <div class="hero-sect-two-inner-two-item">
+                  <div class="hero-sect-two-inner-two-item-img">
+                    <img src="/assets/icons/document.svg" />
+                  </div>
+                  <div class="hero-sect-two-inner-two-item-inner">
+                    <p>Free Email</p>
+                    <div class="hero-sect-two-prog-bar">
+                      <div id="prog-2"></div>
+                    </div>
+                  </div>
+                  <p id="prog-2-label"></p>
+                </div>
+                <div class="hero-sect-two-inner-two-item">
+                  <div class="hero-sect-two-inner-two-item-img">
+                    <img src="/assets/icons/document.svg" />
+                  </div>
+                  <div class="hero-sect-two-inner-two-item-inner">
+                    <p>Free Email</p>
+                    <div class="hero-sect-two-prog-bar">
+                      <div id="prog-3"></div>
+                    </div>
+                  </div>
+                  <p id="prog-3-label"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Hero End -->
+
+      <!-- WordPress Plugin Libraries Start -->
+      <section class="wd-pr-lb-wrapper">
+        <div class="wd-pr-lb-cont">
+          <h2>
+            Integrate in any tech stack in minutes. WordPress Plugin libraries
+            make it even simpler.
+          </h2>
+          <div class="wd-pr-lb-cont-inner">
+            <div class="wd-pr-lb-cont-inner-item">
+              <div>
+                <img src="/assets/images/landing/index/wordpress.svg" />
+              </div>
+              <p>Wordpress</p>
+            </div>
+            <div class="wd-pr-lb-cont-inner-item">
+              <div>
+                <img src="/assets/images/landing/index/php.svg" />
+              </div>
+              <p>PHP</p>
+            </div>
+            <div class="wd-pr-lb-cont-inner-item">
+              <div>
+                <img src="/assets/images/landing/index/javascript.svg" />
+              </div>
+              <p>Javascript</p>
+            </div>
+            <div class="wd-pr-lb-cont-inner-item">
+              <div>
+                <img src="/assets/images/landing/index/npm.svg" />
+              </div>
+              <p>NPM</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- WordPress Plugin Libraries End -->
+
+      <!-- Eliminate fraudulent email addresses Start -->
+      <section class="efea-wrapper">
+        <div class="efea-wrapper-sct-one">
+          <div class="efea-wrapper-sct-one-item">
+            <p>891</p>
+            <p>ENTRIES ADDED</p>
+            <p>to our block list in the last four weeks</p>
+          </div>
+          <div class="efea-wrapper-sct-one-item">
+            <p>124k</p>
+            <p>DOMAINS</p>
+            <p>of disposable email providers in our database</p>
+          </div>
+          <div class="efea-wrapper-sct-one-item">
+            <p>500+</p>
+            <p>HAPPY USERS</p>
+            <p>of our API and WordPress plugin</p>
+          </div>
+        </div>
+        <div class="efea-wrapper-sct-two">
+          <div class="efea-wrapper-sct-two-inner-one">
+            <h3>Eliminate fraudulent email addresses</h3>
+            <p>
+              New disposable email services keep popping up, and we keep
+              blocking them.
+            </p>
+            <button>Get Free API Token</button>
+          </div>
+          <div class="efea-wrapper-sct-two-inner-two">
+            <img src="/assets/images/landing/index/email.svg" />
+          </div>
+        </div>
+      </section>
+      <!-- Eliminate fraudulent email addresses End -->
+
+      <!-- Block disposable email in WordPress Start -->
+      <section class="bdeiw-wrapper">
+        <h4 class="bdeiw-wrapper-hd">Block disposable email in WordPress</h4>
+        <p class="bdeiw-wrapper-tle">
+          Use our WordPress plugin and start detecting temporary email.
+        </p>
+        <div class="bdeiw-wrapper-sect">
+          <div class="bdeiw-wrapper-sect-img">
+            <img src="/assets/images/landing/index/wp-bg.svg" />
+          </div>
+          <div class="bdeiw-wrapper-sect-two">
+            <p class="bdeiw-wrapper-sect-two-title">
+              Reduce email spam and abuse on your WordPress site in minutes.
+              Just follow three easy steps and start blocking temporary and
+              disposable email today:
+            </p>
+            <div class="bdeiw-wrapper-sect-two-inner">
+              <div class="bdeiw-wrapper-sect-two-inner-item">
+                <div>
+                  <img src="/assets/images/landing/index/timer-complete.svg" />
+                </div>
+                <p>Install plugin "Block Temporary Email</p>
+              </div>
+              <div class="bdeiw-wrapper-sect-two-inner-item">
+                <div>
+                  <img src="/assets/images/landing/index/timer-two.svg" />
+                </div>
+                <p>Sign up and get your API token</p>
+              </div>
+              <div class="bdeiw-wrapper-sect-two-inner-item">
+                <div>
+                  <img src="/assets/images/landing/index/time-three.svg" />
+                </div>
+                <p>Enter API token in WP Admin</p>
+              </div>
+            </div>
+            <button class="bdeiw-btn">Get The Plugin Now</button>
+          </div>
+        </div>
+      </section>
+      <!-- Block disposable email in WordPress End -->
+
+      <!-- Why choose IsTempMail Start -->
+      <section class="wci-wrapper">
+        <h5 class="wci-wrapper-hd">Why choose IsTempMail</h5>
+        <p class="wci-wrapper-tle">
+          See why blocking temporary email with our service is so popular:
+        </p>
+        <div class="wci-wrapper-grd">
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/ph-database-light.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Huge database</p>
+            <p class="wci-wrapper-grd-item-tle">
+              Our database of email providers holds more than 124,000 domains
+              that are known for fake and temporary email. We use this list to
+              identify disposable email addresses.
+            </p>
+          </div>
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/ic-twotone-wordpress.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Works with WordPress</p>
+            <p class="wci-wrapper-grd-item-tle">
+              Our WordPress plugin makes using our service really easy. Just
+              install the plugin, signup for an account and boom - you will be
+              blocking disposable emails.
+            </p>
+          </div>
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/bi-filetype-json.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Simple JSON API</p>
+            <p class="wci-wrapper-grd-item-tle">
+              Simple works best. We have one endpoint for all functionality and
+              give you an easy to parse and human understandable JSON response.
+            </p>
+          </div>
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/arcticons-uptodate.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Always up-to-date</p>
+            <p class="wci-wrapper-grd-item-tle">
+              New providers for temporary or disposable email pop up on the web
+              every day. We add between 5 and 20 new providers in a typical day.
+            </p>
+          </div>
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/developer-mode-outline.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Developer friendly</p>
+            <p class="wci-wrapper-grd-item-tle">
+              We will gladly answer any technical questions and you can even get
+              direct access to an engineer depending on your plan.
+            </p>
+          </div>
+          <div class="wci-wrapper-grd-item">
+            <div class="wci-wrapper-grd-item-icon">
+              <img src="/assets/icons/price-tag.svg" />
+            </div>
+            <p class="wci-wrapper-grd-item-hd">Fair pricing</p>
+            <p class="wci-wrapper-grd-item-tle">
+              Basic usage is for free and our paid plans are very affordable. We
+              offer a discount for non-profits, please contact support.
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- Why choose IsTempMail End -->
+
+      <!-- Fast and simple integration Start -->
+      <section class="fasi-wrapper">
+        <div class="fasi-sect-one">
+          <h6 class="fasi-sect-one-hd">Fast and simple integration</h6>
+          <p class="fasi-sect-one-tle">
+            Easily configure your mobile proxies by connecting to a single main
+            point, granting you access to pre-verified mobile proxies. Skip the
+            hassle of importing proxy lists and seamlessly collect the public
+            data you need with our mobile proxies.
+          </p>
+        </div>
+        <div class="fasi-sect-two">
+          <img src="/assets/images/landing/index/code-snippet.svg" />
+        </div>
+      </section>
+      <!-- Fast and simple integration End -->
+
+      <!-- Pricing Start -->
+      <section class="land-pricing-wrapper">
+        <p class="land-pricing-hd">
+          We offer great <span class="land-pricing-hd-inner">pricing</span> plan
+          for the application
+        </p>
+        <div class="land-pricing-sect">
+          <p class="lpssut">SAVE UP TO 30%</p>
+          <img class="lpssut-pointer" src="/assets/icons/pointer.svg" />
+          <div class="land-pricing-sect-selctor"></div>
+          <button class="land-pricing-sect-mth active-btn">Monthly</button>
+          <button class="land-pricing-sect-yr">Yearly</button>
+        </div>
+      </section>
+      <!-- Pricing End -->
+
+      <section class="fags-wrapper">
+        <!-- Pricing Content Start -->
+        <div class="land-pricing-container">
+          <!-- Monthly Plan Start -->
+          <div class="land-cont-mnth active">
+            <div class="land-pricing-container-sectone">
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+            </div>
+
+            <div class="land-pricing-container-sectone">
+              <div class="land-pricing-container-sectone-recomm">
+                <p class="lpcsr-remm">Recommended</p>
+                <div class="land-pricing-container-item-recomm">
+                  <p class="land-pricing-container-item-hd">Standards</p>
+                  <p class="land-pricing-container-item-tle">
+                    5,000 API requests in 30 days
+                  </p>
+                  <p class="land-pricing-container-item-sub-tle">
+                    <span class="pr-do-si">$</span
+                    ><span class="pr-do-am">5</span> / month
+                  </p>
+                  <button class="land-pricing-container-item-btn-recomm">
+                    Get Started
+                  </button>
+                </div>
+              </div>
+
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Monthly Plan End -->
+
+          <!-- Yearly Plan Start -->
+          <div class="land-cont-yr">
+            <div class="land-pricing-container-sectone">
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+            </div>
+
+            <div class="land-pricing-container-sectone">
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+
+              <div class="land-pricing-container-item">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <button class="land-pricing-container-item-btn">
+                  Get Started
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Monthly Plan End -->
+        </div>
+        <!-- Pricing Content End -->
+
+        <!-- Fags Start -->
+        <p class="fags-hd">Frequently Asked Questions</p>
+        <p class="fags-tle">
+          Your questions around disposable email, answered.
+        </p>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-button">
+              1. What are disposable email addresses?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 1.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-button">
+              2. Why block disposable email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 2.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-button">
+              3. Why do people use disposable email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 3.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-button">
+              4. How does Stopreg block temporary email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 4.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-button">
+              5. Where do I report a domain to be blocked?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 5.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Fags End -->
+      </section>
+
+      <footer class="land-foot">
+        <div class="land-foot-wrapp">
+          <section class="land-foot-wrapp-sct-one">
+            <div class="foot-logo">
+              <img src="/assets/logo/stopreg-footer-logo.svg" />
+            </div>
+            <div class="foot-detail">
+              <p class="foot-detail-hd">What we do</p>
+              <p class="foot-detail-tle">
+                Lörem ipsum fanessade tresamma dilyd av pogangar. Anaskapet
+                duktigt och profoni i dilängen pobelt. Saras kvasingen langen,
+                tills pokorat dende. Teressa antinde kaluvis.
+              </p>
+            </div>
+            <div class="foot-detail">
+              <p class="foot-detail-hd">Other Links</p>
+              <a class="foot-detail-link" href="#" class="foot-detail-tle"
+                >Terms of Service</a
+              >
+              <a class="foot-detail-link" href="#" class="foot-detail-tle"
+                >Privacy Policy
+              </a>
+            </div>
+          </section>
+          <section class="land-foot-wrapp-sct-two">
+            <p class="land-foot-wrapp-sct-two-item-one">&copy; Stopreg</p>
+            <p class="land-foot-wrapp-sct-two-item-two">All Right Reserved.</p>
+          </section>
+        </div>
+      </footer>
+    </div>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/landing/index.js"></script>
+    <script src="/assets/js/landing/header.js"></script>
+  </body>
+</html>

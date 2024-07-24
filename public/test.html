@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Toggle Layout with Animation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .docume-content-nav {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            background: #f4f4f4;
+            border-bottom: 1px solid #ddd;
+            transition: all 23s ease;
+        }
+        .docume-content-nav.row {
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        .content {
+            padding: 20px;
+            height: 2000px; /* To create enough scroll space */
+        }
+        .docsScrollButton {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Header
+    </div>
+    <div class="docume-content-nav" id="nav">
+        <button policy-data-target="docume-item1" class="docsScrollButton active-docume-list-item">Documentation 1</button>
+        <button policy-data-target="docume-item2" class="docsScrollButton">Documentation 2</button>
+        <button policy-data-target="docume-item3" class="docsScrollButton">Documentation 3</button>
+        <button policy-data-target="docume-item4" class="docsScrollButton">Documentation 4</button>
+        <button policy-data-target="docume-item5" class="docsScrollButton">Documentation 5</button>
+    </div>
+    <div class="content">
+        Scroll down to see the effect.
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const nav = document.getElementById('nav');
+            const navTop = nav.offsetTop;
+            if (window.scrollY > navTop) {
+                nav.classList.add('row');
+            } else {
+                nav.classList.remove('row');
+            }
+        });
+    </script>
+</body>
+</html>
