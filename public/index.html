@@ -49,56 +49,148 @@
             <span></span>
           </div>
         </div>
-
         <div class="mobile-nav-items">
-          <a href="#">API</a>
-          <a href="#">WordPress Plugin</a>
-          <a href="#">Pricing</a>
-          <a href="#">Pricing</a>
-          <a href="#">FAQs</a>
-          <a href="#">Documentation</a>
+          <button content-data-target="api" class="section-scroller">API</button>
+          <button content-data-target="wordpress-plugin" class="section-scroller">WordPress Plugin</button>
+          <button content-data-target="pricing" class="section-scroller">Pricing</button>
+          <button content-data-target="fags" class="section-scroller">FAQs</button>
+          <a href="/documentation.html">Documentation</a>
         </div>
-
         <div class="mobile-nav-btns">
-          <button>Log In</button>
-          <button>Create an Account</button>
+          <button class="signin-overlay-btn">Log In</button>
+          <button class="signup-overlay-btn">Create an Account</button>
         </div>
       </div>
       <!-- Mobile Navigation End -->
 
+      <!-- Authentication Overlay Start -->
+      <div id="overlay" class="overlay">
 
-      <div id="signup-overlay" class="overlay">
-        <div style="height: 200px; width: 200px; background-color: wheat;" class="overlay-animate"></div>
-        <!-- <div class="dialog-container">
-          <div class="dialog">
-            <div class="succ-img">
-              <img src="assets/images/account-created-success.svg" />
-            </div>
-             <p>Your account was created successfully</p>
-           <p>Please tap the button below to view dashboard</p>
-            <a href="/dashboard/index.html">Continue</a>
+        <!-- SignUp Dialog Start -->
+        <div id="signup-dialog" class="auth-container overlay-animate">
+          <button id="signup-close-btn" class="auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
           </div>
-        </div> -->
+          <p class="cr-auth-header">Create an Account</p>
+          <p class="cr-auth-tle">
+            Already have an account?
+            <span class="signin-overlay-btn cr-auth-auth">Log In</span>
+          </p>
+          <form class="form-container">
+            <div class="form-item">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                required
+                type="email"
+                placeholder="Example: xyz@gmail.com"
+              />
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signup-password">Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                  id="signup-password"
+                /><img
+                  id="signup-password-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signup-cpassword">Confirm Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Confirm password"
+                  id="signup-cpassword"
+                /><img
+                  id="signup-cpassword-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <button class="cr-btn">Create an Account</button>
+          </form>
+        </div>
+        <!-- SignUp Dialog End -->
+
+        <!-- SignIn Dialog Start -->
+        <div id="signin-dialog" class="auth-container overlay-animate">
+          <button id="signin-close-btn" class="auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+          <p class="cr-auth-header">Log in</p>
+          <p class="cr-auth-tle">
+            Don't have an account?
+            <span class="signup-overlay-btn cr-auth-auth">Sign up</span>
+          </p>
+          <form class="form-container">
+            <div class="form-item">
+              <label for="signin-email">Email</label>
+              <input
+                id="signin-email"
+                required
+                type="email"
+                placeholder="Example: xyz@gmail.com"
+              />
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signin-password">Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                  id="signin-password"
+                /><img
+                  id="signin-password-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <button class="cr-btn">Log in</button>
+          </form>
+        </div>
+        <!-- SignIn Dialog Start -->
       </div>
-
-
-
+      <!-- Authentication Overlay End -->
 
       <!-- Header Start -->
-      <header class="main-head-wrapper">
+      <header class="main-head-cont">
+        <div class="main-head-wrapper box animation6">
         <a href="/" class="land-logo">
           <img src="/assets/logo/stopreg-logo.svg" />
         </a>
         <nav class="nav-wrapper">
-          <a href="#">API</a>
-          <a href="#">WordPress Plugin</a>
-          <a href="#">Pricing</a>
-          <a href="#">FAQs</a>
-          <a href="#">Documentation</a>
+          <button content-data-target="api" class="section-scroller">API</button>
+          <button content-data-target="wordpress-plugin" class="section-scroller">WordPress Plugin</button>
+          <button content-data-target="pricing" class="section-scroller">Pricing</button>
+          <button content-data-target="fags" class="section-scroller">FAQs</button>
+          <a href="/documentation.html">Documentation</a>
         </nav>
         <div class="auth-wrapper">
-          <button>Log In</button>
-          <button id="signup-overlay-btn">Create an Account</button>
+          <button class="signin-overlay-btn">Log In</button>
+          <button class="signup-overlay-btn">Create an Account</button>
         </div>
 
         <div class="nav-icon2">
@@ -109,13 +201,14 @@
           <span></span>
           <span></span>
         </div>
+        </div>
       </header>
       <!-- Header End -->
 
       <!-- Hero Start -->
       <section class="hero-wrapper">
-        <div class="hero-container">
-          <div class="hero-sect-one">
+        <div class="hero-container box animation2">
+          <div class="hero-sect-one box animation2">
             <h1 class="hero-header">
               <span class="header-inner">Block</span> temporary email addresses
             </h1>
@@ -130,7 +223,7 @@
               <button>Add to WordPress</button>
             </div>
           </div>
-          <div class="hero-sect-two">
+          <div class="hero-sect-two box animation3">
             <div class="hero-sect-two-inner-one"></div>
             <div class="hero-sect-two-inner-two">
               <div class="hero-sect-two-inner-two-badge-one">100%</div>
@@ -212,7 +305,7 @@
                     <img src="/assets/icons/document.svg" />
                   </div>
                   <div class="hero-sect-two-inner-two-item-inner">
-                    <p>Free Email</p>
+                    <p>Disposible email</p>
                     <div class="hero-sect-two-prog-bar">
                       <div id="prog-2"></div>
                     </div>
@@ -224,7 +317,7 @@
                     <img src="/assets/icons/document.svg" />
                   </div>
                   <div class="hero-sect-two-inner-two-item-inner">
-                    <p>Free Email</p>
+                    <p>Business email</p>
                     <div class="hero-sect-two-prog-bar">
                       <div id="prog-3"></div>
                     </div>
@@ -239,32 +332,32 @@
       <!-- Hero End -->
 
       <!-- WordPress Plugin Libraries Start -->
-      <section class="wd-pr-lb-wrapper">
+      <section id="wordpress-plugin" class="wd-pr-lb-wrapper">
         <div class="wd-pr-lb-cont">
-          <h2>
+          <h2 class="box animation5">
             Integrate in any tech stack in minutes. WordPress Plugin libraries
             make it even simpler.
           </h2>
           <div class="wd-pr-lb-cont-inner">
-            <div class="wd-pr-lb-cont-inner-item">
+            <div class="wd-pr-lb-cont-inner-item box animation3">
               <div>
                 <img src="/assets/images/landing/index/wordpress.svg" />
               </div>
               <p>Wordpress</p>
             </div>
-            <div class="wd-pr-lb-cont-inner-item">
+            <div class="wd-pr-lb-cont-inner-item box animation2">
               <div>
                 <img src="/assets/images/landing/index/php.svg" />
               </div>
               <p>PHP</p>
             </div>
-            <div class="wd-pr-lb-cont-inner-item">
+            <div class="wd-pr-lb-cont-inner-item box animation1">
               <div>
                 <img src="/assets/images/landing/index/javascript.svg" />
               </div>
               <p>Javascript</p>
             </div>
-            <div class="wd-pr-lb-cont-inner-item">
+            <div class="wd-pr-lb-cont-inner-item box animation6">
               <div>
                 <img src="/assets/images/landing/index/npm.svg" />
               </div>
@@ -278,32 +371,32 @@
       <!-- Eliminate fraudulent email addresses Start -->
       <section class="efea-wrapper">
         <div class="efea-wrapper-sct-one">
-          <div class="efea-wrapper-sct-one-item">
+          <div class="efea-wrapper-sct-one-item box animation1">
             <p>891</p>
             <p>ENTRIES ADDED</p>
             <p>to our block list in the last four weeks</p>
           </div>
-          <div class="efea-wrapper-sct-one-item">
+          <div class="efea-wrapper-sct-one-item box animation2">
             <p>124k</p>
             <p>DOMAINS</p>
             <p>of disposable email providers in our database</p>
           </div>
-          <div class="efea-wrapper-sct-one-item">
+          <div class="efea-wrapper-sct-one-item box animation3">
             <p>500+</p>
             <p>HAPPY USERS</p>
             <p>of our API and WordPress plugin</p>
           </div>
         </div>
         <div class="efea-wrapper-sct-two">
-          <div class="efea-wrapper-sct-two-inner-one">
-            <h3>Eliminate fraudulent email addresses</h3>
+          <div class="efea-wrapper-sct-two-inner-one box animation5">
+            <h3 >Eliminate fraudulent email addresses</h3>
             <p>
               New disposable email services keep popping up, and we keep
               blocking them.
             </p>
             <button>Get Free API Token</button>
           </div>
-          <div class="efea-wrapper-sct-two-inner-two">
+          <div class="efea-wrapper-sct-two-inner-two box animation6">
             <img src="/assets/images/landing/index/email.svg" />
           </div>
         </div>
@@ -312,11 +405,11 @@
 
       <!-- Block disposable email in WordPress Start -->
       <section class="bdeiw-wrapper">
-        <h4 class="bdeiw-wrapper-hd">Block disposable email in WordPress</h4>
-        <p class="bdeiw-wrapper-tle">
+        <h4 class="bdeiw-wrapper-hd box animation4">Block disposable email in WordPress</h4>
+        <p class="bdeiw-wrapper-tle box animation4">
           Use our WordPress plugin and start detecting temporary email.
         </p>
-        <div class="bdeiw-wrapper-sect">
+        <div class="bdeiw-wrapper-sect box animation1">
           <div class="bdeiw-wrapper-sect-img">
             <img src="/assets/images/landing/index/wp-bg.svg" />
           </div>
@@ -354,12 +447,12 @@
 
       <!-- Why choose IsTempMail Start -->
       <section class="wci-wrapper">
-        <h5 class="wci-wrapper-hd">Why choose IsTempMail</h5>
-        <p class="wci-wrapper-tle">
+        <h5 class="wci-wrapper-hd box animation5">Why choose IsTempMail</h5>
+        <p class="wci-wrapper-tle box animation5">
           See why blocking temporary email with our service is so popular:
         </p>
         <div class="wci-wrapper-grd">
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation6">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/ph-database-light.svg" />
             </div>
@@ -370,7 +463,7 @@
               identify disposable email addresses.
             </p>
           </div>
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation5">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/ic-twotone-wordpress.svg" />
             </div>
@@ -381,7 +474,7 @@
               blocking disposable emails.
             </p>
           </div>
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation4">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/bi-filetype-json.svg" />
             </div>
@@ -391,7 +484,7 @@
               give you an easy to parse and human understandable JSON response.
             </p>
           </div>
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation3">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/arcticons-uptodate.svg" />
             </div>
@@ -401,7 +494,7 @@
               every day. We add between 5 and 20 new providers in a typical day.
             </p>
           </div>
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation2">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/developer-mode-outline.svg" />
             </div>
@@ -411,7 +504,7 @@
               direct access to an engineer depending on your plan.
             </p>
           </div>
-          <div class="wci-wrapper-grd-item">
+          <div class="wci-wrapper-grd-item box animation1">
             <div class="wci-wrapper-grd-item-icon">
               <img src="/assets/icons/price-tag.svg" />
             </div>
@@ -426,7 +519,7 @@
       <!-- Why choose IsTempMail End -->
 
       <!-- Fast and simple integration Start -->
-      <section class="fasi-wrapper">
+      <section id="api" class="fasi-wrapper box animation2">
         <div class="fasi-sect-one">
           <h6 class="fasi-sect-one-hd">Fast and simple integration</h6>
           <p class="fasi-sect-one-tle">
@@ -443,8 +536,8 @@
       <!-- Fast and simple integration End -->
 
       <!-- Pricing Start -->
-      <section class="land-pricing-wrapper">
-        <p class="land-pricing-hd">
+      <section id="pricing" class="land-pricing-wrapper">
+        <p class="land-pricing-hd box animation5">
           We offer great <span class="land-pricing-hd-inner">pricing</span> plan
           for the application
         </p>
@@ -464,7 +557,7 @@
           <!-- Monthly Plan Start -->
           <div class="land-cont-mnth active">
             <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation1">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -478,7 +571,7 @@
                 </button>
               </div>
 
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation2">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -494,7 +587,7 @@
             </div>
 
             <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-sectone-recomm">
+              <div class="land-pricing-container-sectone-recomm box animation3">
                 <p class="lpcsr-remm">Recommended</p>
                 <div class="land-pricing-container-item-recomm">
                   <p class="land-pricing-container-item-hd">Standards</p>
@@ -511,7 +604,7 @@
                 </div>
               </div>
 
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation1">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -531,7 +624,7 @@
           <!-- Yearly Plan Start -->
           <div class="land-cont-yr">
             <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation1">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -545,7 +638,7 @@
                 </button>
               </div>
 
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation2">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -561,7 +654,7 @@
             </div>
 
             <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation2">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -575,7 +668,7 @@
                 </button>
               </div>
 
-              <div class="land-pricing-container-item">
+              <div class="land-pricing-container-item box animation3">
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -595,13 +688,13 @@
         <!-- Pricing Content End -->
 
         <!-- Fags Start -->
-        <p class="fags-hd">Frequently Asked Questions</p>
-        <p class="fags-tle">
+        <p id="fags" class="fags-hd box animation6">Frequently Asked Questions</p>
+        <p class="fags-tle box animation5">
           Your questions around disposable email, answered.
         </p>
 
         <div class="accordion">
-          <div class="accordion-item">
+          <div class="accordion-item box animation5">
             <button class="accordion-button">
               1. What are disposable email addresses?
               <span class="accordion-icon"
@@ -612,7 +705,7 @@
               <p>Content for section 1.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation5">
             <button class="accordion-button">
               2. Why block disposable email?
               <span class="accordion-icon"
@@ -623,7 +716,7 @@
               <p>Content for section 2.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation5">
             <button class="accordion-button">
               3. Why do people use disposable email?
               <span class="accordion-icon"
@@ -634,7 +727,7 @@
               <p>Content for section 3.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation5">
             <button class="accordion-button">
               4. How does Stopreg block temporary email?
               <span class="accordion-icon"
@@ -645,7 +738,7 @@
               <p>Content for section 4.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation5">
             <button class="accordion-button">
               5. Where do I report a domain to be blocked?
               <span class="accordion-icon"

@@ -27,8 +27,13 @@
     --color-twenty-three: #627065;
     --color-twenty-four: #4136F1;
     --color-twenty-five: #F6F9FE;
+    --color-twenty-six: #0617381F; 
+    --color-twenty-seven: rgba(20, 82, 202, .7);
+    --color-twenty-eight: #FAFCFF; 
+    --error-color: #CC0000;
     --max-width: 1200px;
     --desktop-padding: 40px;
     --mobile-padding: 16px;
+    --desktop-dash-padding: 56px;
 
 }

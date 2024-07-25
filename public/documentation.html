@@ -49,38 +49,148 @@
             <span></span>
           </div>
         </div>
-
         <div class="mobile-nav-items">
-          <a href="#">API</a>
-          <a href="#">WordPress Plugin</a>
-          <a href="#">Pricing</a>
-          <a href="#">Pricing</a>
-          <a href="#">FAQs</a>
-          <a href="#">Documentation</a>
+          <a href="/#api">API</a>
+          <a href="/#wordpress-plugin">WordPress Plugin</a>
+          <a href="/#pricing">Pricing</a>
+          <button content-data-target="fags" class="section-scroller">FAQs</button>
+          <a href="/documentation.html">Documentation</a>
         </div>
-
         <div class="mobile-nav-btns">
-          <button>Log In</button>
-          <button>Create an Account</button>
+          <button class="signin-overlay-btn">Log In</button>
+          <button class="signup-overlay-btn">Create an Account</button>
         </div>
       </div>
       <!-- Mobile Navigation End -->
 
-      <!-- Header Start -->
-      <header class="main-head-wrapper">
-        <div class="land-logo">
-          <img src="/assets/logo/stopreg-logo.svg" />
+      <!-- Authentication Overlay Start -->
+      <div id="overlay" class="overlay">
+
+        <!-- SignUp Dialog Start -->
+        <div id="signup-dialog" class="auth-container overlay-animate">
+          <button id="signup-close-btn" class="auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+          <p class="cr-auth-header">Create an Account</p>
+          <p class="cr-auth-tle">
+            Already have an account?
+            <span class="signin-overlay-btn cr-auth-auth">Log In</span>
+          </p>
+          <form class="form-container">
+            <div class="form-item">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                required
+                type="email"
+                placeholder="Example: xyz@gmail.com"
+              />
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signup-password">Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                  id="signup-password"
+                /><img
+                  id="signup-password-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signup-cpassword">Confirm Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Confirm password"
+                  id="signup-cpassword"
+                /><img
+                  id="signup-cpassword-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <button class="cr-btn">Create an Account</button>
+          </form>
         </div>
+        <!-- SignUp Dialog End -->
+
+        <!-- SignIn Dialog Start -->
+        <div id="signin-dialog" class="auth-container overlay-animate">
+          <button id="signin-close-btn" class="auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+          <p class="cr-auth-header">Log in</p>
+          <p class="cr-auth-tle">
+            Don't have an account?
+            <span class="signup-overlay-btn cr-auth-auth">Sign up</span>
+          </p>
+          <form class="form-container">
+            <div class="form-item">
+              <label for="signin-email">Email</label>
+              <input
+                id="signin-email"
+                required
+                type="email"
+                placeholder="Example: xyz@gmail.com"
+              />
+            </div>
+            <div class="form-item">
+              <div class="form-item-inner">
+                <label for="signin-password">Password</label>
+              </div>
+              <div class="password-container">
+                <input
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                  id="signin-password"
+                /><img
+                  id="signin-password-btn"
+                  class="password-icon"
+                  src="/assets/icons/obsured.svg"
+                />
+              </div>
+            </div>
+            <button class="cr-btn">Log in</button>
+          </form>
+        </div>
+        <!-- SignIn Dialog Start -->
+      </div>
+      <!-- Authentication Overlay End -->
+
+      <!-- Header Start -->
+      <header class="main-head-cont">
+        <div class="main-head-wrapper">
+        <a href="/" class="land-logo">
+          <img src="/assets/logo/stopreg-logo.svg" />
+        </a>
         <nav class="nav-wrapper">
-          <a href="#">API</a>
-          <a href="#">WordPress Plugin</a>
-          <a href="#">Pricing</a>
-          <a href="#">FAQs</a>
-          <a href="#">Documentation</a>
+          <a href="/#api">API</a>
+          <a href="/#wordpress-plugin">WordPress Plugin</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/#fags">FAQs</button>
+          <a href="/documentation.html">Documentation</a>
         </nav>
         <div class="auth-wrapper">
-          <button>Log In</button>
-          <button>Create an Account</button>
+          <button class="signin-overlay-btn">Log In</button>
+          <button class="signup-overlay-btn">Create an Account</button>
         </div>
 
         <div class="nav-icon2">
@@ -91,12 +201,13 @@
           <span></span>
           <span></span>
         </div>
+      </div>
       </header>
       <!-- Header End -->
 
       <!-- Product Documentation Header Start -->
       <section class="docs-header-wrapper">
-        <div class="docs-header">
+        <div class="docs-header box animation4">
           <div class="docs-header-sect-one">
             <h1 class="docs-header-sect-one-hd">Product Documentation</h1>
             <h2 class="docs-header-sect-one-tle">
@@ -147,7 +258,7 @@
               </button>
             </div>
             <div class="docs-content-list">
-              <div id="docume-item1" class="documen-content-item">
+              <div id="docume-item1" class="documen-content-item box animation1">
                 <p>Documentation1</p>
                 <p>
                   Lörem ipsum povis pretologi, samt eurodöbel. Mäsoska far nir
@@ -180,7 +291,7 @@
                   becknarväska andrometer.
                 </p>
               </div>
-              <div id="docume-item2" class="documen-content-item">
+              <div id="docume-item2" class="documen-content-item box animation2">
                 <p>Documentation2</p>
                 <p>
                   Lörem ipsum povis pretologi, samt eurodöbel. Mäsoska far nir
@@ -191,7 +302,7 @@
                   Intryckssanera decikasamma
                 </p>
               </div>
-              <div id="docume-item3" class="documen-content-item">
+              <div id="docume-item3" class="documen-content-item box animation3">
                 <p>Documentation3</p>
                 <p>
                   Lörem ipsum povis pretologi, samt eurodöbel. Mäsoska far nir
@@ -221,7 +332,7 @@
                   dekött, tirar kroment. Kropp becknarväska andrometer.
                 </p>
               </div>
-              <div id="docume-item4" class="documen-content-item">
+              <div id="docume-item4" class="documen-content-item box animation4">
                 <p>Documentation4</p>
                 <p>
                   Lörem ipsum povis pretologi, samt eurodöbel. Mäsoska far nir
@@ -251,7 +362,7 @@
                   dekött, tirar kroment. Kropp becknarväska andrometer.
                 </p>
               </div>
-              <div id="docume-item5" class="documen-content-item">
+              <div id="docume-item5" class="documen-content-item box animation5">
                 <p>Documentation5</p>
                 <p>
                   Lörem ipsum povis pretologi, samt eurodöbel. Mäsoska far nir
@@ -288,13 +399,13 @@
 
       <section class="fags-wrapper">
         <!-- Fags Start -->
-        <p class="fags-hd fags-docs">Frequently Asked Questions</p>
-        <p class="fags-tle">
+        <p id="fags" class="fags-hd fags-docs box animation1">Frequently Asked Questions</p>
+        <p class="fags-tle box animation2">
           Your questions around disposable email, answered.
         </p>
 
         <div class="accordion">
-          <div class="accordion-item">
+          <div class="accordion-item box animation3">
             <button class="accordion-button">
               1. What are disposable email addresses?
               <span class="accordion-icon"
@@ -305,7 +416,7 @@
               <p>Content for section 1.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation4">
             <button class="accordion-button">
               2. Why block disposable email?
               <span class="accordion-icon"
@@ -316,7 +427,7 @@
               <p>Content for section 2.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation6">
             <button class="accordion-button">
               3. Why do people use disposable email?
               <span class="accordion-icon"
@@ -327,7 +438,7 @@
               <p>Content for section 3.</p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation2">
             <button class="accordion-button">
               4. How does Stopreg block temporary email?
               <span class="accordion-icon"
@@ -335,10 +446,10 @@
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 4.</p>
+              <p>Content for section 4. </p>
             </div>
           </div>
-          <div class="accordion-item">
+          <div class="accordion-item box animation1">
             <button class="accordion-button">
               5. Where do I report a domain to be blocked?
               <span class="accordion-icon"

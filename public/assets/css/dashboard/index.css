@@ -1,0 +1,320 @@
+.dash-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    /* background-color: var(--color-three); */
+}
+
+.dash-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    width: 22%;
+    background-color: var(--color-twenty-eight);
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 23px;
+}
+
+.dash-logo {
+    width: 72px;
+    height: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-logo>img {
+    height: 100%;
+    width: 100%;
+}
+
+.dash-nav-link {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+.dash-nav-link>a {
+    text-decoration: none;
+    height: 48px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    padding-left: 16px;
+    box-sizing: border-box;
+}
+
+.dash-nav-link>a>p {
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    line-height: 22.4px;
+    color: var(--primary-color);
+    margin-top: 3px;
+}
+
+.dash-nav-link>a>div {
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-nav-link>a>div>img {
+    width: 100%;
+    height: 100%;
+}
+
+.dash-nav-link-active {
+    color: var(--color-one) !important;
+    background-color: var(--color-two);
+}
+
+.dash-bdy {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.dash-header {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: var(--desktop-dash-padding);
+    padding-right: var(--desktop-dash-padding);
+    height: 104px;
+    background-color: var(--color-six);
+}
+
+.dash-header-tle {
+    font-size: 20px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    color: var(--primary-color);
+}
+
+.dash-header-auth {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-header-avatar {
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-header-avatar>img,
+.dash-logout-icon>img {
+    height: 100%;
+    width: 100%;
+}
+
+.dash-logout {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.dash-logout-icon {
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-logout-tle {
+    color: var(--error-color);
+    font-size: 16px;
+    line-height: 22.4px;
+    font-family: 'PlusJakartaSans-SemiBold';
+}
+
+.dash-inner-section {
+    padding-left: var(--desktop-dash-padding);
+    padding-right: var(--desktop-dash-padding);
+}
+
+.dash-plan {
+    margin-bottom: 32px;
+}
+
+.dash-plan-sectone {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    margin-top: 40px;
+}
+
+.dash-plan-tle {
+    font-size: 20px;
+    color: var(--primary-color);
+    font-family: 'PlusJakartaSans-SemiBold';
+}
+
+.dash-plan-subtle {
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-Regular';
+    color: var(--color-eleven);
+}
+
+.dash-plan-secttwo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 16px 24px;
+    border-radius: 8px;
+    background-color: var(--color-six);
+}
+
+.dash-plan-secttwo-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dash-plan-secttwo-inner p {
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.dash-plan-secttwo-inner>p:first-child {
+    font-family: 'PlusJakartaSans-SemiBold';
+}
+
+.dash-plan-secttwo-inner>p:last-child {
+    font-family: 'PlusJakartaSans-ExtraBold';
+}
+
+.dash-cur-plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    color: var(--color-two);
+    background-color: var(--color-twenty-two);
+    border-radius: 8px;
+    height: 46px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.dash-api-hd {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dash-api-hd-tl {
+    font-size: 20px;
+    font-family: 'PlusJakartaSans-SemiBold';
+}
+
+.dash-api-hd-subtl {
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-Regular';
+    color: var(--color-thirteen);
+}
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-checkbox .checkmark {
+    position: relative;
+    height: 18px;
+    width: 19px;
+    background-color: transparent;
+    border: 2px solid var(--color-twelve);
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+    background-color: var(--secondary-color); 
+    border: none;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.custom-checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'PlusJakartaSans-SemiBold';
+    margin-top: 24px;
+}
+
+.custom-checkbox a {
+    text-decoration: none;
+    color: var(--custom-seven);
+}
+
+.dash-tool-tip {
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    margin-left: 4px;
+}
+
+.dash-tool-tip>img {
+    height: 100%;
+    width: 100%;
+}
+
+.dash-api-content-hd {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.dash-api-content-sel {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+

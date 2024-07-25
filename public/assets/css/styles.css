@@ -21,7 +21,7 @@
   width: 7.2px;
   height: 7.2px;
   border-radius: 50%;
-  background: currentColor;
+  background: var(--color-three);
   margin: -3.6px 0 0 -3.6px;
 }
 .lds-roller div:nth-child(1) {
@@ -109,12 +109,138 @@
     align-items: center;
     z-index: 9999999;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .overlay-animate {
     animation: fadeIn 0.5s;
   }
 
+
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.fadeOut {
+    animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+
   .hidden-overflow {
     overflow-y: hidden;
+}
+
+
+.box {
+  opacity: 0;
+  transition: opacity 1s, transform 1s;
+}
+
+.box.visible-ani {
+  opacity: 1;
+}
+
+@keyframes animation1 {
+  from {
+      transform: translateY(50px);
+  }
+
+  to {
+      transform: translateY(0);
+  }
+}
+
+@keyframes animation2 {
+  from {
+      transform: translateX(-50px);
+  }
+
+  to {
+      transform: translateX(0);
+  }
+}
+
+@keyframes animation3 {
+  from {
+      transform: translateX(50px);
+  }
+
+  to {
+      transform: translateX(0);
+  }
+}
+
+@keyframes animation4 {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes animation5 {
+  from {
+      transform: translate(0, 50px);
+  }
+
+  to {
+      transform: translate(0, 0);
+  }
+}
+
+@keyframes animation6 {
+  from {
+      transform: translateY(-50px);
+  }
+
+  to {
+      transform: translateY(0);
+  }
+}
+
+
+.box.animation1.visible-ani {
+  animation: animation1 1s forwards;
+}
+
+.box.animation2.visible-ani {
+  animation: animation2 1s forwards;
+}
+
+.box.animation3.visible-ani {
+  animation: animation3 1s forwards;
+}
+
+.box.animation4.visible-ani {
+  animation: animation4 4s forwards;
+}
+
+.box.animation5.visible-ani {
+  animation: animation5 1s forwards;
+}
+
+.box.animation6.visible-ani {
+  animation: animation6 1s forwards;
 }
