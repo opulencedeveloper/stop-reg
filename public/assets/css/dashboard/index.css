@@ -1,160 +1,7 @@
-.dash-wrapper {
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    /* background-color: var(--color-three); */
-}
 
-.dash-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 64px;
-    width: 22%;
-    background-color: var(--color-twenty-eight);
-    height: 100%;
-    box-sizing: border-box;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-top: 23px;
-}
-
-.dash-logo {
-    width: 72px;
-    height: 57px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-logo>img {
-    height: 100%;
-    width: 100%;
-}
-
-.dash-nav-link {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-
-.dash-nav-link>a {
-    text-decoration: none;
-    height: 48px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    border-radius: 8px;
-    padding-left: 16px;
-    box-sizing: border-box;
-}
-
-.dash-nav-link>a>p {
-    font-size: 16px;
-    font-family: 'PlusJakartaSans-ExtraBold';
-    line-height: 22.4px;
-    color: var(--primary-color);
-    margin-top: 3px;
-}
-
-.dash-nav-link>a>div {
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-nav-link>a>div>img {
-    width: 100%;
-    height: 100%;
-}
-
-.dash-nav-link-active {
-    color: var(--color-one) !important;
-    background-color: var(--color-two);
-}
-
-.dash-bdy {
-    flex: 1;
-    height: 100%;
-    width: 100%;
-    overflow-y: auto;
-}
-
-.dash-header {
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0px;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-left: var(--desktop-dash-padding);
-    padding-right: var(--desktop-dash-padding);
-    height: 104px;
-    background-color: var(--color-six);
-}
-
-.dash-header-tle {
-    font-size: 20px;
-    font-family: 'PlusJakartaSans-ExtraBold';
-    color: var(--primary-color);
-}
-
-.dash-header-auth {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.dash-header-avatar {
-    height: 48px;
-    width: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-header-avatar>img,
-.dash-logout-icon>img {
-    height: 100%;
-    width: 100%;
-}
-
-.dash-logout {
-    background-color: transparent;
-    border: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-}
-
-.dash-logout-icon {
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-logout-tle {
-    color: var(--error-color);
-    font-size: 16px;
-    line-height: 22.4px;
-    font-family: 'PlusJakartaSans-SemiBold';
-}
-
-.dash-inner-section {
-    padding-left: var(--desktop-dash-padding);
-    padding-right: var(--desktop-dash-padding);
-}
 
 .dash-plan {
-    margin-bottom: 32px;
+    margin-bottom: 35px;
 }
 
 .dash-plan-sectone {
@@ -191,7 +38,7 @@
 .dash-plan-secttwo-inner {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 }
 
 .dash-plan-secttwo-inner p {
@@ -225,6 +72,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 16px;
 }
 
 .dash-api-hd-tl {
@@ -247,7 +95,7 @@
 .custom-checkbox .checkmark {
     position: relative;
     height: 18px;
-    width: 19px;
+    width: 18px;
     background-color: transparent;
     border: 2px solid var(--color-twelve);
     border-radius: 3px;
@@ -256,17 +104,17 @@
     box-sizing: border-box;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .checkmark {
-    background-color: var(--secondary-color); 
+.custom-checkbox input[type="checkbox"]:checked+.checkmark {
+    background-color: var(--secondary-color);
     border: none;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+.custom-checkbox input[type="checkbox"]:checked+.checkmark::after {
     content: "";
     position: absolute;
     top: 45%;
     left: 50%;
-    width: 4px;
+    width: 3px;
     height: 8px;
     border: solid white;
     border-width: 0 2px 2px 0;
@@ -282,7 +130,6 @@
     font-size: 14px;
     font-weight: 600;
     font-family: 'PlusJakartaSans-SemiBold';
-    margin-top: 24px;
 }
 
 .custom-checkbox a {
@@ -296,13 +143,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 25px;
+    /* margin-top: 25px; */
     margin-left: 4px;
 }
 
 .dash-tool-tip>img {
     height: 100%;
     width: 100%;
+}
+
+.dash-api-content {
+    background-color: var(--color-six);
+    padding: 40px 20px;
+    border-radius: 8px;
 }
 
 .dash-api-content-hd {
@@ -317,4 +170,313 @@
     align-items: center;
     flex-direction: row;
 }
+
+.dash-api-content-sect1 {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.token-con {
+    flex: 1;
+    padding-left: 28px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 46px;
+    border-radius: 8px;
+    box-sizing: content-box;
+    flex: 1;
+    border: 1px solid var(--color-nine);
+}
+
+.main-token {
+    color: var(--color-four);
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-Regular';
+}
+
+.dash-copy-btn {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 4px;
+    border: none;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+.dash-copy-btn-img-container {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-copy-btn-img-container>img {
+    height: 100%;
+    width: 100%;
+}
+
+.ratoken-btn {
+    height: 46px;
+    background-color: var(--color-two);
+    border-radius: 8px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border: none;
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    color: var(--color-one);
+    white-space: nowrap;
+}
+
+.link-container {
+    display: flex;
+    align-items: center;
+    gap: 11.2px;
+}
+
+.link-container {
+    text-decoration-color: var(--color-twelve);
+}
+
+.token-link-title {
+    font-family: 'PlusJakartaSans-Regular';
+    color: var(--color-twelve);
+    font-size: 16px;
+    word-break: break-all;
+}
+
+.token-link-icon {
+    height: 17px;
+    width: 17px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+}
+
+.token-link-icon>img {
+    height: 100%;
+    width: 100%;
+}
+
+.tooltip {
+    position: relative;
+    display: flex;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: max-content;
+    max-width: 221px;
+    margin-bottom: 6px;
+    box-shadow: 0px 2px 7px 0px #0000001F;
+    background-color: var(--color-six);
+    padding: 14px;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 0px;
+    margin-left: -25px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltiptexttle {
+    font-size: 12px;
+    color: var(--color-thirty-two);
+    text-align: start;
+    font-family: 'PlusJakartaSans-SemiBold';
+
+    margin-bottom: 8px;
+}
+
+.tooltiptextsubtle {
+    line-height: 16.8px;
+    font-size: 12px;
+    text-align: start;
+    font-family: 'PlusJakartaSans-Regular';
+    color: var(--color-thirty-three);
+}
+
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    bottom: 100px;
+    left: 55px;
+    margin-left: -30px;
+    border-width: 9px;
+    border-style: solid;
+    /* box-shadow: 0px 2px 7px 0px #0000001F; */
+    border-color: var(--color-six) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+/* .dash-mobi-nav-links {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.dash-mobi-nav-links>a {
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+} */
+
+@media only screen and (max-width: 1151px) {
+    .dash-api-content-sect1 {
+        align-items: start;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 24px;
+        box-sizing: border-box;
+        margin-bottom: 32px;
+    }
+
+    .dash-copy-btn {
+        height: 46px;
+    }
+
+    .token-con {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .ratoken-btn {
+        width: 100%;
+    }
+}
+
+
+@media only screen and (max-width: 748px) {
+    .dash-api-content-hd {
+        flex-direction: column;
+        align-items: start;
+    }
+
+}
+
+@media only screen and (max-width: 628px) {
+    .main-token {
+        font-size: 15px;
+    }
+    
+
+}
+
+@media only screen and (max-width: 550px) {
+    .dash-plan-tle {
+        font-size: 14px;
+    }
+    
+    .dash-plan-subtle {
+        font-size: 12px;
+    }
+
+    .dash-plan-sectone {
+        margin-bottom: 12px;
+        margin-top: 28px;
+    }
+
+    .dash-plan-secttwo {
+        padding: 13px;
+    }
+
+    .dash-plan-secttwo-inner>p:first-child {
+        font-size: 12px;
+    }
+    
+    .dash-plan-secttwo-inner>p:last-child {
+        font-size: 14px;
+    }
+
+    .dash-cur-plan {
+        font-size: 12px;
+        height: 41px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .dash-plan {
+        margin-bottom: 20px;
+    }
+    .dash-api-hd {
+        margin-bottom: 12px;
+    }
+    
+    .dash-api-hd-tl, .dash-api-hd-subtl  {
+        font-size: 12px;
+    }
+
+    .dash-api-content {
+        margin-left: -16px;
+        margin-right: -16px;
+        padding: 20px 16px;
+        border-radius: 8px;
+    }
+
+    .dash-api-content-hd {
+        gap: 16px;
+    }
+  
+    .custom-checkbox {
+        font-size: 12px;
+    }
+
+    .main-token {
+        font-size: 12px;
+    }
+
+    .dash-copy-btn-tle {
+        display: none;
+    }
+
+    .token-con {
+        padding-left: 16px;
+    }
+
+    .ratoken-btn {
+        font-size: 12px;
+    }
+
+    .dash-api-content-sect1 {
+        margin-bottom: 20px;
+    }
+
+    .token-link-title {
+        font-size: 10px;
+    }
+
+    .token-link-icon {
+        height: 14px;
+        width: 14px;
+    }
+}
+
+
+
 

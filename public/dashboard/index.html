@@ -13,7 +13,15 @@
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+      integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
 
   <body>
@@ -32,8 +40,79 @@
     </div>
     <!-- Loading Spinner End -->
 
-    <div id="content">
+    <main id="content">
+
+      <!-- Mobile Navigation Start -->
+      <div class="nav-menu">
+        <div class="nav-menu-sect-one">
+          <a href="/" class="land-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </a>
+          <div class="nav-icon2-mobile active">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="dash-mobi-nav-links">
+          <a class="dash-nav-link-active" href="#">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/dashboard-active.svg" />
+            </div>
+            <p class="dash-nav-link-active">Dashboard</p>
+          </a>
+          <a class="" href="#">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/domains-inactive.svg" />
+            </div>
+            <p class="">Domains</p>
+          </a>
+          <a class="" href="#">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/payment-inactive.svg" />
+            </div>
+            <p class="">Payments</p>
+          </a>
+          <a class="" href="#">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/profile-inactive.svg" />
+            </div>
+            <p class="">Profile</p>
+          </a>
+        </div>
+
+        <button id="mobile-logout-button" class="dash-mobile-logout-btn">
+          <div class="dash-mobile-logout-btn-icon">
+            <img src="/assets/icons/logout-line.svg" />
+          </div>
+            <p class="dash-mobile-logout-btn-tle">Log Out</p>
+          
+        </button>
+       
+      </div>
+      <!-- Mobile Navigation End -->
+
+
+      <div id="logout-overlay" class="overlay">
+        <!-- Logout Dialog Start -->
+        <div id="logout-container" class="logout-container overlay-animate">
+          <div class="logout-icon">
+            <img src="/assets/icons/logout.svg" />
+          </div>
+          <p class="logout-tle">Log Out?</p>
+          <p class="logout-subtle">Are you sure you want to proceed?</p>
+
+          <a href="/" class="y-log-out">Yes, Log Out</a>
+          <button id="n-log-out" class="n-log-out">No, Don't Log Out</button>
+        </div>
+      </div>
+
       <div class="dash-wrapper">
+        <!-- Desktop Nav Start -->
         <nav class="dash-nav">
           <div class="dash-logo">
             <img src="/assets/logo/stopreg-logo.svg" />
@@ -46,24 +125,60 @@
               </div>
               <p class="dash-nav-link-active">Dashboard</p>
             </a>
+            <a class="" href="#">
+              <div>
+                <img src="/assets/icons/domains-inactive.svg" />
+              </div>
+              <p class="">Domains</p>
+            </a>
+            <a class="" href="#">
+              <div>
+                <img src="/assets/icons/payment-inactive.svg" />
+              </div>
+              <p class="">Payments</p>
+            </a>
+            <a class="" href="#">
+              <div>
+                <img src="/assets/icons/profile-inactive.svg" />
+              </div>
+              <p class="">Profile</p>
+            </a>
           </div>
         </nav>
+        <!-- Desktop Nav End -->
+
         <div class="dash-bdy">
+          <!-- Header Start -->
           <header class="dash-header">
+            <a href="/" class="mobile-nav-logo">
+              <img src="/assets/logo/stopreg-logo.svg" />
+            </a>
             <p class="dash-header-tle">My Account</p>
             <div class="dash-header-auth">
               <div class="dash-header-avatar">
                 <img src="/assets/icons/avatar-filled.svg" />
               </div>
-              <button class="dash-logout">
+              <button id="logout-button" class="dash-logout">
                 <div class="dash-logout-icon">
                   <img src="/assets/icons/logout-line.svg" />
                 </div>
                 <p class="dash-logout-tle">Log Out</p>
               </button>
             </div>
+            <div class="nav-icon2">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </header>
+          <!-- Header End -->
+
           <div class="dash-inner-section">
+            <p class="dash-header-tle-mobile">My Account</p>
+            <!-- Plan Start -->
             <section class="dash-plan">
               <div class="dash-plan-sectone">
                 <p class="dash-plan-tle">Current plan</p>
@@ -79,31 +194,45 @@
                 <div class="dash-cur-plan">Upgrade</div>
               </div>
             </section>
+            <!-- Plan End -->
 
             <section class="dash-api-token">
               <div class="dash-api-hd">
                 <p class="dash-api-hd-tl">Free API Token</p>
                 <p class="dash-api-hd-subtl">200 API requests left.</p>
               </div>
+
               <div class="dash-api-content">
                 <div class="dash-api-content-hd">
-                <div class="dash-api-content-sel">
-                  <label for="bfe" class="custom-checkbox">
-                    <input required type="checkbox" id="bfe" />
-                    <span class="checkmark"></span>
-                    <p>Block free emails</p>
-                  </label>
-                  <div class="dash-tool-tip">
-                    <img src="/assets/icons/question.svg" />
+                  <div class="dash-api-content-sel">
+                    <label for="bfe" class="custom-checkbox">
+                      <input required type="checkbox" id="bfe" />
+                      <span class="checkmark"></span>
+                      <p>Block free emails</p>
+                    </label>
+                    <div class="dash-tool-tip tooltip">
+                      <div class="tooltiptext">
+                        <p class="tooltiptexttle">Free emails</p>
+                        <p class="tooltiptextsubtle">
+                          Free emails are emails such as yourname@gmail.com
+                        </p>
+                      </div>
+                      <img src="/assets/icons/question.svg" />
+                    </div>
                   </div>
-                </div>
-                <div class="dash-api-content-sel">
+                  <div class="dash-api-content-sel">
                     <label for="bbe" class="custom-checkbox">
                       <input required type="checkbox" id="bbe" />
                       <span class="checkmark"></span>
                       <p>Block business emails</p>
                     </label>
-                    <div class="dash-tool-tip">
+                    <div class="dash-tool-tip tooltip">
+                      <div class="tooltiptext">
+                        <p class="tooltiptexttle">Business emails</p>
+                        <p class="tooltiptextsubtle">
+                          Free emails are emails such as yourname@gmail.com
+                        </p>
+                      </div>
                       <img src="/assets/icons/question.svg" />
                     </div>
                   </div>
@@ -113,18 +242,58 @@
                       <span class="checkmark"></span>
                       <p>Block disposable emails</p>
                     </label>
-                    <div class="dash-tool-tip">
+                    <div class="dash-tool-tip tooltip">
+                      <div class="tooltiptext">
+                        <p class="tooltiptexttle">Disposable emails</p>
+                        <p class="tooltiptextsubtle">
+                          Free emails are emails such as yourname@gmail.com
+                        </p>
+                      </div>
                       <img src="/assets/icons/question.svg" />
                     </div>
                   </div>
-                  
                 </div>
+
+                <div class="dash-api-content-sect1">
+                  <div class="token-con">
+                    <p class="main-token">3EKWDCK5rTcmRwDHXnNPvTszg5WMaEAD</p>
+                    <button class="dash-copy-btn">
+                      <div class="dash-copy-btn-img-container">
+                        <img src="/assets/icons/copy.svg" />
+                      </div>
+                      <p class="dash-copy-btn-tle">Copy</p>
+                    </button>
+                  </div>
+                  <button class="ratoken-btn">Regenerate API Token</button>
+                </div>
+
+                <a
+                  target="_blank"
+                  href="https://www.stopreg.com/api/check/3EKWDCK5rTcmRwDHXnNPvTszg5WMaEXD/gmail.com"
+                  class="link-container"
+                >
+                  <p class="token-link-title">
+                    https://www.stopreg.com/api/check/3EKWDCK5rTcmRwDHXnNPvTszg5WMaEXD/gmail.com
+                  </p>
+                  <div class="token-link-icon">
+                    <img src="/assets//icons/link.svg" />
+                  </div>
+                </a>
               </div>
             </section>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+      integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/dash/index.js"></script>
+    <script src="/assets/js/dash/header.js"></script>
+    <script></script>
   </body>
 </html>

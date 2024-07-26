@@ -1,0 +1,120 @@
+.domains-hd-cont {
+    margin-top: 40px;
+}
+
+.domains-hd {
+    font-size: 20px;
+    font-family: 'PlusJakartaSans-SemiBold';
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.domain-hd-cont-inner {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.domain-hd-cont-inner>p {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-Regular';
+}
+
+.domain-hd-cont-inner>a {
+    font-size: 16px;
+    color: var(--secondary-color);
+    text-decoration-color: var(--secondary-color);
+}
+
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius:8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: var(--color-thirty-four);
+    color: var(--primary-color);
+    height: 54px;
+}
+
+tbody tr {
+    border-bottom: 2px solid yellow;
+}
+
+tbody tr:last-child {
+    border-bottom: 0;
+    /* Remove bottom border for the last row */
+}
+
+tr.table-inner td {
+    border-bottom: 1pt solid var(--color-twenty);
+    padding-top: 27px;
+    padding-bottom: 27px;
+}
+
+.first-head, .table-inner-inner{
+    padding-left: 24px;
+}
+
+thead th {
+    text-align: left;
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-SemiBold';
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 13.63px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 13.63px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 9.63px;
+    width: 9.63px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(10px);
+  }
