@@ -196,16 +196,18 @@ input:checked+.slider:before {
 .report-input-container {
   padding-left: 32px;
   padding-right: 32px;
+  box-sizing: content-box;
+  flex: 1;
 }
 
 .report-input {
   height: 48px;
   width: 100%;
+  box-sizing: border-box;
   font-size: 16px;
   border-radius: 8px;
   font-family: 'PlusJakartaSans-Regular';
   border: 0.3px solid rgba(115, 115, 115, .3);
-  box-sizing: border-box;
   padding-left: 17px;
   margin-bottom: 16px;
 }
@@ -217,7 +219,7 @@ input:checked+.slider:before {
 .close-report-container-btn,
 .report-container-btn {
   width: 100%;
-  box-sizing: content-box;
+  box-sizing: border-box;
   height: 46px;
   font-size: 16px;
   font-family: 'PlusJakartaSans-ExtraBold';
@@ -349,7 +351,6 @@ input:checked+.slider:before {
     margin-top: 20px;
     font-size: 12px;
   }
-
 
   .report-input {
     font-size: 13px;
