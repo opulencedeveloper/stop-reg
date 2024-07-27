@@ -81,13 +81,13 @@
     background: rgba(255, 255, 255, 0.5);
     height: 506px;
     width: 498px;
-    border-radius: 40px;
+    border-radius: 25px;
 }
 
 .hero-sect-two-inner-two {
     height: 100%;
     width: 100%;
-    border-radius: 40px;
+    border-radius: 25px;
     box-shadow: 0px 20px 40px 0px var(--color-five);
     background-color: var(--color-six);
     position: relative;
@@ -1944,7 +1944,9 @@ input[type="password"]::-webkit-textfield-decoration-container {
         padding-top: 70px;
     }
 
-
+    .hero-sect-two-inner-two-item>p:last-child {
+        font-size: 14px;
+    }
 
     .form-container {
         padding-left: var(--mobile-padding);
