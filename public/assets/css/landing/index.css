@@ -1315,16 +1315,19 @@ input[type="password"]::-webkit-textfield-decoration-container {
     align-items: center;
     justify-content: center;
     width: 100%;
+    background-image: url('/assets/images/landing/index/404.svg');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.notfound-tle{
+.notfound-tle {
     font-size: 48px;
     font-family: 'PlusJakartaSans-ExtraBold';
     margin-bottom: 8px;
     line-height: 67.2px;
 }
 
-.notfound-stle{
+.notfound-stle {
     max-width: 374.99px;
     font-size: 16px;
     text-align: center;
@@ -1336,6 +1339,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 .notfound-hme-lnk {
     display: flex;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -1383,7 +1387,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 @media only screen and (max-width: 1170px) {
     .hero-container {
-      overflow-x: hidden;
+        overflow-x: hidden;
     }
 
 }
@@ -1451,7 +1455,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
         border-radius: 0px;
 
     }
-    
+
 }
 
 @media only screen and (max-width: 852px) {
@@ -1464,7 +1468,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
         display: flex;
         flex-direction: column;
         transition: all 3s ease;
-        
+
 
     }
 
@@ -1940,7 +1944,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
         padding-top: 70px;
     }
 
-    
+
 
     .form-container {
         padding-left: var(--mobile-padding);
@@ -1956,10 +1960,36 @@ input[type="password"]::-webkit-textfield-decoration-container {
     }
 
     .cr-auth-tle,
-    .form-item>label, .form-item>input,
+    .form-item>label,
+    .form-item>input,
     .password-container>input {
         font-size: 12px;
     }
+
+
+
+    .notfound-contianer {
+        background-size: 450px;
+        padding-left: var(--mobile-padding);
+        padding-right: var(--mobile-padding);
+    }
+
+    .notfound-tle {
+        font-size: 28px;
+        line-height: 39.2px;
+    }
+
+    .notfound-stle {
+        font-size: 14px;
+        line-height: 19.6px;
+    }
+
+    .notfound-hme-lnk {
+        width: 100%;
+        padding: 0px;
+        font-size: 14px;
+    }
+
     /* .form-item>input,
 .password-container>input {
     height: 48px;

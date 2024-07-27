@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const reportDomainOverlay = document.getElementById("report-domain-overlay");
     const reportDomainBtn = document.getElementById("report-domain-btn");
    // const mobilereportDomainBtn = document.getElementById("mobile-logout-button");
-    const closeLogOutDialogBtn = document.getElementById("n-log-out");
+    const closeReportDialogBtn = document.getElementById("close-report-container-btn");
     const reportContainer = document.getElementById("report-container");
   
     reportDomainBtn.addEventListener("click", function () {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //   document.body.classList.remove("hidden-overflow");
     // });
   
-    closeLogOutDialogBtn.addEventListener("click", function () {
+    closeReportDialogBtn.addEventListener("click", function () {
       reportContainer.classList.add("fadeOut");
   
       reportContainer.addEventListener(

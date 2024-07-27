@@ -213,15 +213,26 @@ input:checked+.slider:before {
   outline: 0.3px solid var(--color-twenty-seven);
 }
 
+.close-report-container-btn,
 .report-container-btn {
   width: 100%;
   height: 46px;
-  background-color: var(--color-thirty-five);
   font-size: 16px;
-  color: var(--error-color);
   font-family: 'PlusJakartaSans-ExtraBold';
   border: none;
-  margin-bottom: 72px;
+
+}
+
+.close-report-container-btn {
+  background-color: transparent;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.report-container-btn {
+  background-color: var(--color-thirty-five);
+  margin-bottom: 8px;
+  color: var(--error-color);
 }
 
 .domain-cl-bk-btn {
@@ -309,19 +320,24 @@ input:checked+.slider:before {
   }
 
   .report-input,
-  .report-container-btn {
+  .report-container-btn,
+  .close-report-container-btn {
     height: 44px;
   }
 
   .report-container-btn {
-    margin-bottom: 11px;
+    margin-bottom: 12px;
+  }
+
+  .close-report-container-btn {
+    margin-bottom: 24px;
   }
 
   .domain-cl-bk-icon {
     width: 10px;
     height: 20px;
   }
-  
+
   .domain-cl-bk-btn-tle {
     font-size: 12px;
   }
