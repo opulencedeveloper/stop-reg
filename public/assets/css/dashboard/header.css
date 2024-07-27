@@ -8,6 +8,7 @@
     border-radius: 8px;
     margin-left: 16px;
     margin-right: 16px;
+    box-sizing: content-box;
 }
 
 .logout-icon {
@@ -191,6 +192,10 @@
     font-family: 'PlusJakartaSans-ExtraBold' !important;
 }
 
+.dash-nav-link-active>p{
+    color: var(--color-one) !important;
+}
+
 .dash-bdy {
     flex: 1;
     height: 100%;
@@ -203,6 +208,7 @@
     align-items: center;
     position: sticky;
     top: 0px;
+    z-index: 9;
     flex-direction: row;
     justify-content: space-between;
     padding-left: var(--desktop-dash-padding);
@@ -344,8 +350,9 @@
         top: 0px;
         flex-direction: row;
         justify-content: space-between;
-        height: 100px;
-        background-color: transparent;
+        height: 75px;
+        margin-bottom: 8px;
+        background-color: var(--color-twenty-nine);
     }
 }
 

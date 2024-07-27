@@ -14,7 +14,7 @@
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
-    <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/payments.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -57,15 +57,15 @@
             </div>
             <p>Dashboard</p>
           </a>
-          <a class="dash-nav-link-active" href="/dashboard/domains.html">
+          <a class="" href="/dashboard/domains.html">
             <div class="dash-mobi-nav-link-icon">
-              <img src="/assets/icons/domains-active.svg" />
+              <img src="/assets/icons/domains-inactive.svg" />
             </div>
             <p>Domains</p>
           </a>
-          <a class="" href="/dashboard/payments.html">
+          <a class="dash-nav-link-active" href="/dashboard/payments.html">
             <div class="dash-mobi-nav-link-icon">
-              <img src="/assets/icons/payment-inactive.svg" />
+              <img src="/assets/icons/payment-active.svg" />
             </div>
             <p>Payments</p>
           </a>
@@ -101,24 +101,6 @@
       </div>
       <!-- Logout Dialog End -->
 
-      <!-- Report Domain Dialog Start -->
-      <div id="report-domain-overlay" class="overlay">
-        <form id="report-container" class="logout-container overlay-animate">
-          <div class="report-input-container">
-            <p class="report-container-tle">Report a Domain</p>
-            <p class="report-container-stle">Report a Suspicious Domain Name</p>
-            <input
-              class="report-input"
-              required
-              type="url"
-              placeholder="www.opulencedeveloper.com"
-            />
-            <button class="report-container-btn">Report</button>
-          </div>
-        </form>
-      </div>
-      <!-- Report Domain Dialog End -->
-
       <div class="dash-wrapper">
         <!-- Desktop Nav Start -->
         <nav class="dash-nav">
@@ -133,15 +115,15 @@
               </div>
               <p>Dashboard</p>
             </a>
-            <a class="dash-nav-link-active" href="/dashboard/domains.html">
+            <a class="" href="/dashboard/domains.html">
               <div>
-                <img src="/assets/icons/domains-active.svg" />
+                <img src="/assets/icons/domains-inactive.svg" />
               </div>
-              <p class="dash-nav-link-active">Domains</p>
+              <p>Domains</p>
             </a>
-            <a class="" href="/dashboard/payments.html">
+            <a class="dash-nav-link-active" href="/dashboard/payments.html">
               <div>
-                <img src="/assets/icons/payment-inactive.svg" />
+                <img src="/assets/icons/payment-active.svg" />
               </div>
               <p>Payments</p>
             </a>
@@ -185,109 +167,87 @@
           <!-- Header End -->
 
           <div class="dash-inner-section">
-            <div class="domains-hd-cont">
-              <h1 class="domains-hd">Domain Names</h1>
-              <div class="domain-hd-cont-inner">
-                <p>Verify your domain names instantly</p>
-                <a href="/dashboard/domain-checked-list.html">Domain checked list</a>
+            <div class="payments-hd">
+              <div class="payments-hd-sect-one">
+                <p class="payments-hd-sect-one-tle">Payments</p>
+                <p class="payments-hd-sect-one-stle">
+                  Upgrade now to get started with a paid plan.
+                </p>
               </div>
+              <p class="payments-hd-sect-two">Currently on free plan</p>
             </div>
 
-            <div class="tb-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="first-head">Domain Name</th>
-                    <th class="other-head">Status</th>
-                    <th class="other-head other-other-head">Comments</th>
-                    <th class="last-head">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.opulencedeveloper.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.macdonald.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.ebay.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.playhouse.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.tempxyz.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="dash-plan-grid">
+              <form class="land-pricing-container-item box animation1">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <input style="display: none" />
+                <button class="land-pricing-container-item-btn">
+                 Choose this plan
+                </button>
+              </form>
 
-            <p class="rsdnh">
-              Report Suspicious Domain Name
-              <span id="report-domain-btn" class="report-domain-btn">Here</span>
-            </p>
+              <form class="land-pricing-container-item box animation1">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <input style="display: none" />
+                <button class="land-pricing-container-item-btn">
+                 Choose this plan
+                </button>
+              </form>
+
+              <form
+                class="land-pricing-container-sectone-recomm box animation3"
+              >
+                <p class="lpcsr-remm">Recommended</p>
+                <div class="land-pricing-container-item-recomm">
+                  <p class="land-pricing-container-item-hd">Standards</p>
+                  <p class="land-pricing-container-item-tle">
+                    5,000 API requests in 30 days
+                  </p>
+                  <p class="land-pricing-container-item-sub-tle">
+                    <span class="pr-do-si">$</span
+                    ><span class="pr-do-am">5</span> / month
+                  </p>
+                  <input style="display: none" />
+                  <button class="land-pricing-container-item-btn-recomm">
+                   Choose this plan
+                  </button>
+                </div>
+              </form>
+
+              <form class="land-pricing-container-item box animation1">
+                <p class="land-pricing-container-item-hd">Standard</p>
+                <p class="land-pricing-container-item-tle">
+                  5,000 API requests in 30 days
+                </p>
+                <p class="land-pricing-container-item-sub-tle">
+                  <span class="pr-do-si">$</span
+                  ><span class="pr-do-am">5</span> / month
+                </p>
+                <input style="display: none" />
+                <button class="land-pricing-container-item-btn">
+                 Choose this plan
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </main>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dash/header.js"></script>
-    <script src="/assets/js/dash/domain.js"></script>
   </body>
 </html>

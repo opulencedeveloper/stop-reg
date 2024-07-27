@@ -1,0 +1,38 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const reportDomainOverlay = document.getElementById("report-domain-overlay");
+    const reportDomainBtn = document.getElementById("report-domain-btn");
+   // const mobilereportDomainBtn = document.getElementById("mobile-logout-button");
+    const closeLogOutDialogBtn = document.getElementById("n-log-out");
+    const reportContainer = document.getElementById("report-container");
+  
+    reportDomainBtn.addEventListener("click", function () {
+      reportDomainOverlay.style.display = "flex";
+      document.body.classList.add("hidden-overflow");
+    });
+  
+    // mobilereportDomainBtn.addEventListener("click", function () {
+    //   reportDomainOverlay.style.display = "flex";
+    //   document.body.classList.add("hidden-overflow");
+    //   navIcons.classList.remove("open");
+    //   navMenu.classList.remove("active");
+    //   document.body.classList.remove("hidden-overflow");
+    // });
+  
+    closeLogOutDialogBtn.addEventListener("click", function () {
+      reportContainer.classList.add("fadeOut");
+  
+      reportContainer.addEventListener(
+        "animationend",
+        function () {
+          reportContainer.classList.remove("fadeOut");
+          reportDomainOverlay.style.display = "none";
+          document.body.classList.remove("hidden-overflow");
+        },
+        { once: true }
+      );
+    });    
+});
+
+function goBack() {
+  window.history.back();
+}

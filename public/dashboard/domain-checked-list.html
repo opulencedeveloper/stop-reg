@@ -137,7 +137,7 @@
               <div>
                 <img src="/assets/icons/domains-active.svg" />
               </div>
-              <p class="dash-nav-link-active">Domains</p>
+              <p>Domains</p>
             </a>
             <a class="" href="/dashboard/payments.html">
               <div>
@@ -186,11 +186,14 @@
 
           <div class="dash-inner-section">
             <div class="domains-hd-cont">
-              <h1 class="domains-hd">Domain Names</h1>
-              <div class="domain-hd-cont-inner">
-                <p>Verify your domain names instantly</p>
-                <a href="/dashboard/domain-checked-list.html">Domain checked list</a>
-              </div>
+                <button onclick="goBack()" class="domain-cl-bk-btn">
+                    <div class="domain-cl-bk-icon">
+                        <img src="/assets/icons/back-outlined.svg" >
+                    </div>
+                    <p class="domain-cl-bk-btn-tle">Back</p>
+                </button>
+              <h1 class="domains-hd domains-details-hd">Domain checked list</h1>
+             
             </div>
 
             <div class="tb-container">
@@ -198,90 +201,54 @@
                 <thead>
                   <tr>
                     <th class="first-head">Domain Name</th>
-                    <th class="other-head">Status</th>
-                    <th class="other-head other-other-head">Comments</th>
-                    <th class="last-head">Action</th>
+                    <th class="other-head">Blocked</th>
+                    <th class="last-head">Request Count</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="table-inner">
                     <td class="table-inner-inner">www.opulencedeveloper.com</td>
-                    <td>Active</td>
+                    <td>12</td>
                     <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
+                      2345
                     </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
+                    
                   </tr>
                   <tr class="table-inner">
                     <td class="table-inner-inner">www.macdonald.com</td>
-                    <td>Active</td>
+                    <td>12</td>
                     <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
+                      2345
                     </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
+                    
                   </tr>
                   <tr class="table-inner">
                     <td class="table-inner-inner">www.ebay.com</td>
-                    <td>Active</td>
+                    <td>950</td>
                     <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
+                      2345
                     </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
+                    
                   </tr>
                   <tr class="table-inner">
                     <td class="table-inner-inner">www.playhouse.com</td>
-                    <td>Active</td>
+                    <td>12</td>
                     <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
+                      2345
                     </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
+                    
                   </tr>
                   <tr class="table-inner">
                     <td class="table-inner-inner">www.tempxyz.com</td>
-                    <td>Active</td>
+                    <td>12</td>
                     <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
+                      2345
                     </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
+                    
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <p class="rsdnh">
-              Report Suspicious Domain Name
-              <span id="report-domain-btn" class="report-domain-btn">Here</span>
-            </p>
           </div>
         </div>
       </div>

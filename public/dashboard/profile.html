@@ -14,7 +14,7 @@
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
-    <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/profile.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -57,9 +57,9 @@
             </div>
             <p>Dashboard</p>
           </a>
-          <a class="dash-nav-link-active" href="/dashboard/domains.html">
+          <a class="" href="/dashboard/domains.html">
             <div class="dash-mobi-nav-link-icon">
-              <img src="/assets/icons/domains-active.svg" />
+              <img src="/assets/icons/domains-inactive.svg" />
             </div>
             <p>Domains</p>
           </a>
@@ -69,9 +69,9 @@
             </div>
             <p>Payments</p>
           </a>
-          <a class="" href="/dashboard/profile.html">
+          <a class="dash-nav-link-active" href="/dashboard/profile.html">
             <div class="dash-mobi-nav-link-icon">
-              <img src="/assets/icons/profile-inactive.svg" />
+              <img src="/assets/icons/profile-active.svg" />
             </div>
             <p>Profile</p>
           </a>
@@ -101,24 +101,6 @@
       </div>
       <!-- Logout Dialog End -->
 
-      <!-- Report Domain Dialog Start -->
-      <div id="report-domain-overlay" class="overlay">
-        <form id="report-container" class="logout-container overlay-animate">
-          <div class="report-input-container">
-            <p class="report-container-tle">Report a Domain</p>
-            <p class="report-container-stle">Report a Suspicious Domain Name</p>
-            <input
-              class="report-input"
-              required
-              type="url"
-              placeholder="www.opulencedeveloper.com"
-            />
-            <button class="report-container-btn">Report</button>
-          </div>
-        </form>
-      </div>
-      <!-- Report Domain Dialog End -->
-
       <div class="dash-wrapper">
         <!-- Desktop Nav Start -->
         <nav class="dash-nav">
@@ -133,11 +115,11 @@
               </div>
               <p>Dashboard</p>
             </a>
-            <a class="dash-nav-link-active" href="/dashboard/domains.html">
+            <a class="" href="/dashboard/domains.html">
               <div>
-                <img src="/assets/icons/domains-active.svg" />
+                <img src="/assets/icons/domains-inactive.svg" />
               </div>
-              <p class="dash-nav-link-active">Domains</p>
+              <p>Domains</p>
             </a>
             <a class="" href="/dashboard/payments.html">
               <div>
@@ -145,9 +127,9 @@
               </div>
               <p>Payments</p>
             </a>
-            <a class="" href="/dashboard/profile.html">
+            <a class="dash-nav-link-active" href="/dashboard/profile.html">
               <div>
-                <img src="/assets/icons/profile-inactive.svg" />
+                <img src="/assets/icons/profile-active.svg" />
               </div>
               <p>Profile</p>
             </a>
@@ -185,109 +167,40 @@
           <!-- Header End -->
 
           <div class="dash-inner-section">
-            <div class="domains-hd-cont">
-              <h1 class="domains-hd">Domain Names</h1>
-              <div class="domain-hd-cont-inner">
-                <p>Verify your domain names instantly</p>
-                <a href="/dashboard/domain-checked-list.html">Domain checked list</a>
-              </div>
+            <div class="profile-wrapper">
+            <div class="profile-avatar-img">
+                <img src="/assets/icons/user-avatar-filled.svg">
             </div>
+            <p class="profile-name">Macdonald Anyanwu</p>
 
-            <div class="tb-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="first-head">Domain Name</th>
-                    <th class="other-head">Status</th>
-                    <th class="other-head other-other-head">Comments</th>
-                    <th class="last-head">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.opulencedeveloper.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.macdonald.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.ebay.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.playhouse.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                  <tr class="table-inner">
-                    <td class="table-inner-inner">www.tempxyz.com</td>
-                    <td>Active</td>
-                    <td class="comment-td">
-                      Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                      slöjböter.
-                    </td>
-                    <td>
-                      <label class="switch">
-                        <input type="checkbox" />
-                        <span class="slider round"></span>
-                      </label>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p class="rsdnh">
-              Report Suspicious Domain Name
-              <span id="report-domain-btn" class="report-domain-btn">Here</span>
-            </p>
+            <form class="form-container">
+                <div class="form-item">
+                    <label for="fullname">Full Name</label>
+                    <input
+                      id="fullname"
+                      required
+                      type="text"
+                      placeholder="Victor Opulence"
+                    />
+                  </div>
+                <div class="form-item">
+                  <label for="email">Email</label>
+                  <input
+                    id="email"
+                    required
+                    type="email"
+                    placeholder="Example: xyz@gmail.com"
+                  />
+                </div>
+                <button class="p-save-ch-btn">Save Changes</button>
+              </form>
+            
           </div>
+        </div>
         </div>
       </div>
     </main>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dash/header.js"></script>
-    <script src="/assets/js/dash/domain.js"></script>
   </body>
 </html>

@@ -7,7 +7,6 @@
 .hero-container {
     display: flex;
     flex-direction: row;
-    overflow: hidden;
     gap: 10px;
     justify-content: space-between;
     align-items: center;
@@ -727,6 +726,7 @@
 .land-pricing-sect-mth,
 .land-pricing-sect-yr {
     font-size: 16px;
+    cursor: pointer;
     height: 100%;
     width: 50%;
     display: flex;
@@ -746,7 +746,7 @@
 
 .land-pricing-sect-mth {
     position: absolute;
-    padding-left: 27px;
+    padding-left: 9.5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -756,7 +756,7 @@
     position: absolute;
     top: 50%;
     right: 0px;
-    padding-right: 19px;
+    padding-right: 5px;
     transform: translateY(-50%);
 }
 
@@ -780,6 +780,7 @@
 
 .land-pricing-container {
     position: absolute;
+    z-index: 9;
     width: 100%;
     top: -180px;
 }
@@ -921,7 +922,6 @@
 .land-pricing-container-item-btn,
 .land-pricing-container-item-btn-recomm {
     font-family: 'PlusJakartaSans-SemiBold';
-
     width: 100%;
     height: 54px;
     font-size: 16px;
@@ -938,6 +938,7 @@
 .land-pricing-container-item-btn-recomm {
     background-color: var(--secondary-color);
     color: var(--color-one);
+    border: none;
 }
 
 .fags-hd,
@@ -1250,7 +1251,6 @@
 
 .form-item>input:focus {
     outline: 0.3px solid var(--color-twenty-seven);
-    ;
 }
 
 .form-item-inner {
@@ -1307,6 +1307,46 @@ input[type="password"]::-webkit-textfield-decoration-container {
     margin-bottom: 40px;
 }
 
+.notfound-contianer {
+    height: calc(100vh - 97px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.notfound-tle{
+    font-size: 48px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    margin-bottom: 8px;
+    line-height: 67.2px;
+}
+
+.notfound-stle{
+    max-width: 374.99px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 22.4px;
+    font-family: 'PlusJakartaSans-SemiBold';
+    color: var(--color-thirteen);
+    margin-bottom: 20px;
+}
+
+.notfound-hme-lnk {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 8px;
+    padding-left: 32px;
+    padding-right: 32px;
+    height: 54px;
+    background-color: var(--color-two);
+    color: var(--color-one);
+}
+
 
 @media only screen and (max-width: 1272px) {
 
@@ -1340,6 +1380,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
     }
 
 }
+
+@media only screen and (max-width: 1170px) {
+    .hero-container {
+      overflow-x: hidden;
+    }
+
+}
+
 
 
 

@@ -1,0 +1,109 @@
+.profile-wrapper{
+    margin-top: 44px;
+    max-width: 653px;
+}
+
+.profile-avatar-img {
+    margin: auto;
+    height: 64px;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.profile-avatar-img>img{
+    height: 100%;
+    width: 100%;
+}
+
+.profile-name {
+    font-size: 24px;
+    text-align: center;
+    color: var(--primary-color);
+    font-family: 'PlusJakartaSans-SemiBold';
+    margin-bottom: 35px;
+}
+
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .form-item>label {
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-Regular';
+    color: var(--custom-five);
+  }
+  
+  .form-item>input {
+    height: 46px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    font-family: 'PlusJakartaSans-Regular';
+    border: 0.3px solid rgba(115, 115, 115, .3);
+    box-sizing: border-box;
+    padding-left: 17px;
+  
+  }
+
+  .form-item>input:focus {
+    outline: 0.3px solid var(--color-twenty-seven);
+}
+
+.p-save-ch-btn {
+    height: 46px;
+    padding: 0 40px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'PlusJakartaSans-ExtraBold';
+    color: var(--color-one);
+    margin: auto;
+    margin-top: 10px;
+    border: none;
+}
+
+@media only screen and (max-width: 550px) {
+    .profile-wrapper{
+        margin-top: 16px;
+    }
+
+    .profile-avatar-img {
+        height: 40px;
+        width: 40px;
+        margin-bottom: 12px;
+    }
+
+    .profile-name {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    .form-item>label {
+        font-size: 14px;
+      }
+
+      .form-item>input {
+        font-size: 14px;
+      
+      }
+      .p-save-ch-btn {
+        height: 46px;
+        width: 100%;
+        padding: 0px;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
