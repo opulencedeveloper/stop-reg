@@ -1791,9 +1791,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
     }
 
     .lpssut {
+        font-size: 10px;
         position: absolute;
         top: 70%;
-        right: -92px;
+        right: -80px;
         transform: translateY(50%);
     }
 
