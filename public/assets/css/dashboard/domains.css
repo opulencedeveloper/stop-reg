@@ -167,6 +167,7 @@ input:checked+.slider:before {
 .rsdnh {
   margin-top: 32px;
   margin-bottom: 50px;
+  font-size: 16px;
   font-family: 'PlusJakartaSans-Regular';
   color: var(--primary-color);
 }
@@ -339,6 +340,11 @@ input:checked+.slider:before {
   }
 
   .domain-cl-bk-btn-tle {
+    font-size: 12px;
+  }
+
+  .rsdnh {
+    margin-top: 20px;
     font-size: 12px;
   }
 }
