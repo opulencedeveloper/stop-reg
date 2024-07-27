@@ -217,6 +217,7 @@ input:checked+.slider:before {
 .close-report-container-btn,
 .report-container-btn {
   width: 100%;
+  box-sizing: content-box;
   height: 46px;
   font-size: 16px;
   font-family: 'PlusJakartaSans-ExtraBold';
@@ -233,6 +234,7 @@ input:checked+.slider:before {
 .report-container-btn {
   background-color: var(--color-thirty-five);
   margin-bottom: 8px;
+  border-radius: 8px;
   color: var(--error-color);
 }
 
@@ -346,5 +348,10 @@ input:checked+.slider:before {
   .rsdnh {
     margin-top: 20px;
     font-size: 12px;
+  }
+
+
+  .report-input {
+    font-size: 13px;
   }
 }
