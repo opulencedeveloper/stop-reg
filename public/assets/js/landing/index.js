@@ -205,6 +205,10 @@ window.onload = function () {
         navIcons.classList.remove("open");
         navMenu.classList.remove("active")
         signupDialog.style.display = "block";
+        signupDialog.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+      });
         signinDialog.style.display = "none";
         document.body.classList.add("hidden-overflow");
       });
@@ -216,6 +220,10 @@ window.onload = function () {
       btn.addEventListener("click", () => {
         overLay.style.display = "flex";
         signinDialog.style.display = "block";
+        signinDialog.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+      });
         navIcons.classList.remove("open");
         navMenu.classList.remove("active")
         signupDialog.style.display = "none";
