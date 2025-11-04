@@ -10,6 +10,12 @@
     margin-right: 16px;
     box-sizing: content-box;
 }
+.check-disposal-email{
+    text-decoration: underline;
+    font-size: 16px;
+    font-weight: 600;
+    color: #595959;
+}
 
 .logout-icon {
     border-radius: 50%;
@@ -312,6 +318,8 @@
     padding-left: var(--desktop-dash-padding);
     padding-right: var(--desktop-dash-padding);
 }
+
+
 .dash-header-tle, .dash-header-tle-mobile {
     font-size: 20px;
     font-family: 'PlusJakartaSans-ExtraBold';

@@ -10,11 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="StopReg" />
     <meta property="og:description" content="" />
+      <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"
+    />
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
   </head>
 
   <body>
@@ -80,7 +85,7 @@
             Already have an account?
             <span class="signin-overlay-btn cr-auth-auth">Log In</span>
           </p>
-          <form class="form-container">
+          <form class="form-container" id="signup-form">
             <div class="form-item">
               <label for="email">Email</label>
               <input
@@ -127,9 +132,7 @@
             <button class="cr-btn">Create an Account</button>
           </form>
         </div>
-        <!-- SignUp Dialog End -->
 
-        <!-- SignIn Dialog Start -->
         <div id="signin-dialog" class="auth-container overlay-animate">
           <button id="signin-close-btn" class="auth-close-btn">
             <img src="/assets/icons/close-outline.svg" />
@@ -142,7 +145,7 @@
             Don't have an account?
             <span class="signup-overlay-btn cr-auth-auth">Sign up</span>
           </p>
-          <form class="form-container">
+          <form class="form-container" id="signIn-form">
             <div class="form-item">
               <label for="signin-email">Email</label>
               <input
@@ -516,6 +519,8 @@
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/landing/index.js"></script>
     <script src="/assets/js/landing/header.js"></script>
+    <script src="/assets/js/auth/signUp.js"></script>
+    <script src="/assets/js/auth/login.js"></script>
     <script></script>
   </body>
 </html>

@@ -15,6 +15,7 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
@@ -41,7 +42,6 @@
     <!-- Loading Spinner End -->
 
     <main id="content">
-
       <!-- Mobile Navigation Start -->
       <div class="nav-menu">
         <div class="nav-menu-sect-one">
@@ -69,7 +69,7 @@
             <div class="dash-mobi-nav-link-icon">
               <img src="/assets/icons/domains-inactive.svg" />
             </div>
-            <p>Domains</p>
+            <p>Manage Domain</p>
           </a>
           <a href="/dashboard/payments.html">
             <div class="dash-mobi-nav-link-icon">
@@ -89,13 +89,10 @@
           <div class="dash-mobile-logout-btn-icon">
             <img src="/assets/icons/logout-line.svg" />
           </div>
-            <p class="dash-mobile-logout-btn-tle">Log Out</p>
-          
+          <p class="dash-mobile-logout-btn-tle">Log Out</p>
         </button>
-       
       </div>
       <!-- Mobile Navigation End -->
-
 
       <div id="logout-overlay" class="overlay">
         <!-- Logout Dialog Start -->
@@ -129,7 +126,13 @@
               <div>
                 <img src="/assets/icons/domains-inactive.svg" />
               </div>
-              <p>Domains</p>
+              <p>Manage Domain</p>
+            </a>
+            <a class="" href="/dashboard/bulk-verification.html">
+              <div class="dash-mobi-nav-link-icon">
+                <img src="/assets/icons/bulk-verification.svg" />
+              </div>
+              <p>Bulk Verification</p>
             </a>
             <a class="" href="/dashboard/payments.html">
               <div>
@@ -155,6 +158,11 @@
             </a>
             <p class="dash-header-tle">My Account</p>
             <div class="dash-header-auth">
+              <a
+                href="/dashboard/check-disposable-email.html"
+                class="check-disposal-email"
+                >Check disposable email</a
+              >
               <div class="dash-header-avatar">
                 <img src="/assets/icons/avatar-filled.svg" />
               </div>
@@ -180,19 +188,62 @@
             <p class="dash-header-tle-mobile">My Account</p>
             <!-- Plan Start -->
             <section class="dash-plan">
-              <div class="dash-plan-sectone">
+              <div class="dash-plan-inner-cont">
+                <div class="dash-plan-analysis">
+                  <p class="dash-plan-anaylysis-title">Total Request</p>
+                  <p class="dash-plan-total dash-total-1">150</p>
+                </div>
+                <div class="dash-plan-analysis">
+                  <p class="dash-plan-anaylysis-title">Successful Request</p>
+                  <p class="dash-plan-total dash-total-2">100</p>
+                </div>
+                <div class="dash-plan-analysis">
+                  <p class="dash-plan-anaylysis-title">Blocked Request</p>
+                  <p class="dash-plan-total dash-total-3">50</p>
+                </div>
+              </div>
+
+              <div class="dash-inner-graph">
+                <p class="graph-header">Bulk check domain names</p>
+                <div class="graph-sub-head-cont">
+                  <div class="graph-sub-head">
+                    <div class="graph-head-dot1 doting"></div>
+                    <p class="graph-sub-head-text">Total number of request</p>
+                  </div>
+                  <div class="graph-sub-head">
+                    <div class="graph-head-dot2 doting"></div>
+                    <p class="graph-sub-head-text">Number of block request</p>
+                  </div>
+                  <div class="graph-sub-head">
+                    <div class="graph-head-dot3 doting"></div>
+                    <p class="graph-sub-head-text">
+                      Number of successful request
+                    </p>
+                  </div>
+                </div>
+                <div class="graph-container">
+                  <div class="chart-container">
+                    <canvas id="lineChart"></canvas>
+                    <div id="chart-tooltip" class="custom-tooltip">
+                      <strong>3.2</strong>
+                      <span>September</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="dash-plan-sectone">
                 <p class="dash-plan-tle">Current plan</p>
                 <p class="dash-plan-subtle">
                   Expires: <span>12 October 2023</span>
                 </p>
-              </div>
-              <div class="dash-plan-secttwo">
+              </div> -->
+              <!-- <div class="dash-plan-secttwo">
                 <div class="dash-plan-secttwo-inner">
                   <p>Free Account</p>
                   <p>200 API requests in 30 days</p>
                 </div>
                 <div class="dash-cur-plan">Upgrade</div>
-              </div>
+              </div> -->
             </section>
             <!-- Plan End -->
 
@@ -205,6 +256,21 @@
               <div class="dash-api-content">
                 <div class="dash-api-content-hd">
                   <div class="dash-api-content-sel">
+                    <label for="bfe" class="custom-checkbox">
+                      <p>Block disposable emails</p>
+                    </label>
+                    <div class="dash-tool-tip tooltip">
+                      <div class="tooltiptext">
+                        <p class="tooltiptexttle">Disposable emails</p>
+                        <p class="tooltiptextsubtle">
+                          Disposable emails are emails such as
+                          yourname@gmail.com
+                        </p>
+                      </div>
+                      <img src="/assets/icons/question.svg" />
+                    </div>
+                  </div>
+                  <!-- <div class="dash-api-content-sel">
                     <label for="bfe" class="custom-checkbox">
                       <input required type="checkbox" id="bfe" />
                       <span class="checkmark"></span>
@@ -219,14 +285,14 @@
                       </div>
                       <img src="/assets/icons/question.svg" />
                     </div>
-                  </div>
-                  <div class="dash-api-content-sel">
+                  </div> -->
+                  <!-- <div class="dash-api-content-sel">
                     <label for="bbe" class="custom-checkbox">
                       <input required type="checkbox" id="bbe" />
                       <span class="checkmark"></span>
                       <p>Block business emails</p>
                     </label>
-                    <div class="dash-tool-tip tooltip">
+                    <div class="dash-tool-tip tooltip" >
                       <div class="tooltiptext">
                         <p class="tooltiptexttle">Business emails</p>
                         <p class="tooltiptextsubtle">
@@ -251,7 +317,7 @@
                       </div>
                       <img src="/assets/icons/question.svg" />
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="dash-api-content-sect1">
@@ -281,6 +347,19 @@
                 </a>
               </div>
             </section>
+            <div class="dash-current-plan">
+              <div class="dash-current-plan-hd">
+                <p class="dash-current-plan-title">Current plan</p>
+                <p class="Current-plan-date">Expires: 12 October 2023</p>
+              </div>
+              <div class="main-current-plan-box">
+                <div class="Current-plan-plan-cont">
+                  <p class="Current-plan-plan">Free Account </p>
+                  <p class="api-request-left">200 API requests in 30 days</p>
+                </div>
+                <button class="Current-plan-upgrade-btn">Upgrade</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -294,6 +373,8 @@
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dash/index.js"></script>
     <script src="/assets/js/dash/header.js"></script>
-    <script></script>
+    <script src="/assets/js/dash/chart.js"></script>
+    <script src="/assets/js/dash/fetch-user-detail.js"></script>
+    <script src="/assets//js//regenerate-api-key.js"></script>
   </body>
 </html>

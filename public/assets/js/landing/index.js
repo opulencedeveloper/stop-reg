@@ -78,7 +78,7 @@ window.onload = function () {
     }
   }
 
-  startProgress("prog-1", "prog-1-label", 96);
+  startProgress("prog-1", "prog-1-label", 100);
   startProgress("prog-2", "prog-2-label", 98);
   startProgress("prog-3", "prog-3-label", 92);
 

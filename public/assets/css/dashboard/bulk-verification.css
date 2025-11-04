@@ -1,0 +1,161 @@
+.dash-inner-inner-section {
+  font-family: "PlusJakartaSans-SemiBold";
+  width: 100%;
+  height: 604px;
+  margin-top: 40px;
+  margin-bottom: 82px;
+  display: flex;
+  gap: 16px;
+}
+.dash-inner-inner-bulk-verification {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+}
+.dash-inner-inner-verification-status {
+  width: 100%;
+  height: fit-content;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.verify-status-head {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.bulk-domain-download {
+  display: flex;
+  border: 0;
+  background-color: transparent;
+  align-items: center;
+  gap: 8px;
+  color: #1452ca;
+  font-weight: 800;
+  font-size: 16px;
+}
+tr.bulks-table-inner td {
+  border-bottom: 1px solid var(--color-twenty);
+  background-color: white;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: "PlusJakartaSans-SemiBold";
+}
+.status-cont {
+  font-size: 14px;
+  font-weight: 600;
+}
+.status-cont span {
+  color: #737373;
+  font-size: 14px;
+  font-weight: 400;
+  padding-right: 4px;
+}
+.bulk-hd {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.bulk-content {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%;
+  margin-bottom: 12px;
+  color: #737373;
+}
+#bulk-links {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    margin: 12px 0;
+    box-sizing: border-box;
+    border: 0.3px solid #737373;
+    border-radius: 8px;
+    background: transparent;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 16px;
+    font-weight: 400;
+    resize: none;
+    text-decoration: underline;
+  }
+
+  #bulk-links span {
+    text-decoration: underline;
+    
+  
+    display: inline-block;
+  }
+
+  #bulk-links:focus {
+    outline: none;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+
+.bulk-link-cont a {
+  color: #000000;
+  text-decoration: underline;
+}
+.bulk-verify-domain-btn {
+  background-color: #1452ca;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  align-items: center;
+  border: 0px;
+  width: 100%;
+  height: 46px;
+}
+.check-disposal-email {
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #595959;
+}
+.bulk-tb-container {
+  border: 1px solid #ededed;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.bulk-tb-container table {
+  width: 100%;
+}
+.bulk-tb-container table tbody {
+  width: 100%;
+}
+tr.bulk-table-inner td {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  font-family: "PlusJakartaSans-SemiBold";
+}
+.inner-top {
+  padding-top: 0 !important;
+}
+.row-status-cont {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  margin-top: 12px;
+}
+.status-cont {
+  display: flex;
+}

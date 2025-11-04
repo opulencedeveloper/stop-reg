@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Copy the text to the clipboard using the Clipboard API
             await navigator.clipboard.writeText(mainTokenText);
 
-            // Show the custom toast notification
+            
             iziToast.success({
                 message: "Copied to clipboard!",
                 position: "topRight",

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- Favicon -->
+    <!-- <link href="img/favicon.ico" rel="icon"> -->
+    <title>StopReg</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="StopReg" />
+    <meta property="og:description" content="" />
+    <link href="/assets/css/fonts.css" rel="stylesheet" />
+    <link href="/assets/css/variables.css" rel="stylesheet" />
+    <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/bulk-verification.css" rel="stylesheet" />
+    <link
+      href="/assets/css/dashboard/check-disposal-email.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Loading Spinner Start -->
+    <div id="spinner-body" class="spinner-body">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <!-- Loading Spinner End -->
+
+    <main id="content">
+      <!-- Mobile Navigation Start -->
+      <div class="nav-menu">
+        <div class="nav-menu-sect-one">
+          <a href="/" class="land-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </a>
+          <div class="nav-icon2-mobile active">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <div class="dash-mobi-nav-links">
+          <a class="" href="/dashboard/index.html">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/dashboard-inactive.svg" />
+            </div>
+            <p>Dashboard</p>
+          </a>
+          <a class="dash-nav-link-active" href="/dashboard/domains.html">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/domains-active.svg" />
+            </div>
+            <p>Manage Domain</p>
+          </a>
+          <a class="" href="/dashboard/bulk-verification.html">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/bulk-verification.svg" />
+            </div>
+            <p>Bulk Verification</p>
+          </a>
+          <a class="" href="/dashboard/payments.html">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/payment-inactive.svg" />
+            </div>
+            <p>Payments</p>
+          </a>
+          <a class="" href="/dashboard/profile.html">
+            <div class="dash-mobi-nav-link-icon">
+              <img src="/assets/icons/profile-inactive.svg" />
+            </div>
+            <p>Profile</p>
+          </a>
+        </div>
+
+        <button id="mobile-logout-button" class="dash-mobile-logout-btn">
+          <div class="dash-mobile-logout-btn-icon">
+            <img src="/assets/icons/logout-line.svg" />
+          </div>
+          <p class="dash-mobile-logout-btn-tle">Log Out</p>
+        </button>
+      </div>
+      <!-- Mobile Navigation End -->
+
+      <!-- Logout Dialog Start -->
+      <div id="logout-overlay" class="overlay">
+        <div id="logout-container" class="logout-container overlay-animate">
+          <div class="logout-icon">
+            <img src="/assets/icons/logout.svg" />
+          </div>
+          <p class="logout-tle">Log Out?</p>
+          <p class="logout-subtle">Are you sure you want to proceed?</p>
+
+          <a href="/" class="y-log-out">Yes, Log Out</a>
+          <button id="n-log-out" class="n-log-out">No, Don't Log Out</button>
+        </div>
+      </div>
+      <!-- Logout Dialog End -->
+
+      <div class="dash-wrapper">
+        <!-- Desktop Nav Start -->
+        <nav class="dash-nav">
+          <div class="dash-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+
+          <div class="dash-nav-link">
+            <a class="" href="/dashboard/index.html">
+              <div>
+                <img src="/assets/icons/dashboard-inactive.svg" />
+              </div>
+              <p>Dashboard</p>
+            </a>
+            <a class="" href="/dashboard/domains.html">
+              <div>
+                <img src="/assets/icons/domains-inactive.svg" />
+              </div>
+              <p>Manage Domain</p>
+            </a>
+            <a class="" href="/dashboard/bulk-verification.html">
+              <div>
+                <img src="/assets/icons/bulk-verification.svg" />
+              </div>
+              <p>Bulk Verification</p>
+            </a>
+            <a class="" href="/dashboard/payments.html">
+              <div>
+                <img src="/assets/icons/payment-inactive.svg" />
+              </div>
+              <p>Payments</p>
+            </a>
+            <a class="" href="/dashboard/profile.html">
+              <div>
+                <img src="/assets/icons/profile-inactive.svg" />
+              </div>
+              <p>Profile</p>
+            </a>
+          </div>
+        </nav>
+        <!-- Desktop Nav End -->
+
+        <div class="dash-bdy">
+          <!-- Header Start -->
+          <header class="dash-header">
+            <a href="/" class="mobile-nav-logo">
+              <img src="/assets/logo/stopreg-logo.svg" />
+            </a>
+            <p class="dash-header-tle">My Account</p>
+            <div class="dash-header-auth">
+              <a
+                href="/dashboard/check-disposable-email.html"
+                class="check-disposal-email"
+                >Check disposable email</a
+              >
+              <div class="dash-header-avatar">
+                <img src="/assets/icons/avatar-filled.svg" />
+              </div>
+              <button id="logout-button" class="dash-logout">
+                <div class="dash-logout-icon">
+                  <img src="/assets/icons/logout-line.svg" />
+                </div>
+                <p class="dash-logout-tle">Log Out</p>
+              </button>
+            </div>
+            <div class="nav-icon2">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </header>
+          <!-- Header End -->
+
+          <div class="dash-inner-section">
+             <p class="dash-header-tle-mobile">My Account</p>
+            <div class="dash-inner-inner-check-email">
+              <h1 class="check-disposable-email-head">
+                Check disposable email
+              </h1>
+              <p class="disposable-email-disc">
+                Verify whether the provided email address is disposable or
+                temporary
+              </p>
+
+              <div class="form-cont">
+                <form id="verify-form">
+                  <fieldset>
+                    <div class="check-disposable-email-form">
+                      <label for="">Enter email</label>
+                      <input id="disposal-email" type="text"  placeholder="www.example.com"/>
+                    </div>
+                  </fieldset>
+                  <button class="bulk-check-email-btn">Verify</button>
+                </form>
+                <div class="disposal-email-result-cont">
+                  <h4 class="disposal-result-title">
+                    The email provided macdonald@gmail.com is a verified
+                    disposable email
+                  </h4>
+                  <div class="disposal-result-inner-cont">
+                    <div class="disposal-result">
+                      <div class="disposable-result-cont">
+                        <h3 class="disposal-result-head">Max Record</h3>
+                        <p class="disposal-result-para">
+                          This domain has MX record. This means that it has a
+                          mail server and is able to receive emails
+                        </p>
+                      </div>
+                      <p class="disposal-result-bolean">YES</p>
+                    </div>
+                  </div>
+                  <div class="disposal-result-inner-cont">
+                    <div class="disposal-result">
+                      <div class="disposable-result-cont">
+                        <h3 class="disposal-result-head">Disposable</h3>
+                        <p class="disposal-result-para">
+                          This domain does not appear to be from a disposable
+                          email provider
+                        </p>
+                      </div>
+                      <p class="disposal-result-bolean">YES</p>
+                    </div>
+                  </div>
+                  <div class="disposal-result-inner-cont e">
+                    <div class="disposal-result">
+                      <div class="disposable-result-cont">
+                        <h3 class="disposal-result-head">
+                          Public email provider
+                        </h3>
+                        <p class="disposal-result-para">
+                          This domain is from a public email provider. This
+                          means that anyone can generate emails from this domain
+                          for free
+                        </p>
+                      </div>
+                      <p class="disposal-result-bolean">NO</p>
+                    </div>
+                  </div>
+                  <div class="disposal-result-inner-cont result-false">
+                    <div class="disposal-result">
+                      <div class="disposable-result-cont">
+                        <h3 class="disposal-result-head">Relay domain</h3>
+                        <p class="disposal-result-para">
+                          This domain does not appear to be a relay domain
+                        </p>
+                      </div>
+                      <p class="disposal-result-bolean">NO</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/dash/header.js"></script>
+    <script src="/assets/js/dash/domain.js"></script>
+    <script src="/assets//js/dash/check-disposal-email.js"></script>
+  </body>
+</html>

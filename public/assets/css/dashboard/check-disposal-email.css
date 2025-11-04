@@ -1,0 +1,179 @@
+
+.disposable-email-disc {
+  font-size: 16px;
+  font-weight: 400;
+  color: #404040;
+  margin-top: 4px;
+}
+.check-disposal-email {
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #595959;
+}
+.check-disposable-email-head {
+  color: #000000;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 40px;
+}
+
+
+.form-cont {
+  background-color: #ffff;
+  width: 100%;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 40px 24px;
+  margin-top: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+fieldset {
+  border: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+.check-disposable-email-form {
+  display: flex;
+  flex-direction: column;
+}
+.check-disposable-email-form label {
+  font-size: 16px;
+  font-weight: 400;
+}
+.check-disposable-email-form input {
+  font-size: 16px;
+  font-weight: 400;
+  border: 0.3px solid #1452ca;
+  background: #ffffff;
+  border-radius: 8px;
+  height: 48px;
+  margin-top: 8px;
+  color: #737373;
+   padding: 0px 24px;
+}
+.bulk-check-email-btn {
+  font-size: 16px;
+  font-weight: 800;
+  background-color: #1452ca;
+  padding: 12px 40px;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  margin-top: 16px;
+}
+.disposal-email-result-cont {
+  background-color: #fafafa;
+  width: 100%;
+  padding: 16px;
+  height: fit-content;
+  margin-top: 24px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+.disposal-result-inner-cont {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #ebffeb;
+}
+.disposal-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.disposal-result-title {
+  color: #252525;
+  font-size: 20px;
+  font-weight: 800;
+}
+.disposal-result-head {
+  font-size: 16px;
+  font-weight: 600;
+  color: #404040;
+  margin-bottom: 8px;
+}
+.disposal-result-head {
+  font-size: 16px;
+  font-weight: 400;
+  color: #404040;
+}
+.disposal-result-bolean {
+  color: #404040;
+  font-size: 20px;
+  font-weight: 800;
+}
+.result-false {
+  background-color: #ffebeb;
+}
+
+@media only screen and (max-width: 750px) {
+.dash-inner-section{
+  padding: 0;
+
+}
+.dash-header-tle-mobile, .check-disposable-email-head, .disposable-email-disc{
+  padding: 0px 16px;
+}
+
+}
+
+@media screen and (max-width: 650px) {
+  .check-disposable-email-head{
+    font-size: 14px;
+  }
+  .disposable-email-disc{
+    font-size: 12px;
+  }
+  .form-cont{
+    width: 100%;
+    padding: 20px 16px;
+    box-sizing: border-box;
+  }
+  .check-disposable-email-form label, input {
+    font-size: 12px;
+    
+  }
+  .check-disposable-email-form  input{
+    padding: 4px 16px;
+    height: 37px;
+    outline: none;
+    
+  }
+  .bulk-check-email-btn{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    height: 41px;
+  }
+  .fieldset{
+    width: 100%;
+  }
+  .disposal-result-title{
+    display: none;
+  }
+  .disposal-email-result-cont{
+    background-color: transparent;
+    padding: 0;
+    border-radius: 8px;
+  }
+  .disposal-result-inner-cont{
+    border-radius: 8px;
+  }
+  .disposal-result-head{
+    font-size: 14px;
+  }
+  .disposal-result-para{
+    font-size: 12px;
+  }
+  .disposal-result-bolean{
+    font-size: 16px;
+  }
+}
