@@ -78,7 +78,7 @@
             </div>
             <p>Payments</p>
           </a>
-          <a class="" href="/dashboard/profile.html">
+          <a class="" href="/dashboard/profile/profile.html">
             <div class="dash-mobi-nav-link-icon">
               <img src="/assets/icons/profile-inactive.svg" />
             </div>
@@ -145,7 +145,7 @@
               </div>
               <p>Payments</p>
             </a>
-            <a class="" href="/dashboard/profile.html">
+            <a class="" href="/dashboard/profile/profile.html">
               <div>
                 <img src="/assets/icons/profile-inactive.svg" />
               </div>
@@ -189,10 +189,11 @@
           </header>
           <!-- Header End -->
 
-          <div class="dash-inner-section">
-            <div class="dash-inner-inner-section">
+          <div class="dash-inner-section ">
+             <p class="dash-header-tle-mobile">My Account</p>
+            <div class="dash-inner-inner-section ">
               <div class="dash-inner-inner-bulk-verification">
-                <h1 class="bulk-hd">Bulk Verification</h1>
+                <h1 class="bulk-hd bulktitle">Bulk Verification</h1>
                 <form class="bulk-verification-form">
                   <fieldset>
                     <label class="bulk-content">
@@ -216,14 +217,14 @@
               <div class="dash-inner-inner-verification-status">
                 <div class="verify-status-head">
                   <h1 class="bulk-hd">Verification status</h1>
-                  <button class="bulk-domain-download">
+                  <button class="bulk-domain-download" id="bulk-domain-download">
                     <img src="/assets/icons/download-bulk-icon.svg" alt="" />
                     <span>Download CSV</span>
                   </button>
                 </div>
                 <div class="bulk-tb-container">
                   <table>
-                    <tbody>
+                    <tbody id="disposableResult">
                       <tr class="bulks-table-inner">
                         <td class="table-inner-inner inner-top">
                           https://www.elevate-fashion.com

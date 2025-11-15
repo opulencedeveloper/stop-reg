@@ -1,11 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("signup-form");
-  const submitBtn = form.querySelector(".cr-btn");
-  const overLay = document.getElementById("overlay");
+  const form = document.getElementById("form-container");
+  const submitBtn = form.querySelector(".p-save-ch-btn");
 
-  const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
-
+  // Error modal
   let errorModal = document.createElement("div");
   errorModal.className = "error-modal";
   form.parentElement.appendChild(errorModal);
@@ -25,21 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
     errorModal.style.display = "none";
   }
 
-  // FORM SUBMIT HANDLER
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
+    const token = localStorage.getItem("authToken");
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("signup-password").value.trim();
+    if (!token) {
+      window.location.href = "/login.html";
+      return;
+    }
+
+    const currentPassword = document
+      .getElementById("signup-password")
+      .value.trim();
+    const password = document.getElementById("signup-rpassword").value.trim();
     const confirmPassword = document
       .getElementById("signup-cpassword")
       .value.trim();
-
-    // VALIDATION
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email))
-      return showError("Please enter a valid email address!");
 
     if (password !== confirmPassword)
       return showError("Passwords do not match!");
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
 
-    const payload = { email, password, confirmPassword };
+    const payload = { currentPassword, confirmPassword, password };
 
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
@@ -59,10 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/register",
+        "https://api-stop-reg.onrender.com/api/v1/user/update/password",
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // ✅ send token here
+          },
           body: JSON.stringify(payload),
         }
       );
@@ -70,25 +72,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       console.log("Response:", data);
 
+      // 🔥 FIX: Handle OTP request BEFORE success/error blocks
+    
+
       if (response.ok) {
         iziToast.success({
-          message: "Account created successfully!",
+          message: "Account logged in successfully!",
           position: "topRight",
         });
-        localStorage.removeItem("otp_email");
-        localStorage.setItem("otp_email", email);
 
-        overLay.style.display = "none";
-
-        // Show OTP modal
-
-        otpModal.style.display = "flex";
-        otpDialog.style.display = "flex";
-        document.body.classList.add("hidden-overflow");
-
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
         form.reset();
       } else {
-        showError(data.description || data.message || "Signup failed!");
+        showError(data.description || data.message || "Login failed!");
       }
     } catch (err) {
       showError("Network error — please try again later.");

@@ -323,6 +323,24 @@ window.onload = function () {
       toggleSignUpCPassword.setAttribute("src", passwordIconSrc);
     });
   }
+  const toggleSignUpRPassword = document.getElementById("signup-rpassword-btn");
+  const rPassword = document.getElementById("signup-rpassword");
+
+  if (toggleSignUpRPassword) {
+    toggleSignUpRPassword.addEventListener("click", function (e) {
+      const passwordType =
+      rPassword.getAttribute("type") === "password" ? "text" : "password";
+  
+      rPassword.setAttribute("type", passwordType);
+  
+      const passwordIconSrc =
+        passwordType === "password"
+          ? "/assets/icons/obsured.svg"
+          : "/assets/icons/obsure.svg";
+  
+      toggleSignUpRPassword.setAttribute("src", passwordIconSrc);
+    });
+  }
 };
 
 // document.getElementById("navigate-button").addEventListener("click", function() {

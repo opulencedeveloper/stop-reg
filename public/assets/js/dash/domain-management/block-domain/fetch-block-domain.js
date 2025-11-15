@@ -37,15 +37,52 @@ document.addEventListener("DOMContentLoaded", async () => {
       <td>${user.status}</td>
       <td class="comment-td">${user.comment}</td>
       <td>
-        <label class="switch">
-          <input type="checkbox" ${user.status === "active" ? "checked" : ""} />
-          <span class="slider round"></span>
-        </label>
+        <button class="deleteEmail" data-id="${user._id}">
+         Delete
+        </button>
       </td>
     </tr>
   `;
         })
         .join("");
+      document.querySelectorAll(".deleteEmail").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const domainId = btn.getAttribute("data-id");
+
+          // Show spinner inside button
+          const originalText = btn.textContent;
+          btn.disabled = true;
+          btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
+
+          try {
+            const deleteResponse = await fetch(
+              `https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            const deleteData = await deleteResponse.json();
+            console.log("Delete response:", deleteData);
+
+            if (deleteResponse.ok) {
+              // Remove row from UI
+              document.getElementById(domainId)?.remove();
+            } else {
+              alert(deleteData.message || "Failed to delete domain.");
+            }
+          } catch (error) {
+            console.error("Delete error:", error);
+          } finally {
+            btn.disabled = false;
+            btn.textContent = originalText;
+          }
+        });
+      });
     } else {
       console.error("Error fetching user:", data);
 

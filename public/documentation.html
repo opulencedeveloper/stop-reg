@@ -70,6 +70,39 @@
       </div>
       <!-- Mobile Navigation End -->
 
+      
+      <!-- OTP Starts here -->
+      <div id="otp-modal" class="otp-modal">
+        <div class="auth-container otp-container" id="otp-dialog">
+          <button id="otp-close-btn" class="otp-close-btn auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+          <h3 class="cr-auth-header">Verify Your Email</h3>
+          <p class="otp-subtext cr-auth-tle">
+            Enter the 6-digit verification code sent to your email.
+          </p>
+
+          <div class="otp-inputs">
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+          </div>
+
+          <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
+
+          <p class="otp-resend cr-auth-tle">
+            Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
+          </p>
+        </div>
+      </div>
+      <!-- OTP End here -->
+
       <!-- Authentication Overlay Start -->
       <div id="overlay" class="overlay">
         <!-- SignUp Dialog Start -->
@@ -175,7 +208,9 @@
             <button class="cr-btn">Log in</button>
           </form>
         </div>
+
         <!-- SignIn Dialog Start -->
+         
       </div>
       <!-- Authentication Overlay End -->
 
@@ -521,6 +556,7 @@
     <script src="/assets/js/landing/header.js"></script>
     <script src="/assets/js/auth/signUp.js"></script>
     <script src="/assets/js/auth/login.js"></script>
+    <script src="/assets//js/auth/otp.js"></script>
     <script></script>
   </body>
 </html>

@@ -1242,6 +1242,9 @@
   font-family: "PlusJakartaSans-ExtraBold";
   transition: background-color 2s, color 2s;
 }
+#otp-dialog {
+  display: none; /* hidden by default like others */
+}
 
 .auth-logo {
   width: 72px;
@@ -1274,15 +1277,19 @@
 }
 
 .auth-container {
-  width: 608px;
+  width: 100%;
+  max-width: 608px;
   box-shadow: 24px 24px 40px 0px var(--color-twenty-six);
   background-color: var(--color-six);
   border-radius: 8px;
   position: relative;
   margin-top: 380px;
   margin-bottom: 100px;
+  padding-bottom: 24px;
 }
-
+.otp-email{
+color: var(--color-two)
+}
 .auth-close-btn {
   height: 56px;
   width: 56px;
@@ -1401,6 +1408,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-repeat: no-repeat;
   background-position: center;
 }
+.
 
 .notfound-tle {
   font-size: 48px;

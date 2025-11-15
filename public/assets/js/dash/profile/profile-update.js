@@ -1,15 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("signIn-form");
-  const submitBtn = form.querySelector(".cr-btn");
-  const overLay = document.getElementById("overlay");
+  const form = document.getElementById("form-container");
+  const submitBtn = form.querySelector(".p-save-ch-btn");
 
-  const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
-
-  // Error modal
   let errorModal = document.createElement("div");
   errorModal.className = "error-modal";
   form.parentElement.appendChild(errorModal);
+
+  const userFullName = document.querySelector(".profile-name");
+
+  const fullName = localStorage.getItem("userName");
+
+  if (fullName !== "") {
+    userFullName.textContent = `${fullName}`;
+  } else {
+    userFullName.textContent = "No name yet";
+  }
 
   const errorIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -29,22 +34,29 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
+    const token = localStorage.getItem("authToken");
 
-    const email = document.getElementById("signin-email").value.trim();
-    const password = document.getElementById("signin-password").value.trim();
+    if (!token) {
+      window.location.href = "/login.html";
+      return;
+    }
+    const fullName = document.getElementById("fullname").value.trim();
 
-    const payload = { email, password };
+    const payload = { fullName };
 
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> Login...`;
+    submitBtn.innerHTML = `<span class="btn-spinner"></span> `;
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/login",
+        "https://api-stop-reg.onrender.com/api/v1/user/update/fullname",
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // ✅ send token here
+          },
           body: JSON.stringify(payload),
         }
       );
@@ -54,34 +66,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 🔥 FIX: Handle OTP request BEFORE success/error blocks
       if (data.message === "verify_email") {
-        localStorage.removeItem("otp_email");
-        localStorage.setItem("otp_email", email);
-        const overLay = document.getElementById("overlay");
-        const loginDialog = document.getElementById("signin-dialog");
-        
-        overLay.style.display = "none";
-        loginDialog.style.display = "none";
-
-        otpModal.style.display = "flex";
-        otpDialog.style.display = "flex";
-        document.body.classList.add("hidden-overflow");
-
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
         return;
       }
 
       if (response.ok) {
+        localStorage.removeItem("userName");
+        localStorage.setItem("userName", fullName);
         iziToast.success({
-          message: "Account logged in successfully!",
+          message: "Account updated successfully!",
           position: "topRight",
         });
 
-        const token = data?.data?.token;
-        localStorage.setItem("authToken", token);
+        setTimeout(() => {
+          window.location.reload();
+        }, 0);
 
-        window.location.href = "/dashboard/index.html";
-        overLay.style.display = "none";
         form.reset();
       } else {
         showError(data.description || data.message || "Login failed!");

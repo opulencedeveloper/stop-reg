@@ -287,8 +287,6 @@ input:checked + .slider:before {
   transform: translate(-50%, -50%) !important;
 }
 
-
-
 .formBox input,
 textarea {
   font-size: 16px;
@@ -371,10 +369,34 @@ textarea {
   color: var(--primary-color);
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 760px) {
   thead th,
   tbody tr {
     font-size: 12px;
+  }
+  .domain-discription {
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: flex-start;
+   
+    gap: 12px;
+  
+  }
+  .block-domain-btn{
+    margin: 0;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 170px;
+    height:44px ;
+    font-size: 14px;
+  }
+  .domain-discription p{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "Plus Jakarta Sans";
+    line-height: 140%;
   }
 }
 

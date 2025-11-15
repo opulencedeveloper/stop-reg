@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
+
   if (!token) {
     window.location.href = "/login.html";
     return;
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ send token here
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -23,29 +24,71 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (response.ok) {
       const userDomain = data?.data || data;
-      //   console.log("User domans:", userDomain);
       const allowedDomain = userDomain.filter(
         (blocked) => blocked.type === "allowed"
       );
-      //  console.log("User  blocked domans:", blockedDomain);
 
       tableBody.innerHTML = allowedDomain
         .map((user) => {
           return `
-    <tr class="table-inner" id="${user._id}">
-      <td class="table-inner-inner">${user.domain}</td>
-      <td>${user.status}</td>
-      <td class="comment-td">${user.comment}</td>
-      <td>
-        <label class="switch">
-          <input type="checkbox" ${user.status === "active" ? "checked" : ""} />
-          <span class="slider round"></span>
-        </label>
-      </td>
-    </tr>
-  `;
+            <tr class="table-inner" id="${user._id}">
+              <td class="table-inner-inner">${user.domain}</td>
+              <td>${user.status}</td>
+              <td class="comment-td">${user.comment}</td>
+              <td>
+                <button class="deleteEmail" data-id="${user._id}">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          `;
         })
         .join("");
+
+      // ---------------------------
+      // DELETE BUTTON WITH SPINNER
+      // ---------------------------
+      document.querySelectorAll(".deleteEmail").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const domainId = btn.getAttribute("data-id");
+
+          // Show spinner inside button
+          const originalText = btn.textContent;
+          btn.disabled = true;
+          btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
+
+          try {
+            const deleteResponse = await fetch(
+              `https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            const deleteData = await deleteResponse.json();
+            console.log("Delete response:", deleteData);
+
+            if (deleteResponse.ok) {
+              // Remove row from UI
+              document.getElementById(domainId)?.remove();
+            } else {
+              alert(deleteData.message || "Failed to delete domain.");
+            }
+          } catch (error) {
+            console.error("Delete error:", error);
+          } finally {
+            btn.disabled = false;
+            btn.textContent = originalText;
+          }
+        });
+      });
+      // END DELETE SPINNER LOGIC
+      // ---------------------------
+
     } else {
       console.error("Error fetching user:", data);
 

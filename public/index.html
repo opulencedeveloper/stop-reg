@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="StopReg" />
     <meta property="og:description" content="" />
-      <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"
     />
@@ -19,7 +19,7 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
-  
+
     <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
   </head>
 
@@ -79,6 +79,38 @@
         </div>
       </div>
       <!-- Mobile Navigation End -->
+
+      <!-- OTP Starts here -->
+      <div id="otp-modal" class="otp-modal">
+        <div class="auth-container otp-container" id="">
+          <button id="otp-close-btn" class="otp-close-btn auth-close-btn">
+            <img src="/assets/icons/close-outline.svg" />
+          </button>
+          <div class="auth-logo">
+            <img src="/assets/logo/stopreg-logo.svg" />
+          </div>
+          <h3 class="cr-auth-header">Verify Your Email</h3>
+          <p class="otp-subtext cr-auth-tle">
+            Enter the 6-digit verification code sent to <span class="otp-email"></span>.
+          </p>
+
+          <div class="otp-inputs">
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+            <input type="text" maxlength="1" class="otp-input" />
+          </div>
+
+          <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
+
+          <p class="otp-resend cr-auth-tle">
+            Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
+          </p>
+        </div>
+      </div>
+      <!-- OTP End here -->
 
       <!-- Authentication Overlay Start -->
       <div id="overlay" class="overlay">
@@ -143,7 +175,9 @@
             <button class="cr-btn">Create an Account</button>
           </form>
         </div>
+        <!-- SignUp Dialog Ends -->
 
+        <!-- SignIn Dialog Start -->
         <div id="signin-dialog" class="auth-container overlay-animate">
           <button id="signin-close-btn" class="auth-close-btn">
             <img src="/assets/icons/close-outline.svg" />
@@ -186,7 +220,9 @@
             <button class="cr-btn">Log in</button>
           </form>
         </div>
-        <!-- SignIn Dialog Start -->
+        <!-- SignIn Dialog Ends -->
+
+      
       </div>
       <!-- Authentication Overlay End -->
 
@@ -313,10 +349,16 @@
                 <img src="/assets/icons/folder.svg" />
                 
               </div> -->
-            
-              <p class="hero-sect-two-inner-two-title-update">Block Disposible Emails</p>
+
+              <p class="hero-sect-two-inner-two-title-update">
+                Block Disposible Emails
+              </p>
               <div class="hero-sec-inner-email-img-cont">
-                <img class="hero-sec-inner-email-img" src="assets//images/landing/index/emailDisposal.png" alt="">
+                <img
+                  class="hero-sec-inner-email-img"
+                  src="assets//images/landing/index/emailDisposal.png"
+                  alt=""
+                />
               </div>
               <!-- <p class="hero-sect-two-inner-two-title">Block Emails</p> -->
               <div class="hero-sect-two-inner-two-cont">
@@ -488,7 +530,6 @@
           </div>
         </div>
       </section>
-      <!-- Block disposable email in WordPress End -->
 
       <!-- Why choose StopReg Start -->
       <section class="wci-wrapper">
@@ -601,8 +642,11 @@
         <div class="land-pricing-container">
           <!-- Monthly Plan Start -->
           <div class="land-cont-mnth active" id="pricing-plans">
-            <div class="land-pricing-container-sectone " >
-              <div class="land-pricing-container-item box box1 animation1" id="pricing-plans1">
+            <div class="land-pricing-container-sectone">
+              <div
+                class="land-pricing-container-item box box1 animation1"
+                id="pricing-plans1"
+              >
                 <p class="land-pricing-container-item-hd">Standard</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -616,7 +660,10 @@
                 </button>
               </div>
 
-              <div class="land-pricing-container-item box box2 animation2" id="pricing-plans2">
+              <div
+                class="land-pricing-container-item box box2 animation2"
+                id="pricing-plans2"
+              >
                 <p class="land-pricing-container-item-hd">Plus</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -631,8 +678,11 @@
               </div>
             </div>
 
-            <div class="land-pricing-container-sectone"  >
-              <div class="land-pricing-container-sectone-recomm box animation3" id="pricing-plans3">
+            <div class="land-pricing-container-sectone">
+              <div
+                class="land-pricing-container-sectone-recomm box animation3"
+                id="pricing-plans3"
+              >
                 <p class="lpcsr-remm">Recommended</p>
                 <div class="land-pricing-container-item-recomm">
                   <p class="land-pricing-container-item-hd">Pro</p>
@@ -649,7 +699,10 @@
                 </div>
               </div>
 
-              <div class="land-pricing-container-item box animation1" id="pricing-plans4">
+              <div
+                class="land-pricing-container-item box animation1"
+                id="pricing-plans4"
+              >
                 <p class="land-pricing-container-item-hd">Max</p>
                 <p class="land-pricing-container-item-tle">
                   5,000 API requests in 30 days
@@ -831,14 +884,13 @@
         </div>
       </footer>
     </main>
-    <script>
-
-</script>
+    <script></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/landing/index.js"></script>
     <script src="/assets/js/landing/header.js"></script>
     <script src="/assets/js/auth/signUp.js"></script>
     <script src="/assets/js/auth/login.js"></script>
     <script src="/assets/js/subscription-plan.js"></script>
+    <script src="/assets//js/auth/otp.js"></script>
   </body>
 </html>
