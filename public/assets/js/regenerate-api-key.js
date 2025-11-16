@@ -14,7 +14,7 @@ regenerateBtn.addEventListener("click", async () => {
 
   try {
     const response = await fetch(
-      "https://api.stopreg.com/api/v1/user/regenerate/token",
+      "https://api-stop-reg.onrender.com/api/v1/user/regenerate/token",
       {
         method: "PATCH",
         headers: {

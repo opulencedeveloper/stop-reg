@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api.stopreg.com/api/v1/manage/domain/fetch",
+      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              `https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              `https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
