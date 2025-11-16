@@ -72,8 +72,8 @@
 
       
       <!-- OTP Starts here -->
-      <div id="otp-modal" class="otp-modal">
-        <div class="auth-container otp-container" id="otp-dialog">
+       <div id="otp-modal" class="otp-modal">
+        <div class="auth-container otp-container" id="">
           <button id="otp-close-btn" class="otp-close-btn auth-close-btn">
             <img src="/assets/icons/close-outline.svg" />
           </button>
@@ -82,7 +82,7 @@
           </div>
           <h3 class="cr-auth-header">Verify Your Email</h3>
           <p class="otp-subtext cr-auth-tle">
-            Enter the 6-digit verification code sent to your email.
+            Enter the 6-digit verification code sent to <span class="otp-email"></span>.
           </p>
 
           <div class="otp-inputs">
@@ -557,6 +557,6 @@
     <script src="/assets/js/auth/signUp.js"></script>
     <script src="/assets/js/auth/login.js"></script>
     <script src="/assets//js/auth/otp.js"></script>
-    <script></script>
+   
   </body>
 </html>

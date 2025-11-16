@@ -5,10 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const submitOtpBtn = document.getElementById("submit-otp-btn");
   const resendOtpBtn = document.getElementById("resend-otp-btn");
   const otpCloseBtn = document.getElementById("otp-close-btn");
+  const form = document.querySelector(".otp-inputs");
 
   let errorModal = document.createElement("div");
   errorModal.className = "error-modal";
-  document.body.appendChild(errorModal); // attach to
+  form.parentElement.appendChild(errorModal);
 
   otpCloseBtn.addEventListener("click", () => {
     otpModal.classList.add("fadeOut");
@@ -90,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hideError();
 
     try {
-        console.log("verify",  email, otp )
+      console.log("verify", email, otp);
       const response = await fetch(
         "https://api-stop-reg.onrender.com/api/v1/auth/verify/email",
         {
@@ -166,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("overlay").classList.remove("active");
         localStorage.removeItem("otp_email");
       } else {
-        iziToast.error({ message: data.description, position: "topRight" });
+        showError(data.description || data.message || "Otp verification failed!");
         submitOtpBtn.disabled = false;
         submitOtpBtn.textContent = originalText;
       }
@@ -205,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
           position: "topRight",
         });
       } else {
-        showError(data.description || data.message || "Signup failed!");
+        showError(data.description || data.message || "Otp verification failed!");
       }
     } catch (err) {
       console.error(err);
