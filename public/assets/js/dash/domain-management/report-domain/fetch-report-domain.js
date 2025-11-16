@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
   if (!token) {
-    window.location.href = "/login.html";
+    window.location.href = "/";
     return;
   }
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
+      "https://api.stopreg.com/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              `https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              `https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/login.html";
+        window.location.href = "/";
       }
     }
   } catch (error) {

@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function requireAuth() {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      window.location.href = "/login.html";
+      window.location.href = "/";
       return null;
     }
     return token;
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/user/update/fullname",
+        "https://api.stopreg.com/api/v1/user/update/fullname",
         {
           method: "PATCH",
           headers: {
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/user/info",
+      "https://api.stopreg.com/api/v1/user/info",
       {
         method: "GET",
         headers: {
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error fetching user info:", data);
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/login.html";
+        window.location.href = "/";
       }
     }
   } catch (error) {

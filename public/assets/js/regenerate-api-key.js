@@ -8,13 +8,13 @@ regenerateBtn.addEventListener("click", async () => {
   regenerateBtn.innerHTML = `<span class="btn-spinner"></span> Requesting...`;
 
   if (!token) {
-    window.location.href = "/login.html";
+    window.location.href = "/";
     return;
   }
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/user/regenerate/token",
+      "https://api.stopreg.com/api/v1/user/regenerate/token",
       {
         method: "PATCH",
         headers: {
@@ -46,7 +46,7 @@ regenerateBtn.addEventListener("click", async () => {
 
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/login.html";
+        window.location.href = "/";
       }
     }
   } catch (error) {
