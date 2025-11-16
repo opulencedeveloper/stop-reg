@@ -8,7 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const disposableResult = document.getElementById("disposableResult");
   const downloadBtn = document.getElementById("bulk-domain-download");
 
-  downloadBtn.style.display = "none"; // hide by default
+  downloadBtn.classList.add("hidden"); // hide by default
+
+  // Store the API response data for CSV download
+  let storedResponseData = [];
+
+  // Hide spinner since this page doesn't fetch initial data
+  if (typeof window.hideSpinner === 'function') {
+    window.hideSpinner();
+  }
 
   function renderEmptyState() {
   disposableResult.innerHTML = "";
@@ -44,65 +52,168 @@ document.addEventListener("DOMContentLoaded", () => {
   tr.appendChild(td);
   disposableResult.appendChild(tr);
 
-  downloadBtn.style.display = "none"; // hide download button when empty
+  downloadBtn.classList.add("hidden"); // hide download button when empty
 }
 
   renderEmptyState();
 
-  const typingLine = document.createElement("div");
-  typingLine.className = "typing-line";
-  typingLine.contentEditable = "true";
-  bulkLinks.appendChild(typingLine);
-  typingLine.focus();
-
-  function placeCursor(el) {
-    const range = document.createRange();
-    const sel = window.getSelection();
-    range.selectNodeContents(el);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+  // Function to extract domain from URL
+  function extractDomain(input) {
+    let cleaned = input.trim();
+    
+    // Remove protocol (http://, https://, ftp://, etc.)
+    cleaned = cleaned.replace(/^https?:\/\//i, '');
+    cleaned = cleaned.replace(/^ftp:\/\//i, '');
+    
+    // Remove www. prefix
+    cleaned = cleaned.replace(/^www\./i, '');
+    
+    // Remove trailing slash and path
+    cleaned = cleaned.split('/')[0];
+    
+    // Remove port if present
+    cleaned = cleaned.split(':')[0];
+    
+    // Remove query parameters and fragments
+    cleaned = cleaned.split('?')[0];
+    cleaned = cleaned.split('#')[0];
+    
+    return cleaned.trim();
   }
 
-  function formatLinks() {
-    const text = typingLine.innerText.trim();
+  // Validation function for email and domain
+  function isValidEmailOrDomain(input) {
+    const trimmed = input.trim();
+    if (!trimmed) return false;
+
+    // Email regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Domain regex pattern
+    const domainPattern = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+
+    // Check if it's a valid email
+    if (emailPattern.test(trimmed)) {
+      return true;
+    }
+
+    // Extract domain from URL if it contains protocol
+    const extractedDomain = extractDomain(trimmed);
+    
+    // Check if extracted domain is valid
+    if (extractedDomain && extractedDomain.length > 0) {
+      if (domainPattern.test(extractedDomain)) {
+        return true;
+      }
+    }
+    
+    // Also check the original input as a domain (in case it's already a clean domain)
+    if (domainPattern.test(trimmed)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Format textarea content - put each item on a new line
+  function formatTextarea() {
+    const text = bulkLinks.value;
     if (!text) return;
 
-    const links = text.split(/[\s,]+/).filter((v) => v.trim() !== "");
+    // Split by space, comma, or newline
+    const items = text.split(/[\s,\n]+/).filter((v) => v.trim() !== "");
+    const formattedItems = [];
+    const invalidItems = [];
 
-    links.forEach((link) => {
-      const span = document.createElement("span");
-      span.textContent = link;
-      bulkLinks.insertBefore(span, typingLine);
-      bulkLinks.insertBefore(document.createElement("br"), typingLine);
+    items.forEach((item) => {
+      const trimmed = item.trim();
+      if (trimmed && isValidEmailOrDomain(trimmed)) {
+        // Extract domain from URL if needed, keep email as is
+        const cleaned = trimmed.includes('@') ? trimmed : extractDomain(trimmed);
+        formattedItems.push(cleaned);
+      } else if (trimmed) {
+        invalidItems.push(trimmed);
+      }
     });
 
-    typingLine.innerText = "";
-    placeCursor(typingLine);
+    // Show error for invalid items
+    if (invalidItems.length > 0) {
+      const errorMessage = `Invalid email/domain: ${invalidItems.join(", ")}`;
+      if (typeof iziToast !== 'undefined') {
+        iziToast.warning({
+          title: 'Invalid Input',
+          message: errorMessage,
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      } else {
+        alert(errorMessage);
+      }
+    }
+
+    // Update textarea with formatted items (one per line)
+    if (formattedItems.length > 0) {
+      bulkLinks.value = formattedItems.join('\n');
+    }
   }
 
-  typingLine.addEventListener("keydown", (e) => {
-    if ([" ", ",", "Enter"].includes(e.key)) {
-      e.preventDefault();
-      formatLinks();
+  // Handle input events - format when space or comma is typed
+  let lastValue = '';
+  bulkLinks.addEventListener("input", (e) => {
+    const value = bulkLinks.value;
+    const cursorPos = bulkLinks.selectionStart;
+    
+    // Check if space or comma was just added
+    if (value.length > lastValue.length) {
+      const addedChar = value[cursorPos - 1];
+      if (addedChar === ' ' || addedChar === ',') {
+        // Format the textarea after a short delay to allow the character to be added
+        setTimeout(() => {
+          formatTextarea();
+          // Set cursor to end
+          bulkLinks.setSelectionRange(bulkLinks.value.length, bulkLinks.value.length);
+        }, 10);
+      }
     }
+    
+    lastValue = value;
   });
 
-  bulkLinks.addEventListener("keyup", (e) => {
-    if ([" ", "Enter", ","].includes(e.key)) formatLinks();
+  // Handle paste events
+  bulkLinks.addEventListener("paste", (e) => {
+    setTimeout(() => {
+      formatTextarea();
+      bulkLinks.setSelectionRange(bulkLinks.value.length, bulkLinks.value.length);
+    }, 10);
   });
-
-  bulkLinks.addEventListener("blur", formatLinks);
 
   function getLinksArray() {
-    const links = Array.from(bulkLinks.querySelectorAll("span"))
-      .map((el) => el.textContent.trim())
-      .filter((v) => v !== "" && v !== "," && v.includes("."));
+    // Get text from textarea and split by newlines
+    const text = bulkLinks.value.trim();
+    if (!text) return [];
 
-    const lastInput = typingLine.innerText.trim();
-    if (lastInput && lastInput !== "," && lastInput.includes(".")) links.push(lastInput);
+    // Split by newline, space, or comma, then filter and validate
+    const items = text.split(/[\n\s,]+/).filter((v) => v.trim() !== "");
+    const links = [];
 
-    return [...new Set(links)];
+    items.forEach((item) => {
+      const trimmed = item.trim();
+      if (trimmed && isValidEmailOrDomain(trimmed)) {
+        // Extract domain from URL if needed, keep email as is
+        const cleaned = trimmed.includes('@') ? trimmed : extractDomain(trimmed);
+        if (cleaned && cleaned.length > 0) {
+          links.push(cleaned);
+        }
+      }
+    });
+
+    // Remove duplicates and return as array
+    const uniqueLinks = [...new Set(links)];
+    console.log("Links array for submission:", uniqueLinks);
+    return uniqueLinks;
   }
 
   // ----------------- Table Population & Download -----------------
@@ -111,8 +222,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!disposal || disposal.length === 0) {
       renderEmptyState();
+      storedResponseData = []; // Clear stored data
       return;
     }
+
+    // Store the response data for CSV download
+    storedResponseData = disposal;
 
     disposal.forEach((item) => {
       const tr = document.createElement("tr");
@@ -124,8 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ${item.domain}
         <div class="row-status-cont">
           <p class="status-cont"><span>Disposable:</span> ${item.isDisposable ? "Yes" : "No"}</p>
-          <p class="status-cont"><span>UNRESOLVABLE:</span> ${item.isUnresolvable ? "Yes" : "No"}</p>
-          <p class="status-cont"><span>ERROR:</span> ${item.isError ? "Yes" : "No"}</p>
+
         </div>
       `;
 
@@ -133,26 +247,19 @@ document.addEventListener("DOMContentLoaded", () => {
       disposableResult.appendChild(tr);
     });
 
-    downloadBtn.style.display = "inline-block"; // show button only if data exists
+    downloadBtn.classList.remove("hidden"); // show button only if data exists
   }
 
   function downloadTableData() {
-    const rows = Array.from(disposableResult.querySelectorAll("tr"));
-    if (rows.length === 0) return;
+    if (storedResponseData.length === 0) return;
 
-    let csvContent = "Domain,Disposable,UNRESOLVABLE,ERROR\n";
+    // Use the actual data array from the API response
+    let csvContent = "Domain,Disposable\n";
 
-    rows.forEach((tr) => {
-      const td = tr.querySelector(".table-inner-inner");
-      if (!td) return;
-
-      const domain = td.childNodes[0]?.textContent?.trim() || "";
-      const statuses = Array.from(td.querySelectorAll("p.status-cont")).map(p =>
-        p.textContent.split(':')[1].trim()
-      );
-      const [disposable, unresolvable, error] = statuses;
-
-      csvContent += `${domain},${disposable || ""},${unresolvable || ""},${error || ""}\n`;
+    storedResponseData.forEach((item) => {
+      const domain = item.domain || "";
+      const disposable = item.isDisposable ? "Yes" : "No";
+      csvContent += `${domain},${disposable}\n`;
     });
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -174,12 +281,27 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!token) return (window.location.href = "/");
 
     const links = getLinksArray();
-    if (links.length === 0) return alert("Please enter at least one domain or email address.");
+    if (links.length === 0) {
+      if (typeof iziToast !== 'undefined') {
+        iziToast.warning({
+          title: 'Warning',
+          message: "Please enter at least one domain or email address.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      } else {
+        alert("Please enter at least one domain or email address.");
+      }
+      return;
+    }
 
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
-
+ console.log("called")
     try {
       const response = await fetch(
         "https://api.stopreg.com/api/v1/email-domains/bulk-verification",
@@ -194,14 +316,26 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await response.json();
+
+       console.log("dara", data)
       if (response.ok) {
         populateTable(data?.data || []);
-        bulkLinks.innerHTML = "";
-        bulkLinks.appendChild(typingLine);
-        typingLine.innerText = "";
-        typingLine.focus();
+        bulkLinks.value = ""; // Clear textarea
       } else {
-        alert(data.description || data.message || "Verification failed!");
+        const errorMessage = data.description || data.message || "Verification failed!";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        } else {
+          alert(errorMessage);
+        }
       }
     } catch (err) {
       console.error(err);

@@ -282,9 +282,10 @@ input:checked + .slider:before {
 }
 .iziToast {
   position: fixed !important;
-  top: 10px;
-  right: 10px !important;
-  transform: translate(-50%, -50%) !important;
+  top: 10px !important;
+  right: 0 !important;
+  transform: none !important;
+  margin-right: 0 !important;
 }
 
 .formBox input,

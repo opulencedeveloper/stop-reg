@@ -98,10 +98,38 @@ document.addEventListener("DOMContentLoaded", () => {
           otpDialog.style.display = "flex";
           document.body.classList.add("hidden-overflow");
         }, 300);
+      } else {
+        // Show error description from response
+        const errorMessage = data.description || data.message || "An error occurred. Please try again.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
       }
     } catch (err) {
-      showError("Network error — please try again later.");
       console.error(err);
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      } else {
+        showError("Network error — please try again later.");
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;

@@ -341,6 +341,532 @@ window.onload = function () {
       toggleSignUpRPassword.setAttribute("src", passwordIconSrc);
     });
   }
+
+  // Code Snippet Functionality
+  const codeTabs = document.querySelectorAll(".code-tab");
+  const codeContent = document.getElementById("code-content");
+  const copyBtn = document.querySelector(".code-copy-btn");
+
+  // Syntax highlighting function - builds DOM nodes manually
+  function highlightCodeToNodes(code, language) {
+    if (!code) return document.createDocumentFragment();
+    
+    const container = document.createDocumentFragment();
+    const lines = code.split('\n');
+    
+    // Define keyword patterns for each language
+    let keywordPattern, stringPattern, functionPattern, numberPattern, variablePattern;
+    
+    if (language === 'nodejs' || language === 'javascript') {
+      keywordPattern = /\b(import|from|const|let|var|await|async|function|return|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|class|extends|super|this|static|default|export|as|in|of|typeof|instanceof|void|null|undefined|true|false)\b/g;
+      stringPattern = /(['"`])(?:(?=(\\?))\2.)*?\1/g;
+      functionPattern = /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'python') {
+      keywordPattern = /\b(import|from|as|def|class|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|and|or|not|in|is|None|True|False|pass|break|continue)\b/g;
+      stringPattern = /(['"])(?:(?=(\\?))\2.)*?\1/g;
+      functionPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'php') {
+      keywordPattern = /\b(function|class|public|private|protected|static|const|if|else|elseif|for|foreach|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|use|namespace|as|echo|print|var|array|string|int|bool|true|false|null)\b/gi;
+      stringPattern = /(['"])(?:(?=(\\?))\2.)*?\1/g;
+      variablePattern = /\$([a-zA-Z_][a-zA-Z0-9_]*)/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'go') {
+      keywordPattern = /\b(package|import|func|var|const|type|struct|interface|if|else|for|range|switch|case|default|break|continue|return|go|defer|chan|select|map|slice|make|new|nil|true|false|int|string|bool|float64|error)\b/g;
+      stringPattern = /(["'`])(?:(?=(\\?))\2.)*?\1/g;
+      functionPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'java') {
+      keywordPattern = /\b(public|private|protected|static|final|class|interface|extends|implements|import|package|if|else|for|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|this|super|void|int|String|boolean|double|float|char|byte|short|long|null|true|false)\b/g;
+      stringPattern = /(["'])(?:(?=(\\?))\2.)*?\1/g;
+      functionPattern = /\b([A-Z][a-zA-Z0-9_]*)\s*(?=\()/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'csharp') {
+      keywordPattern = /\b(using|namespace|class|interface|public|private|protected|static|readonly|const|void|int|string|bool|double|float|char|byte|if|else|for|foreach|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|this|base|async|await|Task|var|null|true|false)\b/g;
+      stringPattern = /(["'])(?:(?=(\\?))\2.)*?\1/g;
+      functionPattern = /\b([A-Z][a-zA-Z0-9_]*)\s*(?=\()/g;
+      numberPattern = /\b(\d+)\b/g;
+    } else if (language === 'curl') {
+      stringPattern = /(["'])(?:(?=(\\?))\2.)*?\1/g;
+      keywordPattern = /\b(curl|-X|-H)\b/g;
+    }
+    
+    lines.forEach((line, lineIndex) => {
+      if (lineIndex > 0) {
+        container.appendChild(document.createTextNode('\n'));
+      }
+      
+      if (!line.trim()) {
+        container.appendChild(document.createTextNode(line));
+        return;
+      }
+      
+      // Process line by creating spans manually
+      let remaining = line;
+      let lastIndex = 0;
+      const segments = [];
+      
+      // Collect all matches with their positions
+      const matches = [];
+      
+      // Handle PHP opening tags first
+      if (language === 'php') {
+        const phpTagMatch = remaining.match(/^(\<\?php|\<\?)/);
+        if (phpTagMatch) {
+          matches.push({
+            type: 'keyword',
+            text: phpTagMatch[0],
+            index: 0,
+            length: phpTagMatch[0].length
+          });
+          remaining = remaining.substring(phpTagMatch[0].length);
+          lastIndex = phpTagMatch[0].length;
+        }
+      }
+      
+      // Find all keyword matches
+      if (keywordPattern) {
+        let match;
+        keywordPattern.lastIndex = 0;
+        while ((match = keywordPattern.exec(remaining)) !== null) {
+          matches.push({
+            type: 'keyword',
+            text: match[0],
+            index: match.index + lastIndex,
+            length: match[0].length
+          });
+        }
+      }
+      
+      // Find all string matches
+      if (stringPattern) {
+        let match;
+        stringPattern.lastIndex = 0;
+        while ((match = stringPattern.exec(remaining)) !== null) {
+          matches.push({
+            type: 'string',
+            text: match[0],
+            index: match.index + lastIndex,
+            length: match[0].length
+          });
+        }
+      }
+      
+      // Find all function matches
+      if (functionPattern) {
+        let match;
+        functionPattern.lastIndex = 0;
+        while ((match = functionPattern.exec(remaining)) !== null) {
+          matches.push({
+            type: 'function',
+            text: match[1] || match[0],
+            index: match.index + lastIndex,
+            length: (match[1] || match[0]).length
+          });
+        }
+      }
+      
+      // Find all number matches
+      if (numberPattern) {
+        let match;
+        numberPattern.lastIndex = 0;
+        while ((match = numberPattern.exec(remaining)) !== null) {
+          matches.push({
+            type: 'number',
+            text: match[1] || match[0],
+            index: match.index + lastIndex,
+            length: (match[1] || match[0]).length
+          });
+        }
+      }
+      
+      // Find variable matches (for PHP)
+      if (variablePattern && language === 'php') {
+        let match;
+        variablePattern.lastIndex = 0;
+        while ((match = variablePattern.exec(remaining)) !== null) {
+          matches.push({
+            type: 'variable',
+            text: match[0],
+            index: match.index + lastIndex,
+            length: match[0].length
+          });
+        }
+      }
+      
+      // Sort matches by index
+      matches.sort((a, b) => a.index - b.index);
+      
+      // Remove overlapping matches (keep first)
+      const nonOverlapping = [];
+      let currentEnd = 0;
+      matches.forEach(match => {
+        if (match.index >= currentEnd) {
+          nonOverlapping.push(match);
+          currentEnd = match.index + match.length;
+        }
+      });
+      
+      // Build the line with spans
+      let currentPos = 0;
+      nonOverlapping.forEach(match => {
+        // Add text before match
+        if (match.index > currentPos) {
+          const textBefore = line.substring(currentPos, match.index);
+          if (textBefore) {
+            container.appendChild(document.createTextNode(textBefore));
+          }
+        }
+        
+        // Add highlighted span
+        const span = document.createElement('span');
+        span.className = match.type;
+        span.textContent = match.text;
+        container.appendChild(span);
+        
+        currentPos = match.index + match.length;
+      });
+      
+      // Add remaining text
+      if (currentPos < line.length) {
+        const remainingText = line.substring(currentPos);
+        if (remainingText) {
+          container.appendChild(document.createTextNode(remainingText));
+        }
+      }
+    });
+    
+    return container;
+  }
+  
+  // Legacy function for backward compatibility - returns HTML string
+  function highlightCode(code, language) {
+    if (!code) return '';
+    
+    // Escape HTML in the original code first (but preserve our spans)
+    // We need to escape & first, then < and >
+    let highlighted = code
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    
+    // Now add our HTML spans - these should NOT be escaped
+    
+    if (language === 'nodejs' || language === 'javascript') {
+      // Process in order: strings first (to avoid highlighting inside strings), then keywords, then functions, then variables, then numbers
+      
+      // Strings (single, double, template literals) - do this first
+      const stringRegex = /(['"`])(?:(?=(\\?))\2.)*?\1/g;
+      const stringMatches = [];
+      highlighted = highlighted.replace(stringRegex, (match) => {
+        const id = `__STRING_${stringMatches.length}__`;
+        stringMatches.push(match);
+        return id;
+      });
+      
+      // Keywords
+      const keywords = /\b(import|from|const|let|var|await|async|function|return|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|class|extends|super|this|static|default|export|as|in|of|typeof|instanceof|void|null|undefined|true|false)\b/g;
+      highlighted = highlighted.replace(keywords, '<span class="keyword">$&</span>');
+      
+      // Functions - process after keywords to avoid conflicts
+      // Only match functions that aren't already inside a span
+      highlighted = highlighted.replace(/\b([a-zA-Z_$][a-zA-Z0-9_$]*)\s*(?=\()/g, (match, funcName, offset, string) => {
+        // Check if already inside a span by looking backwards
+        const before = string.substring(Math.max(0, offset - 100), offset);
+        const lastSpanOpen = before.lastIndexOf('<span');
+        const lastSpanClose = before.lastIndexOf('</span>');
+        // If there's an open span without a close, we're inside a span
+        if (lastSpanOpen > lastSpanClose) {
+          return match; // Don't wrap, already in a span
+        }
+        return '<span class="function">' + funcName + '</span>';
+      });
+      
+      // Variables (const/let/var declarations) - but not if already highlighted
+      highlighted = highlighted.replace(/\b(const|let|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)/g, (match, decl, varName) => {
+        if (match.includes('<span')) return match;
+        return decl + ' <span class="variable">' + varName + '</span>';
+      });
+      
+      // Numbers
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+      
+      // Restore strings
+      stringMatches.forEach((str, index) => {
+        highlighted = highlighted.replace(`__STRING_${index}__`, '<span class="string">' + str + '</span>');
+      });
+    } else if (language === 'python') {
+      const keywords = /\b(import|from|as|def|class|if|elif|else|for|while|try|except|finally|with|return|yield|lambda|and|or|not|in|is|None|True|False|pass|break|continue)\b/g;
+      highlighted = highlighted.replace(keywords, '<span class="keyword">$&</span>');
+      highlighted = highlighted.replace(/(['"])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="function">$1</span>');
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+    } else if (language === 'php') {
+      // Handle PHP opening tag first before escaping
+      highlighted = highlighted.replace(/&lt;\?php/g, '<span class="keyword">&lt;?php</span>');
+      highlighted = highlighted.replace(/&lt;\?/g, '<span class="keyword">&lt;?</span>');
+      
+      // Then handle other keywords (but not the already wrapped ones)
+      const keywords = /\b(function|class|public|private|protected|static|const|if|else|elseif|for|foreach|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|use|namespace|as|echo|print|var|array|string|int|bool|true|false|null)\b/gi;
+      highlighted = highlighted.replace(keywords, (match, offset, string) => {
+        // Check if already inside a span
+        const before = string.substring(Math.max(0, offset - 50), offset);
+        if (before.includes('<span')) {
+          const lastSpan = before.lastIndexOf('<span');
+          const lastClose = before.lastIndexOf('</span>');
+          if (lastSpan > lastClose) return match; // Inside a span
+        }
+        return '<span class="keyword">' + match + '</span>';
+      });
+      
+      highlighted = highlighted.replace(/(['"])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)/g, '<span class="variable">$$1</span>');
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+    } else if (language === 'go') {
+      const keywords = /\b(package|import|func|var|const|type|struct|interface|if|else|for|range|switch|case|default|break|continue|return|go|defer|chan|select|map|slice|make|new|nil|true|false|int|string|bool|float64|error)\b/g;
+      highlighted = highlighted.replace(keywords, '<span class="keyword">$&</span>');
+      highlighted = highlighted.replace(/(["'`])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="function">$1</span>');
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+    } else if (language === 'java') {
+      const keywords = /\b(public|private|protected|static|final|class|interface|extends|implements|import|package|if|else|for|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|this|super|void|int|String|boolean|double|float|char|byte|short|long|null|true|false)\b/g;
+      highlighted = highlighted.replace(keywords, '<span class="keyword">$&</span>');
+      highlighted = highlighted.replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\b([A-Z][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="function">$1</span>');
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+    } else if (language === 'csharp') {
+      const keywords = /\b(using|namespace|class|interface|public|private|protected|static|readonly|const|void|int|string|bool|double|float|char|byte|if|else|for|foreach|while|do|switch|case|break|continue|return|try|catch|finally|throw|new|this|base|async|await|Task|var|null|true|false)\b/g;
+      highlighted = highlighted.replace(keywords, '<span class="keyword">$&</span>');
+      highlighted = highlighted.replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\b([A-Z][a-zA-Z0-9_]*)\s*(?=\()/g, '<span class="function">$1</span>');
+      highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="number">$1</span>');
+    } else if (language === 'curl') {
+      // For curl, just highlight strings
+      highlighted = highlighted.replace(/(["'])(?:(?=(\\?))\2.)*?\1/g, '<span class="string">$&</span>');
+      highlighted = highlighted.replace(/\b(curl|-X|-H)\b/g, '<span class="keyword">$1</span>');
+    }
+    
+    // Ensure we return valid HTML (no unescaped HTML tags from original code)
+    // The spans we added should be fine since we added them after escaping
+    return highlighted;
+  }
+
+  const codeExamples = {
+    nodejs: `import fetch from 'node-fetch';
+
+const apiToken = 'YOUR_API_TOKEN';
+const email = 'test@example.com';
+
+const response = await fetch(
+  \`https://api.stopreg.com/api/v1/check/\${apiToken}?email=\${email}\`,
+  {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+);
+
+const data = await response.json();
+console.log(data);`,
+    curl: `curl -X GET \\
+  "https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \\
+  -H "Content-Type: application/json"`,
+    python: `import requests
+
+api_token = 'YOUR_API_TOKEN'
+email = 'test@example.com'
+
+url = f'https://api.stopreg.com/api/v1/check/{api_token}?email={email}'
+
+response = requests.get(url, headers={
+    'Content-Type': 'application/json'
+})
+
+data = response.json()
+print(data)`,
+    php: `<?php
+
+$apiToken = 'YOUR_API_TOKEN';
+$email = 'test@example.com';
+
+$url = "https://api.stopreg.com/api/v1/check/{$apiToken}?email=" . urlencode($email);
+
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json'
+]);
+
+$response = curl_exec($ch);
+$data = json_decode($response, true);
+
+curl_close($ch);
+print_r($data);`,
+    go: `package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+    "net/url"
+)
+
+func main() {
+    apiToken := "YOUR_API_TOKEN"
+    email := "test@example.com"
+    
+    baseURL := "https://api.stopreg.com/api/v1/check/"
+    params := url.Values{}
+    params.Add("email", email)
+    
+    reqURL := baseURL + apiToken + "?" + params.Encode()
+    
+    req, _ := http.NewRequest("GET", reqURL, nil)
+    req.Header.Set("Content-Type", "application/json")
+    
+    client := &http.Client{}
+    resp, _ := client.Do(req)
+    defer resp.Body.Close()
+    
+    body, _ := io.ReadAll(resp.Body)
+    var data map[string]interface{}
+    json.Unmarshal(body, &data)
+    fmt.Println(data)
+}`,
+    java: `import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
+
+public class ApiCheck {
+    public static void main(String[] args) throws Exception {
+        String apiToken = "YOUR_API_TOKEN";
+        String email = "test@example.com";
+        
+        String urlString = "https://api.stopreg.com/api/v1/check/" 
+            + apiToken + "?email=" + URLEncoder.encode(email, "UTF-8");
+        
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-Type", "application/json");
+        
+        BufferedReader in = new BufferedReader(
+            new InputStreamReader(conn.getInputStream())
+        );
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+        
+        System.out.println(response.toString());
+    }
+}`,
+    csharp: `using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class Program
+{
+    static async Task Main()
+    {
+        string apiToken = "YOUR_API_TOKEN";
+        string email = "test@example.com";
+        
+        string url = $"https://api.stopreg.com/api/v1/check/{apiToken}?email={Uri.EscapeDataString(email)}";
+        
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            
+            HttpResponseMessage response = await client.GetAsync(url);
+            string data = await response.Content.ReadAsStringAsync();
+            
+            Console.WriteLine(data);
+        }
+    }
+}`
+  };
+
+  // Initialize with Node.js code
+  if (codeContent) {
+    try {
+      const codeNodes = highlightCodeToNodes(codeExamples.nodejs, 'nodejs');
+      // Clear existing content
+      codeContent.textContent = '';
+      // Append the document fragment
+      codeContent.appendChild(codeNodes);
+    } catch (error) {
+      console.error('Error initializing code:', error, error.stack);
+      codeContent.textContent = codeExamples.nodejs;
+    }
+  }
+
+  // Handle tab switching
+  if (codeTabs.length > 0) {
+    codeTabs.forEach((tab) => {
+      tab.addEventListener("click", function () {
+        // Remove active class from all tabs
+        codeTabs.forEach((t) => t.classList.remove("active"));
+        
+        // Add active class to clicked tab
+        this.classList.add("active");
+        
+        // Get the language
+        const lang = this.getAttribute("data-lang");
+        
+        // Update code content with syntax highlighting
+        if (codeContent && codeExamples[lang]) {
+          try {
+            const codeNodes = highlightCodeToNodes(codeExamples[lang], lang);
+            // Clear existing content
+            codeContent.textContent = '';
+            // Append the document fragment
+            codeContent.appendChild(codeNodes);
+          } catch (error) {
+            console.error('Error highlighting code:', error, error.stack);
+            codeContent.textContent = codeExamples[lang];
+          }
+        }
+      });
+    });
+  }
+
+  // Handle copy button
+  if (copyBtn && codeContent) {
+    copyBtn.addEventListener("click", function () {
+      // Get plain text for copying (remove HTML tags)
+      const textToCopy = codeContent.textContent || codeContent.innerText;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Visual feedback - change icon to checkmark temporarily
+        const originalImg = copyBtn.querySelector('img');
+        const originalSpan = copyBtn.querySelector('span');
+        if (originalImg && originalSpan) {
+          const originalSrc = originalImg.src;
+          const originalText = originalSpan.textContent;
+          copyBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.6667 5L7.5 14.1667L3.33334 10" stroke="#6a9955" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Copied</span>
+          `;
+          
+          setTimeout(() => {
+            copyBtn.innerHTML = `<img src="${originalSrc}" alt="Copy" /><span>${originalText}</span>`;
+          }, 2000);
+        }
+      }).catch((err) => {
+        console.error("Failed to copy:", err);
+      });
+    });
+  }
 };
 
 // document.getElementById("navigate-button").addEventListener("click", function() {

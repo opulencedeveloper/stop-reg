@@ -14,3 +14,6 @@ Sitemap: https://stopreg.com/sitemap.xml
 # Crawl-delay (optional, adjust as needed)
 Crawl-delay: 1
 
+
+
+

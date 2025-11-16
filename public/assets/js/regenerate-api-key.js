@@ -28,19 +28,31 @@ regenerateBtn.addEventListener("click", async () => {
     console.log("User Info Response:", data);
 
     if (response.ok) {
-      const user = data?.data || data;
-      console.log("New token:", user);
+      const newApiToken = data?.data?.apiToken;
+      console.log("New token:", newApiToken);
 
-      const tokenElement = document.querySelector(".main-token");
-      if (tokenElement && user.userDetails?.apiToken) {
-        tokenElement.textContent = user.userDetails.apiToken;
+      if (newApiToken) {
+        // Update the token display
+        const tokenElement = document.querySelector(".main-token");
+        if (tokenElement) {
+          tokenElement.textContent = newApiToken;
+        }
+
+        // Update the link href and text
+        const linkContainer = document.querySelector(".link-container");
+        if (linkContainer) {
+          const newLink = `https://api.stopreg.com/api/v1/check/${newApiToken}?email=test@test.com`;
+          linkContainer.href = newLink;
+          
+          // Update the link text if it exists
+          const linkTitle = linkContainer.querySelector(".token-link-title");
+          if (linkTitle) {
+            linkTitle.textContent = newLink;
+          }
+        }
+
+        console.log("✅ Token regenerated successfully!");
       }
-
-      document.getElementById("user-name").textContent = user.name || "Unknown";
-      document.getElementById("user-email").textContent =
-        user.email || "No email";
-
-      console.log("✅ Token regenerated successfully!");
     } else {
       console.error("Error regenerating token:", data);
 

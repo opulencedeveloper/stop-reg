@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const spinner = document.getElementById("loading-spinner");
-  const chartWrapper = document.getElementById("chart-wrapper");
-
-  // spinner.style.display = "block"; // show loader
-  // chartWrapper.style.opacity = "0"; // hide chart
+  // Increment spinner counter to track this data fetch
+  if (typeof window.showSpinner === 'function') {
+    window.showSpinner();
+  }
 
   let requestData = [];
 
@@ -36,8 +35,56 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = data?.data || data;
       console.log("User Data:", user);
 
+      const apiToken = user.userDetails.apiToken;
+      
       const tokenElement = document.querySelector(".main-token");
-      tokenElement.textContent = user.userDetails.apiToken;
+      if (tokenElement && apiToken) {
+        tokenElement.textContent = apiToken;
+      }
+
+      // Update the API link with the token
+      if (apiToken) {
+        const linkContainer = document.querySelector(".link-container");
+        if (linkContainer) {
+          const newLink = `https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
+          linkContainer.href = newLink;
+          
+          const linkTitle = linkContainer.querySelector(".token-link-title");
+          if (linkTitle) {
+            linkTitle.textContent = newLink;
+          }
+        }
+      }
+
+      // Update plan information
+      const userDetails = user.userDetails;
+      if (userDetails) {
+        // Update expiration date
+        const expiresDateEl = document.querySelector(".Current-plan-date");
+        if (expiresDateEl && userDetails.tokenExpiresAt) {
+          const expiresDate = new Date(userDetails.tokenExpiresAt);
+          const formattedDate = expiresDate.toLocaleDateString('en-US', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+          });
+          expiresDateEl.textContent = `Expires: ${formattedDate}`;
+        }
+
+        // Update plan name
+        const planNameEl = document.querySelector(".Current-plan-plan");
+        if (planNameEl && userDetails.planId?.name) {
+          planNameEl.textContent = `${userDetails.planId.name} Account`;
+        }
+
+        // Update API requests left
+        const apiRequestLeftEl = document.querySelector(".api-request-left");
+        if (apiRequestLeftEl && userDetails.planId) {
+          const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
+          const durationInDays = userDetails.planId.durationInDays ?? 30;
+          apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+        }
+      }
 
       // Extract request array
       requestData = Array.isArray(user.request) ? user.request : [];
@@ -52,9 +99,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("Network error:", error);
   }
-
-  // spinner.style.display = "none"; // hide loader
-  // chartWrapper.style.opacity = "1"; // show chart
 
   // -----------------------------
   //   PREPARE CHART DATA FROM API
@@ -283,4 +327,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     new Chart(ctx, config);
   };
+  
+  // Hide spinner after all data is loaded and chart is rendered
+  if (typeof window.hideSpinner === 'function') {
+    window.hideSpinner();
+  }
 });

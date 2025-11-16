@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  // Spinner is already visible for dashboard pages
+  // Increment counter to keep it visible during fetch
+  if (typeof window.showSpinner === 'function') {
+    window.showSpinner();
+  }
+
   try {
     const response = await fetch(
       "https://api.stopreg.com/api/v1/manage/domain/fetch",
@@ -72,7 +78,20 @@ document.addEventListener("DOMContentLoaded", async () => {
               // Remove row from UI
               document.getElementById(domainId)?.remove();
             } else {
-              alert(deleteData.message || "Failed to delete domain.");
+              const errorMessage = deleteData.message || "Failed to delete domain.";
+              if (typeof iziToast !== 'undefined') {
+                iziToast.error({
+                  title: 'Error',
+                  message: errorMessage,
+                  position: "topRight",
+                  timeout: 5000,
+                  drag: false,
+                  displayMode: 1,
+                  zindex: 9999,
+                });
+              } else {
+                alert(errorMessage);
+              }
             }
           } catch (error) {
             console.error("Delete error:", error);
@@ -92,5 +111,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (error) {
     console.error("Network error:", error);
+  } finally {
+    // Hide spinner after data is loaded
+    if (typeof window.hideSpinner === 'function') {
+      window.hideSpinner();
+    }
   }
 });

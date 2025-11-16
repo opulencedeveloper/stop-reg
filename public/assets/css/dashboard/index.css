@@ -552,6 +552,8 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+  cursor: pointer;
 
 }
 @media only screen and (max-width: 1151px) {
@@ -672,6 +674,8 @@ canvas {
   padding: 12px 40px;
   box-sizing: border-box;
   border: 0;
+  text-decoration: none;
+  cursor: pointer;
   background-color: #ECF2FD;
   border-radius: 8px;
   font-size: 12px;
