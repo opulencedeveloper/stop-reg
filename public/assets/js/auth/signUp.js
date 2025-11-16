@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const otpModal = document.getElementById("otp-modal");
   const otpDialog = document.getElementById("otp-dialog");
+  const description = document.querySelector(".otp-email");
 
   let errorModal = document.createElement("div");
   errorModal.className = "error-modal";
@@ -29,6 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
+        
+    localStorage.removeItem("otp_email");
+
+
+    console.log ("checkinggggg", localStorage.getItem("otp_email"))
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("signup-password").value.trim();
@@ -69,26 +75,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
       console.log("Response:", data);
-
       if (response.ok) {
         iziToast.success({
           message: "Account created successfully!",
           position: "topRight",
         });
-        localStorage.removeItem("otp_email");
+        const freshEmail = document.getElementById("email").value.trim();
         localStorage.setItem("otp_email", email);
+
+
+        const newEmail = localStorage.getItem("otp_email")
+
+        console.log ("new emai,,", localStorage.getItem("otp_email"))
+          description.textContent = `${newEmail }`;
 
         overLay.style.display = "none";
 
-        // Show OTP modal
-
-        otpModal.style.display = "flex";
-        otpDialog.style.display = "flex";
-        document.body.classList.add("hidden-overflow");
-
-        form.reset();
-      } else {
-        showError(data.description || data.message || "Signup failed!");
+        // Open OTP modal AFTER saving
+        setTimeout(() => {
+           form.reset();
+          otpModal.style.display = "flex";
+          otpDialog.style.display = "flex";
+          document.body.classList.add("hidden-overflow");
+        }, 300);
       }
     } catch (err) {
       showError("Network error — please try again later.");

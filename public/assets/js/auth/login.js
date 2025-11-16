@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signIn-form");
   const submitBtn = form.querySelector(".cr-btn");
   const overLay = document.getElementById("overlay");
+    const description = document.querySelector(".otp-email");
 
   const otpModal = document.getElementById("otp-modal");
   const otpDialog = document.getElementById("otp-dialog");
@@ -56,9 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.message === "verify_email") {
         localStorage.removeItem("otp_email");
         localStorage.setItem("otp_email", email);
+
+         const newEmail = localStorage.getItem("otp_email")
+             description.textContent = `${newEmail }`;
         const overLay = document.getElementById("overlay");
         const loginDialog = document.getElementById("signin-dialog");
         
+     
         overLay.style.display = "none";
         loginDialog.style.display = "none";
 
