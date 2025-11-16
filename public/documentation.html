@@ -2,15 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <!-- Favicon -->
-    <!-- <link href="img/favicon.ico" rel="icon"> -->
-    <title>StopReg</title>
-    <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="StopReg" />
-    <meta property="og:description" content="" />
-      <link
+    
+    <!-- Primary Meta Tags -->
+    <title>StopReg API Documentation | Email Validation API Guide</title>
+    <meta name="title" content="StopReg API Documentation | Email Validation API Guide" />
+    <meta name="description" content="Complete StopReg API documentation. Learn how to integrate email validation, block disposable emails, and use our REST API endpoints. Code examples, authentication, and best practices included." />
+    <meta name="keywords" content="StopReg API documentation, email validation API docs, disposable email API, email verification API guide, API integration guide, email validation documentation" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="language" content="English" />
+    <meta name="author" content="StopReg" />
+    <link rel="canonical" href="https://stopreg.com/documentation.html" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://stopreg.com/documentation.html" />
+    <meta property="og:title" content="StopReg API Documentation | Email Validation API Guide" />
+    <meta property="og:description" content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples and best practices." />
+    <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    <meta property="og:site_name" content="StopReg" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://stopreg.com/documentation.html" />
+    <meta name="twitter:title" content="StopReg API Documentation | Email Validation API Guide" />
+    <meta name="twitter:description" content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples." />
+    <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#1452CA" />
+    
+    <!-- Stylesheets -->
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"
     />
@@ -19,7 +49,47 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "StopReg API Documentation",
+      "description": "Complete documentation for StopReg email validation API",
+      "author": {
+        "@type": "Organization",
+        "name": "StopReg"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "StopReg",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://stopreg.com/assets/logo/stopreg-logo.svg"
+        }
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://stopreg.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://stopreg.com/documentation.html"
+      }]
+    }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js" defer></script>
   </head>
 
   <body>
@@ -42,9 +112,9 @@
       <!-- Mobile Navigation Start -->
       <div class="nav-menu">
         <div class="nav-menu-sect-one">
-          <div class="land-logo">
-            <img src="/assets/logo/stopreg-logo.svg" />
-          </div>
+          <a href="/" class="land-logo" aria-label="StopReg Home">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+          </a>
           <div class="nav-icon2-mobile active">
             <span></span>
             <span></span>
@@ -74,11 +144,11 @@
       <!-- OTP Starts here -->
        <div id="otp-modal" class="otp-modal">
         <div class="auth-container otp-container" id="">
-          <button id="otp-close-btn" class="otp-close-btn auth-close-btn">
-            <img src="/assets/icons/close-outline.svg" />
+          <button id="otp-close-btn" class="otp-close-btn auth-close-btn" aria-label="Close OTP verification">
+            <img src="/assets/icons/close-outline.svg" alt="Close" />
           </button>
           <div class="auth-logo">
-            <img src="/assets/logo/stopreg-logo.svg" />
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
           </div>
           <h3 class="cr-auth-header">Verify Your Email</h3>
           <p class="otp-subtext cr-auth-tle">
@@ -217,8 +287,8 @@
       <!-- Header Start -->
       <header class="main-head-cont">
         <div class="main-head-wrapper">
-          <a href="/" class="land-logo">
-            <img src="/assets/logo/stopreg-logo.svg" />
+          <a href="/" class="land-logo" aria-label="StopReg Home">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
           </a>
           <nav class="nav-wrapper">
             <a href="/#api">API</a>
@@ -254,7 +324,7 @@
             </h2>
           </div>
           <div class="docs-header-img">
-            <img src="/assets/images/landing/index/document.svg" />
+            <img src="/assets/images/landing/index/document.svg" alt="API Documentation illustration" />
           </div>
         </div>
       </section>
@@ -524,7 +594,7 @@
         <div class="land-foot-wrapp">
           <section class="land-foot-wrapp-sct-one">
             <div class="foot-logo">
-              <img src="/assets/logo/stopreg-footer-logo.svg" />
+              <img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg Footer Logo" />
             </div>
             <div class="foot-detail">
               <p class="foot-detail-hd">What we do</p>
@@ -551,12 +621,12 @@
         </div>
       </footer>
     </main>
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/landing/index.js"></script>
-    <script src="/assets/js/landing/header.js"></script>
-    <script src="/assets/js/auth/signUp.js"></script>
-    <script src="/assets/js/auth/login.js"></script>
-    <script src="/assets//js/auth/otp.js"></script>
+    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/landing/index.js" defer></script>
+    <script src="/assets/js/landing/header.js" defer></script>
+    <script src="/assets/js/auth/signUp.js" defer></script>
+    <script src="/assets/js/auth/login.js" defer></script>
+    <script src="/assets/js/auth/otp.js" defer></script>
    
   </body>
 </html>

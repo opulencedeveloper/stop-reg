@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     if (!token) {
-      window.location.href = "/login.html";
+      window.location.href = "/";
       return;
     }
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/email-domains/check-disposable-email",
+        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email",
         {
           method: "POST",
           headers: {

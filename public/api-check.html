@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>API Email Check Tool - StopReg | Test Email Validation API</title>
+    <meta name="title" content="API Email Check Tool - StopReg | Test Email Validation API" />
+    <meta name="description" content="Test StopReg email validation API with our free online tool. Enter your API token and email address to verify if an email is disposable or temporary. Real-time email validation testing." />
+    <meta name="keywords" content="email validation test, API testing tool, disposable email checker, email API test, email verification tool, test email validation API" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="language" content="English" />
+    <meta name="author" content="StopReg" />
+    <link rel="canonical" href="https://stopreg.com/api-check.html" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://stopreg.com/api-check.html" />
+    <meta property="og:title" content="API Email Check Tool - StopReg | Test Email Validation API" />
+    <meta property="og:description" content="Test StopReg email validation API with our free online tool. Verify if an email is disposable or temporary in real-time." />
+    <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    <meta property="og:site_name" content="StopReg" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://stopreg.com/api-check.html" />
+    <meta name="twitter:title" content="API Email Check Tool - StopReg | Test Email Validation API" />
+    <meta name="twitter:description" content="Test StopReg email validation API with our free online tool. Verify if an email is disposable or temporary in real-time." />
+    <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#1452CA" />
+    
+    <!-- Stylesheets -->
+    <link href="/assets/css/fonts.css" rel="stylesheet" />
+    <link href="/assets/css/variables.css" rel="stylesheet" />
+    <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/check-disposal-email.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+      integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "StopReg API Email Check Tool",
+      "url": "https://stopreg.com/api-check.html",
+      "description": "Free online tool to test StopReg email validation API",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://stopreg.com/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "API Check Tool",
+        "item": "https://stopreg.com/api-check.html"
+      }]
+    }
+    </script>
+  </head>
+
+  <body>
+    <!-- Loading Spinner Start -->
+    <div id="spinner-body" class="spinner-body">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <!-- Loading Spinner End -->
+
+    <main id="content">
+      <article style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+        <div class="dash-inner-inner-check-email">
+          <header>
+            <h1 class="check-disposable-email-head">
+              API Email Check
+            </h1>
+            <p class="disposable-email-disc">
+              Enter your API token and email address to verify the email using the API
+            </p>
+          </header>
+
+          <div class="form-cont">
+            <form id="api-check-form" aria-label="API Email Check Form">
+              <fieldset>
+                <legend class="sr-only">Email Validation Form</legend>
+                <div class="check-disposable-email-form">
+                  <label for="api-token">API Token</label>
+                  <input 
+                    id="api-token" 
+                    type="text" 
+                    placeholder="Enter your API token"
+                    required
+                    aria-required="true"
+                    aria-describedby="api-token-desc"
+                  />
+                  <span id="api-token-desc" class="sr-only">Enter your StopReg API token</span>
+                </div>
+                <div class="check-disposable-email-form" style="margin-top: 16px;">
+                  <label for="check-email">Email Address</label>
+                  <input 
+                    id="check-email" 
+                    type="email" 
+                    placeholder="admin@samplemail.com"
+                    required
+                    aria-required="true"
+                    aria-describedby="email-desc"
+                  />
+                  <span id="email-desc" class="sr-only">Enter the email address to validate</span>
+                </div>
+              </fieldset>
+              <button type="submit" class="bulk-check-email-btn" aria-label="Submit email validation request">Check Email</button>
+            </form>
+            <section id="api-check-result" class="disposal-email-result-cont" aria-live="polite" aria-atomic="true">
+              <!-- Results will be displayed here -->
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+      integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
+    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/dash/api-check.js" defer></script>
+  </body>
+</html>
+

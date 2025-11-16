@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!token) return (window.location.href = "/login.html");
+    if (!token) return (window.location.href = "/");
 
     const links = getLinksArray();
     if (links.length === 0) return alert("Please enter at least one domain or email address.");
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification",
+        "https://api.stopreg.com/api/v1/email-domains/bulk-verification",
         {
           method: "POST",
           headers: {

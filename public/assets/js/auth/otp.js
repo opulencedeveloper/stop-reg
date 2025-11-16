@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log("verify", email, otp);
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/verify/email",
+        "https://api.stopreg.com/api/v1/auth/verify/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/verify/email",
+        "https://api.stopreg.com/api/v1/auth/verify/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/resend/email",
+        "https://api.stopreg.com/api/v1/auth/resend/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
