@@ -43,7 +43,196 @@
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/check-disposal-email.css" rel="stylesheet" />
+    <style>
+      .api-check-hero {
+        background: linear-gradient(135deg, #f7f9fc 0%, #ffffff 100%);
+        padding: 60px 20px;
+        text-align: center;
+        border-bottom: 1px solid #ededed;
+      }
+      .api-check-hero h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #252525;
+        margin-bottom: 12px;
+      }
+      .api-check-hero p {
+        font-size: 18px;
+        color: #404040;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        line-height: 1.6;
+      }
+      .api-check-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .api-check-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      .api-check-feature {
+        background: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        border: 1px solid #ededed;
+        text-align: center;
+      }
+      .api-check-feature-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 16px;
+        background: #1452ca;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .api-check-feature-icon img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+      }
+      .api-check-feature h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #252525;
+        margin-bottom: 8px;
+      }
+      .api-check-feature p {
+        font-size: 14px;
+        color: #737373;
+        line-height: 1.5;
+      }
+      .form-cont {
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ededed;
+        background: #ffffff;
+      }
+      .check-disposable-email-head {
+        font-size: 24px;
+        margin-top: 0;
+      }
+      .api-check-form-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .api-check-form-group {
+        margin-bottom: 24px;
+      }
+      .api-check-form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #252525;
+        margin-bottom: 8px;
+      }
+      .api-check-form-group input {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        border: 1.5px solid #e0e0e0;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #252525;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+      .api-check-form-group input:focus {
+        outline: none;
+        border-color: #1452ca;
+        box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+      }
+      .api-check-form-group input::placeholder {
+        color: #9e9e9e;
+      }
+      .api-check-submit-btn {
+        width: 100%;
+        padding: 16px;
+        font-size: 16px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #1452ca 0%, #0d3a8a 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .api-check-submit-btn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #0d3a8a 0%, #1452ca 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(20, 82, 202, 0.3);
+      }
+      .api-check-submit-btn:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      .api-check-submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+      .form-header-section {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .form-header-section h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #252525;
+        margin-bottom: 12px;
+      }
+      .form-header-section p {
+        font-size: 16px;
+        color: #737373;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+      @media (max-width: 768px) {
+        .api-check-hero h1 {
+          font-size: 24px;
+        }
+        .api-check-hero p {
+          font-size: 16px;
+        }
+        .api-check-features {
+          grid-template-columns: 1fr;
+        }
+        .form-header-section h2 {
+          font-size: 22px;
+        }
+        .form-header-section p {
+          font-size: 14px;
+        }
+        .api-check-form-group input {
+          padding: 12px 16px;
+          font-size: 14px;
+        }
+        .api-check-submit-btn {
+          padding: 14px;
+          font-size: 15px;
+        }
+      }
+    </style>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
@@ -105,23 +294,55 @@
     <!-- Loading Spinner End -->
 
     <main id="content">
-      <article style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
-        <div class="dash-inner-inner-check-email">
-          <header>
-            <h1 class="check-disposable-email-head">
-              API Email Check
-            </h1>
-            <p class="disposable-email-disc">
-              Enter your API token and email address to verify the email using the API
-            </p>
-          </header>
+      <!-- Hero Section -->
+      <section class="api-check-hero">
+        <div class="api-check-container">
+          <h1>API Email Check Tool</h1>
+          <p>Test and validate email addresses in real-time using the StopReg API. Verify if an email is disposable, temporary, or legitimate with instant results.</p>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="api-check-container">
+        <div class="api-check-features">
+          <div class="api-check-feature">
+            <div class="api-check-feature-icon">
+              <img src="/assets/icons/bi-filetype-json.svg" alt="API icon" />
+            </div>
+            <h3>Real-Time Validation</h3>
+            <p>Get instant results when checking email addresses against our comprehensive database</p>
+          </div>
+          <div class="api-check-feature">
+            <div class="api-check-feature-icon">
+              <img src="/assets/icons/ph-database-light.svg" alt="Database icon" />
+            </div>
+            <h3>124k+ Domains</h3>
+            <p>Our database contains over 124,000 disposable email domains for accurate detection</p>
+          </div>
+          <div class="api-check-feature">
+            <div class="api-check-feature-icon">
+              <img src="/assets/icons/arcticons-uptodate.svg" alt="Updated icon" />
+            </div>
+            <h3>Always Updated</h3>
+            <p>We continuously update our database with new disposable email providers</p>
+          </div>
+        </div>
+
+        <!-- Form Section -->
+        <article class="dash-inner-inner-check-email">
+          <div class="form-header-section">
+            <h2>Test Your API</h2>
+            <p>Enter your API token and email address to verify the email using our validation API</p>
+          </div>
 
           <div class="form-cont">
-            <form id="api-check-form" aria-label="API Email Check Form">
-              <fieldset>
-                <legend class="sr-only">Email Validation Form</legend>
-                <div class="check-disposable-email-form">
-                  <label for="api-token">API Token</label>
+            <div class="api-check-form-wrapper">
+              <form id="api-check-form" aria-label="API Email Check Form">
+                <div class="api-check-form-group">
+                  <label for="api-token">
+                    API Token
+                    <span style="color: #737373; font-weight: 400; font-size: 12px;">(Required)</span>
+                  </label>
                   <input 
                     id="api-token" 
                     type="text" 
@@ -129,30 +350,57 @@
                     required
                     aria-required="true"
                     aria-describedby="api-token-desc"
+                    autocomplete="off"
                   />
                   <span id="api-token-desc" class="sr-only">Enter your StopReg API token</span>
+                  <small style="display: block; margin-top: 6px; color: #737373; font-size: 12px;">
+                    Get your API token from your <a href="/dashboard/index.html" style="color: #1452ca; text-decoration: underline;">dashboard</a>
+                  </small>
                 </div>
-                <div class="check-disposable-email-form" style="margin-top: 16px;">
-                  <label for="check-email">Email Address</label>
+                
+                <div class="api-check-form-group">
+                  <label for="check-email">
+                    Email Address
+                    <span style="color: #737373; font-weight: 400; font-size: 12px;">(Required)</span>
+                  </label>
                   <input 
                     id="check-email" 
                     type="email" 
-                    placeholder="admin@samplemail.com"
+                    placeholder="example@email.com"
                     required
                     aria-required="true"
                     aria-describedby="email-desc"
+                    autocomplete="email"
                   />
                   <span id="email-desc" class="sr-only">Enter the email address to validate</span>
                 </div>
-              </fieldset>
-              <button type="submit" class="bulk-check-email-btn" aria-label="Submit email validation request">Check Email</button>
-            </form>
+                
+                <button type="submit" class="api-check-submit-btn" aria-label="Submit email validation request">
+                  <span id="button-text">Check Email</span>
+                </button>
+              </form>
+            </div>
+            
             <section id="api-check-result" class="disposal-email-result-cont" aria-live="polite" aria-atomic="true">
               <!-- Results will be displayed here -->
             </section>
           </div>
-        </div>
-      </article>
+        </article>
+
+        <!-- Info Section -->
+        <section style="margin-top: 40px; padding: 24px; background: #fafafa; border-radius: 8px; border: 1px solid #ededed;">
+          <h3 style="font-size: 18px; font-weight: 600; color: #252525; margin-bottom: 12px;">How It Works</h3>
+          <ol style="padding-left: 20px; color: #404040; line-height: 1.8;">
+            <li>Enter your StopReg API token (get one from your <a href="/dashboard/index.html" style="color: #1452ca; text-decoration: underline;">dashboard</a>)</li>
+            <li>Enter the email address you want to validate</li>
+            <li>Click "Check Email" to get instant validation results</li>
+            <li>View detailed information about the email's status and properties</li>
+          </ol>
+          <p style="margin-top: 16px; color: #737373; font-size: 14px;">
+            <strong>Need an API token?</strong> <a href="/" style="color: #1452ca; text-decoration: underline;">Sign up for free</a> and get started with 200 free API requests.
+          </p>
+        </section>
+      </section>
     </main>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"

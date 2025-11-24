@@ -73,7 +73,7 @@
 }
 
 .land-foot {
-    background-color: var(--color-seventeen);
+    background-color: #1e1e1e;
 }
 
 .land-foot-wrapp {
@@ -85,9 +85,8 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding-top: 40px;
-    padding-bottom: 64px;
-    border-bottom: 1px solid var(--color-three);
+    padding: 40px 20px;
+    background-color: #1e1e1e;
 }
 
 .foot-logo {
@@ -101,53 +100,73 @@
 .foot-logo>img {
     height: 100%;
     width: 100%;
+    filter: brightness(0) invert(1);
 }
 
 .foot-detail {
     display: flex;
     flex-direction: column;
-    color: var(--color-one);
+    gap: 8px;
 }
 
 .foot-detail-hd {
-    font-size: 20px;
-    font-family: 'PlusJakartaSans-ExtraBold';
-    margin-bottom: 10px;
+    font-size: 14px;
+    font-family: 'PlusJakartaSans-SemiBold';
+    font-weight: 600;
+    font-style: normal;
+    margin-bottom: 12px;
+    color: #ffffff;
 }
 
 .foot-detail-tle {
     max-width: 478px;
+    font-size: 14px;
+    font-family: 'PlusJakartaSans-Regular';
+    line-height: 1.6;
+    color: #d4d4d4;
 }
 
 .foot-detail-link {
-    margin-bottom: 2px;
+    margin-bottom: 0;
+    transition: color 0.2s ease;
+    font-size: 14px;
+    font-family: 'PlusJakartaSans-Regular';
+    line-height: 1.6;
 }
 
 .foot-detail-tle,
 .foot-detail-link {
-    font-size: 16px;
-    line-height: 22.4px;
-    color: var(--color-one);
+    color: #858585;
     text-decoration: none;
+}
+
+.foot-detail-link:hover {
+    color: #cccccc;
 }
 
 .land-foot-wrapp-sct-two {
     display: flex;
     flex-direction: row;
-    color: var(--color-one);
     justify-content: space-between;
-    padding-top: 16px;
-    padding-bottom: 40px;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #252526;
+    border-top: 1px solid #3e3e42;
 }
 
 
 .land-foot-wrapp-sct-two-item-one {
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'PlusJakartaSans-SemiBold';
+    font-weight: 600;
+    font-style: normal;
+    color: #858585;
 }
 
 .land-foot-wrapp-sct-two-item-two {
-    font-size: 16px;
+    font-size: 14px;
+    font-family: 'PlusJakartaSans-Regular';
+    color: #858585;
 }
 
 .mobile-nav-btns {

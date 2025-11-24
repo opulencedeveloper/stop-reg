@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("api-check-form");
-  const submitBtn = form.querySelector(".bulk-check-email-btn");
+  const submitBtn = form.querySelector(".api-check-submit-btn") || form.querySelector(".bulk-check-email-btn");
   const resultContainer = document.getElementById("api-check-result");
 
   resultContainer.innerHTML = "";
@@ -13,14 +13,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("check-email").value.trim();
 
     if (!apiToken || !email) {
-      alert("Please fill in both API token and email address");
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Error',
+          message: "Please fill in both API token and email address",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      } else {
+        alert("Please fill in both API token and email address");
+      }
       return;
     }
 
     // Add spinner
-    const originalText = submitBtn.textContent;
+    const buttonText = submitBtn.querySelector('#button-text') || submitBtn;
+    const originalText = buttonText.textContent;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> Checking...`;
+    if (buttonText.id === 'button-text') {
+      buttonText.innerHTML = `<span class="btn-spinner"></span> Checking...`;
+    } else {
+      submitBtn.innerHTML = `<span class="btn-spinner"></span> Checking...`;
+    }
 
     try {
       // Construct the URL with API token and email
@@ -77,13 +94,35 @@ document.addEventListener("DOMContentLoaded", () => {
               const displayValue = typeof value === 'boolean' ? (value ? 'YES' : 'NO') : value;
               const valueClass = typeof value === 'boolean' && value ? '' : 'result-false';
               
+              // Create a descriptive message based on the key and value
+              let description = '';
+              if (key.toLowerCase().includes('disposable')) {
+                description = displayValue === 'YES' 
+                  ? 'This email is from a disposable email provider' 
+                  : 'This email is not from a disposable email provider';
+              } else if (key.toLowerCase().includes('mx') || key.toLowerCase().includes('record')) {
+                description = displayValue === 'YES' 
+                  ? 'This domain has MX records and can receive emails' 
+                  : 'This domain does not have valid MX records';
+              } else if (key.toLowerCase().includes('public')) {
+                description = displayValue === 'YES' 
+                  ? 'This is a public email provider (e.g., Gmail, Yahoo)' 
+                  : 'This is not a public email provider';
+              } else if (key.toLowerCase().includes('relay')) {
+                description = displayValue === 'YES' 
+                  ? 'This domain acts as a relay domain' 
+                  : 'This domain does not appear to be a relay domain';
+              } else {
+                description = `Value: ${displayValue}`;
+              }
+              
               resultHTML += `
                 <div class="disposal-result-inner-cont ${valueClass}">
                   <div class="disposal-result">
                     <div class="disposable-result-cont">
                       <h3 class="disposal-result-head">${formattedKey}</h3>
                       <p class="disposal-result-para">
-                        ${formattedKey}: ${displayValue}
+                        ${description}
                       </p>
                     </div>
                     <p class="disposal-result-bolean">${displayValue}</p>
@@ -144,7 +183,12 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
+      const buttonText = submitBtn.querySelector('#button-text') || submitBtn;
+      if (buttonText.id === 'button-text') {
+        buttonText.textContent = originalText;
+      } else {
+        submitBtn.textContent = originalText;
+      }
     }
   });
 });

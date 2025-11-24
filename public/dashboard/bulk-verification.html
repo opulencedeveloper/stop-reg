@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="StopReg" />
     <meta property="og:description" content="" />
+     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"
+    />
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
@@ -202,11 +206,12 @@
                       arranged on single or multiple lines.
                     </label>
 
-                    <div
+                    <textarea
                       id="bulk-links"
                       class="bulk-links-input"
-                      contenteditable="true"
-                    ></div>
+                      rows="6"
+                      placeholder="Enter domains or emails separated by space or comma (e.g., example.com user@email.com)"
+                    ></textarea>
                   </fieldset>
 
                   <button class="bulk-verify-domain-btn">
@@ -218,8 +223,10 @@
                 <div class="verify-status-head">
                   <h1 class="bulk-hd">Verification status</h1>
                   <button class="bulk-domain-download" id="bulk-domain-download">
-                    <img src="/assets/icons/download-bulk-icon.svg" alt="" />
-                    <span>Download CSV</span>
+                    <div class="bulk-domain-download-icon">
+                      <img src="/assets/icons/download-bulk-icon.svg" alt="" />
+                    </div>
+                    <p>Download CSV</p>
                   </button>
                 </div>
                 <div class="bulk-tb-container">
@@ -306,9 +313,17 @@
         </div>
       </div>
     </main>
+      <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+      integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/dash/header.js"></script>
     <script src="/assets/js/dash/domain.js"></script>
+       <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
     <script src="/assets//js//dash/bulk-verification.js"></script>
   </body>
 </html>
