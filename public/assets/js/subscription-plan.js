@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const res = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/subscription/plan"
+      "https://api.stopreg.com/api/v1/subscription/plan"
     );
     console.log("Response status:", res.status);
     const data = await res.json();

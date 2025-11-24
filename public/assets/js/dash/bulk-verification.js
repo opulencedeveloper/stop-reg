@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification",
+        "https://api.stopreg.com/api/v1/email-domains/bulk-verification",
         {
           method: "POST",
           headers: {

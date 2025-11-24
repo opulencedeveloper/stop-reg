@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const overLay = document.getElementById("overlay");
 
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
   const description = document.querySelector(".otp-email");
 
   let errorModal = document.createElement("div");
@@ -30,11 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
-        
+
     localStorage.removeItem("otp_email");
 
-
-    console.log ("checkinggggg", localStorage.getItem("otp_email"))
+    console.log("checkinggggg", localStorage.getItem("otp_email"));
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("signup-password").value.trim();
@@ -65,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/register",
+        "https://api.stopreg.com/api/v1/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -83,19 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const freshEmail = document.getElementById("email").value.trim();
         localStorage.setItem("otp_email", email);
 
+        const newEmail = localStorage.getItem("otp_email");
 
-        const newEmail = localStorage.getItem("otp_email")
-
-        console.log ("new emai,,", localStorage.getItem("otp_email"))
-          description.textContent = `${newEmail }`;
+        console.log("new emai,,", localStorage.getItem("otp_email"));
+        description.textContent = `${newEmail}`;
 
         overLay.style.display = "none";
 
         // Open OTP modal AFTER saving
         setTimeout(() => {
-           form.reset();
+          form.reset();
           otpModal.style.display = "flex";
-          otpDialog.style.display = "flex";
+          // otpModal.scrollIntoView({
+          //   behavior: "smooth",
+          //   block: "center",
+          // });
           document.body.classList.add("hidden-overflow");
         }, 300);
       }

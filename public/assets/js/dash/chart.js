@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/user/info",
+      "https://api.stopreg.com/api/v1/user/info",
       {
         method: "GET",
         headers: {

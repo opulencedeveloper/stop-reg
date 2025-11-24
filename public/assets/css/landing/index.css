@@ -1287,6 +1287,15 @@
   margin-bottom: 100px;
   padding-bottom: 24px;
 }
+.otp-container{
+  width: 100%;
+  max-width: 608px;
+  box-shadow: 24px 24px 40px 0px var(--color-twenty-six);
+  background-color: var(--color-six);
+  border-radius: 8px;
+  position: relative;
+  padding-bottom: 24px;
+}
 .otp-email{
 color: var(--color-two)
 }
@@ -1408,7 +1417,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-repeat: no-repeat;
   background-position: center;
 }
-.
+
 
 .notfound-tle {
   font-size: 48px;

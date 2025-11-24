@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const resendOtpBtn = document.getElementById("resend-otp-btn");
   const otpCloseBtn = document.getElementById("otp-close-btn");
   const formContainer = document.querySelector(".otp-inputs");
+  const overLay = document.getElementById("overlay");
+  const signinDialog = document.getElementById("signin-dialog");
+  const signupDialog = document.getElementById("signup-dialog");
 
   // Error modal
   let errorModal = document.createElement("div");
@@ -33,10 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.removeItem("otp_email");
     otpModal.style.display = "none";
     otpDialog.style.display = "none";
-    const overLay = document.getElementById("overlay");
-    const loginDialog = document.getElementById("signin-dialog");
-    overLay.style.display = "none";
-    loginDialog.style.display = "none";
+
     document.body.classList.remove("hidden-overflow");
     hideError();
     submitOtpBtn.disabled = false;
@@ -46,6 +46,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Close OTP modal
   otpCloseBtn.addEventListener("click", resetOtpModal);
+
+  if (otpCloseBtn) {
+    otpCloseBtn.addEventListener("click", () => {
+      otpModal.classList.add("fadeOut");
+
+      otpModal.addEventListener(
+        "animationend",
+        function () {
+          otpCloseBtn.classList.remove("fadeOut");
+          overLay.style.display = "none";
+          signupDialog.style.display = "none";
+          signinDialog.style.display = "none";
+          otpModal.style.display = "none";
+          otpDialog.style.display = "none";
+        },
+        { once: true }
+      );
+    });
+  }
 
   // OTP input auto focus
   otpInputs.forEach((input, index) => {
@@ -90,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hideError();
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/verify/email",
+        "https://api.stopreg.com/api/v1/auth/verify/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -105,7 +124,16 @@ document.addEventListener("DOMContentLoaded", () => {
           message: "Email verified successfully!",
           position: "topRight",
         });
-        resetOtpModal();
+        overLay.style.display = "flex";
+        signupDialog.style.display = "none";
+        signinDialog.style.display = "block";
+        otpModal.style.display = "none";
+        otpDialog.style.display = "none";
+
+        signinDialog.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       } else {
         showError(data.description || data.message || "Verification failed!");
         console.log("Verification failed:", data, email, otp);
@@ -146,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/verify/email",
+        "https://api.stopreg.com/api/v1/auth/verify/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -161,7 +189,19 @@ document.addEventListener("DOMContentLoaded", () => {
           message: "Email verified successfully!",
           position: "topRight",
         });
-        resetOtpModal();
+        overLay.style.display = "flex";
+        signupDialog.style.display = "none";
+        signinDialog.style.display = "block";
+        otpModal.style.display = "none";
+        otpDialog.style.display = "none";
+
+        signinDialog.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+        navIcons.classList.remove("open");
+        navMenu.classList.remove("active");
+        document.body.classList.add("hidden-overflow");
       } else {
         showError(
           data.description || data.message || "Otp verification failed!"
@@ -191,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/resend/email",
+        "https://api.stopreg.com/api/v1/auth/resend/email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
