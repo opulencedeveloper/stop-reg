@@ -1,14 +1,15 @@
 window.onload = function () {
   const accordionButtons = document.querySelectorAll(".accordion-button");
+  // Yearly pricing removed - commented out
   const monthlyBtn = document.querySelector(".land-pricing-sect-mth");
-  const yearlyBtn = document.querySelector(".land-pricing-sect-yr");
-  const selector = document.querySelector(".land-pricing-sect-selctor");
+  // const yearlyBtn = document.querySelector(".land-pricing-sect-yr");
+  // const selector = document.querySelector(".land-pricing-sect-selctor");
   const monthlyContent = document.querySelector(".land-cont-mnth");
-  const yearlyContent = document.querySelector(".land-cont-yr");
+  // const yearlyContent = document.querySelector(".land-cont-yr");
   const landPricingSectMthBtn = document.querySelector(
     ".land-pricing-sect-mth"
   );
-  const landPricingSectYrBtn = document.querySelector(".land-pricing-sect-yr");
+  // const landPricingSectYrBtn = document.querySelector(".land-pricing-sect-yr");
   var navIcons = document.querySelector('.nav-icon2');
   const navMenu = document.querySelector(".nav-menu");
 
@@ -40,25 +41,26 @@ window.onload = function () {
     });
   }
 
-  if (monthlyBtn) {
-    monthlyBtn.addEventListener("click", function () {
-      selector.style.transform = "translateX(10%)";
-      monthlyContent.classList.add("active");
-      yearlyContent.classList.remove("active");
-      landPricingSectMthBtn.classList.add("active-btn");
-      landPricingSectYrBtn.classList.remove("active-btn");
-    });
-  }
+  // Yearly pricing toggle removed - commented out
+  // if (monthlyBtn) {
+  //   monthlyBtn.addEventListener("click", function () {
+  //     selector.style.transform = "translateX(10%)";
+  //     monthlyContent.classList.add("active");
+  //     yearlyContent.classList.remove("active");
+  //     landPricingSectMthBtn.classList.add("active-btn");
+  //     landPricingSectYrBtn.classList.remove("active-btn");
+  //   });
+  // }
 
-  if (yearlyBtn) {
-    yearlyBtn.addEventListener("click", function () {
-      selector.style.transform = "translateX(100%)";
-      yearlyContent.classList.add("active");
-      monthlyContent.classList.remove("active");
-      landPricingSectYrBtn.classList.add("active-btn");
-      landPricingSectMthBtn.classList.remove("active-btn");
-    });
-  }
+  // if (yearlyBtn) {
+  //   yearlyBtn.addEventListener("click", function () {
+  //     selector.style.transform = "translateX(100%)";
+  //     yearlyContent.classList.add("active");
+  //     monthlyContent.classList.remove("active");
+  //     landPricingSectYrBtn.classList.add("active-btn");
+  //     landPricingSectMthBtn.classList.remove("active-btn");
+  //   });
+  // }
 
   function startProgress(progressBarId, progressLabelId, limit) {
     let progress = 0;
@@ -83,7 +85,87 @@ window.onload = function () {
   startProgress("prog-3", "prog-3-label", 92);
 
   const docsScrollButton = document.querySelectorAll(".docsScrollButton");
+  let isProgrammaticScroll = false;
+  let scrollTimeout;
+
   if (docsScrollButton) {
+    // Scroll spy functionality - update active button based on scroll position
+    const docSections = document.querySelectorAll('[id^="docume-item"]');
+    
+    // Function to update active button based on visible section
+    const updateActiveButton = (sectionId) => {
+      if (isProgrammaticScroll) return; // Don't update during programmatic scrolling
+
+      const targetButton = document.querySelector(
+        `[policy-data-target="${sectionId}"]`
+      );
+
+      if (targetButton) {
+        // Remove active class from all buttons
+        document.querySelectorAll(".docsScrollButton").forEach((btn) => {
+          btn.classList.remove("active-docume-list-item");
+        });
+        // Add active class to the corresponding button
+        targetButton.classList.add("active-docume-list-item");
+      }
+    };
+
+    // Set up scroll spy if sections exist
+    if (docSections.length > 0) {
+      // Use Intersection Observer for better performance
+      const observerOptions = {
+        root: null,
+        rootMargin: '-140px 0px -50% 0px', // Offset from top, trigger when section reaches ~140px from top
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+            updateActiveButton(entry.target.id);
+          }
+        });
+      }, observerOptions);
+
+      // Observe all documentation sections
+      docSections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      // Fallback: scroll event for sections that might not trigger observer
+      let ticking = false;
+      window.addEventListener("scroll", () => {
+        if (isProgrammaticScroll || ticking) return;
+        
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          const offset = 200;
+          let currentSection = null;
+          let minDistance = Infinity;
+
+          docSections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const distance = Math.abs(rect.top - offset);
+
+            // Prefer sections that are in viewport
+            if (rect.top <= offset + 150 && rect.bottom >= 0) {
+              if (distance < minDistance) {
+                minDistance = distance;
+                currentSection = section;
+              }
+            }
+          });
+
+          if (currentSection) {
+            updateActiveButton(currentSection.id);
+          }
+          
+          ticking = false;
+        });
+      });
+    }
+
+    // Button click handlers
     docsScrollButton.forEach((button) => {
       button.addEventListener("click", function () {
         // Remove active class from all buttons
@@ -100,6 +182,10 @@ window.onload = function () {
         const offset = 140; // offset in px
   
         if (targetElement) {
+          // Mark as programmatic scroll to prevent scroll spy from interfering
+          isProgrammaticScroll = true;
+          clearTimeout(scrollTimeout);
+
           // Calculate the position to scroll with offset
           const elementRect = targetElement.getBoundingClientRect();
           const elementTop = elementRect.top + window.pageYOffset;
@@ -110,6 +196,11 @@ window.onload = function () {
             top: offsetPosition,
             behavior: "smooth",
           });
+
+          // Re-enable scroll spy after scroll completes
+          scrollTimeout = setTimeout(() => {
+            isProgrammaticScroll = false;
+          }, 800); // Wait 800ms after scroll ends
         } else {
           console.warn(`Element with ID ${targetId} not found`);
         }

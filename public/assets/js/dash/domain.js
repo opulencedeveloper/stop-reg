@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Only add event listeners if elements exist
     if (reportDomainBtn && reportDomainOverlay) {
-      reportDomainBtn.addEventListener("click", function () {
-        reportDomainOverlay.style.display = "flex";
-        document.body.classList.add("hidden-overflow");
-      });
+    reportDomainBtn.addEventListener("click", function () {
+      reportDomainOverlay.style.display = "flex";
+      document.body.classList.add("hidden-overflow");
+    });
     }
   
     // mobilereportDomainBtn.addEventListener("click", function () {
@@ -22,19 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // });
   
     if (closeReportDialogBtn && reportContainer && reportDomainOverlay) {
-      closeReportDialogBtn.addEventListener("click", function () {
-        reportContainer.classList.add("fadeOut");
+    closeReportDialogBtn.addEventListener("click", function () {
+      reportContainer.classList.add("fadeOut");
   
-        reportContainer.addEventListener(
-          "animationend",
-          function () {
-            reportContainer.classList.remove("fadeOut");
-            reportDomainOverlay.style.display = "none";
-            document.body.classList.remove("hidden-overflow");
-          },
-          { once: true }
-        );
-      });
+      reportContainer.addEventListener(
+        "animationend",
+        function () {
+          reportContainer.classList.remove("fadeOut");
+          reportDomainOverlay.style.display = "none";
+          document.body.classList.remove("hidden-overflow");
+        },
+        { once: true }
+      );
+    });    
     }
 });
 

@@ -1,52 +1,3 @@
-<<<<<<< HEAD
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("authToken");
-
-  if (!token) {
-    window.location.href = "/";
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      "https://api.stopreg.com/api/v1/user/info",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ send token here
-        },
-      }
-    );
-
-    const data = await response.json();
-    console.log("User Info Response:", data);
-
-    if (response.ok) {
-      const user = data?.data || data;
-      console.log("User Data:", user);
-
-      const tokenElement = document.querySelector(".main-token");
-      tokenElement.textContent = user.userDetails.apiToken;
-
-      console.log ("token element", tokenElement)
-
-      document.getElementById("user-name").textContent = user.name || "Unknown";
-      document.getElementById("user-email").textContent =
-        user.email || "No email";
-    } else {
-      console.error("Error fetching user:", data);
-
-      if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        window.location.href = "/";
-      }
-    }
-  } catch (error) {
-    console.error("Network error:", error);
-  }
-});
-=======
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
@@ -137,7 +88,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const apiRequestLeftEl = document.querySelector(".api-request-left");
         if (apiRequestLeftEl && userDetails.planId) {
           const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
-          const apiLimit = userDetails.planId.apiLimit ?? 200;
           const durationInDays = userDetails.planId.durationInDays ?? 30;
           apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
         }
@@ -169,10 +119,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 401) {
         localStorage.removeItem("authToken");
         window.location.href = "/";
+      } else {
+        const errorMessage = data.description || data.message || "Failed to fetch user information.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Network error:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 100000000,
+      });
+    }
   } finally {
     // Hide spinner after data is loaded
     if (typeof window.hideSpinner === 'function') {
@@ -180,4 +154,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278

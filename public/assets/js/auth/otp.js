@@ -120,10 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
-        iziToast.success({
-          message: "Email verified successfully!",
-          position: "topRight",
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Email verified successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
         overLay.style.display = "flex";
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
@@ -135,7 +142,20 @@ document.addEventListener("DOMContentLoaded", () => {
           block: "center",
         });
       } else {
-        showError(data.description || data.message || "Verification failed!");
+        const errorMessage = data.description || data.message || "Verification failed!";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
         console.log("Verification failed:", data, email, otp);
       }
     } catch (err) {
@@ -185,10 +205,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
-        iziToast.success({
-          message: "Email verified successfully!",
-          position: "topRight",
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Email verified successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
         overLay.style.display = "flex";
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
@@ -203,15 +230,38 @@ document.addEventListener("DOMContentLoaded", () => {
         navMenu.classList.remove("active");
         document.body.classList.add("hidden-overflow");
       } else {
-        showError(
-          data.description || data.message || "Otp verification failed!"
-        );
+        const errorMessage = data.description || data.message || "Otp verification failed!";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
         submitOtpBtn.disabled = false;
         submitOtpBtn.textContent = originalText;
       }
     } catch (err) {
       console.error(err);
-      showError("Network error — please try again later.");
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      } else {
+        showError("Network error — please try again later.");
+      }
       submitOtpBtn.disabled = false;
       submitOtpBtn.textContent = originalText;
     }
@@ -241,16 +291,48 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
-        iziToast.success({
-          message: "OTP resent successfully!",
-          position: "topRight",
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "OTP resent successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       } else {
-        showError(data.description || data.message || "OTP resend failed!");
+        const errorMessage = data.description || data.message || "OTP resend failed!";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
       }
     } catch (err) {
       console.error(err);
-      showError("Network error — please try again later.");
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      } else {
+        showError("Network error — please try again later.");
+      }
     } finally {
       submitOtpBtn.disabled = false;
       submitOtpBtn.textContent = originalText;

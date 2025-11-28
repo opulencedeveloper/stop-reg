@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Hide the loading spinner since this page doesn't need initial data fetch
+  if (typeof window.hideSpinner === 'function') {
+    window.hideSpinner();
+  }
+
   const form = document.getElementById("api-check-form");
   const submitBtn = form.querySelector(".api-check-submit-btn") || form.querySelector(".bulk-check-email-btn");
   const resultContainer = document.getElementById("api-check-result");
@@ -59,6 +64,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.message === "error" || !response.ok) {
         // Handle error response - display description
         const errorDescription = data.description || data.message || 'Request failed';
+        
+        // Show error toast
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorDescription,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        }
+        
         resultContainer.innerHTML = `
           <h4 class="disposal-result-title" style="color: var(--tertiary-color);">
             Error: ${errorDescription}
@@ -75,6 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         `;
       } else {
+        // Show success toast
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Email check completed successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        }
         // Display the response data
         // Format the response for display
         let resultHTML = `
@@ -165,6 +196,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("Network error:", err);
+      
+      // Show error toast
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: err.message || "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      }
+      
       resultContainer.style.display = "flex";
       resultContainer.innerHTML = `
         <h4 class="disposal-result-title" style="color: var(--tertiary-color);">
