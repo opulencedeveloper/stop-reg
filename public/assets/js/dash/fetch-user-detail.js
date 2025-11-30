@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("User Data:", user);
 
       const apiToken = user.userDetails.apiToken;
-      
+
       const tokenElement = document.querySelector(".main-token");
       if (tokenElement && apiToken) {
         tokenElement.textContent = apiToken;
