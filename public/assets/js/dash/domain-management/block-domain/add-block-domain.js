@@ -84,22 +84,52 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Response:", data);
 
       if (response.ok) {
-        iziToast.success({
-          message: "Domain Blocked successfully!",
-          position: "topRight",
-          drag: false,
-          displayMode: 1,
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Domain blocked successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        }
         
         addBlockForm.reset();
         reportDomainOverlay.style.display = "none";
       } else {
-        showError(data.description || data.message || "Blocking failed!");
+        const errorMessage = data.description || data.message || "Failed to block domain.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        } else {
+          showError(errorMessage);
+        }
       }
       addBlockForm.reset();
     } catch (err) {
       console.error("Error:", err);
-      showError("Something went wrong. Try again.");
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      } else {
+        showError("Something went wrong. Try again.");
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Block";

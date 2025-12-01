@@ -79,19 +79,51 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.ok) {
         localStorage.setItem("userName", fullNameInput);
-        iziToast.success({
-          message: "Account updated successfully!",
-          position: "topRight",
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Profile updated successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
 
         form.reset();
         window.location.reload();
       } else {
-        showError(data.description || data.message || "Update failed!");
+        const errorMessage = data.description || data.message || "Update failed!";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
       }
     } catch (err) {
-      showError("Network error — please try again later.");
       console.error(err);
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      } else {
+        showError("Network error — please try again later.");
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -134,9 +166,33 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 401) {
         localStorage.removeItem("authToken");
         window.location.href = "/";
+      } else {
+        const errorMessage = data.description || data.message || "Failed to fetch user information.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Network error fetching user info:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 100000000,
+      });
+    }
   }
 });

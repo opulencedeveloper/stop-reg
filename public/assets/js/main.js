@@ -43,16 +43,27 @@ if (content) {
   content.style.display = "none";
 }
 if (spinner) {
-  document.body.classList.add('hidden-overflow');
+document.body.classList.add('hidden-overflow');
 }
 
 window.addEventListener("load", function () {
     // For landing pages, hide spinner immediately
     // For dashboard pages, keep it visible until data loads
-    const isDashboardPage = window.location.pathname.includes('/dashboard/') || 
-                           window.location.pathname.includes('api-check.html');
+    // api-check.html is a special case - it doesn't need initial data fetch
+    const isDashboardPage = window.location.pathname.includes('/dashboard/');
+    const isApiCheckPage = window.location.pathname.includes('api-check');
     
-    if (!isDashboardPage) {
+    if (!isDashboardPage && !isApiCheckPage) {
+      // Landing pages - hide spinner immediately
+      if (spinner) {
+        spinner.style.display = "none";
+      }
+      document.body.classList.remove('hidden-overflow');
+      if (content) {
+        content.style.display = "block";
+      }
+    } else if (isApiCheckPage) {
+      // api-check.html - hide spinner immediately since it doesn't need data fetch
       if (spinner) {
         spinner.style.display = "none";
       }

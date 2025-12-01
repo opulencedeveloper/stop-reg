@@ -153,26 +153,74 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What are disposable email addresses?",
+            "name": "What is a disposable email blocker?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Disposable email addresses are temporary email accounts that can be created quickly and discarded after use. They are often used to avoid spam or to sign up for services without providing a real email address."
+              "text": "A disposable email blocker is a tool that automatically detects and blocks temporary, fake, or throwaway email addresses from signing up on your website. This helps you maintain a clean user database, reduce spam, and protect your platform from abuse."
             }
           },
           {
             "@type": "Question",
-            "name": "Why block disposable email?",
+            "name": "Why should I block disposable email addresses?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Blocking disposable emails helps prevent spam, fake registrations, and abuse of free trials. It ensures that users provide legitimate contact information and improves the quality of your user base."
+              "text": "Disposable emails are commonly used for fraud, spam, duplicate account creation, free-trial abuse, and bot signups. Blocking them helps you improve lead quality, reduce fraud and abuse, protect your free trials, increase conversion accuracy, and improve email deliverability."
             }
           },
           {
             "@type": "Question",
-            "name": "How does StopReg block temporary email?",
+            "name": "Does your API support real-time checking?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "StopReg maintains a comprehensive database of over 124,000 disposable email domains. When you check an email address through our API, we verify if the domain is in our database and return a real-time validation result."
+              "text": "Yes. The API validates emails instantly (typically within milliseconds), allowing you to block disposable emails during signup, checkout, or form submission."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I whitelist specific email providers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can whitelist domains you trust to ensure legitimate users are never blocked by mistake."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you store email addresses checked through the API?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. We do not store full email addresses. For privacy and compliance, we only check the domain part and discard all data immediately."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you block corporate emails?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Only temporary and fake domains. Corporate, ISP, and custom domain emails are always allowed unless they appear in known disposable lists."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer volume-based or unlimited plans?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We offer flexible plans, including monthly subscription and unlimited requests for enterprise users."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer a free trial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Feel free to test the free trial and see how many fake signups you prevent within minutes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can this improve my email deliverability?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. By blocking temporary and fake emails, your bounce rate drops, your sender reputation improves, and you stay compliant with email service providers. This helps your real messages reach real inboxes."
             }
           }
         ]
@@ -224,12 +272,12 @@
           <button content-data-target="api" class="section-scroller">
             API
           </button>
-          <button
+          <!-- <button
             content-data-target="wordpress-plugin"
             class="section-scroller"
           >
             WordPress Plugin
-          </button>
+          </button> -->
           <button content-data-target="pricing" class="section-scroller">
             Pricing
           </button>
@@ -276,7 +324,7 @@
           <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
 
           <p class="otp-resend cr-auth-tle">
-            Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
+            Didn't receive the code? <span id="resend-otp-btn">Resend</span>
           </p>
         </div>
       </div>
@@ -419,12 +467,12 @@
             <button content-data-target="api" class="section-scroller">
               API
             </button>
-            <button
+            <!-- <button
               content-data-target="wordpress-plugin"
               class="section-scroller"
             >
               WordPress Plugin
-            </button>
+            </button> -->
             <button content-data-target="pricing" class="section-scroller">
               Pricing
             </button>
@@ -464,8 +512,8 @@
               these issues.
             </p>
             <div class="hero-btn-wrapper">
-              <button>Get Free API Token</button>
-              <button>Add to WordPress</button>
+              <button class="signup-overlay-btn">Get Free API Token</button>
+              <!-- <button>Add to WordPress</button> -->
             </div>
           </div>
           <div class="hero-sect-two box animation3">
@@ -661,11 +709,11 @@
             <p>DOMAINS</p>
             <p>of disposable email providers in our database</p>
           </div>
-          <div class="efea-wrapper-sct-one-item box animation3">
+          <!-- <div class="efea-wrapper-sct-one-item box animation3">
             <p>500+</p>
             <p>HAPPY USERS</p>
             <p>of our API and WordPress plugin</p>
-          </div>
+          </div> -->
         </div>
         <div class="efea-wrapper-sct-two">
           <div class="efea-wrapper-sct-two-inner-one box animation5">
@@ -674,7 +722,7 @@
               New disposable email services keep popping up, and we keep
               blocking them.
             </p>
-            <button>Get Free API Token</button>
+            <button class="signup-overlay-btn">Get Free API Token</button>
           </div>
           <div class="efea-wrapper-sct-two-inner-two box animation6">
             <img
@@ -736,7 +784,7 @@
                 <p>Enter API token in WP Admin</p>
               </div>
             </div>
-            <button class="bdeiw-btn">Get The Plugin Now</button>
+            <!-- <button class="bdeiw-btn">Get The Plugin Now</button> -->
           </div>
         </div>
       </section>
@@ -853,11 +901,12 @@
 
       <!-- Pricing Start -->
       <section id="pricing" class="land-pricing-wrapper">
+             <p class="lpssut">SAVE UP TO 30%</p>
         <p class="land-pricing-hd box animation5">
           We offer great <span class="land-pricing-hd-inner">pricing</span> plan
           for the application
         </p>
-        <div class="land-pricing-sect">
+        <!-- <div class="land-pricing-sect">
           <p class="lpssut">SAVE UP TO 30%</p>
           <img
             class="lpssut-pointer"
@@ -867,7 +916,7 @@
           <div class="land-pricing-sect-selctor"></div>
           <div class="land-pricing-sect-mth active-btn">Monthly</div>
           <div class="land-pricing-sect-yr">Yearly</div>
-        </div>
+        </div> -->
       </section>
       <!-- Pricing End -->
 
@@ -881,34 +930,14 @@
                 class="land-pricing-container-item box box1 animation1"
                 id="pricing-plans1"
               >
-                <p class="land-pricing-container-item-hd">Standard</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">5</span> / month
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
+                <!-- Content will be populated by subscription-plan.js -->
               </div>
 
               <div
                 class="land-pricing-container-item box box2 animation2"
                 id="pricing-plans2"
               >
-                <p class="land-pricing-container-item-hd">Plus</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">20</span> / month
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
+                <!-- Content will be populated by subscription-plan.js -->
               </div>
             </div>
 
@@ -917,106 +946,21 @@
                 class="land-pricing-container-sectone-recomm box animation3"
                 id="pricing-plans3"
               >
-                <p class="lpcsr-remm">Recommended</p>
-                <div class="land-pricing-container-item-recomm">
-                  <p class="land-pricing-container-item-hd">Pro</p>
-                  <p class="land-pricing-container-item-tle">
-                    5,000 API requests in 30 days
-                  </p>
-                  <p class="land-pricing-container-item-sub-tle">
-                    <span class="pr-do-si">$</span
-                    ><span class="pr-do-am">20</span> / month
-                  </p>
-                  <button class="land-pricing-container-item-btn-recomm">
-                    Get Started
-                  </button>
-                </div>
+                <!-- Content will be populated by subscription-plan.js -->
               </div>
 
               <div
                 class="land-pricing-container-item box animation1"
                 id="pricing-plans4"
               >
-                <p class="land-pricing-container-item-hd">Max</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">500</span> / month
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
+                <!-- Content will be populated by subscription-plan.js -->
               </div>
             </div>
           </div>
           <!-- Monthly Plan End -->
 
-          <!-- Yearly Plan Start -->
-          <div class="land-cont-yr">
-            <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-item box animation1">
-                <p class="land-pricing-container-item-hd">Standard</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">5</span> / year
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
+          <!-- Yearly Plan Removed -->
               </div>
-
-              <div class="land-pricing-container-item box animation2">
-                <p class="land-pricing-container-item-hd">Standard</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">5</span> / year
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
-              </div>
-            </div>
-
-            <div class="land-pricing-container-sectone">
-              <div class="land-pricing-container-item box animation3">
-                <p class="land-pricing-container-item-hd">Standard</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">5</span> / year
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Started
-                </button>
-              </div>
-
-              <div class="land-pricing-container-item box animation1">
-                <p class="land-pricing-container-item-hd">Standard</p>
-                <p class="land-pricing-container-item-tle">
-                  5,000 API requests in 30 days
-                </p>
-                <p class="land-pricing-container-item-sub-tle">
-                  <span class="pr-do-si">$</span
-                  ><span class="pr-do-am">5</span> / year
-                </p>
-                <button class="land-pricing-container-item-btn">
-                  Get Startedd
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- Monthly Plan End -->
-        </div>
         <!-- Pricing Content End -->
 
         <!-- Fags Start -->
@@ -1025,7 +969,7 @@
         </p>
         <p class="fags-tle box animation5">
           Your questions around disposable email, answered.
-        </p>
+                </p>
 
         <div class="accordion">
           <div class="accordion-item box animation5">
@@ -1034,57 +978,118 @@
               aria-expanded="false"
               aria-controls="faq-1"
             >
-              1. What are disposable email addresses?
+              1. What is a disposable email blocker?
               <span class="accordion-icon" aria-hidden="true"
                 ><img src="/assets/icons/drop-down.svg" alt=""
               /></span>
+                </button>
+            <div class="accordion-content">
+              <p>A disposable email blocker is a tool that automatically detects and blocks temporary, fake, or throwaway email addresses from signing up on your website. This helps you maintain a clean user database, reduce spam, and protect your platform from abuse.</p>
+              </div>
+            </div>
+          <div class="accordion-item box animation5">
+            <button class="accordion-button">
+              2. Why should I block disposable email addresses?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+                </button>
+            <div class="accordion-content">
+              <p>Disposable emails are commonly used for fraud, spam, duplicate account creation, free-trial abuse, and bot signups. Blocking them helps you:</p>
+              <ul>
+                <li>Improve lead quality</li>
+                <li>Reduce fraud and abuse</li>
+                <li>Protect your free trials</li>
+                <li>Increase conversion accuracy</li>
+                <li>Improve email deliverability</li>
+              </ul>
+              </div>
+          </div>
+          <div class="accordion-item box animation4">
+            <button class="accordion-button">
+              3. Does your API support real-time checking?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+                </button>
+            <div class="accordion-content">
+              <p>Yes. The API validates emails instantly (typically within milliseconds), allowing you to block disposable emails during signup, checkout, or form submission.</p>
+              </div>
+            </div>
+          <div class="accordion-item box animation2">
+            <button class="accordion-button">
+              4. Can I whitelist specific email providers?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 1.</p>
+              <p>Yes. You can whitelist domains you trust to ensure legitimate users are never blocked by mistake.</p>
+          </div>
+        </div>
+          <div class="accordion-item box animation3">
+            <button class="accordion-button">
+              5. Do you store email addresses checked through the API?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>No. We do not store full email addresses. For privacy and compliance, we only check the domain part and discard all data immediately.</p>
             </div>
           </div>
           <div class="accordion-item box animation5">
             <button class="accordion-button">
-              2. Why block disposable email?
+              6. Do you block corporate emails?
               <span class="accordion-icon"
                 ><img src="/assets/icons/drop-down.svg"
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 2.</p>
+              <p>No. Only temporary and fake domains. Corporate, ISP, and custom domain emails are always allowed unless they appear in known disposable lists.</p>
             </div>
           </div>
           <div class="accordion-item box animation4">
             <button class="accordion-button">
-              3. Why do people use disposable email?
+              7. Do you offer volume-based or unlimited plans?
               <span class="accordion-icon"
                 ><img src="/assets/icons/drop-down.svg"
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 3.</p>
+              <p>Yes. We offer flexible plans, including:</p>
+              <ul>
+                <li>Monthly subscription</li>
+                <li>Unlimited requests for enterprise users</li>
+              </ul>
             </div>
           </div>
           <div class="accordion-item box animation2">
             <button class="accordion-button">
-              4. How does Stopreg block temporary email?
+              8. Do you offer a free trial?
               <span class="accordion-icon"
                 ><img src="/assets/icons/drop-down.svg"
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 4.</p>
+              <p>Yes. Feel free to test the free trial and see how many fake signups you prevent within minutes.</p>
             </div>
           </div>
           <div class="accordion-item box animation3">
             <button class="accordion-button">
-              5. Where do I report a domain to be blocked?
+              9. Can this improve my email deliverability?
               <span class="accordion-icon"
                 ><img src="/assets/icons/drop-down.svg"
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Content for section 5.</p>
+              <p>Yes. By blocking temporary and fake emails:</p>
+              <ul>
+                <li>Your bounce rate drops</li>
+                <li>Your sender reputation improves</li>
+                <li>You stay compliant with email service providers</li>
+              </ul>
+              <p>This helps your real messages reach real inboxes.</p>
             </div>
           </div>
         </div>
@@ -1103,9 +1108,7 @@
             <div class="foot-detail">
               <p class="foot-detail-hd">What we do</p>
               <p class="foot-detail-tle">
-                Lörem ipsum fanessade tresamma dilyd av pogangar. Anaskapet
-                duktigt och profoni i dilängen pobelt. Saras kvasingen langen,
-                tills pokorat dende. Teressa antinde kaluvis.
+                Our service continuously monitors and identifies disposable email addresses in real-time, effectively blocking them to prevent potential issues such as spam, fraud, and other security concerns. 
               </p>
             </div>
             <div class="foot-detail">
@@ -1123,6 +1126,7 @@
               <a href ="/privacy-policy.html" class="foot-detail-link" href="#" class="foot-detail-tle"
                 >Privacy Policy
               </a>
+              <a href="/api-check.html" class="foot-detail-link">API Check</a>
             </div>
           </section>
           <section class="land-foot-wrapp-sct-two">
@@ -1139,5 +1143,8 @@
     <script src="/assets/js/auth/login.js" defer></script>
     <script src="/assets/js/subscription-plan.js" defer></script>
     <script src="/assets/js/auth/otp.js" defer></script>
+    <!-- Zoho SalesIQ Live Chat Widget -->
+    <script>window.$zoho=window.$zoho||{};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script>
+    <script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1" defer></script>
   </body>
 </html>

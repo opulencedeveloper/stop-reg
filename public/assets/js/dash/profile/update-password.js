@@ -76,20 +76,52 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
       if (response.ok) {
-        iziToast.success({
-          message: "Account logged in successfully!",
-          position: "topRight",
-        });
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Password updated successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
 
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
         form.reset();
       } else {
-        showError(data.description || data.message || "Login failed!");
+        const errorMessage = data.description || data.message || "Failed to update password.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        } else {
+          showError(errorMessage);
+        }
       }
     } catch (err) {
-      showError("Network error — please try again later.");
       console.error(err);
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      } else {
+        showError("Network error — please try again later.");
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;

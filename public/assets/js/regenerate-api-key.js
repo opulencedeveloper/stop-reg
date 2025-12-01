@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
 const regenerateBtn = document.querySelector(".ratoken-btn");
 
 regenerateBtn.addEventListener("click", async () => {
@@ -109,10 +112,47 @@ regenerateBtn.addEventListener("click", async () => {
           }
         }
 
-        console.log("✅ Token regenerated successfully!");
+        // Show success toast
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "API token regenerated successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
+      } else {
+        // Show error if no token in response
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: "Failed to regenerate token. Please try again.",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       }
     } else {
       console.error("Error regenerating token:", data);
+      
+      const errorMessage = data.description || data.message || "Failed to regenerate token.";
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Error',
+          message: errorMessage,
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 100000000,
+        });
+      }
 
       if (response.status === 401) {
         localStorage.removeItem("authToken");
@@ -121,9 +161,23 @@ regenerateBtn.addEventListener("click", async () => {
     }
   } catch (error) {
     console.error("❌ Network error:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 100000000,
+      });
+    }
   } finally {
     regenerateBtn.disabled = false;
     regenerateBtn.textContent = originalText;
   }
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698

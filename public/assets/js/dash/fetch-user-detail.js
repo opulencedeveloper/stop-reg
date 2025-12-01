@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
@@ -45,6 +46,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
@@ -134,7 +137,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const apiRequestLeftEl = document.querySelector(".api-request-left");
         if (apiRequestLeftEl && userDetails.planId) {
           const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
-          const apiLimit = userDetails.planId.apiLimit ?? 200;
           const durationInDays = userDetails.planId.durationInDays ?? 30;
           apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
         }
@@ -172,10 +174,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 401) {
         localStorage.removeItem("authToken");
         window.location.href = "/";
+      } else {
+        const errorMessage = data.description || data.message || "Failed to fetch user information.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Network error:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 100000000,
+      });
+    }
   } finally {
     // Hide spinner after data is loaded
     if (typeof window.hideSpinner === "function") {

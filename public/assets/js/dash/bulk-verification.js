@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".bulk-verification-form");
@@ -213,6 +214,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".bulk-verification-form");
   const submitBtn = form.querySelector(".bulk-verify-domain-btn");
@@ -535,7 +538,24 @@ document.addEventListener("DOMContentLoaded", () => {
        console.log("dara", data)
       if (response.ok) {
         populateTable(data?.data || []);
+<<<<<<< HEAD
         bulkLinks.value = ""; 
+=======
+        bulkLinks.value = ""; // Clear textarea
+        
+        // Show success toast
+        if (typeof iziToast !== 'undefined') {
+          iziToast.success({
+            title: 'Success',
+            message: "Bulk verification completed successfully!",
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        }
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
       } else {
         const errorMessage = data.description || data.message || "Verification failed!";
         if (typeof iziToast !== 'undefined') {
@@ -554,6 +574,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error(err);
+      if (typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;

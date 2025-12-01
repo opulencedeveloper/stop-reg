@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
@@ -96,6 +97,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -205,10 +208,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 401) {
         localStorage.removeItem("authToken");
         window.location.href = "/";
+      } else {
+        const errorMessage = data.description || data.message || "Failed to fetch domains.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 9999,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Network error:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 9999,
+      });
+    }
   } finally {
     // Hide spinner after data is loaded
     if (typeof window.hideSpinner === 'function') {
@@ -216,4 +243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698

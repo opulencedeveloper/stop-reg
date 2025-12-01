@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("User Data:", user);
 
       const apiToken = user.userDetails.apiToken;
-      
+
       const tokenElement = document.querySelector(".main-token");
       if (tokenElement && apiToken) {
         tokenElement.textContent = apiToken;
@@ -94,10 +94,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.status === 401) {
         localStorage.removeItem("authToken");
         window.location.href = "/";
+      } else {
+        const errorMessage = data.description || data.message || "Failed to fetch user information.";
+        if (typeof iziToast !== 'undefined') {
+          iziToast.error({
+            title: 'Error',
+            message: errorMessage,
+            position: "topRight",
+            timeout: 5000,
+            drag: false,
+            displayMode: 1,
+            zindex: 100000000,
+          });
+        }
       }
     }
   } catch (error) {
     console.error("Network error:", error);
+    if (typeof iziToast !== 'undefined') {
+      iziToast.error({
+        title: 'Network Error',
+        message: "Network error — please try again later.",
+        position: "topRight",
+        timeout: 5000,
+        drag: false,
+        displayMode: 1,
+        zindex: 100000000,
+      });
+    }
   }
 
   // -----------------------------
