@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const overLay = document.getElementById("overlay");
   const signinDialog = document.getElementById("signin-dialog");
   const signupDialog = document.getElementById("signup-dialog");
+  const description = document.querySelector(".otp-email");
 
   // Error modal
   let errorModal = document.createElement("div");
@@ -85,13 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const urlEmail = params.get("email");
   const savedEmail = localStorage.getItem("otp_email");
   const email = savedEmail || urlEmail;
+  description.textContent = `${email}`;
 
   const urlOtp = params.get("token")?.replace(/"/g, "");
 
   // Auto-fill OTP if token exists
   if (urlEmail && params.has("token") && urlOtp) {
+    overLay.style.display = "none";
     otpModal.style.display = "flex";
-    otpDialog.style.display = "flex";
+
     document.body.classList.add("hidden-overflow");
 
     otpInputs.forEach((input, index) => {

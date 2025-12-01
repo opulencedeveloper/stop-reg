@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         otpModal.style.display = "flex";
         otpDialog.style.display = "flex";
-        document.body.classList.add("hidden-overflow");
+        
 
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
@@ -93,6 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       showError("Network error — please try again later.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
       console.error(err);
     } finally {
       submitBtn.disabled = false;

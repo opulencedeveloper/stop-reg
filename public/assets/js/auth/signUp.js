@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signup-form");
   const submitBtn = form.querySelector(".cr-btn");
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-=======
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signup-form");
   const submitBtn = form.querySelector(".cr-btn");
@@ -207,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
            form.reset();
           otpModal.style.display = "flex";
-          otpDialog.style.display = "flex";
+       
           document.body.classList.add("hidden-overflow");
         }, 300);
       } else {
@@ -248,4 +247,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278
+

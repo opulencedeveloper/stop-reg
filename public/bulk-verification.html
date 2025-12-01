@@ -96,6 +96,8 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
+    <link href="/assets/css/bulk-verification.css" rel="stylesheet" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -452,44 +454,127 @@
 
       <main>
         <section class="privacy-hero animation3">
-          <h1>Terms of Service</h1>
-          <p>Last Updated: 15 July, 2025.</p>
-          
+          <h1>Bulk Verification</h1>
+          <p>
+            Verify whether the provided email address is disposable or
+            temporary.
+          </p>
         </section>
-        <section class="privecy-contents">
-          <div class="privacy-section animation4">
-            <h1>WELCOME TO STOPREG</h1>
-            <div  class="contents animation6">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              
-            </div>
-            
-          </div>
-          <div class="privacy-section">
-            <h1>PURPOSE AND SCOPE OF AGREEMENT</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              <p>Niminde finass. Epiloda hähäsk megagavass blixad. Trasam antevis yrkessåpa kroledes pade. Tetrar mäck. Prok debeligt medborgarjournalistik. Flitbonus jongen hackathon megaren. Sore treng viplang. Mp3-spelare sesm hexakaras anagam plaliga. Porer gäsangen och heteronomi en rena. Bening antemurade. </p>
-            </div>
-            
-          </div>
-          <div class="privacy-section">
-            <h1>GETTING TO KNOW YOU</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              <p>Niminde finass. Epiloda hähäsk megagavass blixad. Trasam antevis yrkessåpa kroledes pade. Tetrar mäck. Prok debeligt medborgarjournalistik. Flitbonus jongen hackathon megaren. Sore treng viplang. Mp3-spelare sesm hexakaras anagam plaliga. Porer gäsangen och heteronomi en rena. Bening antemurade. </p>
-            </div>
-            
-          </div>
-          <div class="privacy-section">
-            <h1>ACCOUNT SECURITY</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-            </div>
-            
-          </div>
+        <section class="bulk-content-section box animation6">
+          <div class="dash-inner-inner-section">
+            <div class="dash-inner-inner-bulk-verification">
+              <h1 class="bulk-hd bulktitle">Bulk Verification</h1>
+              <form class="bulk-verification-form">
+                <fieldset>
+                  <label class="bulk-content">
+                    Input your data flexibly using domain names or email
+                    addresses, whether separated by spaces, delimiters, or
+                    arranged on single or multiple lines.
+                  </label>
 
+                  <textarea
+                    id="bulk-links"
+                    class="bulk-links-input"
+                    rows="6"
+                    placeholder="Enter domains or emails separated by space or comma (e.g., example.com user@email.com)"
+                  ></textarea>
+                </fieldset>
+
+                <button class="bulk-verify-domain-btn">Verify Domains</button>
+              </form>
+            </div>
+            <div class="dash-inner-inner-verification-status">
+              <div class="verify-status-head">
+                <h1 class="bulk-hd">Verification status</h1>
+                <!-- <button class="bulk-domain-download" id="bulk-domain-download">
+                  <div class="bulk-domain-download-icon">
+                    <img src="/assets/icons/download-bulk-icon.svg" alt="" />
+                  </div>
+                  <p>Download CSV</p>
+                </button> -->
+              </div>
+              <div class="bulk-tb-container">
+                <table>
+                  <tbody id="disposableResult">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </section>
+          <section class="fags-wrapper">
+    
+
+        <!-- Fags Start -->
+        <p id="fags" class="bulks-fags-hd box animation6">
+          Frequently Asked Questions
+        </p>
+        <p class="fags-tle box animation5">
+          Your questions around disposable email, answered.
+        </p>
+
+        <div class="accordion">
+          <div class="accordion-item box animation5">
+            <button
+              class="accordion-button"
+              aria-expanded="false"
+              aria-controls="faq-1"
+            >
+              1. What are disposable email addresses?
+              <span class="accordion-icon" aria-hidden="true"
+                ><img src="/assets/icons/drop-down.svg" alt=""
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 1.</p>
+            </div>
+          </div>
+          <div class="accordion-item box animation5">
+            <button class="accordion-button">
+              2. Why block disposable email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+         
+          </div>
+          <div class="accordion-item box animation4">
+            <button class="accordion-button">
+              3. Why do people use disposable email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 3.</p>
+            </div>
+          </div>
+          <div class="accordion-item box animation2">
+            <button class="accordion-button">
+              4. How does Stopreg block temporary email?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 4.</p>
+            </div>
+          </div>
+          <div class="accordion-item box animation3">
+            <button class="accordion-button">
+              5. Where do I report a domain to be blocked?
+              <span class="accordion-icon"
+                ><img src="/assets/icons/drop-down.svg"
+              /></span>
+            </button>
+            <div class="accordion-content">
+              <p>Content for section 5.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Fags End -->
+      </section>
       </main>
 
       <footer class="land-foot">
@@ -509,19 +594,35 @@
                 tills pokorat dende. Teressa antinde kaluvis.
               </p>
             </div>
-           <div class="foot-detail">
+            <div class="foot-detail">
               <p class="foot-detail-hd">Other Links</p>
-               <a href ="/contact.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/contact.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Contact Us</a
               >
-             
-               <a href ="/bulk-verification.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+
+              <a
+                href="/bulk-verification.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Bulk Verification</a
               >
-                <a href ="/terms.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/terms.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Terms of Service</a
               >
-              <a href ="/privacy-policy.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/privacy-policy.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Privacy Policy
               </a>
             </div>
@@ -540,5 +641,6 @@
     <script src="/assets/js/auth/login.js" defer></script>
     <script src="/assets/js/subscription-plan.js" defer></script>
     <script src="/assets/js/auth/otp.js" defer></script>
+    <script src="/assets/js/bulk-verification.js" ></script>
   </body>
 </html>

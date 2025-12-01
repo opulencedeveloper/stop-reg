@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("verify-form");
   const submitBtn = form.querySelector(".bulk-check-email-btn");
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-=======
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("verify-form");
   const submitBtn = form.querySelector(".bulk-check-email-btn");
@@ -278,4 +278,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278
+

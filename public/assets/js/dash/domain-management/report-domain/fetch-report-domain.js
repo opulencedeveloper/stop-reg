@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              `https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Network error:", error);
   }
 });
-=======
+
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              `https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -216,4 +216,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278
+

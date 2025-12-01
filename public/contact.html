@@ -96,6 +96,7 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/contact.css" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -450,45 +451,62 @@
       </header>
       <!-- Header End -->
 
-      <main>
-        <section class="privacy-hero animation3">
-          <h1>Terms of Service</h1>
-          <p>Last Updated: 15 July, 2025.</p>
-          
-        </section>
-        <section class="privecy-contents">
-          <div class="privacy-section animation4">
-            <h1>WELCOME TO STOPREG</h1>
-            <div  class="contents animation6">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              
+      <main class="main-wrapper">
+        <section class="contact-hero animation3"></section>
+        <section class="contact-wrapper animation5">
+          <div class="contact-contents-wrapper animation3">
+            <div class="contact-details animation4">
+              <h1>Contact Us</h1>
+              <p class="contact-discription">
+                We are committed to processing the information in order to
+                contact you and talk about your project.
+              </p>
+              <div class="contacts-contact-desktop">
+                <div class="contact-contacts">
+                  <img src="/assets/images/contactUs/email.svg" alt="" />
+                  <p>admin@stopreg.com</p>
+                </div>
+                <div class="contact-contacts">
+                  <img src="/assets/images/contactUs/mobile-chat.svg" alt="" />
+                  <p>+234-8123456789</p>
+                </div>
+              </div>
             </div>
-            
-          </div>
-          <div class="privacy-section">
-            <h1>PURPOSE AND SCOPE OF AGREEMENT</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              <p>Niminde finass. Epiloda hähäsk megagavass blixad. Trasam antevis yrkessåpa kroledes pade. Tetrar mäck. Prok debeligt medborgarjournalistik. Flitbonus jongen hackathon megaren. Sore treng viplang. Mp3-spelare sesm hexakaras anagam plaliga. Porer gäsangen och heteronomi en rena. Bening antemurade. </p>
+            <div class="form-wrapper animation6">
+              <form action="">
+                <fieldset>
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="6"
+                      required
+                    ></textarea>
+                  </div>
+                  <button class="cnt-btn" id="cnt-btn">Submit</button>
+                </fieldset>
+              </form>
             </div>
-            
+             <div class="contacts-contact-mobile">
+                <div class="contact-contacts">
+                  <img src="/assets/images/contactUs/email.svg" alt="" />
+                  <p>admin@stopreg.com</p>
+                </div>
+                <div class="contact-contacts">
+                  <img src="/assets/images/contactUs/mobile-chat.svg" alt="" />
+                  <p>+234-8123456789</p>
+                </div>
+              </div>
           </div>
-          <div class="privacy-section">
-            <h1>GETTING TO KNOW YOU</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-              <p>Niminde finass. Epiloda hähäsk megagavass blixad. Trasam antevis yrkessåpa kroledes pade. Tetrar mäck. Prok debeligt medborgarjournalistik. Flitbonus jongen hackathon megaren. Sore treng viplang. Mp3-spelare sesm hexakaras anagam plaliga. Porer gäsangen och heteronomi en rena. Bening antemurade. </p>
-            </div>
-            
-          </div>
-          <div class="privacy-section">
-            <h1>ACCOUNT SECURITY</h1>
-            <div class="contents">
-              <p>Lörem ipsum luk beligt nyn mellanförskap. Esiligt besede. Doxa antespen remism. Miktig yr besk. Makronenas menskopp att stenoturtad sagas. Nest reklejma dir för att hände. Nyguderat plall en lybebelt. Epifire beskade osat. Krolig spesm. Sask. Teröl vagen hid, i sasit. Immunitetspass gament. Du kan vara drabbad. </p>
-            </div>
-            
-          </div>
-
         </section>
       </main>
 
@@ -509,19 +527,35 @@
                 tills pokorat dende. Teressa antinde kaluvis.
               </p>
             </div>
-           <div class="foot-detail">
+            <div class="foot-detail">
               <p class="foot-detail-hd">Other Links</p>
-               <a href ="/contact.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/contact.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Contact Us</a
               >
-             
-               <a href ="/bulk-verification.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+
+              <a
+                href="/bulk-verification.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Bulk Verification</a
               >
-                <a href ="/terms.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/terms.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Terms of Service</a
               >
-              <a href ="/privacy-policy.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/privacy-policy.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Privacy Policy
               </a>
             </div>

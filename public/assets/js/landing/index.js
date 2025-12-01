@@ -659,7 +659,7 @@ const apiToken = 'YOUR_API_TOKEN';
 const email = 'test@example.com';
 
 const response = await fetch(
-  \`https://api.stopreg.com/api/v1/check/\${apiToken}?email=\${email}\`,
+  \` https://api.stopreg.com/api/v1/check/\${apiToken}?email=\${email}\`,
   {
     method: 'GET',
     headers: {
@@ -678,7 +678,7 @@ console.log(data);`,
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
 
-url = f'https://api.stopreg.com/api/v1/check/{api_token}?email={email}'
+url = f' https://api.stopreg.com/api/v1/check/{api_token}?email={email}'
 
 response = requests.get(url, headers={
     'Content-Type': 'application/json'

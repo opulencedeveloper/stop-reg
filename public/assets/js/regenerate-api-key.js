@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 const regenerateBtn = document.querySelector(".ratoken-btn");
 
 regenerateBtn.addEventListener("click", async () => {
@@ -57,8 +57,6 @@ regenerateBtn.addEventListener("click", async () => {
     regenerateBtn.textContent = originalText;
   }
 });
-=======
-const regenerateBtn = document.querySelector(".ratoken-btn");
 
 regenerateBtn.addEventListener("click", async () => {
   const token = localStorage.getItem("authToken");
@@ -101,7 +99,7 @@ regenerateBtn.addEventListener("click", async () => {
         // Update the link href and text
         const linkContainer = document.querySelector(".link-container");
         if (linkContainer) {
-          const newLink = `https://api.stopreg.com/api/v1/check/${newApiToken}?email=test@test.com`;
+          const newLink = ` https://api.stopreg.com/api/v1/check/${newApiToken}?email=test@test.com`;
           linkContainer.href = newLink;
           
           // Update the link text if it exists
@@ -128,4 +126,4 @@ regenerateBtn.addEventListener("click", async () => {
     regenerateBtn.textContent = originalText;
   }
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278
+

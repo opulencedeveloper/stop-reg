@@ -258,7 +258,7 @@ input:checked + .slider:before {
 }
 .error-modal {
   display: none;
-  width: 100%;
+  width: fit-content;
   padding: 12px 14px;
   border: 1px solid #ff4d4d;
   background-color: #fff0f0;
@@ -271,6 +271,7 @@ input:checked + .slider:before {
   box-sizing: border-box;
   box-shadow: 0 2px 8px rgba(255, 77, 77, 0.1);
   animation: slideDown 0.3s ease-in-out;
+  justify-content: center;
 }
 
 /* Error icon inside modal */

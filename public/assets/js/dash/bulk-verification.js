@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".bulk-verification-form");
   const submitBtn = form.querySelector(".bulk-verify-domain-btn");
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function populateTable(disposal) {
     disposableResult.innerHTML = "";
 
-    if (!disposal || disposal.length === 0) {
+    if (!disposal || disposal.length === 0 || !token) {
       renderEmptyState();
       return;
     }
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-=======
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".bulk-verification-form");
   const submitBtn = form.querySelector(".bulk-verify-domain-btn");
@@ -535,7 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
        console.log("dara", data)
       if (response.ok) {
         populateTable(data?.data || []);
-        bulkLinks.value = ""; // Clear textarea
+        bulkLinks.value = ""; 
       } else {
         const errorMessage = data.description || data.message || "Verification failed!";
         if (typeof iziToast !== 'undefined') {
@@ -560,4 +560,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
->>>>>>> 8dc7d2f50bc9c9492afbbee4c1af565f4992b278

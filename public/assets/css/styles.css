@@ -126,8 +126,9 @@
   justify-content: center;
   align-items: center;
   z-index: 9999999;
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
+
 }
 .otp-container {
   padding: 0 40px;
@@ -524,6 +525,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  
  
 }
 .privacy-hero h1{
@@ -535,6 +537,7 @@
   font-family: 'PlusJakartaSans-Regular', sans-serif;
   color: #737373;
   font-size: 20px;
+  text-align: center;
 }
 .privecy-contents{
   width: 100%;

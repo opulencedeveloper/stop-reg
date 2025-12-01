@@ -963,6 +963,7 @@
 .fags-wrapper {
   background-color: var(--color-seventeen);
   position: relative;
+  
 }
 
 .land-pricing-container {
@@ -1131,6 +1132,7 @@
   font-family: "PlusJakartaSans-ExtraBold";
   text-align: center;
   margin-bottom: 13px;
+
 }
 
 .fags-hd {
@@ -1456,6 +1458,7 @@
   border-radius: 8px;
   position: relative;
   padding-bottom: 24px;
+
 }
 .otp-email{
 color: var(--color-two)
