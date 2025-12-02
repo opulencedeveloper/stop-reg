@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const payload = { email };
 
     // Add spinner
-    const originalText = submitBtn.textContent;
+    const originalText = "verify";
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
 
@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (response.ok) {
         const disposal = data?.data;
+        submitBtn.textContent = originalText;
 
         // Determine YES/NO status
         const mxRecordStatus = disposal.mx_record ? "YES" : "NO";
@@ -146,11 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         form.reset();
       } else {
-        alert(data.description || data.message || "Verification failed!");
+          iziToast.error({
+          title: 'Error',
+          message: (data.description || data.message || "Verification failed!"),
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
       }
     } catch (err) {
       console.error("Network error:", err);
-      alert("Network error — please try again later.");
+ 
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -184,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const payload = { email };
 
     // Add spinner
-    const originalText = submitBtn.textContent;
+    const originalText = "verify";
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
 
@@ -255,7 +264,16 @@ document.addEventListener("DOMContentLoaded", () => {
             zindex: 9999,
           });
         } else {
-          alert(errorMessage);
+          
+          iziToast.warning({
+          title: 'Invalid Input',
+          message: errorMessage,
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
         }
       }
     } catch (err) {
@@ -271,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 9999,
         });
       } else {
-        alert("Network error — please try again later.");
+      
       }
     } finally {
       submitBtn.disabled = false;
@@ -378,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
             zindex: 9999,
           });
         } else {
-          alert(errorMessage);
+         
         }
       }
     } catch (err) {
@@ -394,7 +412,16 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 9999,
         });
       } else {
-        alert("Network error — please try again later.");
+         iziToast.error({
+          title: 'Network Error',
+          message: "Network error — please try again later.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
+        
       }
     } finally {
       submitBtn.disabled = false;

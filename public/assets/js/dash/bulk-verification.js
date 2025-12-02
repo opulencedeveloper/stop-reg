@@ -176,7 +176,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!token) return (window.location.href = "/");
 
     const links = getLinksArray();
-    if (links.length === 0) return alert("Please enter at least one domain or email address.");
+    if (links.length === 0) return 
+       iziToast.warning({
+          title: 'Invalid Input',
+          message: "Please enter at least one domain or email address.",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        })
+    
+  
 
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
@@ -203,7 +214,16 @@ document.addEventListener("DOMContentLoaded", () => {
         typingLine.innerText = "";
         typingLine.focus();
       } else {
-        alert(data.description || data.message || "Verification failed!");
+        iziToast.warning({
+          title: 'Invalid Input',
+          message: data.description || data.message || "Verification failed!",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        })
+   
       }
     } catch (err) {
       console.error(err);
@@ -368,7 +388,15 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 9999,
         });
       } else {
-        alert(errorMessage);
+       iziToast.warning({
+          title: 'Invalid Input',
+          message: errorMessage,
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
       }
     }
 
@@ -511,7 +539,16 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 9999,
         });
       } else {
-        alert("Please enter at least one domain or email address.");
+         iziToast.warning({
+          title: 'Invalid Input',
+          message: "Please enter at least one domain or email address",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        })
+      
       }
       return;
     }
@@ -569,7 +606,15 @@ document.addEventListener("DOMContentLoaded", () => {
             zindex: 9999,
           });
         } else {
-          alert(errorMessage);
+         iziToast.warning({
+          title: 'Invalid Input',
+          message: errorMessage,
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        })
         }
       }
     } catch (err) {

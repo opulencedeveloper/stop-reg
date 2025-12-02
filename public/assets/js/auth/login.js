@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.querySelector(".otp-email");
 
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
+ 
 
   // Error modal
   let errorModal = document.createElement("div");
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loginDialog.style.display = "none";
 
         otpModal.style.display = "flex";
-        otpDialog.style.display = "flex";
+        
         
 
         submitBtn.disabled = false;
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.querySelector(".otp-email");
 
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
+ 
 
   // Error modal
   let errorModal = document.createElement("div");

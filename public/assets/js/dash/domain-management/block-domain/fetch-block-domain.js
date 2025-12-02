@@ -1,5 +1,3 @@
- 
-
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -75,7 +73,15 @@ document.addEventListener("DOMContentLoaded", async () => {
               // Remove row from UI
               document.getElementById(domainId)?.remove();
             } else {
-              alert(deleteData.message || "Failed to delete domain.");
+              iziToast.error({
+                title: "Error",
+                message: deleteData.message || "Failed to delete domain.",
+                position: "topRight",
+                timeout: 5000,
+                drag: false,
+                displayMode: 1,
+                zindex: 9999,
+              });
             }
           } catch (error) {
             console.error("Delete error:", error);
@@ -98,8 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
- 
-  
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -110,7 +114,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Spinner is already visible for dashboard pages
   // Increment counter to keep it visible during fetch
-  if (typeof window.showSpinner === 'function') {
+  if (typeof window.showSpinner === "function") {
     window.showSpinner();
   }
 
@@ -181,10 +185,11 @@ document.addEventListener("DOMContentLoaded", async () => {
               // Remove row from UI
               document.getElementById(domainId)?.remove();
             } else {
-              const errorMessage = deleteData.message || "Failed to delete domain.";
-              if (typeof iziToast !== 'undefined') {
+              const errorMessage =
+                deleteData.message || "Failed to delete domain.";
+              if (typeof iziToast !== "undefined") {
                 iziToast.error({
-                  title: 'Error',
+                  title: "Error",
                   message: errorMessage,
                   position: "topRight",
                   timeout: 5000,
@@ -193,7 +198,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                   zindex: 9999,
                 });
               } else {
-                alert(errorMessage);
+                iziToast.error({
+                  title: "Error",
+                  message: errorMessage,
+                  position: "topRight",
+                  timeout: 5000,
+                  drag: false,
+                  displayMode: 1,
+                  zindex: 9999,
+                });
               }
             }
           } catch (error) {
@@ -211,10 +224,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         localStorage.removeItem("authToken");
         window.location.href = "/";
       } else {
-        const errorMessage = data.description || data.message || "Failed to fetch domains.";
-        if (typeof iziToast !== 'undefined') {
+        const errorMessage =
+          data.description || data.message || "Failed to fetch domains.";
+        if (typeof iziToast !== "undefined") {
           iziToast.error({
-            title: 'Error',
+            title: "Error",
             message: errorMessage,
             position: "topRight",
             timeout: 5000,
@@ -227,9 +241,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (error) {
     console.error("Network error:", error);
-    if (typeof iziToast !== 'undefined') {
+    if (typeof iziToast !== "undefined") {
       iziToast.error({
-        title: 'Network Error',
+        title: "Network Error",
         message: "Network error — please try again later.",
         position: "topRight",
         timeout: 5000,
@@ -240,12 +254,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } finally {
     // Hide spinner after data is loaded
-    if (typeof window.hideSpinner === 'function') {
+    if (typeof window.hideSpinner === "function") {
       window.hideSpinner();
     }
   }
 });
- 
-
- 
-  

@@ -29,7 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 9999,
         });
       } else {
-        alert("Please fill in both API token and email address");
+          iziToast.error({
+          title: 'Error',
+          message: "Please fill in both API token and email address",
+          position: "topRight",
+          timeout: 5000,
+          drag: false,
+          displayMode: 1,
+          zindex: 9999,
+        });
       }
       return;
     }

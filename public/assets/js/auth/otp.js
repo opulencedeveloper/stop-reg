@@ -1,7 +1,7 @@
  
 document.addEventListener("DOMContentLoaded", () => {
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
+  
   const otpInputs = document.querySelectorAll(".otp-input");
   const submitOtpBtn = document.getElementById("submit-otp-btn");
   const resendOtpBtn = document.getElementById("resend-otp-btn");
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     otpInputs.forEach((input) => (input.value = ""));
     localStorage.removeItem("otp_email");
     otpModal.style.display = "none";
-    otpDialog.style.display = "none";
+    
 
     document.body.classList.remove("hidden-overflow");
     hideError();
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
           signupDialog.style.display = "none";
           signinDialog.style.display = "none";
           otpModal.style.display = "none";
-          otpDialog.style.display = "none";
+          
         },
         { once: true }
       );
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
         otpModal.style.display = "none";
-        otpDialog.style.display = "none";
+        
 
         signinDialog.scrollIntoView({
           behavior: "smooth",
@@ -197,15 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
         otpModal.style.display = "none";
-        otpDialog.style.display = "none";
+        
 
         signinDialog.scrollIntoView({
           behavior: "smooth",
           block: "center",
         });
-        navIcons.classList.remove("open");
+        classList.remove("open");
         navMenu.classList.remove("active");
-        document.body.classList.add("hidden-overflow");
+        documennavIconst.body.classList.add("hidden-overflow");
       } else {
         showError(
           data.description || data.message || "Otp verification failed!"
@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
  
 document.addEventListener("DOMContentLoaded", () => {
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
+  
   const otpInputs = document.querySelectorAll(".otp-input");
   const submitOtpBtn = document.getElementById("submit-otp-btn");
   const resendOtpBtn = document.getElementById("resend-otp-btn");
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     otpInputs.forEach((input) => (input.value = ""));
     localStorage.removeItem("otp_email");
     otpModal.style.display = "none";
-    otpDialog.style.display = "none";
+    
 
     document.body.classList.remove("hidden-overflow");
     hideError();
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
           signupDialog.style.display = "none";
           signinDialog.style.display = "none";
           otpModal.style.display = "none";
-          otpDialog.style.display = "none";
+          
         },
         { once: true }
       );
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Auto-fill OTP if token exists
   if (urlEmail && params.has("token") && urlOtp) {
     otpModal.style.display = "flex";
-    otpDialog.style.display = "flex";
+    
     document.body.classList.add("hidden-overflow");
 
     otpInputs.forEach((input, index) => {
@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
         otpModal.style.display = "none";
-        otpDialog.style.display = "none";
+        
 
         signinDialog.scrollIntoView({
           behavior: "smooth",
@@ -484,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
         signupDialog.style.display = "none";
         signinDialog.style.display = "block";
         otpModal.style.display = "none";
-        otpDialog.style.display = "none";
+        
 
         signinDialog.scrollIntoView({
           behavior: "smooth",

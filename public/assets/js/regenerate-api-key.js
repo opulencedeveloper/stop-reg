@@ -105,14 +105,14 @@ regenerateBtn.addEventListener("click", async () => {
           const newLink = ` https://api.stopreg.com/api/v1/check/${newApiToken}?email=test@test.com`;
           linkContainer.href = newLink;
           
-          // Update the link text if it exists
+          
           const linkTitle = linkContainer.querySelector(".token-link-title");
           if (linkTitle) {
             linkTitle.textContent = newLink;
           }
         }
 
-        // Show success toast
+      
         if (typeof iziToast !== 'undefined') {
           iziToast.success({
             title: 'Success',

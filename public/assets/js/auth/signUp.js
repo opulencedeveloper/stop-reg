@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       showError("Network error — please try again later.");
       console.error(err);
+      submitBtn.textContent = originalText;
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const overLay = document.getElementById("overlay");
 
   const otpModal = document.getElementById("otp-modal");
-  const otpDialog = document.getElementById("otp-dialog");
+  
   const description = document.querySelector(".otp-email");
 
   let errorModal = document.createElement("div");
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const payload = { email, password, confirmPassword };
 
-    const originalText = submitBtn.textContent;
+    const originalText = "Create an Account";
     submitBtn.disabled = true;
     submitBtn.innerHTML = `<span class="btn-spinner"></span>`;
 
