@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-=======
+ 
   
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector(".bulk-verification-form");
@@ -540,7 +540,7 @@ document.addEventListener("DOMContentLoaded", () => {
         populateTable(data?.data || []);
  
         bulkLinks.value = ""; 
-=======
+ 
         bulkLinks.value = ""; // Clear textarea
         
         // Show success toast

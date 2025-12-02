@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-=======
+ 
 document.addEventListener("DOMContentLoaded", () => {
   const otpModal = document.getElementById("otp-modal");
   const otpDialog = document.getElementById("otp-dialog");

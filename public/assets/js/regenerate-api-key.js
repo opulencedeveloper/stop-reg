@@ -1,6 +1,6 @@
  
 
-=======
+ 
   
 const regenerateBtn = document.querySelector(".ratoken-btn");
 
@@ -179,5 +179,5 @@ regenerateBtn.addEventListener("click", async () => {
 });
  
 
-=======
+ 
   

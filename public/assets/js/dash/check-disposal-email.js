@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-=======
+ 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("verify-form");
   const submitBtn = form.querySelector(".bulk-check-email-btn");

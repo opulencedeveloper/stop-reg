@@ -97,7 +97,7 @@
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
-    <link href="/assets/css/bulk-verification.css" rel="stylesheet" />
+    <link href="/assets/css/verify-email.css" rel="stylesheet" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -453,12 +453,44 @@
       <!-- Header End -->
 
       <main>
-        <section class="privacy-hero animation3">
-          <h1>Bulk Verification</h1>
-          <p>
-            Verify whether the provided email address is disposable or
-            temporary.
-          </p>
+        <section class="verifyEmail-hero animation3">
+          <div class="hero-content-box">
+            <div class="verifyEmail-title">
+              <h1>Check disposable email</h1>
+              <p>
+                Verify whether the provided email address is disposable or
+                temporary
+              </p>
+            </div>
+            <div>
+              <form action="">
+                <fieldset>
+                  <div class="email-container">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter email address"
+                      id="email"
+                      name="email"
+                    />
+                  </div>
+                  <div>
+                    <div>
+                      <input name="checkbox" id="checkbox" type="checkbox" />
+                      <label for="checkbox">Verify you are human</label>
+                    </div>
+                    <div>
+                      <img src="" alt="" />
+                      <div>
+                        <a href="">Privacy • Terms</a>
+                      </div>
+                    </div>
+                  </div>
+                  <button>Verify Domain</button>
+                </fieldset>
+              </form>
+            </div>
+          </div>
         </section>
         <section class="bulk-content-section box animation6">
           <div class="dash-inner-inner-section">
@@ -495,86 +527,81 @@
               </div>
               <div class="bulk-tb-container">
                 <table>
-                  <tbody id="disposableResult">
-                    
-                  </tbody>
+                  <tbody id="disposableResult"></tbody>
                 </table>
               </div>
             </div>
           </div>
         </section>
-          <section class="fags-wrapper">
-    
+        <section class="fags-wrapper">
+          <!-- Fags Start -->
+          <p id="fags" class="bulks-fags-hd box animation6">
+            Frequently Asked Questions
+          </p>
+          <p class="fags-tle box animation5">
+            Your questions around disposable email, answered.
+          </p>
 
-        <!-- Fags Start -->
-        <p id="fags" class="bulks-fags-hd box animation6">
-          Frequently Asked Questions
-        </p>
-        <p class="fags-tle box animation5">
-          Your questions around disposable email, answered.
-        </p>
-
-        <div class="accordion">
-          <div class="accordion-item box animation5">
-            <button
-              class="accordion-button"
-              aria-expanded="false"
-              aria-controls="faq-1"
-            >
-              1. What are disposable email addresses?
-              <span class="accordion-icon" aria-hidden="true"
-                ><img src="/assets/icons/drop-down.svg" alt=""
-              /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 1.</p>
+          <div class="accordion">
+            <div class="accordion-item box animation5">
+              <button
+                class="accordion-button"
+                aria-expanded="false"
+                aria-controls="faq-1"
+              >
+                1. What are disposable email addresses?
+                <span class="accordion-icon" aria-hidden="true"
+                  ><img src="/assets/icons/drop-down.svg" alt=""
+                /></span>
+              </button>
+              <div class="accordion-content">
+                <p>Content for section 1.</p>
+              </div>
+            </div>
+            <div class="accordion-item box animation5">
+              <button class="accordion-button">
+                2. Why block disposable email?
+                <span class="accordion-icon"
+                  ><img src="/assets/icons/drop-down.svg"
+                /></span>
+              </button>
+            </div>
+            <div class="accordion-item box animation4">
+              <button class="accordion-button">
+                3. Why do people use disposable email?
+                <span class="accordion-icon"
+                  ><img src="/assets/icons/drop-down.svg"
+                /></span>
+              </button>
+              <div class="accordion-content">
+                <p>Content for section 3.</p>
+              </div>
+            </div>
+            <div class="accordion-item box animation2">
+              <button class="accordion-button">
+                4. How does Stopreg block temporary email?
+                <span class="accordion-icon"
+                  ><img src="/assets/icons/drop-down.svg"
+                /></span>
+              </button>
+              <div class="accordion-content">
+                <p>Content for section 4.</p>
+              </div>
+            </div>
+            <div class="accordion-item box animation3">
+              <button class="accordion-button">
+                5. Where do I report a domain to be blocked?
+                <span class="accordion-icon"
+                  ><img src="/assets/icons/drop-down.svg"
+                /></span>
+              </button>
+              <div class="accordion-content">
+                <p>Content for section 5.</p>
+              </div>
             </div>
           </div>
-          <div class="accordion-item box animation5">
-            <button class="accordion-button">
-              2. Why block disposable email?
-              <span class="accordion-icon"
-                ><img src="/assets/icons/drop-down.svg"
-              /></span>
-            </button>
-         
-          </div>
-          <div class="accordion-item box animation4">
-            <button class="accordion-button">
-              3. Why do people use disposable email?
-              <span class="accordion-icon"
-                ><img src="/assets/icons/drop-down.svg"
-              /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 3.</p>
-            </div>
-          </div>
-          <div class="accordion-item box animation2">
-            <button class="accordion-button">
-              4. How does Stopreg block temporary email?
-              <span class="accordion-icon"
-                ><img src="/assets/icons/drop-down.svg"
-              /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 4.</p>
-            </div>
-          </div>
-          <div class="accordion-item box animation3">
-            <button class="accordion-button">
-              5. Where do I report a domain to be blocked?
-              <span class="accordion-icon"
-                ><img src="/assets/icons/drop-down.svg"
-              /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 5.</p>
-            </div>
-          </div>
-        </div>
-        <!-- Fags End -->
-      </section>
+          <!-- Fags End -->
+        </section>
       </main>
 
       <footer class="land-foot">
@@ -641,8 +668,8 @@
     <script src="/assets/js/landing/header.js" defer></script>
     <script src="/assets/js/auth/signUp.js" defer></script>
     <script src="/assets/js/auth/login.js" defer></script>
-    <script src="/assets/js/subscription-plan.js" defer></script>
+    
     <script src="/assets/js/auth/otp.js" defer></script>
-    <script src="/assets/js/bulk-verification.js" ></script>
+    <script src="/assets/js/bulk-verification.js"></script>
   </body>
 </html>

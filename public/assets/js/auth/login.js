@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-=======
+ 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signIn-form");
   const submitBtn = form.querySelector(".cr-btn");
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loginDialog.style.display = "none";
 
         otpModal.style.display = "flex";
-        otpDialog.style.display = "flex";
+      
         document.body.classList.add("hidden-overflow");
 
         submitBtn.disabled = false;

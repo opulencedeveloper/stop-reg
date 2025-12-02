@@ -3,44 +3,84 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- Primary Meta Tags -->
     <title>StopReg API Documentation | Email Validation API Guide</title>
-    <meta name="title" content="StopReg API Documentation | Email Validation API Guide" />
-    <meta name="description" content="Complete StopReg API documentation. Learn how to integrate email validation, block disposable emails, and use our REST API endpoints. Code examples, authentication, and best practices included." />
-    <meta name="keywords" content="StopReg API documentation, email validation API docs, disposable email API, email verification API guide, API integration guide, email validation documentation" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta
+      name="title"
+      content="StopReg API Documentation | Email Validation API Guide"
+    />
+    <meta
+      name="description"
+      content="Complete StopReg API documentation. Learn how to integrate email validation, block disposable emails, and use our REST API endpoints. Code examples, authentication, and best practices included."
+    />
+    <meta
+      name="keywords"
+      content="StopReg API documentation, email validation API docs, disposable email API, email verification API guide, API integration guide, email validation documentation"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="language" content="English" />
     <meta name="author" content="StopReg" />
     <link rel="canonical" href="https://stopreg.com/documentation.html" />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/icons/favicon.ico"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/icons/favicon.ico"
+    />
     <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://stopreg.com/documentation.html" />
-    <meta property="og:title" content="StopReg API Documentation | Email Validation API Guide" />
-    <meta property="og:description" content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples and best practices." />
-    <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    <meta
+      property="og:title"
+      content="StopReg API Documentation | Email Validation API Guide"
+    />
+    <meta
+      property="og:description"
+      content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples and best practices."
+    />
+    <meta
+      property="og:image"
+      content="https://stopreg.com/assets/logo/stopreg-logo.svg"
+    />
     <meta property="og:site_name" content="StopReg" />
     <meta property="og:locale" content="en_US" />
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://stopreg.com/documentation.html" />
-    <meta name="twitter:title" content="StopReg API Documentation | Email Validation API Guide" />
-    <meta name="twitter:description" content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples." />
-    <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
-    
+    <meta
+      name="twitter:title"
+      content="StopReg API Documentation | Email Validation API Guide"
+    />
+    <meta
+      name="twitter:description"
+      content="Complete StopReg API documentation. Learn how to integrate email validation and block disposable emails with code examples."
+    />
+    <meta
+      name="twitter:image"
+      content="https://stopreg.com/assets/logo/stopreg-logo.svg"
+    />
+
     <!-- Additional Meta Tags -->
     <meta name="theme-color" content="#1452CA" />
-    
+
     <!-- Stylesheets -->
-      <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css"
     />
@@ -49,47 +89,53 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
-    
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "TechArticle",
-      "headline": "StopReg API Documentation",
-      "description": "Complete documentation for StopReg email validation API",
-      "author": {
-        "@type": "Organization",
-        "name": "StopReg"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "StopReg",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://stopreg.com/assets/logo/stopreg-logo.svg"
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "StopReg API Documentation",
+        "description": "Complete documentation for StopReg email validation API",
+        "author": {
+          "@type": "Organization",
+          "name": "StopReg"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "StopReg",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://stopreg.com/assets/logo/stopreg-logo.svg"
+          }
         }
       }
-    }
     </script>
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://stopreg.com/"
-      },{
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Documentation",
-        "item": "https://stopreg.com/documentation.html"
-      }]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://stopreg.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Documentation",
+            "item": "https://stopreg.com/documentation.html"
+          }
+        ]
+      }
     </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js" defer></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"
+      defer
+    ></script>
   </head>
 
   <body>
@@ -140,11 +186,14 @@
       </div>
       <!-- Mobile Navigation End -->
 
-      
       <!-- OTP Starts here -->
-       <div id="otp-modal" class="otp-modal">
-        <div class="auth-container  otp-container" id="">
-          <button id="otp-close-btn" class="otp-close-btn auth-close-btn" aria-label="Close OTP verification">
+      <div id="otp-modal" class="otp-modal">
+        <div class="auth-container otp-container" id="">
+          <button
+            id="otp-close-btn"
+            class="otp-close-btn auth-close-btn"
+            aria-label="Close OTP verification"
+          >
             <img src="/assets/icons/close-outline.svg" alt="Close" />
           </button>
           <div class="auth-logo">
@@ -152,7 +201,8 @@
           </div>
           <h3 class="cr-auth-header">Verify Your Email</h3>
           <p class="otp-subtext cr-auth-tle">
-            Enter the 6-digit verification code sent to <span class="otp-email"></span>.
+            Enter the 6-digit verification code sent to
+            <span class="otp-email"></span>.
           </p>
 
           <div class="otp-inputs">
@@ -280,7 +330,6 @@
         </div>
 
         <!-- SignIn Dialog Start -->
-         
       </div>
       <!-- Authentication Overlay End -->
 
@@ -324,7 +373,10 @@
             </h2>
           </div>
           <div class="docs-header-img">
-            <img src="/assets/images/landing/index/document.svg" alt="API Documentation illustration" />
+            <img
+              src="/assets/images/landing/index/document.svg"
+              alt="API Documentation illustration"
+            />
           </div>
         </div>
       </section>
@@ -373,31 +425,63 @@
               >
                 <h2>Getting Started with StopReg</h2>
                 <p>
-                  StopReg is a powerful email validation API that helps you detect and block disposable, temporary, and fake email addresses in real-time. This documentation will guide you through integrating StopReg into your application to protect your platform from spam, fraud, and abuse.
+                  StopReg is a powerful email validation API that helps you
+                  detect and block disposable, temporary, and fake email
+                  addresses in real-time. This documentation will guide you
+                  through integrating StopReg into your application to protect
+                  your platform from spam, fraud, and abuse.
                 </p>
                 <h3>What is StopReg?</h3>
                 <p>
-                  StopReg provides businesses and individuals with tools and resources for detecting and blocking disposable email providers. Our API validates email addresses instantly (typically within milliseconds), allowing you to block disposable emails during signup, checkout, or form submission.
+                  StopReg provides businesses and individuals with tools and
+                  resources for detecting and blocking disposable email
+                  providers. Our API validates email addresses instantly
+                  (typically within milliseconds), allowing you to block
+                  disposable emails during signup, checkout, or form submission.
                 </p>
                 <h3>Key Features</h3>
                 <ul>
-                  <li><strong>Real-time Validation:</strong> Instant email checking with millisecond response times</li>
-                  <li><strong>Comprehensive Database:</strong> Over 124,000 disposable email domains in our database</li>
-                  <li><strong>Privacy-Focused:</strong> We don't store full email addresses - only check the domain part</li>
-                  <li><strong>Easy Integration:</strong> Simple REST API that works with any programming language</li>
-                  <li><strong>Whitelisting Support:</strong> Whitelist trusted domains to ensure legitimate users are never blocked</li>
+                  <li>
+                    <strong>Real-time Validation:</strong> Instant email
+                    checking with millisecond response times
+                  </li>
+                  <li>
+                    <strong>Comprehensive Database:</strong> Over 124,000
+                    disposable email domains in our database
+                  </li>
+                  <li>
+                    <strong>Privacy-Focused:</strong> We don't store full email
+                    addresses - only check the domain part
+                  </li>
+                  <li>
+                    <strong>Easy Integration:</strong> Simple REST API that
+                    works with any programming language
+                  </li>
+                  <li>
+                    <strong>Whitelisting Support:</strong> Whitelist trusted
+                    domains to ensure legitimate users are never blocked
+                  </li>
                 </ul>
                 <h3>Quick Start</h3>
-                <p>
-                  To get started with StopReg, you'll need:
-                </p>
+                <p>To get started with StopReg, you'll need:</p>
                 <ol>
-                  <li>Create an account at <a href="/" style="color: #1452ca;">stopreg.com</a></li>
-                  <li>Get your API token from your <a href="/dashboard/index.html" style="color: #1452ca;">dashboard</a></li>
+                  <li>
+                    Create an account at
+                    <a href="/" style="color: #1452ca">stopreg.com</a>
+                  </li>
+                  <li>
+                    Get your API token from your
+                    <a href="/dashboard/index.html" style="color: #1452ca"
+                      >dashboard</a
+                    >
+                  </li>
                   <li>Make your first API call to validate an email address</li>
                 </ol>
                 <p>
-                  The API endpoint is simple and straightforward. You'll use a GET request with your API token and the email address you want to validate. Continue reading the next sections to learn about authentication, endpoints, and code examples.
+                  The API endpoint is simple and straightforward. You'll use a
+                  GET request with your API token and the email address you want
+                  to validate. Continue reading the next sections to learn about
+                  authentication, endpoints, and code examples.
                 </p>
               </article>
               <article
@@ -406,32 +490,68 @@
               >
                 <h2>API Authentication</h2>
                 <p>
-                  StopReg uses API token-based authentication. Your API token is unique to your account and should be kept secure. Never share your API token publicly or commit it to version control systems.
+                  StopReg uses API token-based authentication. Your API token is
+                  unique to your account and should be kept secure. Never share
+                  your API token publicly or commit it to version control
+                  systems.
                 </p>
                 <h3>Getting Your API Token</h3>
                 <ol>
-                  <li>Log in to your <a href="/dashboard/index.html" style="color: #1452ca;">StopReg dashboard</a></li>
+                  <li>
+                    Log in to your
+                    <a href="/dashboard/index.html" style="color: #1452ca"
+                      >StopReg dashboard</a
+                    >
+                  </li>
                   <li>Navigate to your account settings or API section</li>
-                  <li>Copy your API token (you can regenerate it at any time if needed)</li>
+                  <li>
+                    Copy your API token (you can regenerate it at any time if
+                    needed)
+                  </li>
                 </ol>
                 <h3>Using Your API Token</h3>
                 <p>
-                  Your API token is included directly in the API endpoint URL. The format is:
+                  Your API token is included directly in the API endpoint URL.
+                  The format is:
                 </p>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=user@example.com</code></pre>
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=user@example.com</code></pre>
                 <p>
-                  Replace <code>YOUR_API_TOKEN</code> with your actual API token from the dashboard.
+                  Replace <code>YOUR_API_TOKEN</code> with your actual API token
+                  from the dashboard.
                 </p>
                 <h3>Security Best Practices</h3>
                 <ul>
-                  <li><strong>Keep it Secret:</strong> Treat your API token like a password - never expose it in client-side code</li>
-                  <li><strong>Use Environment Variables:</strong> Store your API token in environment variables, not in your source code</li>
-                  <li><strong>Regenerate if Compromised:</strong> If you suspect your token has been exposed, regenerate it immediately from your dashboard</li>
-                  <li><strong>Server-Side Only:</strong> Always make API calls from your server-side code, never from the browser</li>
+                  <li>
+                    <strong>Keep it Secret:</strong> Treat your API token like a
+                    password - never expose it in client-side code
+                  </li>
+                  <li>
+                    <strong>Use Environment Variables:</strong> Store your API
+                    token in environment variables, not in your source code
+                  </li>
+                  <li>
+                    <strong>Regenerate if Compromised:</strong> If you suspect
+                    your token has been exposed, regenerate it immediately from
+                    your dashboard
+                  </li>
+                  <li>
+                    <strong>Server-Side Only:</strong> Always make API calls
+                    from your server-side code, never from the browser
+                  </li>
                 </ul>
                 <h3>Rate Limits</h3>
                 <p>
-                  Rate limits depend on your subscription plan. Free trial accounts have limited requests per day, while paid plans offer higher limits or unlimited requests. Check your dashboard for your current rate limit status.
+                  Rate limits depend on your subscription plan. Free trial
+                  accounts have limited requests per day, while paid plans offer
+                  higher limits or unlimited requests. Check your dashboard for
+                  your current rate limit status.
                 </p>
               </article>
               <article
@@ -440,25 +560,53 @@
               >
                 <h2>API Endpoints</h2>
                 <p>
-                  StopReg provides a simple REST API endpoint for email validation. All endpoints use HTTPS and return JSON responses.
+                  StopReg provides a simple REST API endpoint for email
+                  validation. All endpoints use HTTPS and return JSON responses.
                 </p>
                 <h3>Email Validation Endpoint</h3>
                 <p><strong>Endpoint:</strong></p>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>GET https://api.stopreg.com/api/v1/check/{apiToken}?email={email}</code></pre>
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>GET https://api.stopreg.com/api/v1/check/{apiToken}?email={email}</code></pre>
                 <h3>Parameters</h3>
                 <ul>
-                  <li><strong>apiToken</strong> (path parameter, required): Your StopReg API token</li>
-                  <li><strong>email</strong> (query parameter, required): The email address to validate</li>
+                  <li>
+                    <strong>apiToken</strong> (path parameter, required): Your
+                    StopReg API token
+                  </li>
+                  <li>
+                    <strong>email</strong> (query parameter, required): The
+                    email address to validate
+                  </li>
                 </ul>
                 <h3>Request Example</h3>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>GET https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>GET https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com
 Headers:
   Content-Type: application/json</code></pre>
                 <h3>Response Format</h3>
                 <p>
                   The API returns a JSON response with the following structure:
                 </p>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>{
   "message": "success",
   "data": {
     "isDisposable": false,
@@ -466,26 +614,56 @@ Headers:
 }</code></pre>
                 <h3>Response Fields</h3>
                 <ul>
-                  <li><strong>message:</strong> Status of the request ("success" or "error")</li>
-                  <li><strong>data.email:</strong> The email address that was checked</li>
-                  <li><strong>data.isDisposable:</strong> Boolean indicating if the email is from a disposable provider</li>
-                  <li><strong>data.domain:</strong> The domain part of the email address</li>
+                  <li>
+                    <strong>message:</strong> Status of the request ("success"
+                    or "error")
+                  </li>
+                  <li>
+                    <strong>data.email:</strong> The email address that was
+                    checked
+                  </li>
+                  <li>
+                    <strong>data.isDisposable:</strong> Boolean indicating if
+                    the email is from a disposable provider
+                  </li>
+                  <li>
+                    <strong>data.domain:</strong> The domain part of the email
+                    address
+                  </li>
                 </ul>
                 <h3>Error Responses</h3>
                 <p>
-                  If an error occurs, the API returns a JSON response with an error message:
+                  If an error occurs, the API returns a JSON response with an
+                  error message:
                 </p>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>{
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>{
   "message": "error",
   "description": "Error description here"
 }</code></pre>
                 <h3>HTTP Status Codes</h3>
                 <ul>
                   <li><strong>200 OK:</strong> Request successful</li>
-                  <li><strong>400 Bad Request:</strong> Invalid parameters (missing email or API token)</li>
-                  <li><strong>401 Unauthorized:</strong> Invalid or missing API token</li>
-                  <li><strong>429 Too Many Requests:</strong> Rate limit exceeded</li>
-                  <li><strong>500 Internal Server Error:</strong> Server error</li>
+                  <li>
+                    <strong>400 Bad Request:</strong> Invalid parameters
+                    (missing email or API token)
+                  </li>
+                  <li>
+                    <strong>401 Unauthorized:</strong> Invalid or missing API
+                    token
+                  </li>
+                  <li>
+                    <strong>429 Too Many Requests:</strong> Rate limit exceeded
+                  </li>
+                  <li>
+                    <strong>500 Internal Server Error:</strong> Server error
+                  </li>
                 </ul>
               </article>
               <article
@@ -494,10 +672,19 @@ Headers:
               >
                 <h2>Code Examples</h2>
                 <p>
-                  Here are code examples for integrating StopReg API in various programming languages. Replace <code>YOUR_API_TOKEN</code> with your actual API token.
+                  Here are code examples for integrating StopReg API in various
+                  programming languages. Replace
+                  <code>YOUR_API_TOKEN</code> with your actual API token.
                 </p>
                 <h3>JavaScript (Node.js)</h3>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>const apiToken = 'YOUR_API_TOKEN';
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>const apiToken = 'YOUR_API_TOKEN';
 const email = 'test@example.com';
 
 const response = await fetch(
@@ -519,7 +706,14 @@ if (data.data?.isDisposable) {
   console.log('Email is valid - allow registration');
 }</code></pre>
                 <h3>Python</h3>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>import requests
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>import requests
 
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
@@ -538,7 +732,14 @@ if data.get('data', {}).get('isDisposable'):
 else:
     print('Email is valid - allow registration')</code></pre>
                 <h3>PHP</h3>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>&lt;?php
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>&lt;?php
 
 $apiToken = 'YOUR_API_TOKEN';
 $email = 'test@example.com';
@@ -563,12 +764,23 @@ if ($data['data']['isDisposable']) {
 }
 ?&gt;</code></pre>
                 <h3>cURL</h3>
-                <pre style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>curl -X GET \
+                <pre
+                  style="
+                    background: #f5f5f5;
+                    padding: 15px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                  "
+                ><code>curl -X GET \
   "https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \
   -H "Content-Type: application/json"</code></pre>
                 <h3>Integration in Registration Forms</h3>
                 <p>
-                  When integrating StopReg into your registration or signup forms, validate the email address before allowing the user to complete registration. If <code>isDisposable</code> is <code>true</code>, show an error message asking the user to use a valid email address.
+                  When integrating StopReg into your registration or signup
+                  forms, validate the email address before allowing the user to
+                  complete registration. If <code>isDisposable</code> is
+                  <code>true</code>, show an error message asking the user to
+                  use a valid email address.
                 </p>
               </article>
               <article
@@ -577,30 +789,73 @@ if ($data['data']['isDisposable']) {
               >
                 <h2>Best Practices & Troubleshooting</h2>
                 <p>
-                  Follow these best practices to ensure optimal performance and reliability when using the StopReg API.
+                  Follow these best practices to ensure optimal performance and
+                  reliability when using the StopReg API.
                 </p>
                 <h3>Best Practices</h3>
                 <ul>
-                  <li><strong>Validate on Server-Side:</strong> Always perform email validation on your server, never in client-side JavaScript. This protects your API token and ensures security.</li>
-                  <li><strong>Handle Errors Gracefully:</strong> Implement proper error handling for network failures, rate limits, and API errors. Provide user-friendly error messages.</li>
-                  <li><strong>Cache Results When Appropriate:</strong> For frequently checked domains, consider caching results to reduce API calls and improve performance.</li>
-                  <li><strong>Use Whitelisting:</strong> Whitelist trusted corporate domains to prevent false positives and ensure legitimate users are never blocked.</li>
-                  <li><strong>Monitor Rate Limits:</strong> Keep track of your API usage to avoid hitting rate limits. Upgrade your plan if needed.</li>
-                  <li><strong>Validate Email Format First:</strong> Check basic email format before calling the API to save unnecessary requests.</li>
+                  <li>
+                    <strong>Validate on Server-Side:</strong> Always perform
+                    email validation on your server, never in client-side
+                    JavaScript. This protects your API token and ensures
+                    security.
+                  </li>
+                  <li>
+                    <strong>Handle Errors Gracefully:</strong> Implement proper
+                    error handling for network failures, rate limits, and API
+                    errors. Provide user-friendly error messages.
+                  </li>
+                  <li>
+                    <strong>Cache Results When Appropriate:</strong> For
+                    frequently checked domains, consider caching results to
+                    reduce API calls and improve performance.
+                  </li>
+                  <li>
+                    <strong>Use Whitelisting:</strong> Whitelist trusted
+                    corporate domains to prevent false positives and ensure
+                    legitimate users are never blocked.
+                  </li>
+                  <li>
+                    <strong>Monitor Rate Limits:</strong> Keep track of your API
+                    usage to avoid hitting rate limits. Upgrade your plan if
+                    needed.
+                  </li>
+                  <li>
+                    <strong>Validate Email Format First:</strong> Check basic
+                    email format before calling the API to save unnecessary
+                    requests.
+                  </li>
                 </ul>
                 <h3>Common Use Cases</h3>
                 <ul>
-                  <li><strong>Registration Forms:</strong> Validate emails during user signup to prevent fake accounts</li>
-                  <li><strong>Checkout Processes:</strong> Block disposable emails during e-commerce checkout</li>
-                  <li><strong>Free Trial Signups:</strong> Prevent abuse of free trial offers</li>
-                  <li><strong>Newsletter Subscriptions:</strong> Ensure quality email lists</li>
-                  <li><strong>Support Ticket Systems:</strong> Verify contact emails for support requests</li>
+                  <li>
+                    <strong>Registration Forms:</strong> Validate emails during
+                    user signup to prevent fake accounts
+                  </li>
+                  <li>
+                    <strong>Checkout Processes:</strong> Block disposable emails
+                    during e-commerce checkout
+                  </li>
+                  <li>
+                    <strong>Free Trial Signups:</strong> Prevent abuse of free
+                    trial offers
+                  </li>
+                  <li>
+                    <strong>Newsletter Subscriptions:</strong> Ensure quality
+                    email lists
+                  </li>
+                  <li>
+                    <strong>Support Ticket Systems:</strong> Verify contact
+                    emails for support requests
+                  </li>
                 </ul>
                 <h3>Troubleshooting</h3>
                 <h4>API Returns Error</h4>
                 <ul>
                   <li>Verify your API token is correct and active</li>
-                  <li>Check that the email parameter is properly URL-encoded</li>
+                  <li>
+                    Check that the email parameter is properly URL-encoded
+                  </li>
                   <li>Ensure you're using the correct endpoint URL</li>
                   <li>Check your rate limit status in the dashboard</li>
                 </ul>
@@ -614,11 +869,18 @@ if ($data['data']['isDisposable']) {
                 <ul>
                   <li>Use the whitelist feature for trusted domains</li>
                   <li>Report false positives through your dashboard</li>
-                  <li>Check if the domain is actually disposable before blocking</li>
+                  <li>
+                    Check if the domain is actually disposable before blocking
+                  </li>
                 </ul>
                 <h3>Support</h3>
                 <p>
-                  If you need additional help or have questions, contact our support team at <a href="mailto:support@stopreg.com" style="color: #1452ca;">support@stopreg.com</a> or visit your dashboard for more resources.
+                  If you need additional help or have questions, contact our
+                  support team at
+                  <a href="mailto:support@stopreg.com" style="color: #1452ca"
+                    >support@stopreg.com</a
+                  >
+                  or visit your dashboard for more resources.
                 </p>
               </article>
             </div>
@@ -648,7 +910,12 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>A disposable email blocker is a tool that automatically detects and blocks temporary, fake, or throwaway email addresses from signing up on your website. This helps you maintain a clean user database, reduce spam, and protect your platform from abuse.</p>
+              <p>
+                A disposable email blocker is a tool that automatically detects
+                and blocks temporary, fake, or throwaway email addresses from
+                signing up on your website. This helps you maintain a clean user
+                database, reduce spam, and protect your platform from abuse.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation5">
@@ -659,7 +926,11 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Disposable emails are commonly used for fraud, spam, duplicate account creation, free-trial abuse, and bot signups. Blocking them helps you:</p>
+              <p>
+                Disposable emails are commonly used for fraud, spam, duplicate
+                account creation, free-trial abuse, and bot signups. Blocking
+                them helps you:
+              </p>
               <ul>
                 <li>Improve lead quality</li>
                 <li>Reduce fraud and abuse</li>
@@ -677,7 +948,11 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Yes. The API validates emails instantly (typically within milliseconds), allowing you to block disposable emails during signup, checkout, or form submission.</p>
+              <p>
+                Yes. The API validates emails instantly (typically within
+                milliseconds), allowing you to block disposable emails during
+                signup, checkout, or form submission.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation2">
@@ -688,7 +963,10 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Yes. You can whitelist domains you trust to ensure legitimate users are never blocked by mistake.</p>
+              <p>
+                Yes. You can whitelist domains you trust to ensure legitimate
+                users are never blocked by mistake.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation3">
@@ -699,7 +977,11 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>No. We do not store full email addresses. For privacy and compliance, we only check the domain part and discard all data immediately.</p>
+              <p>
+                No. We do not store full email addresses. For privacy and
+                compliance, we only check the domain part and discard all data
+                immediately.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation5">
@@ -710,7 +992,11 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>No. Only temporary and fake domains. Corporate, ISP, and custom domain emails are always allowed unless they appear in known disposable lists.</p>
+              <p>
+                No. Only temporary and fake domains. Corporate, ISP, and custom
+                domain emails are always allowed unless they appear in known
+                disposable lists.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation4">
@@ -736,7 +1022,10 @@ if ($data['data']['isDisposable']) {
               /></span>
             </button>
             <div class="accordion-content">
-              <p>Yes. Feel free to test the free trial and see how many fake signups you prevent within minutes.</p>
+              <p>
+                Yes. Feel free to test the free trial and see how many fake
+                signups you prevent within minutes.
+              </p>
             </div>
           </div>
           <div class="accordion-item box animation3">
@@ -764,33 +1053,52 @@ if ($data['data']['isDisposable']) {
         <div class="land-foot-wrapp">
           <section class="land-foot-wrapp-sct-one">
             <div class="foot-logo">
-              <img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg Footer Logo" />
+              <img
+                src="/assets/logo/stopreg-footer-logo.svg"
+                alt="StopReg Footer Logo"
+              />
             </div>
             <div class="foot-detail">
               <p class="foot-detail-hd">What we do</p>
               <p class="foot-detail-tle">
-                Our service continuously monitors and identifies disposable email addresses in real-time, effectively blocking them to prevent potential issues such as spam, fraud, and other security concerns. 
+                Our service continuously monitors and identifies disposable
+                email addresses in real-time, effectively blocking them to
+                prevent potential issues such as spam, fraud, and other security
+                concerns.
               </p>
             </div>
             <div class="foot-detail">
               <p class="foot-detail-hd">Other Links</p>
-               <a href ="/contact.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/contact.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Contact Us</a
               >
-             
-               <a href ="/bulk-verification.html" class="foot-detail-link" href="#" class="foot-detail-tle"
-                >Bulk Verification</a
+
+              <a
+                href="/verify-email.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
+                >Verify Email</a
               >
-                <a href ="/terms.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/terms.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Terms of Service</a
               >
-              <a href ="/privacy-policy.html" class="foot-detail-link" href="#" class="foot-detail-tle"
+              <a
+                href="/privacy-policy.html"
+                class="foot-detail-link"
+                href="#"
+                class="foot-detail-tle"
                 >Privacy Policy
               </a>
- 
-=======
               <a href="/api-check.html" class="foot-detail-link">API Check</a>
-  
             </div>
           </section>
           <section class="land-foot-wrapp-sct-two">
@@ -807,8 +1115,14 @@ if ($data['data']['isDisposable']) {
     <script src="/assets/js/auth/login.js" defer></script>
     <script src="/assets/js/auth/otp.js" defer></script>
     <!-- Zoho SalesIQ Live Chat Widget -->
-    <script>window.$zoho=window.$zoho||{};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script>
-    <script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1" defer></script>
-   
+    <script>
+      window.$zoho = window.$zoho || {};
+      $zoho.salesiq = $zoho.salesiq || { ready: function () {} };
+    </script>
+    <script
+      id="zsiqscript"
+      src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
+      defer
+    ></script>
   </body>
 </html>
