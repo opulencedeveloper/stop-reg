@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ 
 document.addEventListener("DOMContentLoaded", () => {
   const otpModal = document.getElementById("otp-modal");
   const otpDialog = document.getElementById("otp-dialog");
@@ -603,4 +603,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  

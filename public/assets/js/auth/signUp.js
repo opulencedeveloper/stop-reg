@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signup-form");
   const submitBtn = form.querySelector(".cr-btn");
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signup-form");
   const submitBtn = form.querySelector(".cr-btn");
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-<<<<<<< HEAD
+ 
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  

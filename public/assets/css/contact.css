@@ -14,11 +14,9 @@
 .contact-hero {
   width: 100%;
   height: 159px;
-  background: linear-gradient(
-    0deg,
-    rgba(20, 82, 202, 0.16) 2.44%,
-    rgba(20, 82, 202, 0.48) 100%
-  );
+ background-image: url("/assets/images/landing/common/privacy-bg.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .contact-contents-wrapper {
   width: 100%;

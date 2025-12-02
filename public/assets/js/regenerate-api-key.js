@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+ 
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  
 const regenerateBtn = document.querySelector(".ratoken-btn");
 
 regenerateBtn.addEventListener("click", async () => {
@@ -177,7 +177,7 @@ regenerateBtn.addEventListener("click", async () => {
     regenerateBtn.textContent = originalText;
   }
 });
-<<<<<<< HEAD
+ 
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  

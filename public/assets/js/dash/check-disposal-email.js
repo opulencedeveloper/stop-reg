@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ 
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("verify-form");
@@ -402,4 +402,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  

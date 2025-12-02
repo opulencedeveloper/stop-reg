@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ 
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   const tableBody = document.getElementById("table-body-inner");
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
-<<<<<<< HEAD
+ 
 
 =======
->>>>>>> 88b3d0b7c918dc6c3d3ad82ae037ad660ed84698
+  
