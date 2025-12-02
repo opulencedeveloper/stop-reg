@@ -7,7 +7,7 @@ const regenerateBtn = document.querySelector(".ratoken-btn");
 regenerateBtn.addEventListener("click", async () => {
   const token = localStorage.getItem("authToken");
 
-  const originalText = regenerateBtn.textContent;
+  const originalText = "Regenerate API Token";
   regenerateBtn.disabled = true;
   regenerateBtn.innerHTML = `<span class="btn-spinner"></span> Requesting...`;
 
@@ -64,7 +64,7 @@ regenerateBtn.addEventListener("click", async () => {
 regenerateBtn.addEventListener("click", async () => {
   const token = localStorage.getItem("authToken");
 
-  const originalText = regenerateBtn.textContent;
+  const originalText = "Regenerate API Token";
   regenerateBtn.disabled = true;
   regenerateBtn.innerHTML = `<span class="btn-spinner"></span> Requesting...`;
 

@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
 
         submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+        submitBtn.textContent = "Login";
         return;
       }
 

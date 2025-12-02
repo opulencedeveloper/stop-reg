@@ -384,6 +384,9 @@ canvas {
   padding-left: 40px;
   padding-right: 40px;
   border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 16px;
   font-family: "PlusJakartaSans-ExtraBold";
   color: var(--color-one);

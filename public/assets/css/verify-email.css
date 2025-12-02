@@ -33,11 +33,11 @@
 
   text-align: center;
 }
-fieldset{
-  padding :0;
+fieldset {
+  padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   gap: 24px;
 }
 .email-container input {
@@ -89,12 +89,52 @@ fieldset{
   padding: 20px;
   border-radius: 12px;
 }
-.empty-state-text {
-  text-align: center;
+.inner-content {
+  display: flex;
+  width: 100%;
+  gap: 72px;
+  align-items: center;
+  justify-content: center;
+}
+.content-discription {
+  width: 100%;
+  max-width: 623px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.content-discription button {
+  width: 100%;
+  max-width: 208px;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1452ca;
+  color: #ffffff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: "PlusJakartaSans-SemiBold", sans-serif;
+}
+.inner-content h1 {
+  font-size: 40px;
+  font-family: "PlusJakartaSans-ExtraBold", sans-serif;
+  line-height: 140%;
+  color: #010101;
+}
+.inner-content p {
   font-size: 20px;
-  text-align: center;
-  font-family: "PlusJakartaSans-SemiBold";
-  padding-top: 10px;
+  font-family: "PlusJakartaSans-Regular", sans-serif;
+  line-height: 140%;
+}
+.content-img {
+  width: 100%;
+  max-width: 505px;
+  height: 576px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .verify-status-head {
   display: flex;
@@ -287,6 +327,14 @@ tr.bulk-table-inner td {
   display: flex;
 }
 @media only screen and (max-width: 760px) {
+  .verifyEmail-hero{
+    padding: 16px;
+    box-sizing: border-box;
+    height: 398px;
+  }
+  fieldset{
+    gap: 12px;
+  }
   .dash-inner-inner-section {
     width: 100%;
     height: fit-content;
@@ -298,6 +346,36 @@ tr.bulk-table-inner td {
     padding: 0px;
     gap: 0;
   }
+  .verifyEmail-hero h1{
+    font-size: 24px;
+  }
+  .verifyEmail-hero p{
+    font-size: 12px;
+  }
+  .email-container input {
+  background-color: #ffffff;
+  border: 0px;
+  width: 100%;
+  height: 14px;
+  padding-bottom: 30px;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+}
+.content-discription h1{
+  font-size: 20px;
+}
+.content-discription p{
+  font-size: 12px;
+}
+.content-discription button {
+  max-width: 148px;
+  height: 41px;
+  font-size: 12px;
+}
+.inner-content{
+  flex-direction: column;
+}
   .bulk-content-section {
     display: flex;
     background-color: #ffffff;
@@ -352,10 +430,18 @@ tr.bulk-table-inner td {
     height: fit-content;
   }
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 520px) {
   .bulks-fags-hd {
     font-size: 20px;
     margin-bottom: 10px;
     padding-top: 40px;
+  }
+  .bulk-verify-domain-btn{
+    font-size: 12px;
+    height: 41px;
+
+  }
+  .content-img{
+    height: 320px;
   }
 }

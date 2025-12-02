@@ -1578,6 +1578,9 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-family: "PlusJakartaSans-SemiBold";
   color: var(--color-six);
   margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .notfound-contianer {
