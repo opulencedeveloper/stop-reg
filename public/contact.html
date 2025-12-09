@@ -184,6 +184,8 @@
       src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"
       defer
     ></script>
+    <!-- Cloudflare Turnstile (explicit render to avoid double widgets) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   </head>
 
   <body>
@@ -473,7 +475,7 @@
               </div>
             </div>
             <div class="form-wrapper animation6">
-              <form action="">
+              <form id="contact-form" action="#" method="post">
                 <fieldset>
                   <div class="form-group">
                     <label for="name">Name</label>
@@ -492,7 +494,11 @@
                       required
                     ></textarea>
                   </div>
-                  <button class="cnt-btn" id="cnt-btn">Submit</button>
+                  <div id="captcha-container" style="display: flex; justify-content: center; margin: 16px 0;">
+                    <!-- Removed cf-turnstile class so widget is only rendered explicitly by JS -->
+                    <div id="turnstile-widget" data-sitekey="0x4AAAAAACEca11RLVJeokxF"></div>
+                  </div>
+                  <button class="cnt-btn" id="cnt-btn" type="submit">Submit</button>
                 </fieldset>
               </form>
             </div>
@@ -559,7 +565,7 @@
                 class="foot-detail-tle"
                 >Privacy Policy
               </a>
-              <a href="/api-check.html" class="foot-detail-link">API Check</a>
+              <a href="/verify-email.html" class="foot-detail-link">API Check</a>
             </div>
           </section>
           <section class="land-foot-wrapp-sct-two">
@@ -576,5 +582,6 @@
     <script src="/assets/js/auth/login.js" defer></script>
     <script src="/assets/js/subscription-plan.js" defer></script>
     <script src="/assets/js/auth/otp.js" defer></script>
+    <script src="/assets/js/contact.js"></script>
   </body>
 </html>

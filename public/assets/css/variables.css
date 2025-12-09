@@ -44,3 +44,8 @@
     --desktop-dash-padding: 56px;
 
 }
+
+
+#iziToastWrapper, .iziToast, .iziToast-wrapper {
+  z-index: 999999999 !important;
+}

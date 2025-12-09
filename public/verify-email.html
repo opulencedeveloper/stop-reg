@@ -98,6 +98,7 @@
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
     <link href="/assets/css/verify-email.css" rel="stylesheet" />
+     <link href="/assets/css/dashboard/check-disposal-email.css" rel="stylesheet" />
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -185,6 +186,8 @@
       src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"
       defer
     ></script>
+    <!-- Cloudflare Turnstile (explicit render to avoid double widgets) -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   </head>
 
   <body>
@@ -474,13 +477,17 @@
                       name="email"
                     />
                   </div>
-                  <div>
-                    <img src="/assets/images/landing/common/Captcha.png" alt="">
+                  <div id="captcha-container" style="display: flex; justify-content: center; margin: 16px 0;">
+                    <!-- Removed cf-turnstile class so widget is only rendered explicitly by JS -->
+                    <div id="turnstile-widget" data-sitekey="0x4AAAAAACEca11RLVJeokxF"></div>
                   </div>
                   
-                <button class="bulk-verify-domain-btn">Verify Domains</button>
+                <button class="bulk-verify-domain-btn" type="submit">Verify Email</button>
                 </fieldset>
               </form>
+              
+              <!-- Results Container -->
+              <div id="verify-email-result-container" class="disposal-email-result-cont" style="display: none;"></div>
             </div>
           </div>
         </section>

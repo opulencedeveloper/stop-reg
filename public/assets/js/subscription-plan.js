@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("✅ DOM loaded, rendering plans...");
 
+  // If none of the pricing containers exist (e.g. on contact.html),
+  // safely exit without doing anything.
+  if (!plan1 && !plan2 && !plan3 && !plan4) {
+    console.warn("No pricing plan containers found on this page. Skipping subscription-plan.js rendering.");
+    return;
+  }
+
   // Check if we're on the payments page
   const isPaymentsPage = window.location.pathname.includes("payments.html");
   const buttonText = isPaymentsPage ? "Choose this plan" : "Get Started";
@@ -184,9 +191,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     console.log("✅ Plans rendered successfully");
+
+    // Add click handlers to all pricing buttons to open signup modal
+    const pricingButtons = document.querySelectorAll('.land-pricing-container-item-btn, .land-pricing-container-item-btn-recomm');
+    pricingButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Check if we're on payments page - if so, let form handle it
+        if (isPaymentsPage) {
+          return; // Let the form submission handle it
+        }
+        // Otherwise, open signup modal
+        const signupBtn = document.querySelector('.signup-overlay-btn');
+        if (signupBtn) {
+          signupBtn.click();
+        }
+      });
+    });
   } catch (err) {
     console.error("❌ Error fetching plans:", err);
-    plan1.innerHTML = "<p style='color:red'>Failed to load plans.</p>";
+    if (plan1) {
+      plan1.innerHTML = "<p style='color:red'>Failed to load plans.</p>";
+    }
     
     // Show error toast
     if (typeof iziToast !== 'undefined') {

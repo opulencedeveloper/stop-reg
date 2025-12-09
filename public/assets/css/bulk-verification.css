@@ -187,11 +187,22 @@ fieldset {
   height: 46px;
 }
 .check-disposal-email {
+  font-family: 'PlusJakartaSans-SemiBold';
   text-decoration: underline;
   font-size: 16px;
   font-weight: 600;
   color: #595959;
 }
+a.check-disposal-email-mb {
+  font-family: 'PlusJakartaSans-SemiBold';
+  text-decoration: none; /* removes underline */
+  font-size: 6px;
+  font-weight: 600;
+  color: red;
+}
+
+
+
 .bulk-tb-container {
   border: 1px solid #ededed;
   border-radius: 12px;

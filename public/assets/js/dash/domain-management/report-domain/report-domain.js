@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         addBlockForm.reset();
         reportDomainOverlay.style.display = "none";
+  window.location.reload();
       } else {
         const errorMessage = data.description || data.message || "Failed to report domain.";
         if (typeof iziToast !== 'undefined') {

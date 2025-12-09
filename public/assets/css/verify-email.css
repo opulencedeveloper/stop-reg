@@ -3,7 +3,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 516px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,6 +14,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 
 .verifyEmail-hero h1 {
@@ -41,17 +42,36 @@ fieldset {
   gap: 24px;
 }
 .email-container input {
-  background-color: #ffffff;
-  border: 0px;
+  background-color: #ffffff !important;
   width: 100%;
-  height: 22px;
   padding: 12px;
+  outline: none;
+  border: none;
   padding-bottom: 30px;
   border-radius: 8px;
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
 }
 .email-container input:focus {
-  outline: none;
+  outline: none !important;
+  background-color: #ffffff !important;
+  border: 0px !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+.email-container input:not(:placeholder-shown) {
+  background-color: #ffffff !important;
+  border: 0px !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+.email-container input:-webkit-autofill,
+.email-container input:-webkit-autofill:hover,
+.email-container input:-webkit-autofill:focus,
+.email-container input:-webkit-autofill:active {
+  background-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  box-shadow: 0 0 0 30px #ffffff inset !important;
 }
 .bulk-content-section {
   display: flex;
@@ -357,14 +377,34 @@ tr.bulk-table-inner td {
   }
 
   .email-container input {
-    background-color: #ffffff;
-    border: 0px;
+    background-color: #ffffff !important;
+    border: 0px !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
     width: 100%;
     height: 14px;
     padding-bottom: 30px;
     border-radius: 8px;
-    outline: none;
+    outline: none !important;
     box-sizing: border-box;
+    box-shadow: none !important;
+  }
+  .email-container input:focus,
+  .email-container input:not(:placeholder-shown) {
+    background-color: #ffffff !important;
+    border: 0px !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .email-container input:-webkit-autofill,
+  .email-container input:-webkit-autofill:hover,
+  .email-container input:-webkit-autofill:focus,
+  .email-container input:-webkit-autofill:active {
+    background-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+    box-shadow: 0 0 0 30px #ffffff inset !important;
   }
   .content-discription h1 {
     font-size: 20px;

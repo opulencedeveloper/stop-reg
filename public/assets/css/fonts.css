@@ -66,3 +66,8 @@ button:hover {
 body {
     overflow-x: hidden;
 }
+
+
+  #iziToastWrapper {
+    z-index: 999999999999999999999999999999 !important; /* highest safe browser z-index */
+  }
