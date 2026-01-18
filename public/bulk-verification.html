@@ -6,50 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
-  <title>
-    StopReg - Block Disposable Email Addresses | Real-Time Email Validation
-    API
-  </title>
-  <meta name="title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
+  <title>Bulk Email Verification - Copy & Paste to Validate | StopReg</title>
+  <meta name="title" content="Bulk Email Verification - Copy & Paste to Validate | StopReg" />
   <meta name="description"
-    content="StopReg blocks temporary and disposable email addresses in real-time. Protect your platform from spam, fake registrations, and abuse with our comprehensive email validation API. Over 124,000 disposable email domains in our database. Free API token available." />
-  <meta name="keywords"
-    content="disposable email, temporary email, email validation, block disposable email, email verification API, spam prevention, fake email detection, email validation service, WordPress email plugin, email security" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="language" content="English" />
-  <meta name="author" content="StopReg" />
-  <meta name="revisit-after" content="7 days" />
-  <link rel="canonical" href="https://stopreg.com/" />
+    content="Free bulk email validator. Copy and paste your email list to detect disposable, spam, and invalid addresses instantly." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://stopreg.com/bulk-verification.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stopreg.com/bulk-verification.html" />
+  <meta property="og:title" content="Bulk Email Verification Tool | StopReg" />
+  <meta property="og:description"
+    content="Validate lists of emails instantly. Filter out disposable and spam addresses with our bulk tool." />
+  <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.png" />
+  <meta property="og:site_name" content="StopReg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bulk Email Verifier | StopReg" />
+  <meta name="twitter:description"
+    content="Validate lists of emails instantly. Filter out disposable and spam addresses." />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://stopreg.com/" />
-  <meta property="og:title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
-  <meta property="og:description"
-    content="Block temporary and disposable email addresses in real-time. Protect your platform from spam and fake registrations with our comprehensive email validation API. Over 124,000 disposable email domains in our database." />
-  <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:site_name" content="StopReg" />
-  <meta property="og:locale" content="en_US" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://stopreg.com/" />
-  <meta name="twitter:title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
-  <meta name="twitter:description"
-    content="Block temporary and disposable email addresses in real-time. Protect your platform from spam and fake registrations with our comprehensive email validation API." />
-  <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
-
-  <!-- Additional Meta Tags -->
   <meta name="theme-color" content="#1452CA" />
-  <meta name="msapplication-TileColor" content="#1452CA" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
@@ -58,6 +42,42 @@
   <link href="/assets/css/styles.css" rel="stylesheet" />
   <link href="/assets/css/landing/header.css" rel="stylesheet" />
   <link href="/assets/css/landing/index.css" rel="stylesheet" />
+  <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+
+  <!-- Schema: WebApplication + Breadcrumbs -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://stopreg.com/"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bulk Verification",
+            "item": "https://stopreg.com/bulk-verification.html"
+          }]
+        },
+        {
+          "@type": "WebApplication",
+          "name": "StopReg Bulk Verifier",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Browser",
+          "browserRequirements": "Requires JavaScript",
+          "offers": {
+             "@type": "Offer",
+             "price": "0",
+             "priceCurrency": "USD"
+          }
+        }
+      ]
+    }
+  </script>
   <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
   <link href="/assets/css/bulk-verification.css" rel="stylesheet" />
   <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
@@ -83,7 +103,7 @@
         "@type": "Organization",
         "name": "StopReg",
         "url": "https://stopreg.com",
-        "logo": "https://stopreg.com/assets/logo/stopreg-logo.svg",
+        "logo": "https://stopreg.com/assets/logo/stopreg-logo.png",
         "description": "Email validation service that blocks disposable and temporary email addresses",
         "sameAs": [],
         "contactPoint": {

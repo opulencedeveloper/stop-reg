@@ -6,50 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
-  <title>
-    StopReg - Block Disposable Email Addresses | Real-Time Email Validation
-    API
-  </title>
-  <meta name="title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
+  <title>StopReg - Real-Time Disposable Email Validation API</title>
+  <meta name="title" content="StopReg - Real-Time Disposable Email Validation API" />
   <meta name="description"
-    content="StopReg blocks temporary and disposable email addresses in real-time. Protect your platform from spam, fake registrations, and abuse with our comprehensive email validation API. Over 124,000 disposable email domains in our database. Free API token available." />
+    content="Prevent fake signups instantly. StopReg's API detects disposable emails, spam domains, and high-risk users in real-time. Secure your platform today." />
   <meta name="keywords"
-    content="disposable email, temporary email, email validation, block disposable email, email verification API, spam prevention, fake email detection, email validation service, WordPress email plugin, email security" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="language" content="English" />
+    content="disposable email blocker, email validation api, fake email detector, temp mail checker, spam prevention, stopreg" />
+  <meta name="robots" content="index, follow" />
   <meta name="author" content="StopReg" />
-  <meta name="revisit-after" content="7 days" />
+  <meta name="language" content="English" />
   <link rel="canonical" href="https://stopreg.com/" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
-  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://stopreg.com/" />
-  <meta property="og:title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
+  <meta property="og:title" content="StopReg - Real-Time Disposable Email Validation API" />
   <meta property="og:description"
-    content="Block temporary and disposable email addresses in real-time. Protect your platform from spam and fake registrations with our comprehensive email validation API. Over 124,000 disposable email domains in our database." />
-  <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+    content="Prevent fake signups instantly. Detect disposable emails and spam domains in real-time with StopReg." />
+  <meta property="og:image" content="https://stopreg.com/assets/logo/stopreg-logo.png" />
   <meta property="og:site_name" content="StopReg" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://stopreg.com/" />
-  <meta name="twitter:title" content="StopReg - Block Disposable Email Addresses | Real-Time Email Validation API" />
+  <meta name="twitter:title" content="StopReg - Real-Time Disposable Email Validation API" />
   <meta name="twitter:description"
-    content="Block temporary and disposable email addresses in real-time. Protect your platform from spam and fake registrations with our comprehensive email validation API." />
-  <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.svg" />
+    content="Prevent fake signups instantly. Detect disposable emails and spam domains in real-time with StopReg." />
+  <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.png" />
 
-  <!-- Additional Meta Tags -->
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png" />
   <meta name="theme-color" content="#1452CA" />
-  <meta name="msapplication-TileColor" content="#1452CA" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
@@ -62,53 +53,92 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "StopReg",
-        "url": "https://stopreg.com",
-        "description": "Block temporary and disposable email addresses in real-time with our comprehensive email validation API",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://stopreg.com/?s={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      }
-    </script>
-  <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "StopReg",
-        "url": "https://stopreg.com",
-        "logo": "https://stopreg.com/assets/logo/stopreg-logo.svg",
-        "description": "Email validation service that blocks disposable and temporary email addresses",
-        "sameAs": [],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "Customer Service"
-        }
-      }
-    </script>
-  <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "StopReg Email Validation API",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Any",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://stopreg.com/#organization",
+          "name": "StopReg",
+          "url": "https://stopreg.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://stopreg.com/assets/logo/stopreg-logo.png",
+            "width": 112,
+            "height": 112
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "",
+            "contactType": "customer support",
+            "areaServed": "Global",
+            "availableLanguage": "English"
+          },
+          "sameAs": [
+            "https://twitter.com/stopreg",
+            "https://github.com/stopreg"
+          ]
         },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "ratingCount": "500"
+        {
+          "@type": "WebSite",
+          "@id": "https://stopreg.com/#website",
+          "url": "https://stopreg.com/",
+          "name": "StopReg",
+          "publisher": {
+            "@id": "https://stopreg.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://stopreg.com/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "StopReg API",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Cloud",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "120"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://stopreg.com/#webpage",
+          "url": "https://stopreg.com/",
+          "inLanguage": "en-US",
+          "name": "StopReg - Real-Time Disposable Email Validation API",
+          "isPartOf": {
+            "@id": "https://stopreg.com/#website"
+          },
+          "about": {
+            "@id": "https://stopreg.com/#organization"
+          },
+          "datePublished": "2024-01-01T08:00:00+00:00",
+          "dateModified": "2024-03-20T08:00:00+00:00",
+          "description": "Prevent fake signups instantly. StopReg's API detects disposable emails, spam domains, and high-risk users in real-time. Secure your platform today."
         }
-      }
-    </script>
+      ]
+    }
+  </script>
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+  "@type": "AggregateRating",
+  "ratingValue": "4.9",
+  "ratingCount": "500"
+  }
+  }
+  </script>
   <script type="application/ld+json">
       {
         "@context": "https://schema.org",

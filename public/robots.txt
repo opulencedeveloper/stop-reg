@@ -1,18 +1,10 @@
 User-agent: *
 Allow: /
-Allow: /api-check.html
-Allow: /documentation.html
-Allow: /dashboard/
+Disallow: /dashboard/
+Disallow: /test.html
+Disallow: /404.html
 
-# Disallow private/admin areas if any
-Disallow: /dashboard/profile/
-Disallow: /dashboard/payments.html
-
-# Sitemap location
 Sitemap: https://stopreg.com/sitemap.xml
-
-# Crawl-delay (optional, adjust as needed)
-Crawl-delay: 1
 
 
 
