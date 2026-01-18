@@ -84,13 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           const durationInDays = userDetails.planId.durationInDays ?? 30;
           apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
         }
-
-        // Update API requests left in header subtitle
-        const dashApiHdSubtlEl = document.querySelector(".dash-api-hd-subtl");
-        if (dashApiHdSubtlEl) {
-          const apiRequestLeft = userDetails.apiRequestLeft ?? userDetails.planId?.apiLimit ?? 0;
-          dashApiHdSubtlEl.textContent = `${apiRequestLeft} API requests left.`;
-        }
       }
 
       // Extract request array

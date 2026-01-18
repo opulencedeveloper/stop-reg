@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - StopReg</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Sign Up - StopReg" />
+    <meta name="description"
+        content="Create your StopReg account to block disposable emails and protect your platform." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+
+    <!-- Stylesheets -->
+    <link href="/assets/css/fonts.css" rel="stylesheet" />
+    <link href="/assets/css/variables.css" rel="stylesheet" />
+    <link href="/assets/css/landing/header.css" rel="stylesheet" />
+    <link href="/assets/css/landing/sign-up.css" rel="stylesheet" />
+    <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/landing/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Loading Spinner Start -->
+    <div id="spinner-body" class="spinner-body">
+        <div class="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- Loading Spinner End -->
+
+    <main id="content">
+        <header class="main-head-cont">
+            <div class="main-head-wrapper box animation6">
+                <a href="/" class="land-logo" aria-label="StopReg Home">
+                    <img src="/assets/logo/stopreg-logo.svg" alt="StopReg - Block Disposable Email Addresses" />
+                </a>
+
+
+                <div class="nav-icon2">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Start -->
+        <div class="nav-menu">
+            <div class="nav-menu-sect-one">
+                <a href="/" class="land-logo" aria-label="StopReg Home">
+                    <img src="/assets/logo/stopreg-logo.svg" alt="StopReg - Block Disposable Email Addresses" />
+                </a>
+                <div class="nav-icon2-mobile active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="mobile-nav-items">
+                <a href="/#what-stopreg-check">Feature</a>
+                <button content-data-target="api" class="section-scroller">
+                    API
+                </button>
+                <!-- <button
+            content-data-target="wordpress-plugin"
+            class="section-scroller"
+          >
+            WordPress Plugin
+          </button> -->
+                <button content-data-target="pricing" class="section-scroller">
+                    Pricing
+                </button>
+                <button content-data-target="fags" class="section-scroller">
+                    FAQs
+                </button>
+                <!-- <a href="/documentation.html">Documentation</a> -->
+            </div>
+            <div class="mobile-nav-btns">
+                <a href="/sign-in.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Log In</a>
+                <a href="/sign-up.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Create an
+                    Account</a>
+            </div>
+        </div>
+        <!-- Mobile Navigation End -->
+
+        <div class="auth-page-wrapper">
+            <!-- Left Section (Desktop Only) -->
+            <div class="auth-left-section">
+                <div class="auth-left-logo">
+                    <a href="/index.html">
+                        <img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg" />
+                    </a>
+                    <!-- Note: Assuming logo needs to be white on dark bg. If separate white logo exists, use that. Or filter. using filter as fallback -->
+                </div>
+
+                <div class="auth-left-content">
+                    <h1 class="auth-left-header">
+                        Block disposable emails.<br>
+                        Only real users.<br>
+                        Keep your platform clean and secure.
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Right Section (Form) -->
+            <div class="auth-right-section">
+                <!-- Mobile Header -->
+                <!-- Standard Header (Copied from Index) -->
+
+
+                <div class="auth-form-container">
+                    <h2 class="auth-title">Create an Account</h2>
+                    <p class="auth-subtitle">Get started with an account on Stopreg</p>
+
+                    <form>
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required />
+                        </div>
+
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" id="fname" class="form-input" placeholder="Enter first name" required />
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" id="lname" class="form-input" placeholder="Enter last name" required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="password" class="form-input" placeholder="Create password"
+                                    required />
+                                <button type="button" class="toggle-password" data-target="password">
+                                    <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-group">
+                            <label for="cpassword">Confirm Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="cpassword" class="form-input" placeholder="Confirm password"
+                                    required />
+                                <button type="button" class="toggle-password" data-target="cpassword">
+                                    <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Create an Account</button>
+                    </form>
+
+                    <div class="auth-footer">
+                        Already have an account? <a href="/sign-in.html">Log In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Overlay (Copied from Index) -->
+        <div class="nav-menu">
+            <div class="nav-menu-sect-one">
+                <a href="/" class="land-logo" aria-label="StopReg Home">
+                    <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+                </a>
+                <div class="nav-icon2-mobile active">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="mobile-nav-items">
+                <a href="/index.html#feature" class="section-scroller">Feature</a>
+                <a href="/index.html#api" class="section-scroller">API</a>
+                <a href="/index.html#pricing" class="section-scroller">Pricing</a>
+                <a href="/index.html#fags" class="section-scroller">FAQs</a>
+            </div>
+            <div class="mobile-nav-btns">
+                <a href="/sign-in.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Log In</a>
+                <a href="/sign-up.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Create an
+                    Account</a>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+        integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    <script src="/assets/js/landing/header.js"></script>
+    <script src="/assets/js/landing/sign-up.js"></script>
+    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/landing/index.js" defer></script>
+    <script src="/assets/js/auth/otp.js" defer></script>
+    <!-- Zoho SalesIQ Live Chat Widget -->
+    <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>
+    <script id="zsiqscript"
+        src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
+        defer></script>
+</body>
+
+</html>

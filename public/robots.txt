@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Allow: verify-email.html
+Allow: /api-check.html
 Allow: /documentation.html
 Allow: /dashboard/
 

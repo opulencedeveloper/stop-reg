@@ -1,9 +1,6 @@
  
 document.addEventListener("DOMContentLoaded", async () => {
-
-
- const  fetchUserDetial = async () => {
-   const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem("authToken");
 
   const tokenElement = document.querySelector(".main-token");
 
@@ -33,9 +30,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log(tokenElement.textContent);
       }
 
-      // document.getElementById("user-name").textContent = user.name || "Unknown";
-      // document.getElementById("user-email").textContent =
-      //   user.email || "No email";
+      document.getElementById("user-name").textContent = user.name || "Unknown";
+      document.getElementById("user-email").textContent =
+        user.email || "No email";
     } else {
       console.error("Error fetching user:", data);
 
@@ -47,10 +44,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     console.error("Network error:", error);
   }
-
-  }
-
-   fetchUserDetial();
 });
 
  
@@ -143,16 +136,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Update API requests left
         const apiRequestLeftEl = document.querySelector(".api-request-left");
         if (apiRequestLeftEl && userDetails.planId) {
-          const apiRequestLeft = userDetails.planId.apiLimit ?? 0;
+          const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
           const durationInDays = userDetails.planId.durationInDays ?? 30;
           apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
-        }
-
-        // Update API requests left in header subtitle
-        const dashApiHdSubtlEl = document.querySelector(".dash-api-hd-subtl");
-        if (dashApiHdSubtlEl) {
-          const apiRequestLeft = userDetails.apiRequestLeft ?? userDetails.planId?.apiLimit ?? 0;
-          dashApiHdSubtlEl.textContent = `${apiRequestLeft} API requests left.`;
         }
 
         // Update payments page plan text

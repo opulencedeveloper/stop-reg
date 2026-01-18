@@ -18,18 +18,6 @@
   margin-top: 40px;
 }
 
-.disposable-result-cont {
-  text-align: start;
-  display: flex;
-  flex-direction: column;
- align-items: flex-start;
-justify-content: flex-start;
-
-}
-
-  .disposal-result-para{
-    text-align: start !important;
-  }
 
 .form-cont {
   background-color: #ffff;
@@ -87,7 +75,7 @@ fieldset {
   border-radius: 12px;
   display: none;
   flex-direction: column;
-  gap: 12px !important;
+  gap: 12px;
 }
 .disposal-result-inner-cont {
   width: 100%;

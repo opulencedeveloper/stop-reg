@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
         
         addBlockForm.reset();
         reportDomainOverlay.style.display = "none";
-   window.location.reload();
       } else {
         const errorMessage = data.description || data.message || "Failed to allow domain.";
         if (typeof iziToast !== 'undefined') {

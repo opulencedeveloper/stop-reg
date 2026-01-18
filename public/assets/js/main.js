@@ -81,7 +81,7 @@ window.addEventListener("load", function () {
     const observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.2,
+      threshold: 0.1,
     };
   
     const observerCallback = (entries, observer) => {

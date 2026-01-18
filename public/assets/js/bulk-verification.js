@@ -1,291 +1,560 @@
-// Script used on verify-email.html to check if an email is disposable
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Form and elements on verify-email.html
-  const form = document.querySelector(".verifyEmail-hero form");
-  if (!form) return;
+// document.addEventListener("DOMContentLoaded", () => {
+//   const form = document.querySelector(".bulk-verification-form");
+//   const submitBtn = form.querySelector(".bulk-verify-domain-btn");
 
-  const emailInput = form.querySelector("#email");
-  const submitBtn = form.querySelector(".bulk-verify-domain-btn");
+//   const token = localStorage.getItem("authToken");
 
-  // Create a result element if not present
-  let resultEl = document.getElementById("verify-email-result");
-  if (!resultEl) {
-    resultEl = document.createElement("p");
-    resultEl.id = "verify-email-result";
-    resultEl.className = "verify-email-result";
-    resultEl.style.marginTop = "12px";
-    resultEl.style.fontSize = "0.95rem";
-    resultEl.style.fontWeight = "500";
-    form.parentNode.appendChild(resultEl);
-  }
+//   const bulkLinks = document.getElementById("bulk-links");
+//   const disposableResult = document.getElementById("disposableResult");
+ 
 
-  const API_URL = "https://api.stopreg.com/api/v1/check/public";
+//   function renderEmptyState() {
+//   disposableResult.innerHTML = "";
 
-  function showResult(message, type = "info") {
-    // If iziToast is available, use it for nicer UI
-    if (window.iziToast) {
-      const config = {
-        message,
-        position: "topRight",
-      };
+//   const tr = document.createElement("tr");
+//   tr.className = "empty-state";
 
-      if (type === "success") return window.iziToast.success(config);
-      if (type === "error") return window.iziToast.error(config);
-      return window.iziToast.info(config);
-    }
+//   const td = document.createElement("td");
+//   td.className = "table-inner-inner";
+//   td.colSpan = 1;
 
-    // Fallback: simple text below the form
-    resultEl.textContent = message;
-    resultEl.style.color =
-      type === "success" ? "#16a34a" : type === "error" ? "#dc2626" : "#0f172a";
-  }
+//   // Make the td a flex container to center content
+//   td.style.display = "flex";
+//   td.style.flexDirection = "column";
+//   td.style.justifyContent = "center"; // vertical alignment
+//   td.style.alignItems = "center";     // horizontal alignment
+//   td.style.height = "200px"; // adjust height as needed to center vertically
 
-  // Store Turnstile token and widget ID
-  let turnstileToken = null;
-  let turnstileWidgetId = null;
-  
-  // Initialize Turnstile widget
-  function initTurnstile() {
-    const widgetElement = document.getElementById('turnstile-widget');
-    if (!widgetElement || !window.turnstile) return;
+//   const img = document.createElement("img");
+//   img.src = "/assets/icons/empty.svg";
+//   img.alt = "Empty state";
+//   img.style.display = "block";
 
-    const siteKey = widgetElement.getAttribute('data-sitekey');
-    // Only treat as misconfigured if the site key is missing.
-    // Your production key (e.g. 0x4AAAAAACEca11RLVJeokxF) should be allowed.
-    if (!siteKey) {
-      console.warn('Turnstile site key not configured. Please set SITE KEY in verify-email.html');
-      return;
-    }
+//   img.style.marginBottom = "10px"; // spacing between image and text
 
-    turnstileWidgetId = window.turnstile.render(widgetElement, {
-      sitekey: siteKey,
-      callback: function(token) {
-        turnstileToken = token;
-      },
-      'error-callback': function() {
-        turnstileToken = null;
-      },
-      'expired-callback': function() {
-        turnstileToken = null;
-      }
-    });
-  }
+//   const text = document.createElement("p");
+//   text.textContent = "Your verification status will show here.";
 
-  // Wait for Turnstile script to load
-  if (window.turnstile) {
-    initTurnstile();
-  } else {
-    window.addEventListener('load', () => {
-      // Wait a bit for Turnstile script to initialize
-      setTimeout(initTurnstile, 100);
-    });
-  }
+//   text.className = "empty-state-text"
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+//   td.appendChild(img);
+//   td.appendChild(text);
+//   tr.appendChild(td);
+//   disposableResult.appendChild(tr);
 
-    const email = emailInput.value.trim();
-    console.log(" email",  email)
-    if (!email) {
-      showResult("Please enter an email address.", "error");
-      return;
-    }
+//   downloadBtn.style.display = "none"; // hide download button when empty
+// }
 
-    // Check if Turnstile token is available
-    if (!turnstileToken) {
-      showResult("Please complete the captcha verification.", "error");
-      return;
-    }
+//   renderEmptyState();
 
-    // Clear previous results
-    const resultContainer = document.getElementById("verify-email-result-container");
-    if (resultContainer) {
-      resultContainer.style.display = "none";
-      resultContainer.innerHTML = "";
-    }
+//   const typingLine = document.createElement("div");
+//   typingLine.className = "typing-line";
+//   typingLine.contentEditable = "true";
+//   bulkLinks.appendChild(typingLine);
+//   typingLine.focus();
 
-    const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> Checking...`;
+//   function placeCursor(el) {
+//     const range = document.createRange();
+//     const sel = window.getSelection();
+//     range.selectNodeContents(el);
+//     range.collapse(true);
+//     sel.removeAllRanges();
+//     sel.addRange(range);
+//   }
 
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          email,
-          turnstileToken 
-        }),
-      });
+//   function formatLinks() {
+//     const text = typingLine.innerText.trim();
+//     if (!text) return;
 
-      const data = await response.json().catch(() => ({}));
+//     const links = text.split(/[\s,]+/).filter((v) => v.trim() !== "");
 
-      if (!response.ok) {
-        const msg =
-          data?.description ||
-          data?.message ||
-          "Unable to verify email at the moment.";
-        showResult(msg, "error");
-        return;
-      }
+//     links.forEach((link) => {
+//       const span = document.createElement("span");
+//       span.textContent = link;
+//       bulkLinks.insertBefore(span, typingLine);
+//       bulkLinks.insertBefore(document.createElement("br"), typingLine);
+//     });
 
-      const responseData = data?.data;
-      const disposableEmail = responseData?.disposableEmail;
-      
-      // Handle null or undefined data
-      if (responseData === null || responseData === undefined || disposableEmail === undefined) {
-        showResult("No verification data available for this email.", "error");
-        
-        const resultContainer = document.getElementById("verify-email-result-container");
-        if (resultContainer) {
-          resultContainer.style.display = "flex";
-          resultContainer.innerHTML = `
-            <h4 class="disposal-result-title" style="color: var(--tertiary-color);">
-              No Data Available
-            </h4>
-            <div class="disposal-result-inner-cont result-false">
-              <div class="disposal-result">
-                <div class="disposable-result-cont">
-                  <h3 class="disposal-result-head">Verification Result</h3>
-                  <p class="disposal-result-para">
-                    Unable to retrieve verification data for this email address. The API response did not contain any data.
-                  </p>
-                </div>
-                <p class="disposal-result-bolean">N/A</p>
-              </div>
-            </div>
-          `;
-        }
-        return;
-      }
+//     typingLine.innerText = "";
+//     placeCursor(typingLine);
+//   }
 
-      // Determine if email is disposable:
-      // - If disposableEmail is an object { domain, provider, mx_record, public_email_provider } → email IS disposable
-      // - If disposableEmail is false → email is NOT disposable
-      const isDisposable = disposableEmail !== false && disposableEmail !== null && typeof disposableEmail === 'object';
-      
-      // Extract data from disposableEmail object if it exists
-      // When disposableEmail is false, we don't have additional data (mx_record, public_email_provider, etc.)
-      const emailData = isDisposable ? disposableEmail : {};
-      const hasMxRecord = emailData.mx_record !== null && emailData.mx_record !== undefined && emailData.mx_record !== '';
-      const isPublicProvider = !!emailData.public_email_provider;
-      const hasEmailData = isDisposable && Object.keys(emailData).length > 0;
+//   typingLine.addEventListener("keydown", (e) => {
+//     if ([" ", ",", "Enter"].includes(e.key)) {
+//       e.preventDefault();
+//       formatLinks();
+//     }
+//   });
 
-      // Display toast notification
-      if (isDisposable) {
-        showResult(
-          "This email address is disposable and may not be accepted.",
-          "error"
-        );
-      } else {
-        showResult("This email address is not disposable.", "success");
-      }
+//   bulkLinks.addEventListener("keyup", (e) => {
+//     if ([" ", "Enter", ","].includes(e.key)) formatLinks();
+//   });
 
-      // Display detailed results in UI
-      const resultContainer = document.getElementById("verify-email-result-container");
-      if (resultContainer) {
-        resultContainer.style.display = "flex";
-        
-        // Main heading based on disposable status - matching the design exactly
-        const mainHeading = `The email provided <b>${email}</b> ${
-          isDisposable ? "is" : "is not"
-        } a verified disposable email`;
-        
-        // Determine YES/NO status for each field
-        const mxRecordStatus = hasMxRecord ? "YES" : "NO";
-        // For Disposable:
-        // When email IS disposable (disposableEmail is object): disposableStatus = "YES" (GREEN)
-        // When email is NOT disposable (disposableEmail === false): disposableStatus = "NO" (RED)
-        const disposableStatus = isDisposable ? "YES" : "NO";
-        const publicProviderStatus = isPublicProvider ? "YES" : "NO";
+//   bulkLinks.addEventListener("blur", formatLinks);
 
-        // Apply dynamic classes - green for YES (default), red for NO (result-false)
-        const mxRecordClass = mxRecordStatus === "YES" 
-          ? "disposal-result-inner-cont" 
-          : "disposal-result-inner-cont result-false";
-        
-        // Container color logic:
-        // - If object found (email IS disposable) → GREEN container
-        // - If false (email is NOT disposable) → RED container
-        const disposableClass = isDisposable 
-          ? "disposal-result-inner-cont" 
-          : "disposal-result-inner-cont result-false";
-        
-        const publicProviderClass = publicProviderStatus === "YES" 
-          ? "disposal-result-inner-cont" 
-          : "disposal-result-inner-cont result-false";
+//   function getLinksArray() {
+//     const links = Array.from(bulkLinks.querySelectorAll("span"))
+//       .map((el) => el.textContent.trim())
+//       .filter((v) => v !== "" && v !== "," && v.includes("."));
 
-        let resultHTML = `
-          <h4 class="disposal-result-title">
-            ${mainHeading}
-          </h4>
+//     const lastInput = typingLine.innerText.trim();
+//     if (lastInput && lastInput !== "," && lastInput.includes(".")) links.push(lastInput);
 
-          ${hasEmailData ? `
-          <div class="${mxRecordClass}">
-            <div class="disposal-result">
-              <div class="disposable-result-cont">
-                <h3 class="disposal-result-head">Max Record</h3>
-                <p class="disposal-result-para">
-                  ${mxRecordStatus === "YES" 
-                    ? "This domain has MX record. This means that it has a mail server and is able to receive emails"
-                    : "This domain does not have MX record"}
-                </p>
-              </div>
-              <p class="disposal-result-bolean">${mxRecordStatus}</p>
-            </div>
-          </div>
-          ` : ''}
+//     return [...new Set(links)];
+//   }
 
-          <div class="${disposableClass}">
-            <div class="disposal-result">
-              <div class="disposable-result-cont">
-                <h3 class="disposal-result-head">Disposable</h3>
-                <p class="disposal-result-para">
-                  ${disposableStatus === "YES" 
-                    ? "This domain appears to be from a disposable email provider"
-                    : "This domain does not appear to be from a disposable email provider"}
-                </p>
-              </div>
-              <p class="disposal-result-bolean">${disposableStatus}</p>
-            </div>
-          </div>
+//   // ----------------- Table Population & Download -----------------
+//   function populateTable(disposal) {
+//     disposableResult.innerHTML = "";
 
-          ${hasEmailData ? `
-          <div class="${publicProviderClass}">
-            <div class="disposal-result">
-              <div class="disposable-result-cont">
-                <h3 class="disposal-result-head">Public email provider</h3>
-                <p class="disposal-result-para">
-                  ${publicProviderStatus === "YES" 
-                    ? "This domain is from a public email provider. This means that anyone can generate emails from this domain for free"
-                    : "This domain is not from a public email provider"}
-                </p>
-              </div>
-              <p class="disposal-result-bolean">${publicProviderStatus}</p>
-            </div>
-          </div>
-          ` : ''}
-        `;
+//     if (!disposal || disposal.length === 0 || !token) {
+//       renderEmptyState();
+//       return;
+//     }
 
-        resultContainer.innerHTML = resultHTML;
-      }
+//     disposal.forEach((item) => {
+//       const tr = document.createElement("tr");
+//       tr.className = "bulks-table-inner";
 
-      // Reset Turnstile token after successful check
-      turnstileToken = null;
-      if (window.turnstile && turnstileWidgetId !== null) {
-        window.turnstile.reset(turnstileWidgetId);
-      }
-    } catch (err) {
-      console.error(err);
-      showResult("Network error while checking email. Please try again.", "error");
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-    }
-  });
-});
+//       const td = document.createElement("td");
+//       td.className = "table-inner-inner";
+//       td.innerHTML = `
+//         ${item.domain}
+//         <div class="row-status-cont">
+//           <p class="status-cont"><span>Disposable:</span> ${item.isDisposable ? "Yes" : "No"}</p>
+//           <p class="status-cont"><span>UNRESOLVABLE:</span> ${item.isUnresolvable ? "Yes" : "No"}</p>
+//           <p class="status-cont"><span>ERROR:</span> ${item.isError ? "Yes" : "No"}</p>
+//         </div>
+//       `;
 
+//       tr.appendChild(td);
+//       disposableResult.appendChild(tr);
+//     });
 
+//     downloadBtn.style.display = "inline-block"; // show button only if data exists
+//   }
+
+//   function downloadTableData() {
+//     const rows = Array.from(disposableResult.querySelectorAll("tr"));
+//     if (rows.length === 0) return;
+
+//     let csvContent = "Domain,Disposable,UNRESOLVABLE,ERROR\n";
+
+//     rows.forEach((tr) => {
+//       const td = tr.querySelector(".table-inner-inner");
+//       if (!td) return;
+
+//       const domain = td.childNodes[0]?.textContent?.trim() || "";
+//       const statuses = Array.from(td.querySelectorAll("p.status-cont")).map(p =>
+//         p.textContent.split(':')[1].trim()
+//       );
+//       const [disposable, unresolvable, error] = statuses;
+
+//       csvContent += `${domain},${disposable || ""},${unresolvable || ""},${error || ""}\n`;
+//     });
+
+//     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+//     const url = URL.createObjectURL(blob);
+
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = "bulk-verification-results.csv";
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//   }
+
+//   downloadBtn.addEventListener("click", downloadTableData);
+//   // ---------------------------------------------------------------
+
+//   form.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     if (!token) return (window.location.href = "/");
+
+//     const links = getLinksArray();
+//     if (links.length === 0) return alert("Please enter at least one domain or email address.");
+
+//     const originalText = submitBtn.textContent;
+//     submitBtn.disabled = true;
+//     submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
+
+//     try {
+//       const response = await fetch(
+//         "https://api.stopreg.com/api/v1/email-domains/bulk-verification",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//           },
+//           body: JSON.stringify({ domains: links }),
+//         }
+//       );
+
+//       const data = await response.json();
+//       if (response.ok) {
+//         populateTable(data?.data || []);
+//         bulkLinks.innerHTML = "";
+//         bulkLinks.appendChild(typingLine);
+//         typingLine.innerText = "";
+//         typingLine.focus();
+//       } else {
+//         alert(data.description || data.message || "Verification failed!");
+//       }
+//     } catch (err) {
+//       console.error(err);
+//     } finally {
+//       submitBtn.disabled = false;
+//       submitBtn.textContent = originalText;
+//     }
+//   });
+// });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const form = document.querySelector(".bulk-verification-form");
+//   const submitBtn = form.querySelector(".bulk-verify-domain-btn");
+
+//   const token = localStorage.getItem("authToken");
+
+//   const bulkLinks = document.getElementById("bulk-links");
+//   const disposableResult = document.getElementById("disposableResult");
+//   const downloadBtn = document.getElementById("bulk-domain-download");
+
+//   downloadBtn.classList.add("hidden"); // hide by default
+
+//   // Store the API response data for CSV download
+//   let storedResponseData = [];
+
+//   // Hide spinner since this page doesn't fetch initial data
+//   if (typeof window.hideSpinner === 'function') {
+//     window.hideSpinner();
+//   }
+
+//   function renderEmptyState() {
+//   disposableResult.innerHTML = "";
+
+//   const tr = document.createElement("tr");
+//   tr.className = "empty-state";
+
+//   const td = document.createElement("td");
+//   td.className = "table-inner-inner";
+//   td.colSpan = 1;
+
+//   // Make the td a flex container to center content
+//   td.style.display = "flex";
+//   td.style.flexDirection = "column";
+//   td.style.justifyContent = "center"; // vertical alignment
+//   td.style.alignItems = "center";     // horizontal alignment
+//   td.style.height = "200px"; // adjust height as needed to center vertically
+
+//   const img = document.createElement("img");
+//   img.src = "/assets/icons/empty.svg";
+//   img.alt = "Empty state";
+//   img.style.display = "block";
+
+//   img.style.marginBottom = "10px"; // spacing between image and text
+
+//   const text = document.createElement("p");
+//   text.textContent = "Your verification status will show here.";
+
+//   text.className = "empty-state-text"
+
+//   td.appendChild(img);
+//   td.appendChild(text);
+//   tr.appendChild(td);
+//   disposableResult.appendChild(tr);
+
+//   downloadBtn.classList.add("hidden"); // hide download button when empty
+// }
+
+//   renderEmptyState();
+
+//   // Function to extract domain from URL
+//   function extractDomain(input) {
+//     let cleaned = input.trim();
+    
+//     // Remove protocol (http://, https://, ftp://, etc.)
+//     cleaned = cleaned.replace(/^https?:\/\//i, '');
+//     cleaned = cleaned.replace(/^ftp:\/\//i, '');
+    
+//     // Remove www. prefix
+//     cleaned = cleaned.replace(/^www\./i, '');
+    
+//     // Remove trailing slash and path
+//     cleaned = cleaned.split('/')[0];
+    
+//     // Remove port if present
+//     cleaned = cleaned.split(':')[0];
+    
+//     // Remove query parameters and fragments
+//     cleaned = cleaned.split('?')[0];
+//     cleaned = cleaned.split('#')[0];
+    
+//     return cleaned.trim();
+//   }
+
+//   // Validation function for email and domain
+//   function isValidEmailOrDomain(input) {
+//     const trimmed = input.trim();
+//     if (!trimmed) return false;
+
+//     // Email regex pattern
+//     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+//     // Domain regex pattern
+//     const domainPattern = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+
+//     // Check if it's a valid email
+//     if (emailPattern.test(trimmed)) {
+//       return true;
+//     }
+
+//     // Extract domain from URL if it contains protocol
+//     const extractedDomain = extractDomain(trimmed);
+    
+//     // Check if extracted domain is valid
+//     if (extractedDomain && extractedDomain.length > 0) {
+//       if (domainPattern.test(extractedDomain)) {
+//         return true;
+//       }
+//     }
+    
+//     // Also check the original input as a domain (in case it's already a clean domain)
+//     if (domainPattern.test(trimmed)) {
+//       return true;
+//     }
+
+//     return false;
+//   }
+
+//   // Format textarea content - put each item on a new line
+//   function formatTextarea() {
+//     const text = bulkLinks.value;
+//     if (!text) return;
+
+//     // Split by space, comma, or newline
+//     const items = text.split(/[\s,\n]+/).filter((v) => v.trim() !== "");
+//     const formattedItems = [];
+//     const invalidItems = [];
+
+//     items.forEach((item) => {
+//       const trimmed = item.trim();
+//       if (trimmed && isValidEmailOrDomain(trimmed)) {
+//         // Extract domain from URL if needed, keep email as is
+//         const cleaned = trimmed.includes('@') ? trimmed : extractDomain(trimmed);
+//         formattedItems.push(cleaned);
+//       } else if (trimmed) {
+//         invalidItems.push(trimmed);
+//       }
+//     });
+
+//     // Show error for invalid items
+//     if (invalidItems.length > 0) {
+//       const errorMessage = `Invalid email/domain: ${invalidItems.join(", ")}`;
+//       if (typeof iziToast !== 'undefined') {
+//         iziToast.warning({
+//           title: 'Invalid Input',
+//           message: errorMessage,
+//           position: "topRight",
+//           timeout: 5000,
+//           drag: false,
+//           displayMode: 1,
+//           zindex: 9999,
+//         });
+//       } else {
+//         alert(errorMessage);
+//       }
+//     }
+
+//     // Update textarea with formatted items (one per line)
+//     if (formattedItems.length > 0) {
+//       bulkLinks.value = formattedItems.join('\n');
+//     }
+//   }
+
+//   // Handle input events - format when space or comma is typed
+//   let lastValue = '';
+//   bulkLinks.addEventListener("input", (e) => {
+//     const value = bulkLinks.value;
+//     const cursorPos = bulkLinks.selectionStart;
+    
+//     // Check if space or comma was just added
+//     if (value.length > lastValue.length) {
+//       const addedChar = value[cursorPos - 1];
+//       if (addedChar === ' ' || addedChar === ',') {
+//         // Format the textarea after a short delay to allow the character to be added
+//         setTimeout(() => {
+//           formatTextarea();
+//           // Set cursor to end
+//           bulkLinks.setSelectionRange(bulkLinks.value.length, bulkLinks.value.length);
+//         }, 10);
+//       }
+//     }
+    
+//     lastValue = value;
+//   });
+
+//   // Handle paste events
+//   bulkLinks.addEventListener("paste", (e) => {
+//     setTimeout(() => {
+//       formatTextarea();
+//       bulkLinks.setSelectionRange(bulkLinks.value.length, bulkLinks.value.length);
+//     }, 10);
+//   });
+
+//   function getLinksArray() {
+//     // Get text from textarea and split by newlines
+//     const text = bulkLinks.value.trim();
+//     if (!text) return [];
+
+//     // Split by newline, space, or comma, then filter and validate
+//     const items = text.split(/[\n\s,]+/).filter((v) => v.trim() !== "");
+//     const links = [];
+
+//     items.forEach((item) => {
+//       const trimmed = item.trim();
+//       if (trimmed && isValidEmailOrDomain(trimmed)) {
+//         // Extract domain from URL if needed, keep email as is
+//         const cleaned = trimmed.includes('@') ? trimmed : extractDomain(trimmed);
+//         if (cleaned && cleaned.length > 0) {
+//           links.push(cleaned);
+//         }
+//       }
+//     });
+
+//     // Remove duplicates and return as array
+//     const uniqueLinks = [...new Set(links)];
+//     console.log("Links array for submission:", uniqueLinks);
+//     return uniqueLinks;
+//   }
+
+//   // ----------------- Table Population & Download -----------------
+//   function populateTable(disposal) {
+//     disposableResult.innerHTML = "";
+
+//     if (!disposal || disposal.length === 0) {
+//       renderEmptyState();
+//       storedResponseData = []; // Clear stored data
+//       return;
+//     }
+
+//     // Store the response data for CSV download
+//     storedResponseData = disposal;
+
+//     disposal.forEach((item) => {
+//       const tr = document.createElement("tr");
+//       tr.className = "bulks-table-inner";
+
+//       const td = document.createElement("td");
+//       td.className = "table-inner-inner";
+//       td.innerHTML = `
+//         ${item.domain}
+//         <div class="row-status-cont">
+//           <p class="status-cont"><span>Disposable:</span> ${item.isDisposable ? "Yes" : "No"}</p>
+
+//         </div>
+//       `;
+
+//       tr.appendChild(td);
+//       disposableResult.appendChild(tr);
+//     });
+
+//     downloadBtn.classList.remove("hidden"); // show button only if data exists
+//   }
+
+//   function downloadTableData() {
+//     if (storedResponseData.length === 0) return;
+
+//     // Use the actual data array from the API response
+//     let csvContent = "Domain,Disposable\n";
+
+//     storedResponseData.forEach((item) => {
+//       const domain = item.domain || "";
+//       const disposable = item.isDisposable ? "Yes" : "No";
+//       csvContent += `${domain},${disposable}\n`;
+//     });
+
+//     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+//     const url = URL.createObjectURL(blob);
+
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = "bulk-verification-results.csv";
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//   }
+
+//   downloadBtn.addEventListener("click", downloadTableData);
+//   // ---------------------------------------------------------------
+
+//   form.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+//     if (!token) return (window.location.href = "/");
+
+//     const links = getLinksArray();
+//     if (links.length === 0) {
+//       if (typeof iziToast !== 'undefined') {
+//         iziToast.warning({
+//           title: 'Warning',
+//           message: "Please enter at least one domain or email address.",
+//           position: "topRight",
+//           timeout: 5000,
+//           drag: false,
+//           displayMode: 1,
+//           zindex: 9999,
+//         });
+//       } else {
+//         alert("Please enter at least one domain or email address.");
+//       }
+//       return;
+//     }
+
+//     const originalText = submitBtn.textContent;
+//     submitBtn.disabled = true;
+//     submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
+//  console.log("called")
+//     try {
+//       const response = await fetch(
+//         "https://api.stopreg.com/api/v1/email-domains/bulk-verification",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//           },
+//           body: JSON.stringify({ domains: links }),
+//         }
+//       );
+
+//       const data = await response.json();
+
+//        console.log("dara", data)
+//       if (response.ok) {
+//         populateTable(data?.data || []);
+//         bulkLinks.value = ""; 
+//       } else {
+//         const errorMessage = data.description || data.message || "Verification failed!";
+//         if (typeof iziToast !== 'undefined') {
+//           iziToast.error({
+//             title: 'Error',
+//             message: errorMessage,
+//             position: "topRight",
+//             timeout: 5000,
+//             drag: false,
+//             displayMode: 1,
+//             zindex: 9999,
+//           });
+//         } else {
+//           alert(errorMessage);
+//         }
+//       }
+//     } catch (err) {
+//       console.error(err);
+//     } finally {
+//       submitBtn.disabled = false;
+//       submitBtn.textContent = originalText;
+//     }
+//   });
+// });

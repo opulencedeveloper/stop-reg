@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         this.classList.remove('open');
         navIcons.classList.remove("open");
         navMenu.classList.remove("active");
-        overLay.style.display = "none";
+        if (overLay) overLay.style.display = "none";
     });
 
     

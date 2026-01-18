@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/dashboard/index.html";
         } else {
           // User doesn't have valid plan - go to payments page
-          window.location.href = "/payments.html";
+          window.location.href = "/dashboard/payments.html";
         }
 
         overLay.style.display = "none";
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/dashboard/index.html";
         } else {
           // User doesn't have valid plan - go to payments page
-          window.location.href = "/payments.html";
+          window.location.href = "/dashboard/payments.html";
         }
         
         overLay.style.display = "none";
