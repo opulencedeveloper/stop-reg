@@ -49,6 +49,7 @@
   <link href="/assets/css/fonts.css" rel="stylesheet" />
   <link href="/assets/css/variables.css" rel="stylesheet" />
   <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
   <link href="/assets/css/landing/header.css" rel="stylesheet" />
   <link href="/assets/css/landing/index.css" rel="stylesheet" />
 
@@ -98,19 +99,13 @@
 </head>
 
 <body>
+  <script src="/assets/js/entrance-overlay.js"></script>
+
   <!-- Loading Spinner Start -->
   <div id="spinner-body" class="spinner-body">
-    <div class="lds-roller">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="stopreg-spinner"></div>
   </div>
+  <!-- Loading Spinner End -->
   <!-- Loading Spinner End -->
 
   <main id="content">
@@ -257,7 +252,7 @@
 
     <!-- Header Start -->
     <header class="main-head-cont">
-      <div class="main-head-wrapper">
+      <div class="main-head-wrapper box animation6">
         <a href="/" class="land-logo" aria-label="StopReg Home">
           <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
         </a>

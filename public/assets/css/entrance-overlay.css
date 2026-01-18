@@ -1,0 +1,177 @@
+/* Entrance Overlay Container */
+.entrance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 2147483647;
+    /* Max possible Z-Index */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    /* Slightly longer, simpler easing */
+    will-change: opacity, transform;
+}
+
+.entrance-overlay.entrance-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Randomized Exit Variants */
+.entrance-overlay.exit-zoom-in {
+    transform: scale(1.1);
+}
+
+.entrance-overlay.exit-zoom-out {
+    transform: scale(0.95);
+}
+
+.entrance-overlay.exit-slide-up {
+    transform: translateY(-40px);
+}
+
+.entrance-overlay.exit-slide-down {
+    transform: translateY(40px);
+}
+
+/* PERFORMANCE OPTIMIZATION: Pause all inner animations during exit */
+.entrance-overlay.entrance-hidden * {
+    animation-play-state: paused !important;
+}
+
+/* Background Variants (Controlled by JS) */
+.entrance-overlay[data-theme="cosmic"] {
+    background: radial-gradient(circle at center, #0B1026 0%, #000000 100%);
+}
+
+.entrance-overlay[data-theme="cyber"] {
+    background: linear-gradient(135deg, #050511 0%, #1a1a2e 100%);
+}
+
+.entrance-overlay[data-theme="clean"] {
+    background: #ffffff;
+}
+
+/* For "clean" theme, we need darker elements */
+.entrance-overlay[data-theme="clean"] .entrance-content {
+    filter: invert(1);
+}
+
+.entrance-overlay[data-theme="clean"] .stopreg-spinner-overlay::before {
+    border-color: #eee;
+    border-top-color: #1452CA;
+}
+
+/* Content Container */
+.entrance-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.entrance-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 24px;
+    animation: entrance-float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(20, 82, 202, 0.5));
+}
+
+.entrance-tagline {
+    font-family: 'PlusJakartaSans-Regular', sans-serif;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: entrance-fade-up 1s ease-out forwards 0.5s;
+}
+
+@keyframes entrance-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes entrance-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Procedural Grid (Cyber Theme Only) */
+.entrance-overlay[data-theme="cyber"]::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image:
+        linear-gradient(rgba(20, 82, 202, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 82, 202, 0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: entrance-grid-move 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes entrance-grid-move {
+    0% {
+        transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+
+    100% {
+        transform: perspective(500px) rotateX(60deg) translateY(60px);
+    }
+}
+
+/* Cosmic Particles */
+.entrance-overlay[data-theme="cosmic"]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0, 0, 0, 0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: entrance-stars 60s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes entrance-stars {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 1000px;
+    }
+}

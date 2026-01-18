@@ -80,9 +80,17 @@ window.onload = function () {
     }
   }
 
-  startProgress("prog-1", "prog-1-label", 100);
-  startProgress("prog-2", "prog-2-label", 98);
-  startProgress("prog-3", "prog-3-label", 92);
+  function runProgressBars() {
+      startProgress("prog-1", "prog-1-label", 100);
+      startProgress("prog-2", "prog-2-label", 98);
+      startProgress("prog-3", "prog-3-label", 92);
+  }
+
+  if (document.querySelector('.entrance-overlay')) {
+       window.addEventListener('entrance-complete', runProgressBars);
+  } else {
+       runProgressBars();
+  }
 
   const docsScrollButton = document.querySelectorAll(".docsScrollButton");
   let isProgrammaticScroll = false;
@@ -1004,27 +1012,36 @@ class Program
   }
 
   // Hero Section Animation Logic
-  const heroWrapper = document.querySelector(".hero-wrapper");
-  if (heroWrapper) {
-    const heroHeader = heroWrapper.querySelector(".hero-header");
-    const heroTitle = heroWrapper.querySelector(".hero-title");
-    const heroBtns = heroWrapper.querySelector(".hero-btn-wrapper");
-    const heroImage = heroWrapper.querySelector(".hero-sect-image");
-
-    const heroElements = [heroHeader, heroTitle, heroBtns, heroImage];
-
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          heroElements.forEach((el) => {
-            if (el) el.classList.add("hero-animate-in");
+  // Hero Section Animation Logic
+  function initHeroAnimations() {
+      const heroWrapper = document.querySelector(".hero-wrapper");
+      if (heroWrapper) {
+        const heroHeader = heroWrapper.querySelector(".hero-header");
+        const heroTitle = heroWrapper.querySelector(".hero-title");
+        const heroBtns = heroWrapper.querySelector(".hero-btn-wrapper");
+        const heroImage = heroWrapper.querySelector(".hero-sect-image");
+    
+        const heroElements = [heroHeader, heroTitle, heroBtns, heroImage];
+    
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              heroElements.forEach((el) => {
+                if (el) el.classList.add("hero-animate-in");
+              });
+              heroObserver.unobserve(entry.target);
+            }
           });
-          heroObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 }); // Trigger when 50% is visible
+        }, { threshold: 0.5 }); // Trigger when 50% is visible
+    
+        heroObserver.observe(heroWrapper);
+      }
+  }
 
-    heroObserver.observe(heroWrapper);
+  if (document.querySelector('.entrance-overlay')) {
+      window.addEventListener('entrance-complete', initHeroAnimations);
+  } else {
+      initHeroAnimations();
   }
 
   // What Stopreg Checks Animation Logic
