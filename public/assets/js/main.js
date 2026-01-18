@@ -49,7 +49,7 @@ document.body.classList.add('hidden-overflow');
 window.addEventListener("load", function () {
     // For landing pages, hide spinner immediately
     // For dashboard pages, keep it visible until data loads
-    // api-check.html is a special case - it doesn't need initial data fetch
+    // verify-email.html is a special case - it doesn't need initial data fetch
     const isDashboardPage = window.location.pathname.includes('/dashboard/');
     const isApiCheckPage = window.location.pathname.includes('api-check');
     
@@ -63,7 +63,7 @@ window.addEventListener("load", function () {
         content.style.display = "block";
       }
     } else if (isApiCheckPage) {
-      // api-check.html - hide spinner immediately since it doesn't need data fetch
+      // verify-email.html - hide spinner immediately since it doesn't need data fetch
       if (spinner) {
         spinner.style.display = "none";
       }
@@ -81,7 +81,7 @@ window.addEventListener("load", function () {
     const observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.2,
+      threshold: 0.1,
     };
   
     const observerCallback = (entries, observer) => {

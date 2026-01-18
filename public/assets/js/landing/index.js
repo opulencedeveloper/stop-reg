@@ -252,7 +252,7 @@ window.onload = function () {
         const targetElement = document.getElementById(targetId);
         navIcons.classList.remove("open");
         navMenu.classList.remove("active")
-        overLay.style.display = "none";
+        if (overLay) overLay.style.display = "none";
 
         if (targetElement) {
           targetElement.scrollIntoView({
@@ -958,6 +958,376 @@ class Program
       });
     });
   }
+
+  // How It Works Animation Logic
+  const hiwSection = document.getElementById("how-it-works");
+  if (hiwSection) {
+    const header = hiwSection.querySelector(".how-it-works-header");
+    const steps = hiwSection.querySelectorAll(".hiw-step");
+    const arrows = hiwSection.querySelectorAll(".hiw-arrow");
+
+    // Unified list of elements to animate sequentially
+    // Sequence: Header -> Step 1 -> Arrow 1 -> Step 2 -> Arrow 2 -> Step 3 -> Arrow 3 -> Step 4 -> Arrow 4 -> Step 5
+    const elementsToAnimate = [header];
+    
+    // Interleave steps and arrows for correct sequence
+    steps.forEach((step, index) => {
+      elementsToAnimate.push(step);
+      if (arrows[index]) {
+        elementsToAnimate.push(arrows[index]);
+      }
+    });
+
+    const observerOption = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.15, // Trigger when 15% of the element is visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Trigger sequence
+          elementsToAnimate.forEach((el, index) => {
+             if (el) {
+                setTimeout(() => {
+                    el.classList.add("hiw-animate-in");
+                }, index * 200); // 200ms delay between each item
+             }
+          });
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% of section visible starts the flow
+
+    sectionObserver.observe(hiwSection);
+  }
+
+  // Hero Section Animation Logic
+  const heroWrapper = document.querySelector(".hero-wrapper");
+  if (heroWrapper) {
+    const heroHeader = heroWrapper.querySelector(".hero-header");
+    const heroTitle = heroWrapper.querySelector(".hero-title");
+    const heroBtns = heroWrapper.querySelector(".hero-btn-wrapper");
+    const heroImage = heroWrapper.querySelector(".hero-sect-image");
+
+    const heroElements = [heroHeader, heroTitle, heroBtns, heroImage];
+
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          heroElements.forEach((el) => {
+            if (el) el.classList.add("hero-animate-in");
+          });
+          heroObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% is visible
+
+    heroObserver.observe(heroWrapper);
+  }
+
+  // What Stopreg Checks Animation Logic
+  const wscSection = document.getElementById("what-stopreg-check");
+  if (wscSection) {
+    const wscHeader = wscSection.querySelector(".wsc-header");
+    const wscCards = wscSection.querySelectorAll(".wsc-card");
+
+    const wscObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Animate header immediately
+            if(wscHeader) wscHeader.classList.add("wsc-animate-in");
+
+            // Stagger animations for cards
+            wscCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add("wsc-animate-in");
+                }, index * 100); // 100ms stagger delay
+            });
+
+            wscObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    wscObserver.observe(wscSection);
+  }
+
+  // Why Stopreg Animation Logic
+  const whySection = document.getElementById("why-stopreg");
+  if (whySection) {
+    const whyHeader = whySection.querySelector(".why-header");
+    const whyBgImage = whySection.querySelector(".why-bg-image img"); // Target inner img
+    const whyItems = whySection.querySelectorAll(".why-item");
+
+    const whyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Animate Header
+            if (whyHeader) whyHeader.classList.add("why-animate-in");
+
+            // Animate Background Image
+            if (whyBgImage) {
+                setTimeout(() => {
+                    whyBgImage.classList.add("why-animate-in");
+                }, 200); // Slight delay for bg image
+            }
+
+            // Stagger List Items
+            whyItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add("why-animate-in");
+                }, 300 + (index * 100)); // Start after header/image, then stagger
+            });
+
+            whyObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    whyObserver.observe(whySection);
+  }
+
+  // GDPR Section Animation Logic
+  const gdprSection = document.getElementById("gdpr-data-protection");
+  if (gdprSection) {
+    const gdprTitle = gdprSection.querySelector(".gdpr-title");
+    const gdprSubtitle = gdprSection.querySelector(".gdpr-subtitle");
+    const gdprImage = gdprSection.querySelector(".gdpr-image img");
+
+    const gdprObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Animate Title
+            if (gdprTitle) gdprTitle.classList.add("gdpr-animate-in");
+
+            // Animate Subtitle
+            if (gdprSubtitle) {
+                setTimeout(() => {
+                    gdprSubtitle.classList.add("gdpr-animate-in");
+                }, 150); // 150ms delay
+            }
+
+            // Animate Image
+            if (gdprImage) {
+                setTimeout(() => {
+                    gdprImage.classList.add("gdpr-animate-in");
+                }, 300); // 300ms delay
+            }
+
+            gdprObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% threshold as requested
+
+    gdprObserver.observe(gdprSection);
+  }
+
+  // API Section Animation Logic
+  const apiSection = document.getElementById("api");
+  if (apiSection) {
+    const apiHeader = apiSection.querySelector(".fasi-sect-one-hd");
+    const apiItems = apiSection.querySelectorAll(".fasi-api-item");
+    const apiCode = apiSection.querySelector(".fasi-sect-two");
+
+    const apiObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Animate Header
+            if (apiHeader) apiHeader.classList.add("fasi-animate-in");
+
+            // Animate Code Snippet (sync with header)
+            if (apiCode) apiCode.classList.add("fasi-animate-in");
+
+            // Stagger API list items
+            apiItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add("fasi-animate-in");
+                }, 150 + (index * 150)); // Start after header, then stagger
+            });
+
+            apiObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% threshold
+
+    apiObserver.observe(apiSection);
+  }
+
+  // Pricing Section Animation Logic
+  const pricingSection = document.getElementById("pricing");
+  if (pricingSection) {
+    const pricingHeader = pricingSection.querySelector(".pricing-header");
+    const pricingCards = pricingSection.querySelectorAll(".pricing-card");
+
+    // Observer for the Header (Triggers when header is 50% visible)
+    if (pricingHeader) {
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    pricingHeader.classList.add("pricing-animate-in");
+                    headerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        headerObserver.observe(pricingHeader);
+    }
+
+    // Individual Observer for each Card (Triggers when THAT card is 50% visible)
+    if (pricingCards.length > 0) {
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("pricing-animate-in");
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        pricingCards.forEach((card) => {
+            cardObserver.observe(card);
+        });
+    }
+  }
+
+  // Tools (Integrations) Animation Logic
+  const toolsSection = document.getElementById("wordpress-plugin");
+  if (toolsSection) {
+    const toolsHeader = toolsSection.querySelector(".wd-pr-lb-cont h2");
+    const toolsItems = toolsSection.querySelectorAll(".wd-pr-lb-cont-inner-item");
+
+    const toolsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Animate Header
+            if (toolsHeader) toolsHeader.classList.add("tools-animate-in");
+
+            // Stagger Tools Items
+            toolsItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add("tools-animate-in");
+                }, 100 + (index * 100)); // Rapid 100ms stagger for grid ripple
+            });
+
+            toolsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% threshold
+
+    toolsObserver.observe(toolsSection);
+  }
+
+  // Get Started (EFEA) Animation Logic
+  const efeaSection = document.querySelector(".efea-wrapper");
+  if (efeaSection) {
+    const efeaTitle = efeaSection.querySelector(".efea-header-title");
+    const efeaDesc = efeaSection.querySelector(".efea-header-desc");
+    const efeaBtn = efeaSection.querySelector(".signup-overlay-btn");
+    const efeaImage = efeaSection.querySelector(".efea-wrapper-sct-two-inner-two img");
+
+    const efeaObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // Sequence: Title -> Button -> Description
+            if (efeaTitle) efeaTitle.classList.add("efea-animate-in");
+            
+            // Image slides in with title but slower
+            if (efeaImage) efeaImage.classList.add("efea-animate-in");
+
+            if (efeaBtn) {
+                setTimeout(() => {
+                    efeaBtn.classList.add("efea-animate-in");
+                }, 150);
+            }
+
+            if (efeaDesc) {
+                setTimeout(() => {
+                    efeaDesc.classList.add("efea-animate-in");
+                }, 300);
+            }
+
+            efeaObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% threshold
+
+    efeaObserver.observe(efeaSection);
+  }
+
+  // FAQ Animation Logic
+  const faqSection = document.querySelector(".fags-wrapper");
+  if (faqSection) {
+    const faqHeader = faqSection.querySelector(".fags-hd");
+    const faqSubtitle = faqSection.querySelector(".fags-tle");
+    const faqItems = faqSection.querySelectorAll(".accordion-item");
+
+    // 1. Section Observer for Header & Subtitle
+    const faqSectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            if (faqHeader) faqHeader.classList.add("fags-animate-in");
+            if (faqSubtitle) {
+                setTimeout(() => {
+                    faqSubtitle.classList.add("fags-animate-in");
+                }, 150);
+            }
+            faqSectionObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% for text
+
+    faqSectionObserver.observe(faqSection);
+
+    // 2. Individual Item Observer (20% In View)
+    const faqItemObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("faq-item-animate-in");
+                faqItemObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 }); // Reduced threshold for reliable mobile triggering
+
+    faqItems.forEach(item => {
+        faqItemObserver.observe(item);
+    });
+  }
+
+  // Footer Animation Logic
+  const footerSection = document.querySelector(".land-foot");
+  if (footerSection) {
+    const footerBrand = footerSection.querySelector(".foot-col-brand");
+    const footerCols = footerSection.querySelectorAll(".foot-links-group .foot-col");
+    const footerBottom = footerSection.querySelector(".land-foot-wrapp-sct-two");
+
+    const footerObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            // 1. Brand Column
+            if (footerBrand) footerBrand.classList.add("footer-animate-in");
+
+            // 2. Link Columns (Staggered)
+            footerCols.forEach((col, index) => {
+                setTimeout(() => {
+                    col.classList.add("footer-animate-in");
+                }, 150 + (index * 150));
+            });
+
+            // 3. Bottom Bar
+            if (footerBottom) {
+                setTimeout(() => {
+                    footerBottom.classList.add("footer-animate-in");
+                }, 600);
+            }
+
+            footerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 }); // 50% threshold
+
+    footerObserver.observe(footerSection);
+  }
 };
 
 // document.getElementById("navigate-button").addEventListener("click", function() {
@@ -978,3 +1348,52 @@ class Program
 //     );
 //   });
 // }
+
+  /* Sticky Sidebar JS Implementation */
+  const stickySidebar = document.querySelector(".sticky-docs-sidebar");
+  const stickyLayout = document.querySelector(".sticky-docs-layout");
+
+  if (stickySidebar && stickyLayout) {
+    const handleScroll = () => {
+      // Disable on mobile
+      if (window.innerWidth <= 852) {
+        stickySidebar.classList.remove("js-sticky-fixed", "js-sticky-absolute-bottom");
+        stickySidebar.style.width = ""; // Reset width
+        return;
+      }
+
+      const layoutRect = stickyLayout.getBoundingClientRect();
+      const headerOffset = 130; // The top gap we want
+
+      // Case 1: We are above the start of the content (or just started scrolling into it)
+      if (layoutRect.top > headerOffset) {
+        stickySidebar.classList.remove("js-sticky-fixed", "js-sticky-absolute-bottom");
+        stickySidebar.style.width = "";
+        return;
+      }
+
+      // Sidebar calculation
+      const sidebarHeight = stickySidebar.offsetHeight;
+      const layoutBottomLimit = headerOffset + sidebarHeight;
+
+      // Case 3: We hit the bottom
+      // If the bottom of the layout is higher than the bottom of where the sidebar would be
+      if (layoutRect.bottom < layoutBottomLimit) {
+        stickySidebar.classList.remove("js-sticky-fixed");
+        stickySidebar.classList.add("js-sticky-absolute-bottom");
+        stickySidebar.style.width = "320px"; // Enforce width in absolute mode
+      } else {
+        // Case 2: Fixed mode
+        stickySidebar.classList.remove("js-sticky-absolute-bottom");
+        stickySidebar.classList.add("js-sticky-fixed");
+         stickySidebar.style.width = "320px"; // Enforce width in fixed mode
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+    // Initial check
+    handleScroll();
+  }
+
+

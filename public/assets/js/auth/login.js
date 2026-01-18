@@ -84,9 +84,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const token = data?.data?.token;
+        const hasValidPlan = data?.data?.hasValidPlan;
+        const planId = data?.data?.planId;
+        const tokenExpiresAt = data?.data?.tokenExpiresAt;
+
         localStorage.setItem("authToken", token);
 
+        // Check if user has a valid subscription plan
+        if (hasValidPlan && planId && tokenExpiresAt && new Date(tokenExpiresAt) > new Date()) {
+          // User has valid plan - go to dashboard
         window.location.href = "/dashboard/index.html";
+        } else {
+          // User doesn't have valid plan - go to payments page
+          window.location.href = "/dashboard/payments.html";
+        }
+
         overLay.style.display = "none";
         form.reset();
       } else {
@@ -196,9 +208,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const token = data?.data?.token;
+        const hasValidPlan = data?.data?.hasValidPlan;
+        const planId = data?.data?.planId;
+        const tokenExpiresAt = data?.data?.tokenExpiresAt;
+
         localStorage.setItem("authToken", token);
 
+        // Check if user has a valid subscription plan
+        // hasValidPlan checks if planId exists and tokenExpiresAt is in the future
+        if (hasValidPlan && planId && tokenExpiresAt && new Date(tokenExpiresAt) > new Date()) {
+          // User has valid plan - go to dashboard
         window.location.href = "/dashboard/index.html";
+        } else {
+          // User doesn't have valid plan - go to payments page
+          window.location.href = "/dashboard/payments.html";
+        }
+        
         overLay.style.display = "none";
         form.reset();
       } else {

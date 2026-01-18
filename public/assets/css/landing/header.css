@@ -2,8 +2,8 @@
     position: sticky;
     top: 0px;
     z-index: 99999;
-    background-color: var(--color-one);
 }
+
 .main-head-wrapper {
     display: flex;
     padding-top: 20px;
@@ -17,7 +17,7 @@
 
 
 
-.mobile-nav-logo>img{
+.mobile-nav-logo>img {
     height: 100%;
     width: 100%;
 }
@@ -38,7 +38,8 @@
     gap: 20px;
 }
 
-.nav-wrapper>a, .nav-wrapper>button {
+.nav-wrapper>a,
+.nav-wrapper>button {
     text-decoration: none;
     white-space: nowrap;
     font-size: 20px;
@@ -48,7 +49,7 @@
     font-family: "PlusJakartaSans-Regular";
 }
 
-.auth-wrapper>button {
+.auth-wrapper .auth-btn-link {
     white-space: nowrap;
     height: 54px;
     font-family: "PlusJakartaSans-SemiBold";
@@ -58,115 +59,126 @@
     outline: none;
     padding-right: 32px;
     border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 
-.auth-wrapper>button:first-child {
+.auth-wrapper .auth-btn-link:first-child {
     color: var(--primary-color);
     background-color: transparent;
     border: 1px solid var(--primary-color);
 }
 
-.auth-wrapper>button:last-child {
+.auth-wrapper .auth-btn-link:last-child {
     color: var(--color-one);
     background-color: var(--color-two);
 }
 
+/* Footer Styles */
 .land-foot {
-    background-color: #1e1e1e;
+    background-color: #131313;
+    color: #fff;
+    margin-top: auto;
 }
 
 .land-foot-wrapp {
     max-width: var(--max-width);
     margin: auto;
+    padding: 80px 20px 40px;
 }
 
 .land-foot-wrapp-sct-one {
     display: flex;
     justify-content: space-between;
-    flex-direction: row;
-    padding: 40px 20px;
-    background-color: #1e1e1e;
+    gap: 40px;
+    margin-bottom: 60px;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.foot-links-group {
+    display: flex;
+    gap: 80px;
+}
+
+.foot-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.foot-col-brand {
+    padding-right: 20px;
+    max-width: 478px;
+    width: 100%;
 }
 
 .foot-logo {
+    display: inline-block;
     width: 100px;
     height: 78px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 0;
+    height: auto;
+    justify-content: flex-start;
 }
 
 .foot-logo>img {
-    height: 100%;
+    height: auto;
     width: 100%;
-    /* filter: brightness(0) invert(1); */
 }
 
-.foot-detail {
+.foot-desc {
+    color: #EDEDED;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'PlusJakartaSans-Regular';
+    max-width: 478px;
+}
+
+.foot-hd {
+    font-size: 20px;
+    font-family: 'PlusJakartaSans-Bold';
+    color: #FDFDFD;
+    margin-bottom: 8px;
+}
+
+.foot-links {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 18px;
 }
 
-.foot-detail-hd {
-    font-size: 14px;
-    font-family: 'PlusJakartaSans-SemiBold';
-    font-weight: 600;
-    font-style: normal;
-    margin-bottom: 12px;
-    color: #ffffff;
-}
-
-.foot-detail-tle {
-    max-width: 478px;
-    font-size: 14px;
-    font-family: 'PlusJakartaSans-Regular';
-    line-height: 1.6;
-    color: #d4d4d4;
-}
-
-.foot-detail-link {
-    margin-bottom: 0;
-    transition: color 0.2s ease;
-    font-size: 14px;
-    font-family: 'PlusJakartaSans-Regular';
-    line-height: 1.6;
-}
-
-.foot-detail-tle,
-.foot-detail-link {
-    color: #858585;
+.foot-link {
+    color: #FDFDFD;
+    font-size: 16px;
     text-decoration: none;
+    font-family: 'PlusJakartaSans-Regular';
 }
 
-.foot-detail-link:hover {
-    color: #cccccc;
+.foot-link:hover {
+    color: #fff;
 }
 
 .land-foot-wrapp-sct-two {
+    border-top: 1px solid #737373;
+    padding-top: 16px;
+    padding-bottom: 0;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
-    background-color: #252526;
-    border-top: 1px solid #3e3e42;
-}
-
-
-.land-foot-wrapp-sct-two-item-one {
-    font-size: 14px;
-    font-family: 'PlusJakartaSans-SemiBold';
-    font-weight: 600;
-    font-style: normal;
-    color: #858585;
-}
-
-.land-foot-wrapp-sct-two-item-two {
-    font-size: 14px;
+    color: #9CA3AF;
     font-family: 'PlusJakartaSans-Regular';
-    color: #858585;
+    font-size: 14px;
+}
+
+.foot-copy,
+.foot-rights {
+    color: #9CA3AF;
+    margin: 0;
 }
 
 .mobile-nav-btns {
@@ -186,7 +198,8 @@
     padding-right: var(--mobile-padding);
 }
 
-.mobile-nav-items>a, .mobile-nav-items>button {
+.mobile-nav-items>a,
+.mobile-nav-items>button {
     text-decoration: none;
     text-align: center;
     background-color: transparent;
@@ -201,21 +214,27 @@
     flex-direction: row;
 }
 
-.mobile-nav-btns>button {
+.mobile-nav-btns .mobile-nav-btn-link {
     height: 41px;
     flex: 1;
     font-size: 12px;
     gap: 12px;
     border-radius: 8px;
     font-family: 'PlusJakartaSans-SemiBold';
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.mobile-nav-btns>button:first-child {
+.mobile-nav-btns .mobile-nav-btn-link:first-child {
     border: 1px solid var(--primary-color);
     background-color: transparent;
+    color: var(--primary-color);
 }
 
-.mobile-nav-btns>button:last-child {
+.mobile-nav-btns .mobile-nav-btn-link:last-child {
     border: none;
     color: var(--color-one);
     background-color: var(--color-two);
@@ -232,11 +251,12 @@
 
 @media only screen and (max-width: 1152px) {
 
-    .nav-wrapper>a, .nav-wrapper>button {
+    .nav-wrapper>a,
+    .nav-wrapper>button {
         font-size: 14px;
     }
 
-    .auth-wrapper>button {
+    .auth-wrapper .auth-btn-link {
         height: 44px;
         font-size: 15px;
         padding-left: 24px;
@@ -245,11 +265,13 @@
 }
 
 @media only screen and (max-width: 976px) {
-    .nav-wrapper>a, .nav-wrapper>button {
+
+    .nav-wrapper>a,
+    .nav-wrapper>button {
         font-size: 12px;
     }
 
-    .auth-wrapper>button {
+    .auth-wrapper .auth-btn-link {
         height: 44px;
         font-size: 13px;
         padding-left: 18px;
@@ -269,52 +291,63 @@
 
     .land-foot-wrapp-sct-one {
         flex-direction: column;
-        gap: 20px;
+        gap: 40px;
+    }
+
+    .foot-links-group {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .foot-col-brand {
+        padding-right: 0;
+        max-width: 100%;
     }
 }
 
 @media only screen and (max-width: 550px) {
-   
 
-    .main-head-wrapper,
-    .land-foot {
+
+    .main-head-wrapper {
         padding-left: var(--mobile-padding);
         padding-right: var(--mobile-padding);
     }
 
     .foot-logo {
         width: 48px;
-        height: 37.92px;
     }
 
-    .foot-detail-hd {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
-    .foot-detail-tle,
-    .foot-detail-link {
-        font-size: 12px;
-        margin-bottom: 10px;
-        line-height: 16.8px;
+    .land-foot-wrapp {
+        padding-top: 40px;
+        padding-bottom: 20px;
     }
 
     .land-foot-wrapp-sct-one {
-        padding-bottom: 40px;
-    }
-
-    .land-foot-wrapp-sct-two-item-one,
-    .land-foot-wrapp-sct-two-item-two {
-        font-size: 12px;
-    }
-
-    .land-foot-wrapp-sct-two {
-        padding-bottom: 20px;
+        margin-bottom: 40px;
     }
 
     .land-logo {
         height: 38px;
         width: 48px;
     }
-    
+
+}
+
+/* Footer Animation Styles */
+
+/* Initial States */
+.foot-col-brand,
+.foot-links-group .foot-col,
+.land-foot-wrapp-sct-two {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* Active Animation States */
+.footer-animate-in {
+    opacity: 1 !important;
+    transform: none !important;
 }

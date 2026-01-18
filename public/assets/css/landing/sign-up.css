@@ -1,0 +1,439 @@
+/* Sign Up Page Styles */
+
+/* --- Layout --- */
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: 'PlusJakartaSans-Regular', sans-serif;
+    overflow: hidden;
+    /* Prevent body scroll */
+}
+
+.auth-page-wrapper {
+    display: flex;
+    height: 100vh;
+    /* Fixed full viewport height */
+    width: 100%;
+    overflow: hidden;
+    /* Prevent wrapper scroll */
+}
+
+/* --- Left Section (Visual) --- */
+.auth-left-section {
+    display: none;
+    /* Hidden by default on mobile, shown on desktop */
+    width: 50%;
+    /* max-width removed for 50/50 split */
+    height: 100%;
+    /* Full height */
+    overflow: hidden;
+    /* No scroll on left */
+    background-color: #0A011F;
+    /* Deep Navy/Purple from design */
+    background-image: url('/assets/images/auth/auth-bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically */
+    padding: 60px 40px 60px 96px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.auth-left-logo {
+    width: 94px;
+    height: auto;
+    position: absolute;
+    top: 60px;
+    left: 96px;
+}
+
+.auth-left-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.auth-left-content {
+    /* margins removed, flex parent handles centering */
+    width: 100%;
+    max-width: 528px;
+}
+
+.auth-left-header {
+    font-family: 'PlayfairDisplay-ExtraBold', serif;
+    font-size: 40px;
+    line-height: 1.4;
+    margin-bottom: 0;
+    /* Removed to fix centering */
+    opacity: 0;
+    /* Anim init */
+}
+
+/* --- Right Section (Form) --- */
+.auth-right-section {
+    flex: 1;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    /* Removed justify-content: center to prevent crop on scroll */
+    align-items: center;
+    padding: 40px 20px;
+    position: relative;
+    height: 100%;
+    /* Full height */
+    overflow-y: auto;
+    /* Scrollable content */
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 528px;
+    opacity: 0;
+    margin: auto;
+    /* Vertically center in scrollable area */
+    /* Anim init */
+    padding-top: 117px;
+    padding-bottom: 117px;
+}
+
+/* --- Mobile Header --- */
+.mobile-auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+.mobile-logo {
+    width: 100px;
+}
+
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* --- Typography & Form --- */
+.auth-title {
+    font-family: 'PlusJakartaSans-ExtraBold', sans-serif;
+    font-size: 32px;
+    color: #101828;
+    margin-bottom: 18px;
+    text-align: center;
+    /* Mobile default */
+}
+
+.auth-subtitle {
+    font-family: 'PlusJakartaSans-Regular', sans-serif;
+    font-size: 16px;
+    color: #667085;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'PlusJakartaSans-Regular', sans-serif;
+    font-size: 16px;
+    color: #252525;
+    margin-bottom: 12px;
+}
+
+.form-input {
+    width: 100%;
+    height: 50px;
+    padding: 0px 16px;
+    border: 0.3px solid #737373;
+    border-radius: 8px;
+    font-family: 'PlusJakartaSans-Regular', sans-serif;
+    font-size: 16px;
+    color: #101828;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: #1452CA;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    /* Ensure no margin shift */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+.toggle-password img {
+    width: 24px;
+    height: 24px;
+}
+
+.toggle-password:hover {
+    transform: translateY(-50%);
+    /* Enforce stable position */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 50px;
+    background-color: #1452CA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'PlusJakartaSans-SemiBold', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.auth-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 16px;
+    color: #667085;
+}
+
+.auth-footer a {
+    color: #1452CA;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* --- Animations --- */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.anim-slide-up {
+    animation: slideInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.anim-fade-in {
+    animation: fadeIn 1s ease forwards;
+}
+
+/* --- Responsive Media Queries --- */
+
+/* Desktop (Split Screen) */
+@media (min-width: 900px) {
+    .auth-left-section {
+        display: flex;
+        /* Show on desktop */
+        width: 50%;
+        min-width: 0;
+        /* Force equal split */
+    }
+
+    .auth-right-section {
+        align-items: flex-start;
+        /* Align form left visually implies center of its section */
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+
+    /* Hide mobile header elements on desktop if they exist in right section */
+    .mobile-auth-header,
+    .main-head-cont {
+        display: none;
+    }
+
+    .auth-title,
+    .auth-subtitle {
+        text-align: left;
+        /* specific desktop alignment if requested, but design shows centered? No, design form is centered in white space, text aligned left usually. Let's keep center for now. Wait, image 1 shows left aligned text form? No, standard form layout. Let's stick to simple centering in the container. */
+        text-align: center;
+    }
+
+    .auth-form-container {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 1280px) {
+    .auth-left-section {
+        padding-left: 48px;
+        /* Reduced for smaller laptops */
+    }
+
+    .auth-left-logo {
+        left: 48px;
+        /* Match padding */
+    }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 899px) {
+    .auth-left-section {
+        display: none;
+    }
+
+    .auth-right-section {
+        padding: 20px;
+        justify-content: flex-start;
+    }
+
+    .auth-form-container {
+        margin-top: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+}
+
+/* Height Safety for Overlap (Logo vs Text) */
+@media (max-height: 700px) {
+    .auth-left-section {
+        justify-content: center;
+        /* Keep center, but flow handles stacking */
+    }
+
+    .auth-left-logo {
+        position: static;
+        /* Revert to flow */
+        margin-bottom: 40px;
+        /* Space between logo and text */
+    }
+}
+
+/* --- Spacing Updates (117px Desktop / 8px Mobile) --- */
+.auth-form-container {
+    padding-top: 117px;
+    padding-bottom: 117px;
+}
+
+/* --- Standard Mobile Header Styles (Ported) --- */
+.nav-menu-sect-one {
+    display: none;
+    /* Hidden on Desktop */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+
+
+
+
+/* Mobile Query Override */
+@media (max-width: 899px) {
+
+    .nav-menu-sect-one,
+    .main-head-cont {
+        display: block;
+        /* Show standard header on mobile */
+        background-color: #FFFFFF !important;
+        z-index: 1000;
+    }
+
+    .land-logo {
+        width: 48px !important;
+        height: 38px !important;
+    }
+
+    /* Force Hamburger Visible & Dark */
+    .nav-icon2 {
+        display: block !important;
+    }
+
+    .nav-icon2 span {
+        background-color: #101828 !important;
+    }
+
+    .auth-form-container {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        margin-top: 0;
+    }
+
+    .auth-title {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .auth-subtitle {
+        font-size: 12px;
+        margin-bottom: 24px;
+    }
+
+    /* Mobile Input Adjustments */
+    .form-input {
+        height: 44px;
+        font-size: 14px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .toggle-password img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .submit-btn {
+        height: 43px;
+        font-size: 14px;
+    }
+
+    .auth-footer {
+        font-size: 14px;
+    }
+}

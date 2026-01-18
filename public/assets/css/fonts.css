@@ -30,6 +30,14 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'PlayfairDisplay-ExtraBold';
+    src: url('../fonts/PlayfairDisplay-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-display: swap;
+    font-style: normal;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -52,17 +60,25 @@ h6 {
     padding: 0px;
 }
 
-button {
+button,
+a {
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease, transform 0.3s ease;
 }
 
 
-button:hover {
+button:hover,
+a:hover {
     transform: scale(1.05);
 }
 
 body {
     overflow-x: hidden;
+}
+
+
+#iziToastWrapper {
+    z-index: 999999999999999999999999999999 !important;
+    /* highest safe browser z-index */
 }

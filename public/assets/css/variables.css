@@ -38,9 +38,14 @@
     --color-thirty-three: #333333;
     --color-thirty-four: #F7F7F7;
     --color-thirty-five: #FFEBEB;
-    --max-width: 1200px;
+    --max-width: 1280px;
     --desktop-padding: 40px;
     --mobile-padding: 16px;
     --desktop-dash-padding: 56px;
 
+}
+
+
+#iziToastWrapper, .iziToast, .iziToast-wrapper {
+  z-index: 999999999 !important;
 }
