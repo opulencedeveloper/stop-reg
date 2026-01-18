@@ -1,6 +1,8 @@
 .main-head-cont {
-    position: sticky;
+    position: fixed;
     top: 0px;
+    left: 0;
+    width: 100%;
     z-index: 99999;
 }
 
@@ -308,9 +310,15 @@
 @media only screen and (max-width: 550px) {
 
 
+
     .main-head-wrapper {
         padding-left: var(--mobile-padding);
         padding-right: var(--mobile-padding);
+    }
+
+    body {
+        padding-top: 80px;
+        /* Smaller header on mobile */
     }
 
     .foot-logo {
