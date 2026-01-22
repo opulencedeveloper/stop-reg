@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span class="btn-spinner"></span> Verifying...`;
       try {
-        const response = await fetch("http://localhost:8080/api/v1/email-domains/bulk-verification", {
+        const response = await fetch("https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
