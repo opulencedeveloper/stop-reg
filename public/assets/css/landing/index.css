@@ -4505,8 +4505,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
   /* --- Hero Overflow Fix --- */
   .hero-wrapper,
   .hero-container {
+   
     overflow-x: hidden !important;
     width: 100% !important;
+  }
+
+  .hero-container {
+   
+ padding-top: 120px;
   }
 
   .hero-sect-two {
