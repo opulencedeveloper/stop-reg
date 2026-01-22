@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email",
+        "http://localhost:8080/api/v1/email-domains/check-disposable-email",
         {
           method: "POST",
           headers: {
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email",
+        "http://localhost:8080/api/v1/email-domains/check-disposable-email",
         {
           method: "POST",
           headers: {
@@ -331,7 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email",
+        "http://localhost:8080/api/v1/email-domains/check-disposable-email",
         {
           method: "POST",
           headers: {

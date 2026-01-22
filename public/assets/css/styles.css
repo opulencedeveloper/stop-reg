@@ -20,10 +20,12 @@
 }
 
 /* Quantum Ring Spinner */
+/* Flutterwave-Style Fast Spinner */
 .stopreg-spinner {
-  width: 64px;
-  height: 64px;
+  width: 50px;
+  height: 50px;
   position: relative;
+  will-change: transform;
 }
 
 .stopreg-spinner::before {
@@ -34,23 +36,19 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 4px solid var(--color-twenty-two);
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  /* Light transparent track */
   border-top-color: var(--secondary-color);
-  animation: stopreg-spin 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite;
+  /* Brand color for the active spin */
+  animation: stopreg-spin 0.35s linear infinite;
+  /* Very fast, linear rotation */
   box-sizing: border-box;
+  will-change: transform;
 }
 
+/* Removed inner pulse for performance and style alignment */
 .stopreg-spinner::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  background-color: var(--secondary-color);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: stopreg-pulse 1s ease-in-out infinite alternate;
+  display: none;
 }
 
 @keyframes stopreg-spin {
@@ -60,18 +58,31 @@
 
   100% {
     transform: rotate(360deg);
+
   }
 }
 
-@keyframes stopreg-pulse {
+/* Button Spinner (Flutterwave Style) - Unique Class */
+.stopreg-btn-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50%;
+  border-top-color: #ffffff !important;
+  animation: stopreg-btn-spin 0.27s linear infinite !important;
+  vertical-align: middle;
+  margin-right: 8px;
+  will-change: transform;
+}
+
+@keyframes stopreg-btn-spin {
   0% {
-    transform: translate(-50%, -50%) scale(0.85);
-    opacity: 0.7;
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 1;
+    transform: rotate(360deg);
   }
 }
 
@@ -108,10 +119,13 @@
   height: 100dvh;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  /* Allows scrolling from top */
   z-index: 999999;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+  padding: 20px 0;
+  /* Add top/bottom padding for small screens */
 
 }
 
@@ -194,7 +208,8 @@
   font-size: 14px;
 }
 
-#resend-otp-btn {
+#resend-otp-btn,
+#resend-verify-btn {
   color: #007bff;
   cursor: pointer;
   font-weight: bold;
@@ -229,7 +244,13 @@
 }
 
 .hidden-overflow {
-  overflow-y: hidden;
+  overflow-y: hidden !important;
+}
+
+/* Fix: Stop inner containers from scrolling when modal is active */
+body.hidden-overflow .auth-right-section,
+body.hidden-overflow .auth-page-wrapper {
+  overflow: hidden !important;
 }
 
 .box {
@@ -467,11 +488,12 @@
   flex-direction: column;
   font-family: "Satoshi-Medium";
   font-size: 20px;
-  gap: 40px;
   width: 100%;
   text-align: center;
   transition: 0.3s;
   z-index: 9999999999;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .nav-menu.active {
@@ -558,21 +580,25 @@
 }
 
 @media (max-width: 768px) {
+
+  /* Fix: Ensure modal remains centered and full screen on mobile */
   #otp-modal {
     display: none;
-    justify-content: center;
-    box-sizing: border-box;
-    min-height: fit-content;
+    /* Toggled by JS to flex */
     align-items: center;
-    overflow: hidden;
-    margin-top: 70px;
-    margin-bottom: 0;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+    height: 100dvh;
     width: 100%;
+
+    /* Ensure no scroll on the modal container itself if possible, or handle overflow */
   }
 
   .otp-inputs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    /* Slightly smaller gap */
     justify-content: center;
     margin: 20px 0;
   }
@@ -730,6 +756,383 @@
   }
 }
 
-.animate-hero-premium {
-  animation: heroRevealPremium 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+/* =========================================
+   PREMIUM ERROR UI
+   ========================================= */
+
+/* Backdrop with Glassmorphism */
+.error-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 20, 30, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999999;
+  padding: 24px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+.error-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Premium Content Container */
+.premium-error {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+.premium-error.active-animate {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Close Button */
+.error-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #9CA3AF;
+  cursor: pointer;
+  transition: color 0.2s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.error-close-btn:hover {
+  color: #1F2937;
+  background: #F3F4F6;
+}
+
+/* Animated Icon Wrapper */
+.error-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #FEF2F2;
+  color: #DC2626;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.error-icon-svg {
+  width: 40px;
+  height: 40px;
+  animation: errorShake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation-delay: 0.2s;
+}
+
+.error-icon-wrapper::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #FEE2E2;
+  animation: iconPulse 1.5s infinite;
+}
+
+/* Typography */
+.error-title {
+  font-family: 'PlusJakartaSans-ExtraBold', sans-serif;
+  font-size: 24px;
+  color: #111827;
+  margin: 0 0 12px 0;
+}
+
+.error-message-text {
+  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-size: 16px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+  /* Ensure long error texts wrap */
+  padding: 0 10px;
+}
+
+/* Animations */
+@keyframes errorShake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes iconPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Remove Old Styles if not needed, or just scope these */
+
+/* =========================================
+   CUSTOM ANIMATED FORM VALIDATION
+   ========================================= */
+
+/* Error Message Styling */
+.custom-input-error {
+  color: #DC2626;
+  /* Red-600 */
+  font-family: 'PlusJakartaSans-SemiBold', sans-serif;
+  font-size: 13px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: slideDownFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Mind-blowing smooth spring */
+  will-change: transform, opacity;
+}
+
+/* Error Icon (Optional, inline SVG usually better) */
+.custom-input-error::before {
+  content: "!";
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  background: #FEE2E2;
+  /* Red-100 */
+  color: #DC2626;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Input Border Highlight */
+.input-error-border {
+  border-color: #DC2626 !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+  /* Subtle glow */
+  transition: all 0.3s ease;
+}
+
+/* Animation Keyframes */
+@keyframes slideDownFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* OTP Modal Entrance Animation */
+.otp-modal {
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  /* Hide interaction when not active */
+}
+
+.otp-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.otp-modal .otp-container {
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  /* FIX: Force reset margins from index.css to ensure centering */
+  margin: auto !important;
+  /* Ensure it doesn't touch edges on small screens */
+  max-width: 608px;
+  width: 90%;
+  flex-shrink: 0;
+  /* Prevent crushing */
+  will-change: transform, opacity;
+  /* GPU Hint */
+}
+
+.otp-modal.active .otp-container {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+
+  /* --- OTP Multi-View Logic --- */
+  .otp-view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .otp-view.active {
+    display: flex;
+  }
+
+  .otp-view.hidden {
+    display: none;
+  }
+
+  /* --- Premium Animations --- */
+
+  /* 1. Verifying Loader (Sleek Spinner) */
+  .stopreg-verification-loader {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(20, 82, 202, 0.1);
+    /* Light Blue */
+    border-top: 4px solid var(--color-one);
+    /* Primary Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 24px;
+    will-change: transform;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 2. Success Animation (Checkmark) */
+  .stopreg-success-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+  }
+
+  .stopreg-checkmark-circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke: #4CAF50;
+    /* Green */
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  }
+
+  .stopreg-checkmark-check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    stroke-width: 3;
+    stroke: #4CAF50;
+    /* Green */
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+  }
+
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* 3. Error Animation (Pulse) */
+  .stopreg-error-icon {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #FF5252;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Button & Typography Tweaks for States */
+  .cr-auth-header {
+    margin-top: 0;
+  }
+
+  #redirect-timer {
+    font-weight: 800;
+    color: var(--color-one);
+  }
 }

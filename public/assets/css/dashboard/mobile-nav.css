@@ -1,0 +1,119 @@
+/* Dashboard Mobile Navigation Styles */
+
+.dash-mobi-nav-links {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 16px;
+    gap: 0;
+    margin-top: 4px;
+}
+
+.dash-mobi-nav-links>a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 12px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.dash-mobi-nav-links {
+    background-color: #F5F5F5;
+}
+
+.dash-mobi-nav-links>a.dash-nav-link-active {
+    background-color: #F0F0F2;
+}
+
+.dash-mobi-nav-link-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dash-mobi-nav-link-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+.dash-mobi-nav-links>a.dash-nav-link-active .dash-mobi-nav-link-icon img {
+    filter: brightness(0) saturate(100%) invert(11%) sepia(0%) saturate(0%) hue-rotate(151deg) brightness(98%) contrast(92%);
+}
+
+.dash-mobi-nav-links>a p {
+    font-family: "Inter_28pt-Regular";
+    font-size: 16px;
+    color: #252525;
+    margin: 0;
+    font-weight: 400;
+}
+
+.dash-mobi-nav-links>a.dash-nav-link-active p {
+    font-family: "Inter_28pt-SemiBold";
+    font-weight: 600;
+}
+
+/* Mobile Logout Button */
+.dash-mobile-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.dash-mobile-logout-btn:hover {
+    background-color: #FFF5F5;
+}
+
+.dash-mobile-logout-btn-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dash-mobile-logout-btn-icon img {
+    width: 100%;
+    height: 100%;
+    filter: invert(13%) sepia(93%) saturate(7471%) hue-rotate(3deg) brightness(98%) contrast(118%);
+}
+
+.dash-mobile-logout-btn-tle {
+    font-family: "Inter_28pt-Regular";
+    font-size: 16px;
+    color: #FF0000;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Close Button for Mobile Nav */
+.nav-close-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.nav-close-btn svg {
+    width: 100%;
+    height: 100%;
+    stroke: #252525;
+    stroke-width: 2;
+}

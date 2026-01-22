@@ -33,18 +33,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   var navIcons = document.querySelector(".nav-icon2");
-  var navIconNav = document.querySelector(".nav-icon2-mobile");
+  var navCloseBtn = document.querySelector(".nav-close-btn");
   const navMenu = document.querySelector(".nav-menu");
 
   navIcons.addEventListener("click", function () {
     this.classList.add("open");
     navMenu.classList.add("active");
-    navIconNav.classList.add("open");
     document.body.classList.add("hidden-overflow");
   });
 
-  navIconNav.addEventListener("click", function () {
-    this.classList.remove("open");
+  navCloseBtn.addEventListener("click", function () {
     navIcons.classList.remove("open");
     navMenu.classList.remove("active");
     document.body.classList.remove("hidden-overflow");

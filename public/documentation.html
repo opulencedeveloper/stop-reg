@@ -431,7 +431,7 @@
                     padding: 15px;
                     border-radius: 5px;
                     overflow-x: auto;
-                  "><code>https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=user@example.com</code></pre>
+                  "><code>http://localhost:8080/api/v1/check/YOUR_API_TOKEN?email=user@example.com</code></pre>
               <p>
                 Replace <code>YOUR_API_TOKEN</code> with your actual API token
                 from the dashboard.
@@ -477,7 +477,7 @@
                     padding: 15px;
                     border-radius: 5px;
                     overflow-x: auto;
-                  "><code>GET https://api.stopreg.com/api/v1/check/{apiToken}?email={email}</code></pre>
+                  "><code>GET http://localhost:8080/api/v1/check/{apiToken}?email={email}</code></pre>
               <h3>Parameters</h3>
               <ul>
                 <li>
@@ -495,7 +495,7 @@
                     padding: 15px;
                     border-radius: 5px;
                     overflow-x: auto;
-                  "><code>GET https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com
+                  "><code>GET http://localhost:8080/api/v1/check/YOUR_API_TOKEN?email=test@example.com
 Headers:
   Content-Type: application/json</code></pre>
               <h3>Response Format</h3>
@@ -582,7 +582,7 @@ Headers:
 const email = 'test@example.com';
 
 const response = await fetch(
-  `https://api.stopreg.com/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`,
+  `http://localhost:8080/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`,
   {
     method: 'GET',
     headers: {
@@ -610,7 +610,7 @@ if (data.data?.isDisposable) {
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
 
-url = f'https://api.stopreg.com/api/v1/check/{api_token}?email={email}'
+url = f'http://localhost:8080/api/v1/check/{api_token}?email={email}'
 
 response = requests.get(url, headers={
     'Content-Type': 'application/json'
@@ -634,7 +634,7 @@ else:
 $apiToken = 'YOUR_API_TOKEN';
 $email = 'test@example.com';
 
-$url = "https://api.stopreg.com/api/v1/check/{$apiToken}?email=" . urlencode($email);
+$url = "http://localhost:8080/api/v1/check/{$apiToken}?email=" . urlencode($email);
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -660,7 +660,7 @@ if ($data['data']['isDisposable']) {
                     border-radius: 5px;
                     overflow-x: auto;
                   "><code>curl -X GET \
-  "https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \
+  "http://localhost:8080/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \
   -H "Content-Type: application/json"</code></pre>
               <h3>Integration in Registration Forms</h3>
               <p>

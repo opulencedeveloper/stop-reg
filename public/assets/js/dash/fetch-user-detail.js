@@ -1,53 +1,3 @@
- 
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("authToken");
-
-  const tokenElement = document.querySelector(".main-token");
-
-  if (!token) {
-    window.location.href = "/";
-    return;
-  }
-
-  try {
-    const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // ✅ send token here
-      },
-    });
-
-    const data = await response.json();
-    console.log("User Info Response:", data);
-
-    if (response.ok) {
-      const user = data?.data || data;
-      console.log("User Data:", user);
-
-      if (tokenElement) {
-        tokenElement.textContent = user.userDetails.apiToken || "No token";
-        console.log(tokenElement.textContent);
-      }
-
-      document.getElementById("user-name").textContent = user.name || "Unknown";
-      document.getElementById("user-email").textContent =
-        user.email || "No email";
-    } else {
-      console.error("Error fetching user:", data);
-
-      if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        window.location.href = "/";
-      }
-    }
-  } catch (error) {
-    console.error("Network error:", error);
-  }
-});
-
- 
-  
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
@@ -62,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+    const response = await fetch("http://localhost:8080/api/v1/user/info", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -83,14 +33,39 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (tokenElement && apiToken) {
         tokenElement.textContent = apiToken;
       }
+      
+      // Update New Dashboard UI Elements
+      const apiTokenTextEl = document.getElementById("api-token-text");
+      const emailEndpointEl = document.getElementById("email-endpoint-text");
+      const domainEndpointEl = document.getElementById("domain-endpoint-text");
 
-      // Update the API link with the token
+      if (apiToken && apiTokenTextEl) {
+          // Remove manual truncation, let CSS handle it
+          apiTokenTextEl.textContent = apiToken;
+          apiTokenTextEl.dataset.fullText = apiToken; // Store full token for copy
+      }
+
+      // Set Endpoints (Static for now, but ready for dynamic if needed)
+      // We also set data-full-text to simplify the copy logic consistency
+      if (emailEndpointEl) {
+          const emailEndpoint = "https://api.stopreg.com/v1/email/check"; 
+          emailEndpointEl.textContent = emailEndpoint;
+          emailEndpointEl.dataset.fullText = emailEndpoint;
+      }
+
+      if (domainEndpointEl) {
+          const domainEndpoint = "https://api.stopreg.com/v1/domain/check";
+          domainEndpointEl.textContent = domainEndpoint;
+          domainEndpointEl.dataset.fullText = domainEndpoint;
+      }
+
+      // Update the legacy API link with the token section
       if (apiToken) {
         const linkContainer = document.querySelector(".link-container");
         if (linkContainer) {
-          const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
+          const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
           linkContainer.href = newLink;
-
+          
           const linkTitle = linkContainer.querySelector(".token-link-title");
           if (linkTitle) {
             linkTitle.textContent = newLink;
@@ -115,30 +90,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Update plan information
       const userDetails = user.userDetails;
       if (userDetails) {
-        // Update expiration date
-        const expiresDateEl = document.querySelector(".Current-plan-date");
-        if (expiresDateEl && userDetails.tokenExpiresAt) {
+        // Update all expiration date elements
+        const expiresDateEls = document.querySelectorAll(".Current-plan-date");
+        if (userDetails.tokenExpiresAt) {
           const expiresDate = new Date(userDetails.tokenExpiresAt);
           const formattedDate = expiresDate.toLocaleDateString("en-US", {
             day: "numeric",
             month: "long",
             year: "numeric",
           });
-          expiresDateEl.textContent = `Expires: ${formattedDate}`;
+          expiresDateEls.forEach(el => {
+            el.textContent = `Expires: ${formattedDate}`;
+          });
         }
 
-        // Update plan name
-        const planNameEl = document.querySelector(".Current-plan-plan");
-        if (planNameEl && userDetails.planId?.name) {
-          planNameEl.textContent = `${userDetails.planId.name} Account`;
+        // Update all plan name elements
+        const planNameEls = document.querySelectorAll(".Current-plan-plan");
+        if (userDetails.planId?.name) {
+          planNameEls.forEach(el => {
+             el.textContent = `${userDetails.planId.name} Account`;
+          });
         }
 
-        // Update API requests left
-        const apiRequestLeftEl = document.querySelector(".api-request-left");
-        if (apiRequestLeftEl && userDetails.planId) {
+        // Update all API requests left elements
+        const apiRequestLeftEls = document.querySelectorAll(".api-request-left, .dash-api-hd-subtl");
+        if (userDetails.planId) {
           const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
           const durationInDays = userDetails.planId.durationInDays ?? 30;
-          apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+          apiRequestLeftEls.forEach(el => {
+            el.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+          });
         }
 
         // Update payments page plan text

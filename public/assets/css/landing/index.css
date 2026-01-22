@@ -861,6 +861,21 @@ body {
   position: relative;
 }
 
+.auth-container {
+  width: 90%;
+  max-width: 440px;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin: 0;
+  /* Reset margin */
+  position: relative;
+  /* Anim init */
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 .code-snippet-content {
   flex: 1;
   position: relative;
@@ -1673,8 +1688,8 @@ main,
 }
 
 .auth-logo {
-  width: 72px;
-  height: 57px;
+  width: 192px;
+  height: 107px;
   margin: auto;
   margin-bottom: 16px;
   padding-top: 40px;

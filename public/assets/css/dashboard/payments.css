@@ -14,19 +14,19 @@
 
 .payments-hd-sect-one-tle {
     font-size: 24px;
-    font-family: 'PlusJakartaSans-SemiBold';
+    font-family: 'Inter_28pt-SemiBold';
     margin-bottom: 8px;
 }
 
 .payments-hd-sect-one-stle {
     font-size: 20px;
-    font-family: 'PlusJakartaSans-Regular';
+    font-family: 'Inter_28pt-Regular';
     line-height: 28px;
 }
 
 .payments-hd-sect-two {
     font-size: 16px;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
 }
 
 .dash-plan-grid {
@@ -90,7 +90,7 @@
 
 .land-pricing-container-item-hd {
     font-size: 24px;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
     color: var(--color-fifteen);
     text-align: center;
     margin-bottom: 12px;
@@ -118,13 +118,13 @@
 
 
 .pr-do-si {
-    font-family: 'PlusJakartaSans-SemiBold';
+    font-family: 'Inter_28pt-SemiBold';
     font-size: 23px;
 }
 
 .pr-do-am {
     font-size: 32px;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
     margin-right: 10px;
 }
 
@@ -137,7 +137,7 @@
 
 .land-pricing-container-item-btn,
 .land-pricing-container-item-btn-recomm {
-    font-family: 'PlusJakartaSans-SemiBold';
+    font-family: 'Inter_28pt-SemiBold';
     width: 100%;
     height: 54px;
     font-size: 16px;
@@ -158,11 +158,11 @@
     .payments-hd-sect-one-tle {
         font-size: 22px;
     }
-    
+
     .payments-hd-sect-one-stle {
         font-size: 16px;
     }
-    
+
     .payments-hd-sect-two {
         font-size: 14px;
     }
@@ -183,9 +183,9 @@
 
     .payments-hd-sect-one-stle {
         font-size: 12px;
-        
+
     }
-    
+
     .payments-hd-sect-two {
         font-size: 12px;
     }

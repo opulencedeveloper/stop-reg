@@ -8,42 +8,199 @@ document.addEventListener("DOMContentLoaded", () => {
   const otpModal = document.getElementById("otp-modal");
  
 
-  // Error modal
-  let errorModal = document.createElement("div");
-  errorModal.className = "error-modal";
-  form.parentElement.appendChild(errorModal);
+  // Premium Error Modal Structure
+  const errorBackdrop = document.createElement("div");
+  errorBackdrop.className = "error-backdrop";
+  errorBackdrop.style.display = "none";
 
-  const errorIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M12 0C5.372 0 0 5.373 0 12c0 6.628 5.372 12 12 12s12-5.372 12-12C24 5.373 18.628 0 12 0zm1 17h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+  const errorContent = document.createElement("div");
+  errorContent.className = "error-content premium-error";
+
+  // Close Button
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "error-close-btn";
+  closeBtn.innerHTML = "&times;";
+  closeBtn.onclick = hideError;
+
+  // Icon Wrapper
+  const iconWrapper = document.createElement("div");
+  iconWrapper.className = "error-icon-wrapper";
+  iconWrapper.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" class="error-icon-svg" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   `;
 
+  // Text Content
+  const textWrapper = document.createElement("div");
+  textWrapper.className = "error-text-wrapper";
+  
+  const errorTitle = document.createElement("h3");
+  errorTitle.className = "error-title";
+  errorTitle.textContent = "Authentication Failed";
+
+  const errorMessage = document.createElement("p");
+  errorMessage.className = "error-message-text";
+
+  textWrapper.appendChild(errorTitle);
+  textWrapper.appendChild(errorMessage);
+
+  // Assemble
+  errorContent.appendChild(closeBtn);
+  errorContent.appendChild(iconWrapper);
+  errorContent.appendChild(textWrapper);
+  errorBackdrop.appendChild(errorContent);
+
+  // Append to body to ensure it sits on top of everything
+  document.body.appendChild(errorBackdrop);
+
+  // Close on backdrop click
+  errorBackdrop.addEventListener('click', (e) => {
+    if (e.target === errorBackdrop) hideError();
+  });
+
   function showError(message) {
-    errorModal.innerHTML = `${errorIcon}<span>${message}</span>`;
-    errorModal.style.display = "flex";
+      errorMessage.textContent = message;
+      errorBackdrop.style.display = "flex";
+      // Trigger animation reflow
+      void errorContent.offsetWidth; 
+      errorBackdrop.classList.add("active");
+      errorContent.classList.add("active-animate");
   }
 
   function hideError() {
-    errorModal.style.display = "none";
+    if (errorContent.classList.contains("active-animate")) {
+        errorContent.classList.remove("active-animate");
+        errorBackdrop.classList.remove("active"); // For backdrop fade-out if needed
+        
+        // Wait for CSS transition to complete (0.3s for opacity matches the CSS)
+        setTimeout(() => {
+            errorBackdrop.style.display = "none";
+        }, 300);
+    } else {
+        errorBackdrop.style.display = "none";
+    }
   }
+
+  // --- CUSTOM VALIDATION HELPERS ---
+  function showInputError(input, message) {
+    const parent = input.parentElement;
+    let error = parent.querySelector(".custom-input-error");
+    if (!error) {
+      error = document.createElement("div");
+      error.className = "custom-input-error";
+      parent.appendChild(error);
+    }
+    // Only update text/animate if message changes or it was hidden
+    if (error.textContent !== message || error.style.display === 'none') {
+        error.textContent = message;
+        input.classList.add("input-error-border");
+        error.style.animation = 'none';
+        error.offsetHeight; /* trigger reflow */
+        error.style.animation = null; 
+    }
+  }
+
+  function clearInputError(input) {
+    const parent = input.parentElement;
+    const error = parent.querySelector(".custom-input-error");
+    if (error) error.remove();
+    input.classList.remove("input-error-border");
+  }
+
+  function clearAllErrors(form) {
+    const inputs = form.querySelectorAll("input");
+    inputs.forEach(input => clearInputError(input));
+  }
+
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // --- REAL-TIME VALIDATION SETUP ---
+  const emailInput = document.getElementById("signin-email");
+  const passwordInput = document.getElementById("signin-password");
+
+  // Helper for active real-time validation
+  function attachActiveValidation(input, validatorFn, errorMsgFn) {
+      if (!input) return;
+      input.addEventListener("input", () => {
+          const val = input.value.trim();
+          const isErrorShown = input.classList.contains("input-error-border");
+          
+          if (validatorFn(val)) {
+              clearInputError(input);
+          } else if (isErrorShown || val.length > 0) {
+              const msg = errorMsgFn(val);
+              if (msg) showInputError(input, msg);
+          }
+      });
+  }
+
+  attachActiveValidation(
+      emailInput, 
+      (val) => val && validateEmail(val),
+      (val) => !val ? "Email address is required" : "Please enter a valid email address"
+  );
+
+  attachActiveValidation(
+      passwordInput,
+      (val) => val.length > 0,
+      (val) => "Password is required"
+  );
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    hideError();
+    hideError(); // Hide top-level error modal if open
+    // Note: We don't blindly clearAllErrors here anymore if we want to preserve state, 
+    // but standard submit re-validates everything.
+    clearAllErrors(form);
 
-    const email = document.getElementById("signin-email").value.trim();
-    const password = document.getElementById("signin-password").value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    let hasError = false;
+    let firstInvalidInput = null;
+
+    // Validate Email
+    if (!email) {
+      showInputError(emailInput, "Email address is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = emailInput;
+    } else if (!validateEmail(email)) {
+      showInputError(emailInput, "Please enter a valid email address");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = emailInput;
+    }
+
+    // Validate Password
+    if (!password) {
+      showInputError(passwordInput, "Password is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = passwordInput;
+    }
+
+    // SCROLL TO ERROR
+    if (hasError) {
+      if (firstInvalidInput) {
+        firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstInvalidInput.focus({ preventScroll: true });
+      }
+      return; // Stop submission
+    }
 
     const payload = { email, password };
 
-    const originalText = submitBtn.textContent;
+    const originalText = submitBtn.innerHTML;
+    const originalTextString = "Log In";
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> Login...`;
+    submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Logging in...`;
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/auth/login",
+        "http://localhost:8080/api/v1/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -56,24 +213,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 🔥 FIX: Handle OTP request BEFORE success/error blocks
       if (data.message === "verify_email") {
-        localStorage.removeItem("otp_email");
-        localStorage.setItem("otp_email", email);
-
-         const newEmail = localStorage.getItem("otp_email")
-             description.textContent = `${newEmail }`;
-        const overLay = document.getElementById("overlay");
-        const loginDialog = document.getElementById("signin-dialog");
-        
-     
-        overLay.style.display = "none";
-        loginDialog.style.display = "none";
-
-        otpModal.style.display = "flex";
-        
-        
-
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Login";
+        // Redirect to Sign Up page with email for OTP verification
+        window.location.href = `/sign-up.html?email=${encodeURIComponent(email)}`;
         return;
       }
 
@@ -99,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.href = "/dashboard/payments.html";
         }
 
-        overLay.style.display = "none";
+        if (overLay) overLay.style.display = "none";
         form.reset();
       } else {
         showError(data.description || data.message || "Login failed!");
@@ -107,160 +248,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       showError("Network error — please try again later.");
       submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
+      submitBtn.innerHTML = originalText;
       console.error(err);
     } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-    }
-  });
-});
- 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("signIn-form");
-  const submitBtn = form.querySelector(".cr-btn");
-  const overLay = document.getElementById("overlay");
-    const description = document.querySelector(".otp-email");
-
-  const otpModal = document.getElementById("otp-modal");
- 
-
-  // Error modal
-  let errorModal = document.createElement("div");
-  errorModal.className = "error-modal";
-  form.parentElement.appendChild(errorModal);
-
-  const errorIcon = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M12 0C5.372 0 0 5.373 0 12c0 6.628 5.372 12 12 12s12-5.372 12-12C24 5.373 18.628 0 12 0zm1 17h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-    </svg>
-  `;
-
-  function showError(message) {
-    errorModal.innerHTML = `${errorIcon}<span>${message}</span>`;
-    errorModal.style.display = "flex";
-  }
-
-  function hideError() {
-    errorModal.style.display = "none";
-  }
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    hideError();
-
-    const email = document.getElementById("signin-email").value.trim();
-    const password = document.getElementById("signin-password").value.trim();
-
-    const payload = { email, password };
-
-    const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> Login...`;
-
-    try {
-      const response = await fetch(
-        "https://api.stopreg.com/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-
-      const data = await response.json();
-      console.log("Response:", data);
-
-      // 🔥 FIX: Handle OTP request BEFORE success/error blocks
-      if (data.message === "verify_email") {
-        localStorage.removeItem("otp_email");
-        localStorage.setItem("otp_email", email);
-
-         const newEmail = localStorage.getItem("otp_email")
-             description.textContent = `${newEmail }`;
-        const overLay = document.getElementById("overlay");
-        const loginDialog = document.getElementById("signin-dialog");
-        
-     
-        overLay.style.display = "none";
-        loginDialog.style.display = "none";
-
-        otpModal.style.display = "flex";
-      
-        document.body.classList.add("hidden-overflow");
-
         submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-        return;
-      }
-
-      if (response.ok) {
-        if (typeof iziToast !== 'undefined') {
-          iziToast.success({
-            title: 'Success',
-            message: "Account logged in successfully!",
-            position: "topRight",
-            timeout: 5000,
-            drag: false,
-            displayMode: 1,
-            zindex: 100000000,
-          });
+        // Restore only if it was stuck on loading
+        if (submitBtn.innerHTML.includes("stopreg-btn-spinner")) {
+            submitBtn.textContent = originalTextString;
         }
-
-        const token = data?.data?.token;
-        const hasValidPlan = data?.data?.hasValidPlan;
-        const planId = data?.data?.planId;
-        const tokenExpiresAt = data?.data?.tokenExpiresAt;
-
-        localStorage.setItem("authToken", token);
-
-        // Check if user has a valid subscription plan
-        // hasValidPlan checks if planId exists and tokenExpiresAt is in the future
-        if (hasValidPlan && planId && tokenExpiresAt && new Date(tokenExpiresAt) > new Date()) {
-          // User has valid plan - go to dashboard
-        window.location.href = "/dashboard/index.html";
-        } else {
-          // User doesn't have valid plan - go to payments page
-          window.location.href = "/dashboard/payments.html";
-        }
-        
-        overLay.style.display = "none";
-        form.reset();
-      } else {
-        const errorMessage = data.description || data.message || "Login failed!";
-        if (typeof iziToast !== 'undefined') {
-          iziToast.error({
-            title: 'Error',
-            message: errorMessage,
-            position: "topRight",
-            timeout: 5000,
-            drag: false,
-            displayMode: 1,
-            zindex: 100000000,
-          });
-        } else {
-          showError(errorMessage);
-        }
-      }
-    } catch (err) {
-      console.error(err);
-      if (typeof iziToast !== 'undefined') {
-        iziToast.error({
-          title: 'Network Error',
-          message: "Network error — please try again later.",
-          position: "topRight",
-          timeout: 5000,
-          drag: false,
-          displayMode: 1,
-          zindex: 100000000,
-        });
-      } else {
-        showError("Network error — please try again later.");
-      }
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
     }
   });
 });
+ 
+
   

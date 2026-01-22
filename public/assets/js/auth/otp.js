@@ -1,555 +1,376 @@
+
 document.addEventListener("DOMContentLoaded", () => {
   // ===================
-  //  GLOBAL SELECTORS
+  //  CONSTANTS & CONFIG
   // ===================
-  const overLay = document.querySelector(".overlay");
-  const otpModal = document.querySelector(".otp-modal");
-  const otpInputs = document.querySelectorAll(".otp-input");
-  const submitOtpBtn = document.getElementById("submit-otp-btn");
-  const resendOtpBtn = document.getElementById("resend-otp-btn");
-  const otpContainer = document.querySelector(".otp-container");
-  const loginDialog = document.getElementById("signin-dialog");
-  const signinDialog = document.getElementById("signin-dialog");
-  const signupDialog = document.getElementById("signup-dialog");
-
-  // otpContainer.scrollTo({
-  //   top: 0,
-  //   behavior: "smooth"
-  // });
+  const API_BASE = "http://localhost:8080/api/v1/auth";
+  const SELECTORS = {
+    otpModal: "#otp-modal",
+    otpInputs: ".otp-input",
+    submitBtn: "#submit-otp-btn",
+    resendBtn: "#resend-otp-btn",
+    closeBtn: "#otp-close-btn",
+    emailDisplay: ".otp-email",
+    overlay: "#overlay", // Main auth overlay if needed
+  };
 
   // ===================
-  //  GET URL PARAMS
+  //  STATE MANAGEMENT
   // ===================
-  const params = new URLSearchParams(window.location.search);
-  const urlEmail = params.get("email");
-  const urlOtp = params.get("token");
+  const elements = {
+    modal: document.querySelector(SELECTORS.otpModal),
+    inputs: document.querySelectorAll(SELECTORS.otpInputs),
+    submitBtn: document.querySelector(SELECTORS.submitBtn),
+    resendBtn: document.querySelector(SELECTORS.resendBtn),
+    closeBtn: document.querySelector(SELECTORS.closeBtn),
+    emailDisplay: document.querySelector(SELECTORS.emailDisplay),
+    overlay: document.querySelector(SELECTORS.overlay),
+  };
 
-  // =============================
-  //  API BASE URL
-  // =============================
-  const API = "https://api.stopreg.com/api/v1";
+  // Helper: Safe UI Updates
+  const ui = {
+    setLoading: (isLoading, text = "Verify OTP") => {
+      if (!elements.submitBtn) return;
+      elements.submitBtn.disabled = isLoading;
+      elements.submitBtn.innerHTML = isLoading 
+        ? `<span class="stopreg-btn-spinner"></span> Verifying...` 
+        : text;
+    },
+    setResendLoading: (isLoading) => {
+      if (!elements.resendBtn) return;
+      elements.resendBtn.style.pointerEvents = isLoading ? "none" : "auto";
+      elements.resendBtn.style.opacity = isLoading ? "0.6" : "1";
+      elements.resendBtn.textContent = isLoading ? "Sending..." : "Resend";
+    },
+    showError: (msg) => {
+      if (typeof iziToast !== "undefined") {
+        iziToast.error({ message: msg, position: "topRight" });
+      } else {
+        alert(msg); // Fallback
+      }
+    },
+    showSuccess: (msg) => {
+      if (typeof iziToast !== "undefined") {
+        iziToast.success({ message: msg, position: "topRight" });
+      }
+    },
+    openModal: (email) => {
+      if (elements.modal) {
+        elements.modal.style.display = "flex";
+        // Trigger reflow
+        void elements.modal.offsetWidth;
+        elements.modal.classList.add("active");
+        
+        // Ensure focus trap or immediate focus
+        setTimeout(() => elements.inputs[0]?.focus(), 100);
+      }
+      if (elements.emailDisplay) elements.emailDisplay.textContent = email;
+      document.body.classList.add("hidden-overflow");
+    },
+    closeModal: () => {
+        if (elements.modal) {
+            elements.modal.classList.remove("active");
+            setTimeout(() => {
+                elements.modal.style.display = "none";
+            }, 250); // Match fast exit transition
+        }
+        document.body.classList.remove("hidden-overflow");
+    }
+  };
 
-  // =============================
-  //  AUTO VERIFY FUNCTION
-  // =============================
-  async function autoVerify(email, otp) {
+  // ===================
+  //  CORE LOGIC
+  // ===================
+
+  // ===================
+  //  STATE CONTROL
+  // ===================
+  const views = {
+    manual: document.getElementById("otp-view-manual"),
+    verifying: document.getElementById("otp-view-verifying"),
+    success: document.getElementById("otp-view-success"),
+    failure: document.getElementById("otp-view-failure")
+  };
+
+  const stateElements = {
+    successTimer: document.getElementById("redirect-timer"),
+    proceedBtn: document.getElementById("proceed-login-btn"),
+    retryBtn: document.getElementById("retry-verify-btn"),
+    resendVerifyBtn: document.getElementById("resend-verify-btn"),
+    errorMsg: document.getElementById("otp-error-msg")
+  };
+
+  let redirectInterval;
+
+  function switchView(viewName) {
+    Object.values(views).forEach(el => {
+        if(el) {
+            el.classList.remove("active");
+            el.classList.add("hidden");
+        }
+    });
+
+    if (views[viewName]) {
+      views[viewName].classList.remove("hidden");
+      views[viewName].classList.add("active");
+    }
+  }
+
+  // ===================
+  //  CORE LOGIC
+  // ===================
+
+  // 1. URL Parameter Handling (Secure & Auto-Verify)
+  async function handleUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const urlEmail = params.get("email");
+    const urlToken = params.get("token");
+
+    if (urlEmail && urlToken) {
+      console.log("🚀 Auto-verifying from URL...");
+      
+      // Security: Clear params immediately
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+
+      // Defer API call until Entrance Overlay is gone
+      const isOverlayActive = document.documentElement.classList.contains('overlay-active');
+      
+      const startVerification = () => {
+          // Open UI in VERIFYING state
+          ui.openModal(urlEmail);
+          switchView("verifying");
+          verifyOtp(urlEmail, urlToken, true);
+      };
+
+      if (isOverlayActive) {
+          console.log("⏳ Waiting for Entrance Overlay...");
+          window.addEventListener("entrance-complete", () => {
+              console.log("✅ Overlay complete. Starting verification flow...");
+              startVerification();
+          }, { once: true });
+      } else {
+          // No overlay (or already finished), run immediately
+          startVerification();
+      }
+    } else if (urlEmail) {
+        // Case: Redirected from login (Verify Email) or Sign Up
+        console.log("🚀 Manual verification prompt from URL...");
+        
+        // Save email context
+        localStorage.setItem("otp_email", urlEmail);
+
+        // Defer UI unti Overlay done
+        const isOverlayActive = document.documentElement.classList.contains('overlay-active');
+        
+        const openManual = () => {
+             ui.openModal(urlEmail);
+             switchView("manual");
+        };
+
+        if (isOverlayActive) {
+             window.addEventListener("entrance-complete", openManual, { once: true });
+        } else {
+             openManual();
+        }
+        
+    } else {
+        // Default to manual view if opened normally (and triggered by user action later)
+        switchView("manual");
+    }
+  }
+
+  async function verifyOtp(email, otp, isAuto = false) {
+    if (!isAuto) ui.setLoading(true);
+
     try {
-      const res = await fetch(`${API}/auth/verify/email`, {
+      const response = await fetch(`${API_BASE}/verify/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (res.ok) {
-        iziToast.success({
-          message: "Email verified successfully!",
-          position: "topRight",
-        });
-
-        setTimeout(() => {
-          // Hide OTP modal
-          otpModal.style.display = "none";
-          document.body.classList.remove("hidden-overflow");
-
-          // Show login modal
-          overLay.style.display = "flex";
-          signinDialog.style.display = "block"; // LOGIN MODAL
-          signupDialog.style.display = "none"; // HIDE SIGNUP
-
-          // Scroll login into view
-          signinDialog.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 800);
-      } else {
-        if (submitOtpBtn) {
-          submitOtpBtn.disabled = false;
-          submitOtpBtn.innerHTML = "Verify OTP";
+      if (response.ok) {
+        // SUCCESS STATE
+        if (isAuto) {
+            switchView("success");
+            startRedirectCountdown();
+        } else {
+            ui.showSuccess("Email verified successfully!");
+            setTimeout(() => {
+                ui.closeModal();
+                window.location.href = "/sign-in.html"; 
+            }, 1000);
         }
-
-        iziToast.error({
-          message: data.description || "Invalid OTP",
-          position: "topRight",
-        });
+      } else {
+        throw new Error(data.description || data.message || "Invalid OTP");
       }
-    } catch (err) {
-      console.error(err);
-
-      iziToast.error({
-        message: "Network error. Please try again.",
-        position: "topRight",
-      });
-
-      if (submitOtpBtn) {
-        submitOtpBtn.disabled = false;
-        submitOtpBtn.innerHTML = "Verify OTP";
+    } catch (error) {
+      console.error("Verification failed:", error);
+      
+      if (isAuto) {
+          // FAILURE STATE
+          if (stateElements.errorMsg) stateElements.errorMsg.textContent = error.message;
+          switchView("failure");
+      } else {
+          ui.showError(error.message);
       }
+    } finally {
+      if (!isAuto) ui.setLoading(false);
     }
   }
 
-  // ====================================================
-  //  IF LINK HAS ?email=&token= → AUTO OPEN OTP MODAL
-  // ====================================================
-  if (urlEmail && params.has("token") && urlOtp) {
-    // Save email for manual verification & resend
-    localStorage.setItem("otp_email", urlEmail);
+  function startRedirectCountdown() {
+      let seconds = 5;
+      if (stateElements.successTimer) stateElements.successTimer.textContent = seconds;
 
-    if (overLay) overLay.style.display = "none";
-    if (otpModal) {
-      otpModal.style.display = "flex";
-
-      // 👇 FIX: scroll after it becomes visible
-      setTimeout(() => {
-        otpModal.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }, 50);
-    }
-    document.body.classList.add("hidden-overflow");
-
-    // Autofill OTP digits
-    otpInputs.forEach((input, index) => {
-      input.value = urlOtp[index] || "";
-    });
-
-    if (submitOtpBtn) {
-      submitOtpBtn.disabled = true;
-      submitOtpBtn.innerHTML = `<span class="btn-spinner"></span>`;
-    }
-
-    autoVerify(urlEmail, urlOtp);
+      clearInterval(redirectInterval);
+      redirectInterval = setInterval(() => {
+          seconds--;
+          if (stateElements.successTimer) stateElements.successTimer.textContent = seconds;
+          if (seconds <= 0) {
+              clearInterval(redirectInterval);
+              window.location.href = "/sign-in.html";
+          }
+      }, 1000);
   }
 
-  // ======================
-  //  RESEND OTP FUNCTION
-  // ======================
   async function resendOtp() {
     const email = localStorage.getItem("otp_email");
+    if (!email) return ui.showError("No email found. Please sign up again.");
 
-    if (!email) {
-      return iziToast.error({
-        message: "Email not found. Restart signup.",
-        position: "topRight",
-      });
-    }
-
-    resendOtpBtn.disabled = true;
-    resendOtpBtn.innerHTML = "Sending...";
+    // Handle button state safely
+    const btns = [
+        { el: elements.resendBtn, original: "Resend" },
+        { el: stateElements.resendVerifyBtn, original: "Resend OTP" }
+    ];
+    
+    btns.forEach(b => { 
+        if(b.el) {
+            b.el.textContent = "Sending..."; 
+            b.el.style.opacity = "0.7";
+            b.el.style.pointerEvents = "none";
+        } 
+    });
 
     try {
-      const res = await fetch(`${API}/auth/resend/email`, {
+      const response = await fetch(`${API_BASE}/resend/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        iziToast.success({
-          message: "OTP sent to your email!",
-          position: "topRight",
-        });
+      
+      if (response.ok) {
+        ui.showSuccess("New code sent!");
+        switchView("manual");
       } else {
-        iziToast.error({
-          message: data.description || "Failed to resend OTP",
-          position: "topRight",
-        });
+        const data = await response.json();
+        throw new Error(data.description || "Failed to resend");
       }
-    } catch (err) {
-      iziToast.error({
-        message: "Network error. Try again later.",
-        position: "topRight",
-      });
-    }
-
-    resendOtpBtn.disabled = false;
-    resendOtpBtn.innerHTML = "Resend OTP";
-  }
-
-  if (resendOtpBtn) {
-    resendOtpBtn.addEventListener("click", resendOtp);
-  }
-
-  // =============================
-  //  MANUAL OTP VERIFICATION
-  // =============================
-  async function verifyOtp() {
-    const email = localStorage.getItem("otp_email");
-
-    if (!email) {
-      return iziToast.error({
-        message: "Email not found. Restart signup.",
-        position: "topRight",
-      });
-    }
-
-    const otp = Array.from(otpInputs)
-      .map((i) => i.value)
-      .join("");
-
-    if (otp.length !== 6) {
-      return iziToast.error({
-        message: "Enter all 6 OTP digits",
-        position: "topRight",
-      });
-    }
-
-    submitOtpBtn.disabled = true;
-    submitOtpBtn.innerHTML = `<span class="btn-spinner"></span>`;
-
-    try {
-      const res = await fetch(`${API}/auth/verify/email`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        iziToast.success({
-          message: "OTP verified!",
-          position: "topRight",
-        });
-
-        setTimeout(() => {
-          // Hide OTP modal
-          otpModal.style.display = "none";
-          document.body.classList.remove("hidden-overflow");
-
-          // Show login modal
-          overLay.style.display = "flex";
-          signinDialog.style.display = "block"; // LOGIN MODAL
-          signupDialog.style.display = "none"; // HIDE SIGNUP
-
-          // Scroll login into view
-          signinDialog.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 800);
-      } else {
-        iziToast.error({
-          message: data.description || "Invalid OTP",
-          position: "topRight",
-        });
-
-        submitOtpBtn.disabled = false;
-        submitOtpBtn.innerHTML = "Verify OTP";
-      }
-    } catch (err) {
-      iziToast.error({
-        message: "Server error",
-        position: "topRight",
-      });
-
-      submitOtpBtn.disabled = false;
-      submitOtpBtn.innerHTML = "Verify OTP";
+    } catch (error) {
+       ui.showError(error.message);
+    } finally {
+       btns.forEach(b => { 
+           if(b.el) {
+               b.el.textContent = b.original; 
+               b.el.style.opacity = "1";
+               b.el.style.pointerEvents = "auto";
+            } 
+       });
     }
   }
 
-  if (submitOtpBtn) {
-    submitOtpBtn.addEventListener("click", verifyOtp);
+  // ===================
+  //  EVENT LISTENERS
+  // ===================
+
+  // Submit Button
+  if (elements.submitBtn) {
+    elements.submitBtn.addEventListener("click", () => {
+      const email = localStorage.getItem("otp_email");
+      const otp = Array.from(elements.inputs).map(i => i.value).join("");
+      
+      if (!email) return ui.showError("Session expired. Please sign up again.");
+      if (otp.length < 6) return ui.showError("Please enter the full 6-digit code.");
+
+      verifyOtp(email, otp, false);
+    });
   }
 
-  // =================================
-  //  OTP INPUT AUTO-TAB BEHAVIOR
-  // =================================
-  otpInputs.forEach((input, index) => {
-    input.addEventListener("input", () => {
-      if (input.value.length === 1 && index < otpInputs.length - 1) {
-        otpInputs[index + 1].focus();
+  // Resend Buttons (Both Manual and Failure View)
+  if (elements.resendBtn) elements.resendBtn.addEventListener("click", resendOtp);
+  if (stateElements.resendVerifyBtn) stateElements.resendVerifyBtn.addEventListener("click", resendOtp);
+
+  // Close Button
+  if (elements.closeBtn) elements.closeBtn.addEventListener("click", ui.closeModal);
+  
+  // Proceed Button
+  if (stateElements.proceedBtn) {
+      stateElements.proceedBtn.addEventListener("click", () => {
+          clearInterval(redirectInterval);
+          window.location.href = "/sign-in.html";
+      });
+  }
+
+  // Retry Button
+  if (stateElements.retryBtn) {
+      stateElements.retryBtn.addEventListener("click", () => {
+           // Retry with stored email and whatever token we had? 
+           // Ideally we'd need the token again, but we cleared params. 
+           // Actually, if param verification failed, we can't really "retry" the same invalid token.
+           // BUT if it was a network error, we could using the inputs? 
+           // Since we don't store the token if it fails (security), retry usually implies "try again" 
+           // effectively forcing them to manual or resend. 
+           // Use case: Network glitch. 
+           // Strategy: We can't retry the token if we wiped active memory. 
+           // Better UX: Switch to Manual View so they can check their email again.
+           switchView("manual");
+      });
+  }
+
+  // Input UX (Focus, Paste, Backspace)
+  elements.inputs.forEach((input, index) => {
+    // Number only restriction
+    input.addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      
+      if (e.target.value.length === 1 && index < elements.inputs.length - 1) {
+        elements.inputs[index + 1].focus();
       }
     });
 
+    // Backspace navigation
     input.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !input.value && index > 0) {
-        otpInputs[index - 1].focus();
+      if (e.key === "Backspace" && !e.target.value && index > 0) {
+        elements.inputs[index - 1].focus();
       }
     });
 
+    // Global Paste Support
     input.addEventListener("paste", (e) => {
       e.preventDefault();
-
-      const paste = (e.clipboardData || window.clipboardData)
-        .getData("text")
-        .trim();
-      const numbers = paste.replace(/\D/g, ""); // keep only digits
-
-      if (numbers.length === 0) return;
-
-      numbers.split("").forEach((num, i) => {
-        if (index + i < otpInputs.length) {
-          otpInputs[index + i].value = num;
+      const text = (e.clipboardData || window.clipboardData).getData("text").replace(/[^0-9]/g, '');
+      const chars = text.split("");
+      
+      elements.inputs.forEach((inp, i) => {
+        if (chars[i]) {
+            inp.value = chars[i];
+            // Trigger input event for any other listeners
+            inp.dispatchEvent(new Event('input', { bubbles: true }));
         }
       });
 
-      // Move focus to last filled input
-      const lastIndex = Math.min(
-        index + numbers.length - 1,
-        otpInputs.length - 1
-      );
-      otpInputs[lastIndex].focus();
+      // Focus last filled
+      const lastIdx = Math.min(chars.length - 1, elements.inputs.length - 1);
+      if (elements.inputs[lastIdx]) elements.inputs[lastIdx].focus();
+      
+      // Auto-submit if full length?
+      if (text.length === 6) elements.submitBtn.click();
     });
   });
 
-
-//   const otpModal = document.getElementById("otp-modal");
-
-//   const otpInputs = document.querySelectorAll(".otp-input");
-//   const submitOtpBtn = document.getElementById("submit-otp-btn");
-//   const resendOtpBtn = document.getElementById("resend-otp-btn");
-//   const otpCloseBtn = document.getElementById("otp-close-btn");
-//   const formContainer = document.querySelector(".otp-inputs");
-//   const overLay = document.getElementById("overlay");
-//   const signinDialog = document.getElementById("signin-dialog");
-//   const signupDialog = document.getElementById("signup-dialog");
-//   const description = document.querySelector(".otp-email");
-
-//   // Error modal
-//   let errorModal = document.createElement("div");
-//   errorModal.className = "error-modal";
-//   formContainer.parentElement.appendChild(errorModal);
-
-//   const errorIcon = `
-//     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-//       <path d="M12 0C5.372 0 0 5.373 0 12c0 6.628 5.372 12 12 12s12-5.372 12-12C24 5.373 18.628 0 12 0zm1 17h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-//     </svg>
-//   `;
-
-//   function showError(message) {
-//     errorModal.innerHTML = `${errorIcon}<span>${message}</span>`;
-//     errorModal.style.display = "flex";
-//   }
-
-//   function hideError() {
-//     errorModal.style.display = "none";
-//   }
-
-//   // RESET OTP MODAL
-//   function resetOtpModal() {
-//     otpInputs.forEach((input) => (input.value = ""));
-//     localStorage.removeItem("otp_email");
-//     otpModal.style.display = "none";
-
-//     document.body.classList.remove("hidden-overflow");
-//     hideError();
-//     submitOtpBtn.disabled = false;
-//     submitOtpBtn.textContent = "Verify OTP";
-//     console.log("OTP modal closed — OTP cleared & email removed");
-//   }
-
-//   // Close OTP modal
-//   otpCloseBtn.addEventListener("click", resetOtpModal);
-
-//   if (otpCloseBtn) {
-//     otpCloseBtn.addEventListener("click", () => {
-//       otpModal.classList.add("fadeOut");
-
-//       otpModal.addEventListener(
-//         "animationend",
-//         function () {
-//           otpCloseBtn.classList.remove("fadeOut");
-//           overLay.style.display = "none";
-//           signupDialog.style.display = "none";
-//           signinDialog.style.display = "none";
-//           otpModal.style.display = "none";
-
-//         },
-//         { once: true }
-//       );
-//     });
-//   }
-
-//   // OTP input auto focus
-//   otpInputs.forEach((input, index) => {
-//     input.addEventListener("input", () => {
-//       if (input.value.length === 1 && index < otpInputs.length - 1) {
-//         otpInputs[index + 1].focus();
-//       }
-//     });
-//     input.addEventListener("keydown", (e) => {
-//       if (e.key === "Backspace" && input.value === "" && index > 0) {
-//         otpInputs[index - 1].focus();
-//       }
-//     });
-//   });
-
-//   // Get email from URL or localStorage
-//   const params = new URLSearchParams(window.location.search);
-//   const urlEmail = params.get("email");
-//   const savedEmail = localStorage.getItem("otp_email");
-//   const email = savedEmail || urlEmail;
-//   description.textContent = `${email}`;
-
-//   const urlOtp = params.get("token")?.replace(/"/g, "");
-
-//   // Auto-fill OTP if token exists
-//   if (urlEmail && params.has("token") && urlOtp) {
-//     overLay.style.display = "none";
-//     otpModal.style.display = "flex";
-
-//     document.body.classList.add("hidden-overflow");
-
-//     otpInputs.forEach((input, index) => {
-//       input.value = urlOtp[index] || "";
-//     });
-
-//     submitOtpBtn.disabled = true;
-//     submitOtpBtn.innerHTML = `<span class="btn-spinner"></span>`;
-
-//     autoVerify(email, urlOtp);
-//   }
-
-//   // AUTO VERIFY OTP
-//   async function autoVerify(email, otp) {
-//     hideError();
-//     try {
-//       const response = await fetch(
-//         "https://api.stopreg.com/api/v1/auth/verify/email",
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify({ email, otp }),
-//         }
-//       );
-
-//       const data = await response.json();
-
-//       if (response.ok) {
-//         iziToast.success({
-//           message: "Email verified successfully!",
-//           position: "topRight",
-//         });
-//         overLay.style.display = "flex";
-//         signupDialog.style.display = "none";
-//         signinDialog.style.display = "block";
-//         otpModal.style.display = "none";
-
-//         signinDialog.scrollIntoView({
-//           behavior: "smooth",
-//           block: "center",
-//         });
-//       } else {
-//         showError(data.description || data.description || "Verification failed!");
-//         console.log("Verification failed:", data, email, otp);
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       showError("Network error — please try again later.");
-//     } finally {
-//       submitOtpBtn.disabled = false;
-//       submitOtpBtn.textContent = "Verify OTP";
-//     }
-//   }
-
-//   // MANUAL SUBMIT OTP
-//   submitOtpBtn.addEventListener("click", async () => {
-//     hideError();
-//     const code = Array.from(otpInputs)
-//       .map((i) => i.value)
-//       .join("");
-//     const originalText = submitOtpBtn.textContent;
-//     submitOtpBtn.disabled = true;
-//     submitOtpBtn.innerHTML = `<span class="btn-spinner"></span>`;
-
-//     const newEmail = localStorage.getItem("otp_email");
-//     if (!newEmail) {
-//       showError("Email not found. Cannot verify OTP.");
-//       submitOtpBtn.disabled = false;
-//       submitOtpBtn.textContent = originalText;
-//       return;
-//     }
-
-//     if (code.length !== 6) {
-//       showError("Please enter all 6 digits.");
-//       submitOtpBtn.disabled = false;
-//       submitOtpBtn.textContent = originalText;
-//       return;
-//     }
-
-//     try {
-//       const response = await fetch(
-//         "https://api.stopreg.com/api/v1/auth/verify/email",
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify({ email: newEmail, otp: code }),
-//         }
-//       );
-
-//       const data = await response.json();
-
-//       if (response.ok) {
-//         iziToast.success({
-//           message: "Email verified successfully!",
-//           position: "topRight",
-//         });
-//         overLay.style.display = "flex";
-//         signupDialog.style.display = "none";
-//         signinDialog.style.display = "block";
-//         otpModal.style.display = "none";
-
-//         signinDialog.scrollIntoView({
-//           behavior: "smooth",
-//           block: "center",
-//         });
-//         classList.remove("open");
-//         navMenu.classList.remove("active");
-//         documennavIconst.body.classList.add("hidden-overflow");
-//       } else {
-//         showError(
-//           data.description || data.message || "Otp verification failed!"
-//         );
-//         submitOtpBtn.disabled = false;
-//         submitOtpBtn.textContent = originalText;
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       showError("Network error — please try again later.");
-//       submitOtpBtn.disabled = false;
-//       submitOtpBtn.textContent = originalText;
-//     }
-//   });
-
-//   // RESEND OTP
-  resendOtpBtn.addEventListener("click", async () => {
-    hideError();
-    const newEmail = localStorage.getItem("otp_email");
-
-    console.log("e", newEmail)
-    if (!newEmail) {
-      return showError("Email not found. Cannot resend OTP.");
-    }
-
-    const originalText = submitOtpBtn.textContent;
-    submitOtpBtn.disabled = true;
-    submitOtpBtn.innerHTML = `<span class="btn-spinner"></span>`;
-
-    try {
-      const response = await fetch(
-        "https://api.stopreg.com/api/v1/auth/resend/email",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: newEmail }),
-        }
-      );
-      const data = await response.json();
-
-      if (response.ok) {
-        iziToast.success({
-          message: "OTP resent successfully!",
-          position: "topRight",
-        });
-      } else {
-        showError(data.description || data.message || "OTP resend failed!");
-      }
-    } catch (err) {
-      console.error(err);
-      showError("Network error — please try again later.");
-    } finally {
-      submitOtpBtn.disabled = false;
-      submitOtpBtn.textContent = originalText;
-    }
-  });
+  // Init
+  handleUrlParams();
 });

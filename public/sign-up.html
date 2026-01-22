@@ -30,6 +30,7 @@
     <link href="/assets/css/styles.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
     <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
 </head>
 
 <body>
@@ -131,7 +132,7 @@
                     <h2 class="auth-title">Create an Account</h2>
                     <p class="auth-subtitle">Get started with an account on Stopreg</p>
 
-                    <form>
+                    <form id="signup-form" novalidate>
                         <!-- Email -->
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -152,11 +153,11 @@
 
                         <!-- Password -->
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="signup-password">Password</label>
                             <div class="password-input-wrapper">
-                                <input type="password" id="password" class="form-input" placeholder="Create password"
-                                    required />
-                                <button type="button" class="toggle-password" data-target="password">
+                                <input type="password" id="signup-password" class="form-input"
+                                    placeholder="Create password" required />
+                                <button type="button" class="toggle-password" data-target="signup-password">
                                     <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
                                 </button>
                             </div>
@@ -164,17 +165,17 @@
 
                         <!-- Confirm Password -->
                         <div class="form-group">
-                            <label for="cpassword">Confirm Password</label>
+                            <label for="signup-cpassword">Confirm Password</label>
                             <div class="password-input-wrapper">
-                                <input type="password" id="cpassword" class="form-input" placeholder="Confirm password"
-                                    required />
-                                <button type="button" class="toggle-password" data-target="cpassword">
+                                <input type="password" id="signup-cpassword" class="form-input"
+                                    placeholder="Confirm password" required />
+                                <button type="button" class="toggle-password" data-target="signup-cpassword">
                                     <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
                                 </button>
                             </div>
                         </div>
 
-                        <button type="submit" class="submit-btn">Create an Account</button>
+                        <button type="submit" class="submit-btn cr-btn">Create an Account</button>
                     </form>
 
                     <div class="auth-footer">
@@ -206,6 +207,8 @@
                     Account</a>
             </div>
         </div>
+
+
     </main>
 
 
@@ -214,6 +217,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
     <script src="/assets/js/landing/header.js"></script>
     <script src="/assets/js/landing/sign-up.js"></script>
+    <script src="/assets/js/auth/signUp.js"></script> <!-- Imported Auth Logic -->
     <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/landing/index.js" defer></script>
     <script src="/assets/js/auth/otp.js" defer></script>
@@ -222,6 +226,80 @@
     <script id="zsiqscript"
         src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
         defer></script>
+    <!-- OTP Modal (Moved to root for proper fixed positioning) -->
+    <div id="otp-modal" class="otp-modal">
+        <div class="auth-container otp-container">
+            <button id="otp-close-btn" class="otp-close-btn auth-close-btn" aria-label="Close OTP verification">
+                <img src="/assets/icons/close-outline.svg" alt="Close" />
+            </button>
+            <div class="auth-logo">
+                <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+            </div>
+
+            <!-- VIEW: MANUAL (Default) -->
+            <div id="otp-view-manual" class="otp-view active">
+                <h3 class="cr-auth-header">Verify Your Email</h3>
+                <p class="otp-subtext cr-auth-tle">
+                    Enter the 6-digit verification code sent to
+                    <span class="otp-email font-bold"></span>.
+                </p>
+
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                    <input type="text" maxlength="1" class="otp-input" inputmode="numeric" />
+                </div>
+
+                <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
+
+                <p class="otp-resend cr-auth-tle">
+                    Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
+                </p>
+            </div>
+
+            <!-- VIEW: VERIFYING -->
+            <div id="otp-view-verifying" class="otp-view hidden">
+                <div class="stopreg-verification-loader"></div>
+                <h3 class="cr-auth-header">Verifying Email...</h3>
+                <p class="otp-subtext cr-auth-tle">
+                    Checking <span class="otp-email font-bold"></span>
+                </p>
+            </div>
+
+            <!-- VIEW: SUCCESS -->
+            <div id="otp-view-success" class="otp-view hidden">
+                <div class="stopreg-success-icon">
+                    <svg viewBox="0 0 52 52">
+                        <circle class="stopreg-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="stopreg-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+                </div>
+                <h3 class="cr-auth-header">Email Verified!</h3>
+                <p class="otp-subtext cr-auth-tle">
+                    Redirecting to login in <span id="redirect-timer">5</span>s...
+                </p>
+                <button id="proceed-login-btn" class="otp-submit-btn">Proceed to Login</button>
+            </div>
+
+            <!-- VIEW: FAILURE -->
+            <div id="otp-view-failure" class="otp-view hidden">
+                <div class="stopreg-error-icon">!</div>
+                <h3 class="cr-auth-header">Verification Failed</h3>
+                <p id="otp-error-msg" class="otp-subtext cr-auth-tle">
+                    The link is invalid or expired.
+                </p>
+                <button id="retry-verify-btn" class="otp-submit-btn">Retry Verification</button>
+                <p class="otp-resend cr-auth-tle">
+                    Need a new link? <span id="resend-verify-btn">Resend OTP</span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 
 </html>

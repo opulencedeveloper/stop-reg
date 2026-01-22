@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/user/update/fullname",
+        "http://localhost:8080/api/v1/user/update/fullname",
         {
           method: "PATCH",
           headers: {
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api.stopreg.com/api/v1/user/info",
+      "http://localhost:8080/api/v1/user/info",
       {
         method: "GET",
         headers: {

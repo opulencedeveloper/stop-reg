@@ -1,3 +1,215 @@
+/* Global Layout Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.dash-wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Changed from row */
+    background-color: var(--color-twenty-nine);
+}
+
+.dash-bdy {
+    width: 100%;
+    /* overflow-y: auto; handled by body usually but keeping structure */
+    flex: 1;
+}
+
+/* --- HEADER STYLES --- */
+.dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 113px;
+    width: 100%;
+    padding: 0 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #EBEBEB;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Left: Logo */
+.dash-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.dash-logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    gap: 4px;
+}
+
+.header-logo-img {
+    height: 57px;
+    width: auto;
+}
+
+.header-logo-text {
+    font-family: 'Inter_18pt-Bold';
+    font-size: 10px;
+    color: var(--color-two);
+    /* Blue brand color */
+    letter-spacing: 0.5px;
+}
+
+/* Center: Navigation Pill */
+.dash-header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    background-color: #F5F5F7;
+    /* Light grey pill background */
+    border-radius: 8px;
+    /* Or 100px for full pill */
+    padding: 4px;
+    gap: 4px;
+}
+
+.header-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 16px;
+    padding-right: 46px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #252525;
+    font-family: 'Inter_18pt-Bold';
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.header-nav-link:hover {
+    background-color: #E0E0E0;
+}
+
+.header-nav-link.active {
+    background-color: var(--color-two);
+    /* Blue Active */
+    color: #ffffff;
+}
+
+.header-nav-link .nav-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-nav-link .nav-icon img {
+    width: 100%;
+    height: 100%;
+    /* Assuming SVGs can be colored via filter or we swap src for active white icon */
+    /* If using img tags, we need different images for active state or CSS filters */
+}
+
+/* Filter for white icon on active state if SVG is black/grey */
+.header-nav-link.active .nav-icon img {
+    filter: brightness(0) invert(1);
+}
+
+
+/* Right: User Actions */
+.dash-header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-header-avatar {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.dash-header-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dash-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dash-logout-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.dash-logout-tle {
+    font-family: 'Inter_18pt-Bold';
+    font-size: 16px;
+    color: #D32F2F;
+    /* Red logout color */
+}
+
+
+/* Mobile Handling */
+.nav-icon2 {
+    display: none;
+    /* Hidden on desktop */
+}
+
+
+/* Responsive */
+@media only screen and (max-width: 1024px) {
+    .header-nav-link span {
+        display: none;
+        /* Hide text, keep icons on smaller screens */
+    }
+
+    .header-nav-link {
+        padding: 10px 12px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .dash-header-center {
+        display: none;
+        /* Hide center nav on mobile, fallback to hamburger menu */
+    }
+
+    .nav-icon2 {
+        display: block;
+        cursor: pointer;
+    }
+
+    .dash-logout {
+        display: none;
+        /* Hide explicitly logout button, likely inside hamburger menu now */
+    }
+
+    .dash-header-right {
+        gap: 16px;
+    }
+}
+
+/* Logout Modal (Keep existing) */
 .logout-container {
     display: flex;
     flex-direction: column;
@@ -9,12 +221,6 @@
     margin-left: 16px;
     margin-right: 16px;
     box-sizing: content-box;
-}
-.check-disposal-email{
-    text-decoration: underline;
-    font-size: 16px;
-    font-weight: 600;
-    color: #595959;
 }
 
 .logout-icon {
@@ -36,7 +242,7 @@
 
 .logout-tle {
     font-size: 20px;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
     color: var(--color-four);
     margin: auto;
     margin-bottom: 4px;
@@ -55,7 +261,6 @@
 .y-log-out {
     background-color: var(--color-twenty-two);
     height: 46px;
-    /* width: 100%; */
     margin-left: 32px;
     margin-right: 32px;
     text-decoration: none;
@@ -67,8 +272,9 @@
     border: none;
     border-radius: 8px;
     font-size: 16px;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
     color: var(--secondary-color);
+    cursor: pointer;
 }
 
 .n-log-out {
@@ -78,339 +284,39 @@
     margin-top: 16px;
     border: none;
     background-color: transparent;
-    font-family: 'PlusJakartaSans-ExtraBold';
+    font-family: 'Inter_18pt-Bold';
     font-size: 16px;
     height: 46px;
-    /* width: 100%; */
+    cursor: pointer;
 }
 
-.dash-wrapper {
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    background-color: var(--color-twenty-nine);
-}
+@media only screen and (max-width: 550px) {
+    .logout-container {
+        padding: 20px 0;
+    }
 
-.dash-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 64px;
-    width: 22%;
-    background-color: var(--color-twenty-eight);
-    height: 100%;
-    box-sizing: border-box;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-top: 23px;
-}
+    .y-log-out,
+    .n-log-out {
+        height: 41px;
+    }
 
-.dash-logo {
-    width: 72px;
-    height: 57px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-logo>img {
-    height: 100%;
-    width: 100%;
-}
-
-.dash-nav-link,
-.dash-mobi-nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.dash-nav-link {
-    width: 100%;
-}
-
-.dash-mobi-nav-links {
-    margin-left: 16px;
-    margin-right: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--color-twenty);
-}
-
-.dash-mobi-nav-links>a,
-.dash-nav-link>a {
-    text-decoration: none;
-    color: var(--primary-color);
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    padding-left: 16px;
-}
-
-.dash-mobi-nav-links>a {
-    height: 46px;
-    font-size: 14px;
-}
-
-.dash-nav-link>a {
-    height: 48px;
-    font-size: 16px;
-
-}
-
-.dash-nav-link>a>p {
-    font-family: 'PlusJakartaSans-SemiBold';
-    line-height: 22.4px;
-    color: var(--primary-color);
-}
-
-.dash-nav-link>a>div {
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-nav-link>a>div>img {
-    width: 100%;
-    height: 100%;
-}
-
-.dash-mobi-nav-link-icon {
-    height: 22px;
-    width: 23px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-mobi-nav-link-icon>img {
-    width: 100%;
-    height: 100%;
-}
-
-.dash-nav-link-active {
-    color: var(--color-one) !important;
-    background-color: var(--color-two);
-    font-family: 'PlusJakartaSans-ExtraBold' !important;
-}
-
-.dash-nav-link-active>p{
-    color: var(--color-one) !important;
-}
-
-.dash-bdy {
-    flex: 1;
-    height: 100%;
-    width: 100%;
-    overflow-y: auto;
-}
-
-.dash-header {
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0px;
-    z-index: 9;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-left: var(--desktop-dash-padding);
-    padding-right: var(--desktop-dash-padding);
-    height: 104px;
-    background-color: var(--color-six);
-}
-
-.mobile-nav-logo {
-    width: 48px;
-    height: 38px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-nav-logo>img{
-    height: 100%;
-    width: 100%;
-}
-
-.dash-header-auth {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.dash-header-avatar {
-    height: 48px;
-    width: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-header-avatar>img,
-.dash-logout-icon>img {
-    height: 100%;
-    width: 100%;
-}
-
-.dash-logout {
-    background-color: transparent;
-    border: none;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-}
-
-.dash-logout-icon {
-    height: 24px;
-    width: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-mobile-logout-btn {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 8px;
-    padding-left: 16px;
-    height: 44px;
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-top: -15px;
-    border: none;
-    background-color: transparent;
-}
-
-
-.dash-mobile-logout-btn-icon {
-    height: 20px;
-    width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dash-mobile-logout-btn-tle {
-    color: var(--error-color);
-    font-size: 14px;
-    font-family: 'PlusJakartaSans-SemiBold';
-}
-
-.dash-mobile-logout-btn-icon>img{
-    width: 100%;
-    height: 100%;
-}
-
-.dash-logout-tle {
-    color: var(--error-color);
-    font-size: 16px;
-    line-height: 22.4px;
-    font-family: 'PlusJakartaSans-SemiBold';
+    .dash-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 113px;
+        width: 100%;
+        padding: 0 16px;
+        background-color: #ffffff;
+        border-bottom: 1px solid #EBEBEB;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
 }
 
 .dash-inner-section {
     padding-left: var(--desktop-dash-padding);
     padding-right: var(--desktop-dash-padding);
+    padding-top: var(--desktop-dash-padding);
 }
-
-
-.dash-header-tle, .dash-header-tle-mobile {
-    font-size: 20px;
-    font-family: 'PlusJakartaSans-ExtraBold';
-    color: var(--primary-color);
-}
-
-.dash-header-tle-mobile {
-    display: none;
-}
-
-@media only screen and (max-width: 968px) {
-
-    .dash-nav,
-    .dash-header-auth {
-        display: none;
-    }
-
-    .nav-icon2 {
-        display: block;
-    }
-
-    .mobile-nav-logo{
-        display: flex;
-    }
-    .dash-header-tle-mobile {
-        display: block;
-    }
-
-    .dash-header-tle{
-        display: none;
-    }
-    .dash-header {
-        display: flex;
-        align-items: center;
-        position: sticky;
-        top: 0px;
-        flex-direction: row;
-        justify-content: space-between;
-        height: 75px;
-        margin-bottom: 8px;
-        background-color: var(--color-twenty-nine);
-    }
-}
-
-@media only screen and (max-width: 628px) {
-    
-    .dash-inner-section, .dash-header {
-        padding-left: var(--mobile-padding);
-        padding-right: var(--mobile-padding);
-    }
-
-}
-
-@media only screen and (max-width: 550px) {
-    .dash-header-tle-mobile {
-        font-size: 14px;
-    }
-
-    .logout-container {
-        padding: 20px 0;
-    }
-
-    .logout-icon {
-        height: 64px;
-        width: 64px;
-    }
-    
-    .logout-icon>img {
-        width: 26px;
-        height: 22px;
-    }
-
-
-    .logout-tle {
-        font-size: 16px;
-    }
-
-    .logout-subtle {
-        line-height: 16.8px;
-        font-size: 12px;
-        margin-bottom: 32px;
-    }
-
-    .y-log-out, .n-log-out {
-        height: 41px;
-        margin-left: var(--mobile-padding);
-        margin-right: var(--mobile-padding);
-        font-size: 12px;
-    }
-    
-}
-
-
-

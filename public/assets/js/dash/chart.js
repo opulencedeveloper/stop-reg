@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api.stopreg.com/api/v1/user/info",
+      "http://localhost:8080/api/v1/user/info",
       {
         method: "GET",
         headers: {
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (apiToken) {
         const linkContainer = document.querySelector(".link-container");
         if (linkContainer) {
-          const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
+          const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
           linkContainer.href = newLink;
           
           const linkTitle = linkContainer.querySelector(".token-link-title");

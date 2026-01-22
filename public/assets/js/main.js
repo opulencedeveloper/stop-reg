@@ -73,8 +73,7 @@ window.addEventListener("load", function () {
       }
     } else {
       // Dashboard pages will hide spinner via hideSpinner() after data loads
-      // Keep spinner visible for now - increment counter so it stays visible
-      window.spinnerCount = 1;
+      // No longer setting initial count here; scripts should call showSpinner/hideSpinner
     }
 
 
