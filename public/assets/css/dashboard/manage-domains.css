@@ -5,7 +5,7 @@
     font-family: 'Inter_18pt-Bold';
     color: var(--primary-color);
     margin-top: 16px;
-    margin-bottom: 14px;
+    margin-bottom: 16px !important;
 }
 
 .manage-domains-section {
@@ -289,4 +289,35 @@
         gap: 16px;
         align-items: center;
     }
+}
+
+/* Block Domain Modal Styles */
+.btn-block-submit {
+    background-color: #FFEBEB !important;
+    color: #CC0000 !important;
+    border: none !important;
+}
+
+.btn-block-submit:hover {
+    background-color: #FDDCDC !important;
+}
+
+.add-seats-textarea {
+    height: 100px;
+    padding-top: 10px;
+    resize: none;
+    font-family: 'Inter_18pt-Regular', sans-serif;
+}
+
+.block-modal-header {
+    align-items: flex-start;
+}
+
+.block-modal-desc {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.block-modal-body {
+    margin-top: 24px;
 }

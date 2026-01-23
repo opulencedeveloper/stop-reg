@@ -1136,3 +1136,11 @@ body.hidden-overflow .auth-page-wrapper {
     color: var(--color-one);
   }
 }
+
+/* Dashboard Content Wrapper */
+/* Dashboard Content Wrapper */
+.dash-section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}

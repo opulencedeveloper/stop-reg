@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const userDetails = user.userDetails;
       if (userDetails) {
         // Update all expiration date elements
-        const expiresDateEls = document.querySelectorAll(".Current-plan-date");
+        const expiresDateEls = document.querySelectorAll(".current-plan-date");
         if (userDetails.tokenExpiresAt) {
           const expiresDate = new Date(userDetails.tokenExpiresAt);
           const formattedDate = expiresDate.toLocaleDateString("en-US", {

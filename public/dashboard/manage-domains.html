@@ -28,6 +28,7 @@
     <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/manage-domains.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/add-seats-modal.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -101,319 +102,327 @@
             <div class="dash-bdy">
                 <!-- Header Start -->
                 <header class="dash-header">
-                    <!-- Left: Logo -->
-                    <div class="dash-header-left">
-                        <a href="/" class="dash-logo-link">
-                            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" class="header-logo-img" />
-                        </a>
-                    </div>
-
-                    <!-- Center: Navigation -->
-                    <div class="dash-header-center">
-                        <nav class="header-nav">
-                            <a href="/dashboard/index.html" class="header-nav-link">
-                                <div class="nav-icon"><img src="/assets/icons/dashboard-inactive.svg" alt="" /></div>
-                                <span>Dashboard</span>
+                    <div class="dash-header-container">
+                        <!-- Left: Logo -->
+                        <div class="dash-header-left">
+                            <a href="/" class="dash-logo-link">
+                                <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" class="header-logo-img" />
                             </a>
-                            <a href="/dashboard/manage-domains.html" class="header-nav-link active">
-                                <div class="nav-icon"><img src="/assets/icons/domains-active.svg" alt="" /></div>
-                                <span>Manage Domains</span>
-                            </a>
-                            <a href="/dashboard/profile/profile.html" class="header-nav-link">
-                                <div class="nav-icon"><img src="/assets/icons/profile-inactive.svg" alt="" /></div>
-                                <span>Settings</span>
-                            </a>
-                        </nav>
-                    </div>
-
-                    <!-- Right: User Actions -->
-                    <div class="dash-header-right">
-                        <div class="dash-header-avatar">
-                            <img src="/assets/icons/avatar-filled.svg" alt="User avatar" />
                         </div>
-                        <button id="logout-button" class="dash-logout">
-                            <div class="dash-logout-icon">
-                                <img src="/assets/icons/logout-line.svg" />
-                            </div>
-                            <p class="dash-logout-tle">Log Out</p>
-                        </button>
 
-                        <!-- Mobile Menu Toggle -->
-                        <div class="nav-icon2 text-right">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                        <!-- Center: Navigation -->
+                        <div class="dash-header-center">
+                            <nav class="header-nav">
+                                <a href="/dashboard/index.html" class="header-nav-link">
+                                    <div class="nav-icon"><img src="/assets/icons/dashboard-inactive.svg" alt="" />
+                                    </div>
+                                    <span>Dashboard</span>
+                                </a>
+                                <a href="/dashboard/manage-domains.html" class="header-nav-link active">
+                                    <div class="nav-icon"><img src="/assets/icons/domains-active.svg" alt="" /></div>
+                                    <span>Manage Domains</span>
+                                </a>
+                                <a href="/dashboard/profile/profile.html" class="header-nav-link">
+                                    <div class="nav-icon"><img src="/assets/icons/profile-inactive.svg" alt="" /></div>
+                                    <span>Settings</span>
+                                </a>
+                            </nav>
+                        </div>
+
+                        <!-- Right: User Actions -->
+                        <div class="dash-header-right">
+                            <div class="dash-header-avatar">
+                                <img src="/assets/icons/avatar-filled.svg" alt="User avatar" />
+                            </div>
+                            <button id="logout-button" class="dash-logout">
+                                <div class="dash-logout-icon">
+                                    <img src="/assets/icons/logout-line.svg" />
+                                </div>
+                                <p class="dash-logout-tle">Log Out</p>
+                            </button>
+
+                            <!-- Mobile Menu Toggle -->
+                            <div class="nav-icon2 text-right">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
                         </div>
                     </div>
                 </header>
                 <!-- Header End -->
 
                 <div class="dash-inner-section">
-                    <h1 class="page-title">Manage Domains</h1>
+                    <div class="dash-section-container">
+                        <h1 class="page-title">Manage Domains</h1>
 
-                    <!-- Blocked List Section -->
-                    <section class="manage-domains-section section-card">
-                        <div class="section-header">
-                            <h2 class="section-title">Blocked List</h2>
+                        <!-- Blocked List Section -->
+                        <section class="manage-domains-section section-card">
+                            <div class="section-header">
+                                <h2 class="section-title">Blocked List</h2>
 
-                        </div>
-                        <div class="section-description-wrapper">
-                            <p class="section-description">
-                                Customize your domain blocking preferences by adding specific domains, which will
-                                supersede
-                                our existing database status and ensure consistent blocking in all future API
-                                interactions.
-                            </p>
-
-                            <button class="btn-manage btn-block">
-                                <img src="/assets/icons/empty.svg" alt="" />
-                                Block a Domain
-                            </button>
-                        </div>
-
-                        <div class="req-table-container">
-                            <table class="req-table">
-                                <thead>
-                                    <tr>
-                                        <th>Domain Name</th>
-                                        <th>Status</th>
-                                        <th>Comments</th>
-                                        <th class="table-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>www.macdonald.com</td>
-                                        <td>
-                                            <div class="status-badge badge-blocked">
-                                                <img src="/assets/icons/block-outline.svg" alt="" />
-                                                Blocked
-                                            </div>
-                                        </td>
-                                        <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                                            slöjböter.</td>
-                                        <td class="table-right">
-                                            <div class="domain-actions">
-                                                <button class="action-icon-btn" title="Edit">
-                                                    <img src="/assets/icons/edit-outline.svg" alt="Edit"
-                                                        class="icon-edit" />
-                                                </button>
-                                                <button class="action-icon-btn" title="Delete">
-                                                    <img src="/assets/icons/delete.svg" alt="Delete"
-                                                        class="icon-delete" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <!-- Add more sample rows as per image -->
-                                    <tr>
-                                        <td>www.tempxyz.com</td>
-                                        <td>
-                                            <div class="status-badge badge-blocked">
-                                                <img src="/assets/icons/block-outline.svg" alt="" />
-                                                Blocked
-                                            </div>
-                                        </td>
-                                        <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                                            slöjböter.</td>
-                                        <td class="table-right">
-                                            <div class="domain-actions">
-                                                <button class="action-icon-btn" title="Edit">
-                                                    <img src="/assets/icons/profile-light.svg" alt="Edit"
-                                                        style="filter: grayscale(1) brightness(0.5);" />
-                                                </button>
-                                                <button class="action-icon-btn" title="Delete">
-                                                    <img src="/assets/icons/delete.svg" alt="Delete"
-                                                        style="filter: invert(19%) sepia(96%) saturate(3946%) hue-rotate(354deg) brightness(86%) contrast(98%);" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="pagination-container">
-                            <div class="page-size-selector">
-                                <span>10 per page</span>
-                                <img src="/assets/icons/drop-down.svg" alt="" class="icon-dropdown" />
                             </div>
-                            <div class="pagination-nav">
-                                <button class="page-btn" disabled>
-                                    <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
-                                </button>
-                                <button class="page-btn active">1</button>
-                                <button class="page-btn">2</button>
-                                <span>...</span>
-                                <button class="page-btn">9</button>
-                                <button class="page-btn">10</button>
-                                <button class="page-btn">
-                                    <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
+                            <div class="section-description-wrapper">
+                                <p class="section-description">
+                                    Customize your domain blocking preferences by adding specific domains, which will
+                                    supersede
+                                    our existing database status and ensure consistent blocking in all future API
+                                    interactions.
+                                </p>
+
+                                <button id="open-block-modal" class="btn-manage btn-block">
+                                    <img src="/assets/icons/empty.svg" alt="" />
+                                    Block a Domain
                                 </button>
                             </div>
-                        </div>
-                    </section>
 
-                    <!-- Allow List Section -->
-                    <section class="manage-domains-section section-card">
-                        <div class="section-header">
-                            <h2 class="section-title">Allow List</h2>
-                        </div>
-                        <div class="section-description-wrapper">
-                            <p class="section-description">
-                                You can manually whitelist specific domains, which will override our existing database
-                                status, ensuring these domains are reported as approved for future API interactions.
-                            </p>
-
-                            <button class="btn-manage btn-allow">
-                                <img src="/assets/icons/empty.svg" alt="" />
-                                Allow a Domain
-                            </button>
-                        </div>
-
-                        <div class="req-table-container">
-                            <table class="req-table">
-                                <thead>
-                                    <tr>
-                                        <th>Domain Name</th>
-                                        <th>Status</th>
-                                        <th>Comments</th>
-                                        <th class="table-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>www.macdonald.com</td>
-                                        <td>
-                                            <div class="status-badge badge-allow">
-                                                <img src="/assets/icons/approve-outline.svg" alt="" />
-                                                Allow
-                                            </div>
-                                        </td>
-                                        <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                                            slöjböter.</td>
-                                        <td class="table-right">
-                                            <div class="domain-actions">
-                                                <button class="action-icon-btn" title="Edit">
-                                                    <img src="/assets/icons/edit-outline.svg" alt="Edit"
-                                                        class="icon-edit" />
-                                                </button>
-                                                <button class="action-icon-btn" title="Delete">
-                                                    <img src="/assets/icons/delete.svg" alt="Delete"
-                                                        class="icon-delete" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="pagination-container">
-                            <div class="page-size-selector">
-                                <span>10 per page</span>
-                                <img src="/assets/icons/thin-drop-down.svg" alt="" />
+                            <div class="req-table-container">
+                                <table class="req-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain Name</th>
+                                            <th>Status</th>
+                                            <th>Comments</th>
+                                            <th class="table-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>www.macdonald.com</td>
+                                            <td>
+                                                <div class="status-badge badge-blocked">
+                                                    <img src="/assets/icons/block-outline.svg" alt="" />
+                                                    Blocked
+                                                </div>
+                                            </td>
+                                            <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
+                                                slöjböter.</td>
+                                            <td class="table-right">
+                                                <div class="domain-actions">
+                                                    <button class="action-icon-btn" title="Edit">
+                                                        <img src="/assets/icons/edit-outline.svg" alt="Edit"
+                                                            class="icon-edit" />
+                                                    </button>
+                                                    <button class="action-icon-btn" title="Delete">
+                                                        <img src="/assets/icons/delete.svg" alt="Delete"
+                                                            class="icon-delete" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Add more sample rows as per image -->
+                                        <tr>
+                                            <td>www.tempxyz.com</td>
+                                            <td>
+                                                <div class="status-badge badge-blocked">
+                                                    <img src="/assets/icons/block-outline.svg" alt="" />
+                                                    Blocked
+                                                </div>
+                                            </td>
+                                            <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
+                                                slöjböter.</td>
+                                            <td class="table-right">
+                                                <div class="domain-actions">
+                                                    <button class="action-icon-btn" title="Edit">
+                                                        <img src="/assets/icons/profile-light.svg" alt="Edit"
+                                                            style="filter: grayscale(1) brightness(0.5);" />
+                                                    </button>
+                                                    <button class="action-icon-btn" title="Delete">
+                                                        <img src="/assets/icons/delete.svg" alt="Delete"
+                                                            style="filter: invert(19%) sepia(96%) saturate(3946%) hue-rotate(354deg) brightness(86%) contrast(98%);" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="pagination-nav">
-                                <button class="page-btn" disabled>
-                                    <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
-                                </button>
-                                <button class="page-btn active">1</button>
-                                <button class="page-btn">2</button>
-                                <span>...</span>
-                                <button class="page-btn">9</button>
-                                <button class="page-btn">10</button>
-                                <button class="page-btn">
-                                    <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
+                            <div class="pagination-container">
+                                <div class="page-size-selector">
+                                    <span>10 per page</span>
+                                    <img src="/assets/icons/drop-down.svg" alt="" class="icon-dropdown" />
+                                </div>
+                                <div class="pagination-nav">
+                                    <button class="page-btn" disabled>
+                                        <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
+                                    </button>
+                                    <button class="page-btn active">1</button>
+                                    <button class="page-btn">2</button>
+                                    <span>...</span>
+                                    <button class="page-btn">9</button>
+                                    <button class="page-btn">10</button>
+                                    <button class="page-btn">
+                                        <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Allow List Section -->
+                        <section class="manage-domains-section section-card">
+                            <div class="section-header">
+                                <h2 class="section-title">Allow List</h2>
+                            </div>
+                            <div class="section-description-wrapper">
+                                <p class="section-description">
+                                    You can manually whitelist specific domains, which will override our existing
+                                    database
+                                    status, ensuring these domains are reported as approved for future API interactions.
+                                </p>
+
+                                <button class="btn-manage btn-allow">
+                                    <img src="/assets/icons/empty.svg" alt="" />
+                                    Allow a Domain
                                 </button>
                             </div>
-                        </div>
-                    </section>
 
-                    <!-- Report a Domain Section -->
-                    <section class="manage-domains-section section-card">
-                        <div class="section-header">
-                            <h2 class="section-title">Report a Domain</h2>
-                        </div>
-                        <div class="section-description-wrapper">
-                            <p class="section-description">
-                                Help us identify potentially harmful domains. Submit suspicious URLs, and our team will
-                                investigate and add verified threats to our shared database. Please note that reporting
-                                does
-                                not immediately block the domain from your access.
-                            </p>
+                            <div class="req-table-container">
+                                <table class="req-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain Name</th>
+                                            <th>Status</th>
+                                            <th>Comments</th>
+                                            <th class="table-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>www.macdonald.com</td>
+                                            <td>
+                                                <div class="status-badge badge-allow">
+                                                    <img src="/assets/icons/approve-outline.svg" alt="" />
+                                                    Allow
+                                                </div>
+                                            </td>
+                                            <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
+                                                slöjböter.</td>
+                                            <td class="table-right">
+                                                <div class="domain-actions">
+                                                    <button class="action-icon-btn" title="Edit">
+                                                        <img src="/assets/icons/edit-outline.svg" alt="Edit"
+                                                            class="icon-edit" />
+                                                    </button>
+                                                    <button class="action-icon-btn" title="Delete">
+                                                        <img src="/assets/icons/delete.svg" alt="Delete"
+                                                            class="icon-delete" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pagination-container">
+                                <div class="page-size-selector">
+                                    <span>10 per page</span>
+                                    <img src="/assets/icons/thin-drop-down.svg" alt="" />
+                                </div>
+                                <div class="pagination-nav">
+                                    <button class="page-btn" disabled>
+                                        <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
+                                    </button>
+                                    <button class="page-btn active">1</button>
+                                    <button class="page-btn">2</button>
+                                    <span>...</span>
+                                    <button class="page-btn">9</button>
+                                    <button class="page-btn">10</button>
+                                    <button class="page-btn">
+                                        <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
 
-                            <button class="btn-manage btn-report">
-                                <img src="/assets/icons/flag-linear.svg" alt="" />
-                                Report a Domain
-                            </button>
-                        </div>
+                        <!-- Report a Domain Section -->
+                        <section class="manage-domains-section section-card">
+                            <div class="section-header">
+                                <h2 class="section-title">Report a Domain</h2>
+                            </div>
+                            <div class="section-description-wrapper">
+                                <p class="section-description">
+                                    Help us identify potentially harmful domains. Submit suspicious URLs, and our team
+                                    will
+                                    investigate and add verified threats to our shared database. Please note that
+                                    reporting
+                                    does
+                                    not immediately block the domain from your access.
+                                </p>
 
-                        <div class="req-table-container">
-                            <table class="req-table">
-                                <thead>
-                                    <tr>
-                                        <th>Domain Name</th>
-                                        <th>Our Status</th>
-                                        <th>Your Status</th>
-                                        <th>Comments</th>
-                                        <th class="table-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>www.macdonald.com</td>
-                                        <td>
-                                            <div class="status-badge badge-blocked">
-                                                <img src="/assets/icons/block-outline.svg" alt="" />
-                                                Blocked
-                                            </div>
-                                        </td>
-                                        <td>-</td>
-                                        <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                                            slöjböter.</td>
-                                        <td class="table-right">
-                                            <div class="domain-actions">
-                                                <button class="action-icon-btn" title="Edit">
-                                                    <img src="/assets/icons/profile-light.svg" alt="Edit"
-                                                        style="filter: grayscale(1) brightness(0.5);" />
-                                                </button>
-                                                <button class="action-icon-btn" title="Delete">
-                                                    <img src="/assets/icons/delete.svg" alt="Delete"
-                                                        style="filter: invert(19%) sepia(96%) saturate(3946%) hue-rotate(354deg) brightness(86%) contrast(98%);" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>www.household.ng</td>
-                                        <td>-</td>
-                                        <td>
-                                            <div class="status-badge badge-reported">
-                                                <img src="/assets/icons/flag-linear.svg" alt="" />
-                                                Reported
-                                            </div>
-                                        </td>
-                                        <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
-                                            slöjböter.</td>
-                                        <td class="table-right">
-                                            <div class="domain-actions">
-                                                <button class="action-icon-btn" title="Edit">
-                                                    <img src="/assets/icons/edit-outline.svg" alt="Edit"
-                                                        class="icon-edit" />
-                                                </button>
-                                                <button class="action-icon-btn" title="Delete">
-                                                    <img src="/assets/icons/delete.svg" alt="Delete"
-                                                        class="icon-delete" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
+                                <button class="btn-manage btn-report">
+                                    <img src="/assets/icons/flag-linear.svg" alt="" />
+                                    Report a Domain
+                                </button>
+                            </div>
+
+                            <div class="req-table-container">
+                                <table class="req-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain Name</th>
+                                            <th>Our Status</th>
+                                            <th>Your Status</th>
+                                            <th>Comments</th>
+                                            <th class="table-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>www.macdonald.com</td>
+                                            <td>
+                                                <div class="status-badge badge-blocked">
+                                                    <img src="/assets/icons/block-outline.svg" alt="" />
+                                                    Blocked
+                                                </div>
+                                            </td>
+                                            <td>-</td>
+                                            <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
+                                                slöjböter.</td>
+                                            <td class="table-right">
+                                                <div class="domain-actions">
+                                                    <button class="action-icon-btn" title="Edit">
+                                                        <img src="/assets/icons/profile-light.svg" alt="Edit"
+                                                            style="filter: grayscale(1) brightness(0.5);" />
+                                                    </button>
+                                                    <button class="action-icon-btn" title="Delete">
+                                                        <img src="/assets/icons/delete.svg" alt="Delete"
+                                                            style="filter: invert(19%) sepia(96%) saturate(3946%) hue-rotate(354deg) brightness(86%) contrast(98%);" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>www.household.ng</td>
+                                            <td>-</td>
+                                            <td>
+                                                <div class="status-badge badge-reported">
+                                                    <img src="/assets/icons/flag-linear.svg" alt="" />
+                                                    Reported
+                                                </div>
+                                            </td>
+                                            <td class="comment-td">Lörem ipsum ofast jobb enaktiv ysat. Jölål tyning äsm
+                                                slöjböter.</td>
+                                            <td class="table-right">
+                                                <div class="domain-actions">
+                                                    <button class="action-icon-btn" title="Edit">
+                                                        <img src="/assets/icons/edit-outline.svg" alt="Edit"
+                                                            class="icon-edit" />
+                                                    </button>
+                                                    <button class="action-icon-btn" title="Delete">
+                                                        <img src="/assets/icons/delete.svg" alt="Delete"
+                                                            class="icon-delete" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
@@ -421,6 +430,40 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     <script src="/assets/js/dash/header.js"></script>
+    <script src="/assets/js/dash/manage-domains.js" defer></script>
+
+    <!-- Block Domain Modal Start -->
+    <div id="block-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="block-modal-title">
+        <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+                <div>
+                    <h2 id="block-modal-title" class="add-seats-title">Block a Domain</h2>
+                    <p class="add-seats-desc block-modal-desc">Block a Suspicious Domain Name
+                    </p>
+                </div>
+                <button id="close-block-modal" class="add-seats-close-btn" aria-label="Close modal">
+                    <img src="/assets/icons/close.svg" alt="Close" />
+                </button>
+            </div>
+
+            <div class="add-seats-body block-modal-body">
+                <form id="block-domain-form">
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="block-domain-name">Domain Name</label>
+                        <input type="text" id="block-domain-name" class="add-seats-input"
+                            placeholder="www.macdonald.com" required>
+                    </div>
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="block-comment">Comment</label>
+                        <textarea id="block-comment" class="add-seats-input add-seats-textarea"
+                            placeholder="Please type here"></textarea>
+                    </div>
+                    <button type="submit" class="add-seats-submit-btn btn-block-submit">Block</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Block Domain Modal End -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const spinner = document.getElementById('spinner-body');

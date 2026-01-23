@@ -21,10 +21,6 @@
   margin-bottom: 14px;
 }
 
-.dash-plan {
-  margin-bottom: 35px;
-}
-
 .dash-plan-sectone {
   display: flex;
   align-items: center;
@@ -67,7 +63,7 @@
   width: 100%;
   display: flex;
   gap: 19px;
-  margin-top: 32px;
+  margin-top: 24px;
   /* Adjusted margin to sit well below welcome message */
 }
 
@@ -114,10 +110,28 @@
 }
 
 .card-trend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   font-weight: 600;
   font-family: "Inter_28pt-SemiBold";
   margin-bottom: 8px;
+}
+
+.card-trend-row img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.trend-icon-wrapper {
+  width: 9px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .card-trend-col {
@@ -127,7 +141,7 @@
 }
 
 .text-green {
-  color: #049286;
+  color: #008000;
 }
 
 .text-red {
@@ -145,7 +159,6 @@
   font-size: 40px;
   /* Large, bold number */
   font-family: "Inter_18pt-Bold";
-  color: var(--color-two);
   /* Blue */
   margin: 0;
   line-height: 1.2;
@@ -175,9 +188,9 @@
 
 .dash-inner-graph {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 16px;
   background-color: #ffffff;
-  height: 341px;
+  height: auto;
   padding: 16px;
   border: 1px solid #ededed;
   box-sizing: border-box;
@@ -186,8 +199,8 @@
 
 .graph-header {
   font-weight: 600;
-  font-size: 20px;
-  color: #171725;
+  font-size: 16px;
+  color: #252525;
   font-weight: 600;
   font-family: "Inter_28pt-SemiBold" !important;
 }
@@ -220,6 +233,13 @@
 }
 
 .graph-head-dot3 {
+  background-color: #CCCCCC;
+  height: 16px;
+  width: 16px;
+  border-radius: 100%;
+}
+
+.graph-head-dot4 {
   background-color: #049286;
   height: 16px;
   width: 16px;
@@ -687,8 +707,8 @@ canvas {
 
 /* Quick Links Section */
 .dash-quick-links {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   background-color: white;
   padding: 16px;
   border-radius: 8px;
@@ -717,7 +737,7 @@ canvas {
   gap: 8px;
   background-color: #F7F7F7;
   /* Light grey bg */
-  padding: 17px 19px;
+  padding: 17px 16px;
   border-radius: 8px;
   text-decoration: none;
   min-width: fit-content;
@@ -758,7 +778,6 @@ canvas {
 .dash-grid-section {
   display: flex;
   gap: 20px;
-  margin-bottom: 40px;
   flex-wrap: wrap;
   /* Responsive wrap */
   padding-left: 0;
@@ -772,9 +791,8 @@ canvas {
   border-radius: 8px;
   padding: 16px;
   flex: 1;
-  width: 100%;
-  ;
-  /* Minimum width for responsiveness */
+  min-width: 300px;
+  /* Minimum width before wrapping */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -784,27 +802,34 @@ canvas {
 .dash-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 16px;
+  gap: 4px;
 }
 
 .dash-card-header h3 {
-  font-family: "Inter_18pt-Bold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 16px;
   color: #252525;
   margin: 0;
-  color: #252525;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
-.info-icon {
+.info-icon-wrapper {
   width: 14px;
   height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   cursor: pointer;
   opacity: 0.6;
+}
+
+.info-icon-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* Inputs & Forms */
@@ -820,7 +845,7 @@ canvas {
   display: block;
   font-family: "Inter_28pt-Regular";
   font-size: 16px;
-  color: #52525B;
+  color: #737373;
   margin-bottom: 8px;
   font-weight: 400;
 }
@@ -843,10 +868,14 @@ canvas {
   /* Specific grey for endpoints */
 }
 
+.copy-input-field.grey-bg .truncated-text {
+  color: #252525 !important;
+}
+
 .truncated-text {
   font-family: "Inter_28pt-Regular";
-  font-size: 14px;
-  color: #18181B;
+  font-size: 16px;
+  color: black;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -898,7 +927,7 @@ canvas {
 
 .btn-primary {
   background-color: #1452CA;
-  color: #ffffff;
+  color: #FDFDFD;
 }
 
 .btn-primary:hover {
@@ -1037,8 +1066,8 @@ canvas {
 /* Plan Column */
 .expire-text {
   font-family: "Inter_28pt-Regular";
-  font-size: 12px;
-  color: #71717A;
+  font-size: 14px;
+  color: #404040;
 }
 
 .plan-info-box {
@@ -1098,23 +1127,23 @@ canvas {
 }
 
 .seats-container {
-  background-color: #F9FAFB;
+  background-color: #F7F7F7;
   border-radius: 8px;
   padding: 12px;
 }
 
 .seats-title {
-  font-family: "Inter_18pt-Bold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 16px;
   color: #252525;
   margin-bottom: 12px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .seat-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .seat-item {
@@ -1165,7 +1194,7 @@ canvas {
   border: 1px solid #EDEDED;
   border-radius: 8px;
   overflow: hidden;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .req-table-title {
@@ -1198,6 +1227,7 @@ canvas {
   font-size: 14px;
   color: #252525;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .req-table td {
@@ -1214,9 +1244,7 @@ canvas {
   color: #737373;
 }
 
-.req-table tr:last-child td {
-  border-bottom: none;
-}
+
 
 .req-value {
   color: #252525;
@@ -1255,11 +1283,13 @@ canvas {
   font-family: 'Inter_28pt-Regular';
   font-size: 14px;
   width: fit-content;
+  white-space: nowrap;
 }
 
 .status-badge img {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
 .status-reported {
@@ -1277,7 +1307,22 @@ canvas {
   color: #008000;
 }
 
-/* Action Buttons */
+.action-icon-wrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.action-icon-wrapper img,
+.action-icon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .action-btn {
   display: inline-flex;
   align-items: center;
@@ -1293,18 +1338,12 @@ canvas {
   cursor: pointer;
   transition: all 0.2s ease;
   width: fit-content;
+  white-space: nowrap;
 }
 
 .action-btn:hover {
   background: #F4F4F5;
   border-color: #D4D4D8;
-}
-
-.action-btn img,
-.action-btn svg {
-  width: 20px;
-  height: 20px;
-  color: #1452CA;
 }
 
 .btn-add-block {
@@ -1325,6 +1364,7 @@ canvas {
   cursor: pointer;
   transition: background 0.2s ease;
   width: fit-content;
+  text-decoration: none;
 }
 
 .req-view-more-btn:hover {
@@ -1371,8 +1411,13 @@ canvas {
   }
 
   .graph-sub-head-cont {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .graph-sub-head p {
+    font-size: 12px !important;
   }
 
   .dash-inner-graph-wrapper {
@@ -1383,7 +1428,7 @@ canvas {
 
 
   .dash-inner-graph {
-    height: 391px;
+    height: auto;
   }
 
   .dash-inner-section {
@@ -1392,6 +1437,16 @@ canvas {
     overflow: hidden !important;
     padding-left: 16px !important;
     padding-right: 16px !important;
+    padding-top: 15px !important;
+  }
+
+  .quick-link-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .quick-link-text {
+    font-size: 14px !important;
   }
 
 
@@ -1462,13 +1517,15 @@ canvas {
 
 
   .dash-inner-section .page-title {
-  font-size: 20px;
-  margin-top: 11px;
-  margin-bottom: 12px;
-}
+    font-size: 20px;
+    margin-top: 11px;
+    margin-bottom: 12px;
+  }
 
-  .dash-plan, .dash-grid-section {
+  .dash-plan,
+  .dash-grid-section {
     margin-bottom: 16px;
+    gap: 16px;
   }
 
   .Current-plan-upgrade-btn {
@@ -1487,8 +1544,8 @@ canvas {
   }
 
   .dash-quick-links-cont {
- flex-direction: column;
-}
+    flex-direction: column;
+  }
 
 }
 
@@ -1534,10 +1591,6 @@ canvas {
     height: 8px;
   }
 
-  .graph-sub-head-text {
-    font-size: 12px;
-  }
-
   .graph-header {
     font-size: 14px;
   }
@@ -1555,6 +1608,10 @@ canvas {
   .card-trend-col {
     display: flex;
     flex-direction: row-reverse;
+  }
+
+  .card-trend-row {
+    font-size: 12px;
   }
 }
 

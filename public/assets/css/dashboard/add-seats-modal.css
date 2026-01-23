@@ -1,7 +1,8 @@
 /* Add Seats Modal - Premium Design & Animation */
 
 /* --- Overlay --- */
-#add-seats-modal-overlay {
+#add-seats-modal-overlay,
+#block-domain-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -23,7 +24,8 @@
 }
 
 /* Active State (Entry) */
-#add-seats-modal-overlay.is-active {
+#add-seats-modal-overlay.is-active,
+#block-domain-modal-overlay.is-active {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -31,7 +33,8 @@
 }
 
 /* Exiting State */
-#add-seats-modal-overlay.is-exiting {
+#add-seats-modal-overlay.is-exiting,
+#block-domain-modal-overlay.is-exiting {
     visibility: visible;
     pointer-events: none;
     animation: overlayFadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -55,14 +58,16 @@
 }
 
 /* Trigger animation when active */
-#add-seats-modal-overlay.is-active .add-seats-modal-container {
+#add-seats-modal-overlay.is-active .add-seats-modal-container,
+#block-domain-modal-overlay.is-active .add-seats-modal-container {
     opacity: 1;
     transform: scale(1) translateY(0);
     animation: modalPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 /* Trigger animation when exiting */
-#add-seats-modal-overlay.is-exiting .add-seats-modal-container {
+#add-seats-modal-overlay.is-exiting .add-seats-modal-container,
+#block-domain-modal-overlay.is-exiting .add-seats-modal-container {
     animation: modalPopOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -212,5 +217,24 @@
         max-width: calc(100% - 32px);
     }
 
+    .add-seats-form-group {
+        margin-bottom: 16px;
+    }
 
+    .add-seats-title {
+        font-size: 20px;
+    }
+
+    .add-seats-desc {
+        margin-bottom: 25px;
+    }
+
+    .add-seats-close-btn img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .add-seats-input {
+        font-size: 16px;
+    }
 }
