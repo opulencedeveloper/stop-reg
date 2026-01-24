@@ -1,179 +1,230 @@
+/* 2-Column Grid Layout */
+.check-email-grid {
+  display: grid;
+  grid-template-columns: 40% 58%;
+  /* Approx match to design ratio */
+  gap: 24px;
+  width: 100%;
+}
+
+/* Left Column: Form */
+.check-email-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.check-disposable-email-head {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 32px;
+  color: #000000;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.form-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px;
+  /* Add subtle shadow if needed, or keeping flat as per image if it looks flat */
+  background: #FFFFFF;
+  height: 100%;
+  /* Fill height */
+}
 
 .disposable-email-disc {
+  font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 16px;
-  font-weight: 400;
   color: #404040;
-  margin-top: 4px;
-}
-.check-disposal-email {
-  text-decoration: underline;
-  font-size: 16px;
-  font-weight: 600;
-  color: #595959;
-}
-.check-disposable-email-head {
-  color: #000000;
-  font-size: 20px;
-  font-weight: 600;
-  margin-top: 40px;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
-
-.form-cont {
-  background-color: #ffff;
-  width: 100%;
-  height: fit-content;
-  box-sizing: border-box;
-  padding: 40px 24px;
-  margin-top: 16px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-fieldset {
-  border: 0;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0;
-}
 .check-disposable-email-form {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
 }
+
 .check-disposable-email-form label {
-  font-size: 16px;
-  font-weight: 400;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #252525;
 }
+
 .check-disposable-email-form input {
-  font-size: 16px;
-  font-weight: 400;
-  border: 0.3px solid #1452ca;
-  background: #ffffff;
+  height: 46px;
+  border: 0.3px solid #1452CA;
   border-radius: 8px;
-  height: 48px;
-  margin-top: 8px;
-  color: #737373;
-   padding: 0px 24px;
+  padding: 0 16px;
+  font-size: 16px;
+  color: #101828;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  outline: none;
 }
+
+.check-disposable-email-form input:focus {
+  border-color: #1452CA;
+  box-shadow: 0 0 0 4px #F2F4F7;
+}
+
 .bulk-check-email-btn {
-  font-size: 16px;
-  font-weight: 800;
-  background-color: #1452ca;
-  padding: 12px 40px;
-  border: none;
-  border-radius: 8px;
-  color: #ffffff;
-  margin-top: 16px;
-}
-.disposal-email-result-cont {
-  background-color: #fafafa;
   width: 100%;
-  padding: 16px;
-  height: fit-content;
-  margin-top: 24px;
-  box-sizing: border-box;
+  /* Design shows narrower button? Image seems to be full width relative to input or left aligned. 
+     Actually image shows blue button "Verify". */
+  width: max-content;
+  /* Approximate width from image */
+  height: 50px;
+  background-color: #1452CA;
+  color: #FDFDFD;
+  border: none;
+  outline: none;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 8px;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.bulk-check-email-btn:hover {
+  background-color: #1040A0;
+}
+
+
+/* Right Column: Results */
+.check-email-right {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
   border-radius: 12px;
-  display: none;
+  padding: 20px;
+  height: fit-content;
+}
+
+.disposal-result-main-title {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 20px;
+  color: #252525;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.disposal-results-list {
+  display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.disposal-result-inner-cont {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  box-sizing: border-box;
-  background-color: #ebffeb;
-}
-.disposal-result {
+
+.result-card {
   display: flex;
   align-items: center;
+  /* Top align text */
   justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
 }
-.disposal-result-title {
-  color: #252525;
-  font-size: 20px;
-  font-weight: 800;
+
+.result-content {
+  flex: 1;
+  padding-right: 16px;
 }
-.disposal-result-head {
+
+.result-head {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 16px;
-  font-weight: 600;
   color: #404040;
+  /* Dark text */
   margin-bottom: 8px;
 }
-.disposal-result-head {
+
+.result-desc {
+  font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 16px;
-  font-weight: 400;
   color: #404040;
+  /* Lighter text */
+  line-height: 1.5;
+  margin: 0;
 }
-.disposal-result-bolean {
+
+.result-boolean {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 16px;
   color: #404040;
-  font-size: 20px;
-  font-weight: 800;
-}
-.result-false {
-  background-color: #ffebeb;
+  margin: 0;
 }
 
-@media only screen and (max-width: 750px) {
-.dash-inner-section{
-  padding: 0;
+/* Status Colors */
 
-}
-.dash-header-tle-mobile, .check-disposable-email-head, .disposable-email-disc{
-  padding: 0px 16px;
-}
-
+/* True Status (Green) */
+.status-true {
+  background-color: #EBFFEB
+    /* Light green bg */
 }
 
-@media screen and (max-width: 650px) {
-  .check-disposable-email-head{
+.status-true .result-boolean {
+  color: #027A48;
+  /* Dark green text */
+  /* If design has black boolean for 'True', check image. 
+     Image shows Black/Dark Grey 'True' text actually. 
+     Wait, image shows 'True' in Black/Dark Grey on Green BG? 
+     Zooming in... The 'True' looks dark grey #101828 ish. 
+     Let's use dark grey to match image exactly if needed, 
+     but typical pattern is green text. 
+     Looking at image_1769207130688.png:
+     "True" is Black/Dark grey.
+     "False" is Black/Dark grey.
+  */
+  color: #101828;
+}
+
+/* False Status (Red) */
+.status-false {
+  background-color: #FFEBEB;
+  /* Light red bg */
+}
+
+.status-false .result-boolean {
+  color: #101828;
+}
+
+
+/* Responsive */
+@media only screen and (max-width: 1000px) {
+  .check-email-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media only screen and (max-width: 650px) {
+  .disposal-result-main-title {
     font-size: 14px;
   }
-  .disposable-email-disc{
-    font-size: 12px;
+
+  .check-email-grid {
+    gap: 16px !important;
   }
-  .form-cont{
-    width: 100%;
-    padding: 20px 16px;
-    box-sizing: border-box;
+
+  .check-disposable-email-head {
+    font-size: 20px !important;
+    margin-bottom: 22px !important;
   }
-  .check-disposable-email-form label, input {
-    font-size: 12px;
-    
+
+  .form-card {
+    padding: 12px !important;
   }
-  .check-disposable-email-form  input{
-    padding: 4px 16px;
-    height: 37px;
-    outline: none;
-    
+
+  .disposable-email-disc {
+    font-size: 14px !important;
+    margin-bottom: 12px !important;
   }
-  .bulk-check-email-btn{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0;
-    height: 41px;
-  }
-  .fieldset{
-    width: 100%;
-  }
-  .disposal-result-title{
-    display: none;
-  }
-  .disposal-email-result-cont{
-    background-color: transparent;
-    padding: 0;
-    border-radius: 8px;
-  }
-  .disposal-result-inner-cont{
-    border-radius: 8px;
-  }
-  .disposal-result-head{
+
+  .result-head {
     font-size: 14px;
   }
-  .disposal-result-para{
+
+  .result-desc {
     font-size: 12px;
-  }
-  .disposal-result-bolean{
-    font-size: 16px;
   }
 }

@@ -18,21 +18,14 @@
   <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/bulk-verification.css" rel="stylesheet" />
-</head>
+  <!-- Import Payments CSS for shared Back Button styles -->
+  <link href="/assets/css/dashboard/payments.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
 
 <body>
   <!-- Loading Spinner Start -->
   <div id="spinner-body" class="spinner-body">
-    <div class="lds-roller">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="stopreg-spinner"></div>
   </div>
   <!-- Loading Spinner End -->
 
@@ -149,55 +142,183 @@
             </div>
           </div>
         </header>
-        |
+
         <!-- Header End -->
 
-        <div class="dash-inner-section ">
+        <div class="dash-inner-section">
           <div class="dash-section-container">
-            <p class="dash-header-tle-mobile">My Account</p>
-            <div class="dash-inner-inner-section ">
-              <div class="dash-inner-inner-bulk-verification">
-                <h1 class="bulk-hd bulktitle">Bulk Verification</h1>
-                <form class="bulk-verification-form">
-                  <fieldset>
-                    <label class="bulk-content">
-                      Input your data flexibly using domain names or email
-                      addresses, whether separated by spaces, delimiters, or
-                      arranged on single or multiple lines.
-                    </label>
+            <!-- Back Button -->
+            <div class="back-nav-container">
+              <a href="/dashboard/index.html" class="back-link">
+                <img src="/assets/icons/back-outlined.svg" alt="Back" />
+                Back
+              </a>
+            </div>
 
-                    <textarea id="bulk-links" class="bulk-links-input" rows="6"
-                      placeholder="Enter domains or emails separated by space or comma (e.g., example.com user@email.com)"></textarea>
-                  </fieldset>
+            <!-- Upgrade Banner -->
+            <div class="upgrade-banner">
+              <div class="banner-content">
+                <div class="banner-icon">
+                  <img src="/assets/icons/bi_stars.svg" alt="Pro" />
+                </div>
+                <p class="banner-text">You are currently on the free plan with 500 requests per month. Upgrade to unlock
+                  bulk verification</p>
+              </div>
+              <a href="/dashboard/payments.html" class="banner-btn">Download CSV</a>
+            </div>
+
+            <div class="bulk-grid-container">
+              <!-- Left Column: Title & Intro -->
+              <div class="bulk-left-col">
+                <h1 class="bulk-main-title">Bulk Verification</h1>
+                <p class="bulk-main-desc">
+                  Verify email or domain lists in bulk. All verification requests count toward your plan's API limit,
+                  with each verification using one credit from your current plan.
+                </p>
+              </div>
+
+              <!-- Right Column: How it works & Form -->
+              <div class="bulk-right-col">
+                <h3 class="how-it-works-title">How it works:</h3>
+                <ul class="how-it-works-list">
+                  <li>Process up to 10,000 emails or domains per bulk verification</li>
+                  <li>Simply paste your list with one entry per line</li>
+                  <li>Download comprehensive results in CSV format</li>
+                  <li><strong>Each verification uses 1 credit from your current plan</strong></li>
+                </ul>
+
+                <p class="form-label-text">Email Address or Domain Names</p>
+
+                <form class="bulk-verification-form">
+                  <div class="bulk-input-wrapper">
+                    <textarea id="bulk-links" class="bulk-textarea" rows="8" placeholder=""></textarea>
+                  </div>
+                  <p class="bulk-hint-text">Enter one email address or domain per line. Mix and match as needed.</p>
 
                   <button class="bulk-verify-domain-btn">
-                    Verify Domains
+                    Start Bulk Verification
                   </button>
                 </form>
               </div>
-              <div class="dash-inner-inner-verification-status">
-                <div class="verify-status-head">
-                  <h1 class="bulk-hd">Verification status</h1>
-                  <button class="bulk-domain-download" id="bulk-domain-download">
-                    <div class="bulk-domain-download-icon">
-                      <img src="/assets/icons/download-bulk-icon.svg" alt="" />
-                    </div>
-                    <p>Download CSV</p>
-                  </button>
-                </div>
-                <div class="bulk-tb-container">
-                  <table>
-                    <tbody id="disposableResult">
+            </div>
 
-                    </tbody>
-                  </table>
+            <!-- Verification Status Table -->
+            <div class="dash-inner-inner-verification-status">
+
+              <div class="bulk-tb-container">
+                <table class="bulk-results-table">
+                  <thead>
+                    <tr>
+                      <th>SN</th>
+                      <th>Input</th>
+                      <th>Disposable</th>
+                      <th>Public</th>
+                      <th>Role</th>
+                      <th>Alais</th>
+                      <th>Provider</th>
+                      <th>Blocklisted</th>
+                      <th>MX</th>
+                    </tr>
+                  </thead>
+                  <tbody id="disposableResult">
+                    <!-- Placeholder Rows -->
+                    <tr>
+                      <td>1</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              <div class="table-pagination">
+                <div class="pagination-select-container">
+                  <select class="pagination-select">
+                    <option>10 per page </option>
+                    <option>20 per page</option>
+                    <option>50 per page</option>
+                  </select>
+                  <img src="/assets/icons/drop-down.svg" class="select-arrow" alt="Select" />
+                </div>
+                <div class="pagination-controls">
+                  <button class="page-nav-btn prev-btn" disabled>
+                    <img src="/assets/icons//angle-right.svg" alt="Previous" />
+                  </button>
+                  <button class="page-number active">1</button>
+                  <button class="page-number">2</button>
+                  <span class="page-dots">...</span>
+                  <button class="page-nav-btn next-btn">
+                    <img src="/assets/icons/angle-right.svg" alt="Next" />
+                  </button>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
-    </div>
   </main>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
     integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="

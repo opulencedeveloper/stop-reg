@@ -273,7 +273,7 @@
                                     status, ensuring these domains are reported as approved for future API interactions.
                                 </p>
 
-                                <button class="btn-manage btn-allow">
+                                <button id="open-allow-modal" class="btn-manage btn-allow">
                                     <img src="/assets/icons/empty.svg" alt="" />
                                     Allow a Domain
                                 </button>
@@ -352,7 +352,7 @@
                                     not immediately block the domain from your access.
                                 </p>
 
-                                <button class="btn-manage btn-report">
+                                <button id="open-report-modal" class="btn-manage btn-report">
                                     <img src="/assets/icons/flag-linear.svg" alt="" />
                                     Report a Domain
                                 </button>
@@ -436,15 +436,12 @@
     <div id="block-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="block-modal-title">
         <div class="add-seats-modal-container">
             <div class="add-seats-header block-modal-header">
-                <div>
-                    <h2 id="block-modal-title" class="add-seats-title">Block a Domain</h2>
-                    <p class="add-seats-desc block-modal-desc">Block a Suspicious Domain Name
-                    </p>
-                </div>
+                <h2 id="block-modal-title" class="add-seats-title">Block a Domain</h2>
                 <button id="close-block-modal" class="add-seats-close-btn" aria-label="Close modal">
                     <img src="/assets/icons/close.svg" alt="Close" />
                 </button>
             </div>
+            <p class="add-seats-desc block-modal-desc">Block a Suspicious Domain Name</p>
 
             <div class="add-seats-body block-modal-body">
                 <form id="block-domain-form">
@@ -464,6 +461,66 @@
         </div>
     </div>
     <!-- Block Domain Modal End -->
+    <!-- Report Domain Modal Start -->
+    <div id="report-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="report-modal-title">
+        <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+                <h2 id="report-modal-title" class="add-seats-title">Report a Domain</h2>
+                <button id="close-report-modal" class="add-seats-close-btn" aria-label="Close modal">
+                    <img src="/assets/icons/close.svg" alt="Close" />
+                </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Report a Suspicious Domain Name</p>
+
+            <div class="add-seats-body block-modal-body">
+                <form id="report-domain-form">
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="report-domain-name">Domain Name</label>
+                        <input type="text" id="report-domain-name" class="add-seats-input"
+                            placeholder="www.macdonald.com" required>
+                    </div>
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="report-comment">Comment</label>
+                        <textarea id="report-comment" class="add-seats-input add-seats-textarea"
+                            placeholder="Please type here"></textarea>
+                    </div>
+                    <button type="submit" class="add-seats-submit-btn btn-report-submit">Report</button>
+                    <button type="button" id="report-bottom-close" class="btn-text-close">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Report Domain Modal End -->
+    <!-- Allow Domain Modal Start -->
+    <div id="allow-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="allow-modal-title">
+        <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+                <h2 id="allow-modal-title" class="add-seats-title">Allow a Domain</h2>
+                <button id="close-allow-modal" class="add-seats-close-btn" aria-label="Close modal">
+                    <img src="/assets/icons/close.svg" alt="Close" />
+                </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Enter the domain name below to continue</p>
+
+            <div class="add-seats-body block-modal-body">
+                <form id="allow-domain-form">
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="allow-domain-name">Domain Name</label>
+                        <input type="text" id="allow-domain-name" class="add-seats-input"
+                            placeholder="www.macdonald.com" required>
+                    </div>
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="allow-comment">Comment</label>
+                        <textarea id="allow-comment" class="add-seats-input add-seats-textarea"
+                            placeholder="Please type here"></textarea>
+                    </div>
+                    <button type="submit" class="add-seats-submit-btn btn-allow-submit">Continue</button>
+                    <button type="button" id="allow-bottom-close" class="btn-text-close">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Allow Domain Modal End -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const spinner = document.getElementById('spinner-body');

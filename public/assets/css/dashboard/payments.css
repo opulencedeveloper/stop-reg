@@ -1,237 +1,363 @@
-.payments-hd {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 40px;
+/* =========================================
+   Payments Page / Pricing Styles
+   Extracted from landing/index.css
+   ========================================= */
+
+.pricing-section {
+    background-color: #F7F7F7;
+    padding: 72px 0;
+    width: 100%;
+    /* Ensure it fills container */
+    height: 100%;
 }
 
-.payments-hd-sect-one-tle,
-.payments-hd-sect-one-stle,
-.payments-hd-sect-two {
-    color: var(--primary-color);
+.pricing-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
 }
 
-.payments-hd-sect-one-tle {
-    font-size: 24px;
-    font-family: 'Inter_28pt-SemiBold';
-    margin-bottom: 8px;
+.pricing-header {
+    font-family: "PlusJakartaSans-ExtraBold", sans-serif;
+    font-size: 48px;
+    color: #101828;
+    margin-bottom: 90px;
+    line-height: 1.6;
+    max-width: 646px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.payments-hd-sect-one-stle {
-    font-size: 20px;
-    font-family: 'Inter_28pt-Regular';
-    line-height: 28px;
+.pricing-header-highlight {
+    color: #1452CA;
 }
 
-.payments-hd-sect-two {
-    font-size: 16px;
-    font-family: 'Inter_18pt-Bold';
-}
-
-.dash-plan-grid {
+/* Grid Layout */
+.pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 898px;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 60px;
-}
-
-
-.land-pricing-container-item {
-    /* border: 1px solid var(--color-twenty); */
-    background-color: var(--color-six);
-    border-radius: 8px;
-}
-
-.land-pricing-container-sectone-recomm {
-    border-radius: 8px;
-    box-shadow: 8px 8px 40px 0px var(--color-eighteen);
-    overflow: hidden;
-
-}
-
-.land-pricing-container-sectone-recomm {
-    width: 100%;
-}
-
-.lpcsr-remm {
-    font-size: 16px;
-    height: 34px;
-    width: 100%;
-    text-align: center;
-    background-color: var(--secondary-color);
-    display: flex;
-    align-items: center;
+    gap: 20px;
     justify-content: center;
-    color: var(--color-six);
-    box-shadow: 0px 2px 5px 0px var(--color-twenty-one);
-
+    /* Ensure cards are visible immediately (no animation hiding) */
+    opacity: 1 !important;
+    transform: none !important;
 }
 
-.land-pricing-container-item,
-.land-pricing-container-item-recomm {
-    border-bottom: 8px;
-    padding-left: 24px;
-    padding-right: 24px;
+/* Card Styles */
+.pricing-card {
+    background: #FFFFFF;
+    border: 1px solid #EAECF0;
+    border-radius: 16px;
+    padding: 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 361px;
+    position: relative;
+    box-shadow: 8px 8px 40px 0px #FDFDFD14;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    /* Ensure visibility */
+    opacity: 1 !important;
+    transform: none !important;
 }
 
-.land-pricing-container-item-recomm {
-    background-color: var(--color-twenty-two);
-
+.pricing-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.12);
 }
 
-.land-pricing-container-item-hd {
-    font-size: 24px;
-    font-family: 'Inter_18pt-Bold';
-    color: var(--color-fifteen);
-    text-align: center;
-    margin-bottom: 12px;
+.pricing-card.recommended {
+    border: 1px solid #1452CA;
+    background-color: #ECF2FD;
+    padding-top: 58px;
+    /* 20px base + 38px offset */
+    overflow: hidden;
 }
 
-.land-pricing-container-item-tle {
-    font-size: 20px;
-    line-height: 28px;
-    text-align: center;
-    color: var(--color-ninteen);
-    margin-bottom: 40px;
-    max-width: 235.5px;
+/* Offset ONLY for Grid Layout (Desktop/Tablet Landscape) */
+@media only screen and (min-width: 701px) {
+    .pricing-card.recommended {
+        margin-top: -38px;
+    }
 }
 
-.land-pricing-container-item-sub-tle {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    text-align: center;
-    color: var(--color-fifteen);
-    margin-bottom: 40px;
-}
-
-
-.pr-do-si {
-    font-family: 'Inter_28pt-SemiBold';
-    font-size: 23px;
-}
-
-.pr-do-am {
-    font-size: 32px;
-    font-family: 'Inter_18pt-Bold';
-    margin-right: 10px;
-}
-
-.land-pricing-container-item-btn {
-    border: 1px solid var(--secondary-color);
-    background-color: transparent;
-    color: var(--secondary-color);
-
-}
-
-.land-pricing-container-item-btn,
-.land-pricing-container-item-btn-recomm {
-    font-family: 'Inter_28pt-SemiBold';
+.pricing-badge {
+    background-color: #1452CA;
+    color: #FFFFFF;
+    font-family: "PlusJakartaSans-SemiBold", sans-serif;
+    font-size: 14px;
+    padding: 8px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 54px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pricing-title {
+    font-family: "PlusJakartaSans-Bold", sans-serif;
+    font-size: 24px;
+    color: #101828;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.pricing-price {
+    font-family: "PlusJakartaSans-ExtraBold", sans-serif;
+    font-size: 32px;
+    color: #0B2110;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.pricing-period {
+    font-size: 20px;
+    color: #0B2110;
+    font-weight: normal;
+    font-family: "PlusJakartaSans-Regular", sans-serif;
+}
+
+.pricing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+}
+
+.pricing-details p {
+    font-family: "PlusJakartaSans-Regular", sans-serif;
     font-size: 16px;
+    color: #475467;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.pricing-features {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+    flex: 1;
+}
+
+.pricing-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-family: "PlusJakartaSans-Regular", sans-serif;
+    font-size: 16px;
+    color: #475467;
+    text-align: left;
+    line-height: 1.5;
+}
+
+/* Checkmark icon sizing */
+.pricing-features li img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    /* Align with text */
+}
+
+.pricing-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 16px;
     border-radius: 8px;
+    font-family: "PlusJakartaSans-SemiBold", sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.2s;
+    text-align: center;
+    margin-top: auto;
+    box-sizing: border-box;
 }
 
-.land-pricing-container-item-btn-recomm {
-    background-color: var(--secondary-color);
-    color: var(--color-one);
-    border: none;
+.btn-pricing-outline {
+    background: #FFFFFF;
+    border: 1px solid #1452CA;
+    color: #1452CA;
 }
 
-@media only screen and (max-width: 1140px) {
-    .dash-plan-grid {
+.btn-pricing-outline:hover {
+    background-color: #F9FAFB;
+    border-color: #D0D5DD;
+}
+
+.btn-pricing-filled {
+    background: #1452CA;
+    border: 1px solid #1452CA;
+    color: #FFFFFF;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+}
+
+.btn-pricing-filled:hover {
+    opacity: 0.9;
+}
+
+/* =========================================
+   Mobile / Responsive Overrides
+   ========================================= */
+
+@media only screen and (max-width: 1200px) {
+    .pricing-grid {
         grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
     }
 
-    .payments-hd-sect-one-tle {
-        font-size: 22px;
-    }
-
-    .payments-hd-sect-one-stle {
-        font-size: 16px;
-    }
-
-    .payments-hd-sect-two {
-        font-size: 14px;
+    .pricing-card.recommended {
+        margin-top: 0;
+        /* Reset offset for mobile stack */
     }
 }
 
 @media only screen and (max-width: 550px) {
-    .payments-hd {
-        flex-direction: column;
-        align-items: start;
-        gap: 18px;
-        margin-top: 16px;
+    .pricing-section {
+        padding-top: 32px !important;
+        padding-bottom: 72px !important;
+        background-color: transparent;
+        /* Blend with dashboard */
     }
 
-    .payments-hd-sect-one-tle {
-        font-size: 22px;
-        margin-bottom: 5px;
+    .pricing-header {
+        font-size: 20px !important;
+        margin-bottom: 32px !important;
     }
 
-    .payments-hd-sect-one-stle {
-        font-size: 12px;
-
+    .pricing-card {
+        padding: 14px !important;
     }
 
-    .payments-hd-sect-two {
-        font-size: 12px;
+    .pricing-title {
+        font-size: 16px !important;
+        margin-bottom: 8px !important;
     }
 
-    .dash-plan-grid {
-        grid-template-columns: repeat(1, 1fr);
+    .pricing-price {
+        font-size: 28px !important;
+        margin-bottom: 8px !important;
     }
 
-    .land-pricing-container-item,
-    .land-pricing-container-item-recomm {
-        width: 87%;
+    .pricing-period {
+        font-size: 14px !important;
     }
 
-    .land-pricing-container-item-tle {
-        font-size: 14px;
-        line-height: 19.6px;
-        margin-bottom: 16px;
+    .pricing-details {
+        font-size: 14px !important;
+        margin-bottom: 16px !important;
     }
 
-    .land-pricing-container-item,
-    .land-pricing-container-item-recomm {
-        height: 208px;
+    .pricing-details p {
+        font-size: 14px !important;
     }
 
-    .land-pricing-container-item-hd {
-        font-size: 20px;
-        margin-bottom: 8px;
+    .pricing-features {
+        margin-bottom: 24px !important;
     }
 
-    .land-pricing-container-item-sub-tle {
-        font-size: 12px;
-        margin-bottom: 27px;
+    .pricing-features li {
+        font-size: 14px !important;
     }
 
-    .pr-do-si {
-        font-size: 20px;
+    .pricing-btn {
+        padding: 14px !important;
+        font-size: 14px !important;
     }
 
-    .pr-do-am {
-        font-size: 28px;
+    /* Mobile Header Overrides */
+    .payments-hd-title {
+        font-size: 20px !important;
+        margin-bottom: 28px !important;
     }
 
-    .land-pricing-container-item-btn,
-    .land-pricing-container-item-btn-recomm {
-        height: 41px;
-        font-size: 12px;
+    .payments-hd-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
     }
 
+    .payments-hd-plan-info {
+        font-size: 14px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .payments-hd-expiry-info {
+        font-size: 12px !important;
+        margin-bottom: 28px !important;
+    }
+}
+
+/* Back Button Styles (replicated from api-stats.css) */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #737373;
+    text-decoration: none;
+    font-family: 'Inter_28pt-Regular';
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #1452CA;
+}
+
+.back-link img {
+    width: 10px;
+    height: 18px;
+    transition: transform 0.2s ease;
+}
+
+.back-link:hover img {
+    transform: translateX(-2px);
+}
+
+.back-nav-container {
+    margin-bottom: 20px;
+}
+
+/* Specific Header Styles */
+.payments-hd-title {
+    font-family: 'Inter_18pt-Bold', sans-serif;
+    /* As approximated 'Inter Bold' */
+    font-size: 32px;
+    color: #000000;
+    margin-bottom: 25px;
+}
+
+.payments-hd-subtitle {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 20px;
+    color: #404040;
+    margin-bottom: 15px;
+}
+
+.payments-hd-plan-info {
+    font-family: 'Inter_18pt-Bold', sans-serif;
+    margin-top: 8px;
+    font-size: 16px;
+    color: #252525;
+    margin-bottom: 15px;
+}
+
+.payments-hd-expiry-info {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    margin-top: 4px;
+    font-size: 14px;
+    color: #404040;
+    margin-bottom: 80px;
 }

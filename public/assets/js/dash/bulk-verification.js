@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (downloadBtn) downloadBtn.classList.add("hidden");
   }
 
-  renderEmptyState();
+  // renderEmptyState(); // Commented out to show static placeholders by default
 
   // Function to extract domain from URL
   function extractDomain(input) {

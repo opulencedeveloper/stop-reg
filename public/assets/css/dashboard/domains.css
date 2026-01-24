@@ -327,6 +327,12 @@ textarea {
   margin-bottom: 16px;
 }
 
+#comment {
+  height: 80px !important;
+  padding-top: 12px;
+  /* Center text top-aligned */
+}
+
 .report-input:focus {
   outline: 0.3px solid var(--color-twenty-seven);
 }
@@ -467,6 +473,10 @@ textarea {
   .report-container-btn,
   .close-report-container-btn {
     height: 44px;
+  }
+
+  #comment {
+    height: 100px !important;
   }
 
   .report-container-btn {

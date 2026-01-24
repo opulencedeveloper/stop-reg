@@ -1,9 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('block-domain-modal-overlay');
-    const openBtn = document.getElementById('open-block-modal');
-    const closeBtn = document.getElementById('close-block-modal');
+    const blockOverlay = document.getElementById('block-domain-modal-overlay');
+    const openBlockBtn = document.getElementById('open-block-modal');
+    const closeBlockBtn = document.getElementById('close-block-modal');
 
-    function openModal() {
+    const reportOverlay = document.getElementById('report-domain-modal-overlay');
+    const openReportBtn = document.getElementById('open-report-modal');
+    const closeReportBtn = document.getElementById('close-report-modal');
+    const bottomCloseReportBtn = document.getElementById('report-bottom-close');
+
+    const allowOverlay = document.getElementById('allow-domain-modal-overlay');
+    const openAllowBtn = document.getElementById('open-allow-modal');
+    const closeAllowBtn = document.getElementById('close-allow-modal');
+    const bottomCloseAllowBtn = document.getElementById('allow-bottom-close');
+
+    function openModal(overlayId) {
+        const overlay = document.getElementById(overlayId);
         if (!overlay) return;
         overlay.classList.add('is-active');
         overlay.classList.remove('is-exiting');
@@ -15,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 
-    function closeModal() {
+    function closeModal(overlayId) {
+        const overlay = document.getElementById(overlayId);
         if (!overlay) return;
         overlay.classList.add('is-exiting');
         overlay.classList.remove('is-active');
@@ -27,31 +39,100 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    if (openBtn) {
-        openBtn.addEventListener('click', (e) => {
+    // Block Modal Listeners
+    if (openBlockBtn) {
+        openBlockBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openModal();
+            openModal('block-domain-modal-overlay');
         });
     }
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', (e) => {
+    if (closeBlockBtn) {
+        closeBlockBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            closeModal();
+            closeModal('block-domain-modal-overlay');
         });
     }
 
-    if (overlay) {
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                closeModal();
+    if (blockOverlay) {
+        blockOverlay.addEventListener('click', (e) => {
+            if (e.target === blockOverlay) {
+                closeModal('block-domain-modal-overlay');
+            }
+        });
+    }
+
+    // Report Modal Listeners
+    if (openReportBtn) {
+        openReportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('report-domain-modal-overlay');
+        });
+    }
+
+    if (closeReportBtn) {
+        closeReportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal('report-domain-modal-overlay');
+        });
+    }
+
+    if (bottomCloseReportBtn) {
+        bottomCloseReportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal('report-domain-modal-overlay');
+        });
+    }
+
+    if (reportOverlay) {
+        reportOverlay.addEventListener('click', (e) => {
+            if (e.target === reportOverlay) {
+                closeModal('report-domain-modal-overlay');
+            }
+        });
+    }
+
+    // Allow Modal Listeners
+    if (openAllowBtn) {
+        openAllowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('allow-domain-modal-overlay');
+        });
+    }
+
+    if (closeAllowBtn) {
+        closeAllowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal('allow-domain-modal-overlay');
+        });
+    }
+
+    if (bottomCloseAllowBtn) {
+        bottomCloseAllowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal('allow-domain-modal-overlay');
+        });
+    }
+
+    if (allowOverlay) {
+        allowOverlay.addEventListener('click', (e) => {
+            if (e.target === allowOverlay) {
+                closeModal('allow-domain-modal-overlay');
             }
         });
     }
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && overlay && overlay.classList.contains('is-active')) {
-            closeModal();
+        if (e.key === 'Escape') {
+            if (blockOverlay && blockOverlay.classList.contains('is-active')) {
+                closeModal('block-domain-modal-overlay');
+            }
+            if (reportOverlay && reportOverlay.classList.contains('is-active')) {
+                closeModal('report-domain-modal-overlay');
+            }
+            if (allowOverlay && allowOverlay.classList.contains('is-active')) {
+                closeModal('allow-domain-modal-overlay');
+            }
         }
     });
 
