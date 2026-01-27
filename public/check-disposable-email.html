@@ -215,118 +215,6 @@
     </div>
     <!-- Mobile Navigation End -->
 
-    <!-- OTP Starts here -->
-    <div id="otp-modal" class="otp-modal">
-      <div class="otp-container" id="">
-        <button id="otp-close-btn" class="otp-close-btn auth-close-btn" aria-label="Close OTP verification">
-          <img src="/assets/icons/close-outline.svg" alt="Close" />
-        </button>
-        <div class="auth-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
-        </div>
-        <h3 class="cr-auth-header">Verify Your Email</h3>
-        <p class="otp-subtext cr-auth-tle">
-          Enter the 6-digit verification code sent to
-          <span class="otp-email"></span>.
-        </p>
-
-        <div class="otp-inputs">
-          <input type="text" maxlength="1" class="otp-input" />
-          <input type="text" maxlength="1" class="otp-input" />
-          <input type="text" maxlength="1" class="otp-input" />
-          <input type="text" maxlength="1" class="otp-input" />
-          <input type="text" maxlength="1" class="otp-input" />
-          <input type="text" maxlength="1" class="otp-input" />
-        </div>
-
-        <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
-
-        <p class="otp-resend cr-auth-tle">
-          Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
-        </p>
-      </div>
-    </div>
-    <!-- OTP End here -->
-
-    <!-- Authentication Overlay Start -->
-    <div id="overlay" class="overlay">
-      <!-- SignUp Dialog Start -->
-      <div id="signup-dialog" class="auth-container overlay-animate">
-        <button id="signup-close-btn" class="auth-close-btn" aria-label="Close signup dialog">
-          <img src="/assets/icons/close-outline.svg" alt="Close" />
-        </button>
-        <div class="auth-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
-        </div>
-        <p class="cr-auth-header">Create an Account</p>
-        <p class="cr-auth-tle">
-          Already have an account?
-          <span class="signin-overlay-btn cr-auth-auth">Log In</span>
-        </p>
-        <form class="form-container" id="signup-form">
-          <div class="form-item">
-            <label for="email">Email</label>
-            <input id="email" required type="email" placeholder="Example: xyz@gmail.com" />
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signup-password">Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Enter password" id="signup-password" />
-              <img id="signup-password-btn" class="password-icon" src="/assets/icons/obsured.svg"
-                alt="Toggle password visibility" role="button" tabindex="0" />
-            </div>
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signup-cpassword">Confirm Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Confirm password" id="signup-cpassword" /><img
-                id="signup-cpassword-btn" class="password-icon" src="/assets/icons/obsured.svg" />
-            </div>
-            <div id="message"></div>
-          </div>
-          <button class="cr-btn">Create an Account</button>
-        </form>
-      </div>
-      <!-- SignUp Dialog Ends -->
-
-      <!-- SignIn Dialog Start -->
-      <div id="signin-dialog" class="auth-container overlay-animate">
-        <button id="signin-close-btn" class="auth-close-btn" aria-label="Close login dialog">
-          <img src="/assets/icons/close-outline.svg" alt="Close" />
-        </button>
-        <div class="auth-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
-        </div>
-        <p class="cr-auth-header">Log in</p>
-        <p class="cr-auth-tle">
-          Don't have an account?
-          <span class="signup-overlay-btn cr-auth-auth">Sign up</span>
-        </p>
-        <form class="form-container" id="signIn-form">
-          <div class="form-item">
-            <label for="signin-email">Email</label>
-            <input id="signin-email" required type="email" placeholder="Example: xyz@gmail.com" />
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signin-password">Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Enter password" id="signin-password" /><img
-                id="signin-password-btn" class="password-icon" src="/assets/icons/obsured.svg" />
-            </div>
-          </div>
-          <button class="cr-btn">Log in</button>
-        </form>
-      </div>
-      <!-- SignIn Dialog Ends -->
-    </div>
-    <!-- Authentication Overlay End -->
-
     <!-- Header Start -->
     <header class="main-head-cont">
       <div class="main-head-wrapper box animation6">
@@ -378,7 +266,7 @@
           </div>
           <div>
             <form action="">
-              <fieldset>
+              <div>
                 <div class="email-container">
                   <input type="email" required placeholder="Enter email address" id="email" name="email" />
                 </div>
@@ -387,11 +275,83 @@
                 </div>
 
                 <button class="bulk-verify-domain-btn">Verify Domains</button>
-              </fieldset>
+              </div>
             </form>
           </div>
         </div>
       </section>
+
+      <!-- Results Section (Overlay) -->
+      <section class="results-overlay-section">
+        <div class="public-results-card">
+          <h4 class="disposal-result-main-title">
+            The email provided macdonald@gmail.com is a verified disposable email
+          </h4>
+
+          <div class="disposal-results-list">
+            <!-- Max Record (True) -->
+            <div class="result-card status-true">
+              <p class="result-boolean">True</p>
+              <div class="result-content">
+                <h3 class="result-head">Max Record</h3>
+                <p class="result-desc">
+                  This domain has MX record. This means that it has a mail server and is able to receive emails
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Disposable (True) -->
+            <div class="result-card status-true">
+              <p class="result-boolean">True</p>
+              <div class="result-content">
+                <h3 class="result-head">Disposable</h3>
+                <p class="result-desc">
+                  This domain does not appear to be from a disposable email provider
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Public Email (False) -->
+            <div class="result-card status-false">
+              <p class="result-boolean">False</p>
+              <div class="result-content">
+                <h3 class="result-head">Public email provider</h3>
+                <p class="result-desc">
+                  This domain is from a public email provider. This means that anyone can generate emails from
+                  this domain for free
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Relay Domain (False) -->
+            <div class="result-card status-false">
+              <p class="result-boolean">False</p>
+              <div class="result-content">
+                <h3 class="result-head">Relay domain</h3>
+                <p class="result-desc">
+                  This domain does not appear to be a relay domain
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- New CTA Section -->
+      <section class="cta-banner-section box animation6">
+
+        <div class="cta-banner-content">
+          <h2>Stop Fake Signups Today</h2>
+          <p class="cta-subtitle">Keep Disposable Emails Out of Your System</p>
+          <a href="/sign-up.html" class="cta-button">Sign up for free</a>
+          <p class="cta-note">Receive 500 free request at no cost. No card needed</p>
+        </div>
+      </section>
+
       <section class="bulk-content-section box animation6">
         <div class="inner-content">
           <div class="content-discription">
@@ -399,14 +359,13 @@
             <p>Disposable or temporary email addresses are often created to bypass registration steps, hide identity, or
               avoid long-term engagement with a platform. While some users rely on them for privacy, they can create
               serious challenges for digital products and online communities.</p>
-            <button>Create an Account</button>
+            <a href="/sign-up.html" class="content-btn">Create an Account</a>
           </div>
           <div class="content-img">
-
-            <img src="/assets/images/landing/common/verify-image.png" alt="">
-
+            <img src="/assets/images/landing/index/mail.svg" alt="Mailbox Illustration">
           </div>
         </div>
+
       </section>
       <section class="fags-wrapper">
         <!-- Fags Start -->
@@ -496,7 +455,7 @@
               <div class="foot-links">
                 <a href="/#about" class="foot-link">About</a>
                 <a href="/documentation.html" class="foot-link">Guides</a>
-                <a href="/dashboard/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
+                <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
               </div>
             </div>
 

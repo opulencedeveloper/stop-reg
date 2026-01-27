@@ -1,4 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("verify-form");
+  const token = localStorage.getItem("authToken");
+  
+  // Select results elements
+  const resultsContainer = document.querySelector(".check-email-right");
+  const resultTitle = document.querySelector(".disposal-result-main-title");
+  const resultsList = document.querySelector(".disposal-results-list");
+
+  // Hide spinner since this page might be waiting for user input, 
+  // but also to fix the "keeps loading" issue if fetch-user-detail.js is slow or fails
+  if (typeof window.hideSpinner === 'function') {
+    window.hideSpinner();
+  }
+
   if (!form) return;
   const submitBtn = form.querySelector(".bulk-check-email-btn");
 
@@ -47,10 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update individual result cards
         if (resultsList) {
-          // Mapping data to the 4 cards in HTML
-          // Note: The API might only return isDisposable. If so, we'll update what we have.
-          // Based on the fields seen in previous versions, let's look for isDisposable, mx_record, etc.
-          
           const cards = resultsList.querySelectorAll(".result-card");
           
           // Helper to update a card
@@ -67,22 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (bool) bool.textContent = isTrue ? "True" : "False";
           };
 
-          // Card 1: MX Record
+          // Mapping API fields to cards
           updateCard(cards[0], disposal.mxRecord ?? disposal.mx_record, "MX Record", 
             "This domain has an MX record and can receive emails.", 
             "This domain does not have a valid mail server.");
           
-          // Card 2: Disposable
           updateCard(cards[1], disposal.isDisposable ?? disposal.disposable_domain, "Disposable", 
             "This domain appears to be from a disposable email provider.", 
             "This domain does not appear to be from a disposable provider.");
           
-          // Card 3: Public Email Provider
           updateCard(cards[2], disposal.isPublic ?? disposal.public_email_provider, "Public email provider", 
             "This domain is from a public email provider (e.g. Gmail).", 
             "This domain is not from a public email provider.");
             
-          // Card 4: Relay Domain
           updateCard(cards[3], disposal.isRelay ?? disposal.relay_domain, "Relay domain", 
             "This domain acts as a relay or alias service.", 
             "This domain does not appear to be a relay domain.");
@@ -124,4 +131,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-  

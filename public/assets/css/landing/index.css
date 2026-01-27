@@ -993,8 +993,8 @@ body {
   font-family: "PlusJakartaSans-SemiBold", "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 14px;
-  white-space: normal;
+  font-size: 14px !important;
+  white-space: inherit;
 }
 
 /* Syntax highlighting colors - matching the image */
@@ -4505,14 +4505,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
   /* --- Hero Overflow Fix --- */
   .hero-wrapper,
   .hero-container {
-   
+
     overflow-x: hidden !important;
     width: 100% !important;
   }
 
   .hero-container {
-   
- padding-top: 120px;
+
+    padding-top: 120px;
   }
 
   .hero-sect-two {

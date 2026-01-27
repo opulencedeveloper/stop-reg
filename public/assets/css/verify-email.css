@@ -3,18 +3,28 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 516px;
+  height: fit-content;
+  /* User requested content height */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin-top: 90px;
+  /* Offset fixed header */
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+  padding-bottom: 170px;
+  box-sizing: border-box;
 }
+
 .hero-content-box {
   width: 100%;
   max-width: 655px;
   display: flex;
   flex-direction: column;
   gap: 24px;
+
 }
 
 .verifyEmail-hero h1 {
@@ -25,14 +35,15 @@
   padding-bottom: 8px;
   text-align: center;
 }
+
 .verifyEmail-hero p {
   font-family: "PlusJakartaSans-Regular", sans-serif;
   color: #737373;
   font-size: 20px;
   text-align: center;
-
   text-align: center;
 }
+
 fieldset {
   padding: 0;
   margin: 0;
@@ -40,30 +51,104 @@ fieldset {
   flex-direction: column;
   gap: 24px;
 }
+
+.email-container {
+  margin-bottom: 8px;
+}
+
 .email-container input {
   background-color: #ffffff;
   border: 0px;
   width: 100%;
-  height: 22px;
+  height: 44px;
   padding: 12px;
-  padding-bottom: 30px;
+  font-family: "Inter_28pt-Regular";
   border-radius: 8px;
   outline: none;
 }
+
 .email-container input:focus {
   outline: none;
 }
+
+/* New CTA Banner Section Styles */
+.cta-banner-section {
+  padding: 40px 24px;
+  /* Rounded corners */
+}
+
+.cta-banner-content {
+  background: linear-gradient(90deg, #dce8ff 0%, #f4f8ff 50%, #dce8ff 100%);
+  padding-top: 80px;
+  padding-bottom: 64px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  max-width: 1200px;
+  margin: auto;
+  width: 100%;
+  gap: 16px;
+  border-radius: 16px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cta-banner-content h2 {
+  font-family: "Inter_18pt-Bold", sans-serif;
+  font-size: 40px;
+  color: #010101;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.cta-subtitle {
+  font-family: "Inter_28pt-SemiBold", sans-serif;
+  font-size: 20px;
+  color: #595959;
+  margin: 0;
+
+}
+
+.cta-button {
+  background-color: #1452CA;
+  color: #FDFDFD;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-family: "Inter_28pt-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background-color: #1040A0;
+}
+
+.cta-note {
+  font-family: "Inter_28pt-Regular", sans-serif;
+  font-size: 16px;
+  color: #595959;
+}
+
+/* Updated Bulk Content Section */
 .bulk-content-section {
   display: flex;
   background-color: #ffffff;
-  padding: 40px 120px;
+  padding: 80px 120px;
+  /* Increased padding */
 }
+
 #checkbox {
   height: 24px;
   width: 24px;
 
   border: 3px solid #dbdbdb;
 }
+
 .dash-inner-inner-section {
   font-family: "PlusJakartaSans-SemiBold";
   width: 100%;
@@ -74,6 +159,7 @@ fieldset {
   display: flex;
   gap: 16px;
 }
+
 .dash-inner-inner-bulk-verification {
   width: 100%;
   height: 100%;
@@ -89,24 +175,35 @@ fieldset {
   padding: 20px;
   border-radius: 12px;
 }
+
 .inner-content {
   display: flex;
   width: 100%;
   gap: 72px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  /* Adjusted to space-between */
 }
+
 .content-discription {
   width: 100%;
-  max-width: 623px;
+  max-width: 623px !important;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
+
+  /* Increased gap */
 }
-.content-discription button {
-  width: 100%;
-  max-width: 208px;
-  height: 54px;
+
+.content-discription p {
+  font-family: "PlusJakartaSans-Regular";
+}
+
+
+/* New Button Style for Content Section */
+.content-btn {
+  width: fit-content;
+  padding: 14px 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,30 +212,49 @@ fieldset {
   border: 0;
   border-radius: 8px;
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold", sans-serif;
+  font-family: "PlusJakartaSans-Bold", sans-serif;
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+  /* Prevent wrapping */
 }
+
 .inner-content h1 {
   font-size: 40px;
-  font-family: "PlusJakartaSans-ExtraBold", sans-serif;
-  line-height: 140%;
+  font-family: "Inter_18pt-Bold", sans-serif;
+  line-height: 130%;
   color: #010101;
+  margin: 0;
 }
+
 .inner-content p {
-  font-size: 20px;
-  font-family: "PlusJakartaSans-Regular", sans-serif;
-  line-height: 140%;
+  font-size: 18px;
+  /* Adjusted font size */
+  font-family: "Inter_28pt-Regular", sans-serif;
+  line-height: 160%;
+  color: #595959 !important;
+  /* Lighter text color */
 }
+
 .content-img {
   width: 100%;
   max-width: 505px;
-  height: 576px;
+  /* Removed fixed height to allow auto sizing */
+  height: auto;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .content-img img {
   width: 100%;
-  max-width: 400px;
-  height: 505px;
+  height: auto;
+  /* changed from fixed height */
+  max-width: 100%;
+  /* Ensure it fits container */
 }
+
 .verify-status-head {
   display: flex;
   width: 100%;
@@ -146,6 +262,7 @@ fieldset {
   align-items: center;
   margin-bottom: 28px;
 }
+
 .bulk-domain-download {
   display: flex;
   flex-direction: row !important;
@@ -189,6 +306,7 @@ fieldset {
   font-weight: 800;
   font-size: 16px;
 }
+
 tr.bulks-table-inner td {
   border-bottom: 1px solid var(--color-twenty);
   background-color: white;
@@ -198,22 +316,26 @@ tr.bulks-table-inner td {
   font-size: 16px;
   font-family: "PlusJakartaSans-SemiBold";
 }
+
 .status-cont {
   font-size: 14px;
   font-weight: 600;
 }
+
 .status-cont span {
   color: #737373;
   font-size: 14px;
   font-weight: 400;
   padding-right: 4px;
 }
+
 .bulk-hd,
 .bulk-verify-domain-btn {
   font-size: 20px;
   font: "PlusJakartaSans-semiBold";
   margin-bottom: 12px;
 }
+
 .bulk-content {
   font-size: 16px;
   font-weight: 600;
@@ -221,6 +343,7 @@ tr.bulks-table-inner td {
   margin-bottom: 12px;
   color: #737373;
 }
+
 #bulk-links {
   width: 100%;
   min-height: 100px;
@@ -249,13 +372,16 @@ tr.bulks-table-inner td {
 
   display: inline-block;
 }
+
 .fags-wrapper {
   background-color: var(--color-seventeen);
   position: relative;
 }
+
 #bulk-links:focus {
   outline: none;
 }
+
 .bulks-fags-hd,
 .fags-docs {
   font-size: 48px;
@@ -264,6 +390,7 @@ tr.bulks-table-inner td {
   text-align: center;
   margin-bottom: 13px;
 }
+
 .bulks-fags-hd {
   padding-top: 100px;
 }
@@ -277,6 +404,7 @@ fieldset {
   color: #000000;
   text-decoration: underline;
 }
+
 .bulk-verify-domain-btn {
   background-color: #1452ca;
   color: #ffffff;
@@ -289,13 +417,16 @@ fieldset {
   border: 0px;
   width: 100%;
   height: 46px;
+  margin-top: 24px;
 }
+
 .check-disposal-email {
   text-decoration: underline;
   font-size: 16px;
   font-weight: 600;
   color: #595959;
 }
+
 .bulk-tb-container {
   border: 1px solid #ededed;
   border-radius: 12px;
@@ -303,12 +434,15 @@ fieldset {
   box-sizing: border-box;
   width: 100%;
 }
+
 .bulk-tb-container table {
   width: 100%;
 }
+
 .bulk-tb-container table tbody {
   width: 100%;
 }
+
 tr.bulk-table-inner td {
   width: 100%;
   padding-top: 16px;
@@ -316,9 +450,11 @@ tr.bulk-table-inner td {
 
   font-family: "PlusJakartaSans-SemiBold";
 }
+
 .inner-top {
   padding-top: 0 !important;
 }
+
 .row-status-cont {
   display: flex;
   justify-content: space-between;
@@ -326,18 +462,54 @@ tr.bulk-table-inner td {
 
   margin-top: 12px;
 }
+
 .status-cont {
   display: flex;
 }
+
 @media only screen and (max-width: 760px) {
   .verifyEmail-hero {
-    padding: 16px;
+    padding: 40px 16px;
+    /* Adjust padding for mobile if needed, or keep consistent */
     box-sizing: border-box;
-    height: 398px;
+    height: fit-content;
+    margin-top: 80px;
+    /* Reduced margin for mobile */
   }
+
+  @media only screen and (max-width: 550px) {
+    .verifyEmail-hero {
+      margin-top: 80px;
+      /* Restore margin for mobile */
+    }
+  }
+
+  /* Update padding for mobile */
+  .bulk-content-section {
+    padding: 40px 16px;
+  }
+
+  /* CTA Banner Mobile */
+  .cta-banner-section {
+    margin-top: 1px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 40px;
+    padding-top: 0px;
+  }
+
+  .cta-banner-content h2 {
+    font-size: 24px;
+  }
+
+  .cta-subtitle {
+    font-size: 16px;
+  }
+
   fieldset {
     gap: 12px;
   }
+
   .dash-inner-inner-section {
     width: 100%;
     height: fit-content;
@@ -349,9 +521,11 @@ tr.bulk-table-inner td {
     padding: 0px;
     gap: 0;
   }
+
   .verifyEmail-hero h1 {
     font-size: 24px;
   }
+
   .verifyEmail-hero p {
     font-size: 12px;
   }
@@ -366,52 +540,59 @@ tr.bulk-table-inner td {
     outline: none;
     box-sizing: border-box;
   }
+
   .content-discription h1 {
-    font-size: 20px;
+    font-size: 20px !important;
+    /* Force override */
   }
+
   .content-discription p {
-    font-size: 12px;
+    font-size: 14px !important;
   }
-  .content-discription button {
-    max-width: 148px;
-    height: 41px;
-    font-size: 12px;
-  }
+
+  /* Mobile Order: Text first, then Image */
+  /* If the HTML is Text Div then Image Div, normal flow works. 
+     If we want Text TOP, Image BOTTOM, that's the default column flow.
+     Let's just ensure flex-direction is column and order is natural, or forced.
+  */
   .inner-content {
     flex-direction: column;
-    gap: 44px;
+    gap: 32px;
   }
-  .content-img {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+
+  /* Ensure image is large enough but fits */
   .content-img img {
-    max-width: 245.45px;
-    height: 300px ;
-    
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
   }
-  .bulk-content-section {
-    display: flex;
-    background-color: #ffffff;
-    padding: 20px 16px;
+
+  /* .content-discription button removal was here, we use .content-btn now */
+  .content-btn {
+    width: 100%;
+    max-width: 200px;
   }
+
   .dash-inner-inner-verification-status {
     padding: 0;
     border-radius: 0;
     background-color: transparent;
   }
+
   .verify-status-head {
     margin-top: 12px;
   }
+
   .empty-state-text {
     font-size: 14px;
   }
+
   .dash-inner-inner-section {
     padding-top: 20px;
 
     margin: 0;
   }
+
   /* .bulk-hd {
     display: none;
   } */
@@ -421,11 +602,13 @@ tr.bulk-table-inner td {
     overflow-y: scroll;
     padding: 12px;
   }
+
   .bulktitle {
     display: block;
     font-size: 14px;
     padding-top: 10px;
   }
+
   .dash-inner-inner-bulk-verification {
     width: 100%;
     height: 100%;
@@ -440,22 +623,167 @@ tr.bulk-table-inner td {
     border: 0;
     border-radius: 0;
   }
+
   .dash-inner-inner-bulk-verification {
     padding: 0;
     height: fit-content;
   }
 }
+
 @media only screen and (max-width: 520px) {
   .bulks-fags-hd {
     font-size: 20px;
     margin-bottom: 10px;
     padding-top: 40px;
   }
+
   .bulk-verify-domain-btn {
     font-size: 12px;
     height: 41px;
   }
-  .content-img {
+
+  /* .content-img {
     height: 320px;
+  } */
+}
+
+/* Results Overlay Section */
+.results-overlay-section {
+  max-width: 1200px;
+  /* Constrain width */
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: -140px;
+  /* Initial overlap */
+  margin-bottom: 60px;
+  /* Push following content down */
+}
+
+/* Public Results Card Styles */
+.public-results-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #EDEDED;
+}
+
+.disposal-result-main-title {
+  font-family: "PlusJakartaSans-Bold";
+  font-size: 20px;
+  color: #252525;
+  margin: 0;
+  text-align: center;
+}
+
+.disposal-results-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 Columns */
+  gap: 16px;
+}
+
+/* Result Card Styles */
+.result-card {
+  display: flex;
+  flex-direction: column;
+  /* Stack content vertically */
+  align-items: center;
+  /* Center align */
+  justify-content: start;
+  /* Kept as start or center? Previous was start in Step 239. */
+  padding: 16px 12px;
+  border-radius: 12px;
+  text-align: center;
+  height: 100%;
+}
+
+
+.result-head {
+  font-family: "PlusJakartaSans-Bold", sans-serif;
+  font-size: 16px;
+  color: #404040;
+  margin-bottom: 8px;
+}
+
+.result-desc {
+  font-family: "Inter_28pt-Regular", sans-serif !important;
+  font-size: 16px;
+  color: #404040;
+  line-height: 160%;
+}
+
+.result-boolean {
+  font-family: "Inter_18pt-Bold", sans-serif;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  color: #404040;
+}
+
+/* Status Colors */
+.status-true {
+  background-color: #ECFDF3;
+  /* Light green */
+}
+
+.status-true .result-boolean {
+  color: #027A48;
+  /* Green text */
+}
+
+.status-false {
+  background-color: #FEF3F2;
+  /* Light red */
+}
+
+.status-false .result-boolean {
+  color: #B42318;
+  /* Red text */
+}
+
+/* Responsive Overrides */
+@media only screen and (max-width: 900px) {
+  .disposal-results-list {
+    grid-template-columns: 1fr 1fr;
+    /* 2x2 on Tablet */
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .disposal-results-list {
+    grid-template-columns: 1fr;
+    /* Stack on Mobile */
+  }
+
+  .results-overlay-section {
+    margin-top: -40px;
+    padding-left: 16px;
+    padding-right: 16px;
+    /* Reduce overlap on mobile */
+  }
+
+  .disposal-result-main-title {
+    font-size: 14px;
+  }
+
+  .result-boolean {
+    font-size: 14px;
+    margin: 12px;
+    /* Reduce margin on mobile if needed, or keep 20px. User didn't specify, but smaller text usually implies tighter spacing. I'll stick to font size only unless it looks bad. But margin-bottom: 20px on desktop might be huge for 14px text. I'll keep margin as is strictly unless asked. */
+  }
+
+  .result-head {
+    font-size: 12px;
+  }
+
+  .result-desc {
+    font-size: 12px;
   }
 }
