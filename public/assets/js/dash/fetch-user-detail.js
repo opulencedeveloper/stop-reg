@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/user/info", {
+      const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (apiToken) {
           const linkContainer = document.querySelector(".link-container");
           if (linkContainer) {
-            const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
+            const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
             linkContainer.href = newLink;
             
             const linkTitle = linkContainer.querySelector(".token-link-title");
@@ -170,43 +170,52 @@ document.addEventListener("DOMContentLoaded", async () => {
         const userDetails = user.userDetails;
         if (userDetails) {
           // Update all expiration date elements
-          const expiresDateEls = document.querySelectorAll(".current-plan-date");
           if (userDetails.tokenExpiresAt) {
             const expiresDate = new Date(userDetails.tokenExpiresAt);
             const formattedDate = expiresDate.toLocaleDateString("en-US", {
               day: "numeric",
               month: "long",
-              year: "numeric",
-              hour: undefined,
-              minute: undefined,
-              second: undefined
+              year: "numeric"
             });
-            expiresDateEls.forEach(el => {
-              el.textContent = `Expires: ${formattedDate}`;
+            document.querySelectorAll(".current-plan-date").forEach(el => {
+              const span = el.querySelector("span");
+              if (span) span.textContent = ` ${formattedDate}`;
+              else el.textContent = `Expires: ${formattedDate}`;
             });
           }
   
           // Update all plan name elements
-          const planNameEls = document.querySelectorAll(".Current-plan-plan");
           if (userDetails.planId?.name) {
-            planNameEls.forEach(el => {
-               el.textContent = `${userDetails.planId.name} Account`;
+            const planName = userDetails.planId.name;
+            document.querySelectorAll(".Current-plan-plan").forEach(el => {
+               // On generic dashboard pages we might want "Account" suffix, 
+               // but on payments/header we want just the name.
+               // Check if it's the payments header
+               if (el.closest('.payments-hd-plan-info')) {
+                 el.textContent = planName;
+               } else {
+                 el.textContent = `${planName} Account`;
+               }
             });
           }
   
           // Update all API requests left elements
-          const apiRequestLeftEls = document.querySelectorAll(".api-request-left, .dash-api-hd-subtl");
           if (userDetails.planId) {
             const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
             const durationInDays = userDetails.planId.durationInDays ?? 30;
-            apiRequestLeftEls.forEach(el => {
-              el.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+            document.querySelectorAll(".api-request-left, .dash-api-hd-subtl").forEach(el => {
+              const span = el.querySelector("span");
+              if (span) {
+                  span.textContent = apiRequestLeft.toLocaleString();
+              } else {
+                  el.textContent = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
+              }
             });
           }
   
           // Update payments page plan text
           const paymentsPlanTextEl = document.querySelector(
-            ".payments-hd-sect-two"
+            ".payments-hd-plan-info"
           );
           const paymentsDescriptionEl = document.querySelector(
             ".payments-hd-sect-one-stle"
@@ -216,7 +225,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             const isFreePlan = planName.toLowerCase() === "free";
   
             if (paymentsPlanTextEl) {
-              paymentsPlanTextEl.textContent = `Currently on ${planName.toLowerCase()} plan`;
+                // If it contains a Current-plan-plan span, let the general loop handle it
+                if (!paymentsPlanTextEl.querySelector(".Current-plan-plan")) {
+                    paymentsPlanTextEl.textContent = `Currently on ${planName.toLowerCase()} plan`;
+                }
             }
   
             // Update description text based on plan type

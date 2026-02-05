@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (expiryDateEl) expiryDateEl.innerHTML = spinnerDateHTML;
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1/user/info", {
+            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -70,8 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const userDetails = user.userDetails;
         
                 if (userDetails) {
-                    // Update Expiration
-                    const expiresDateEls = document.querySelectorAll(".current-plan-date");
+                    // 1. Update Expiration
                     if (userDetails.tokenExpiresAt) {
                         const expiresDate = new Date(userDetails.tokenExpiresAt);
                         const formattedDate = expiresDate.toLocaleDateString("en-US", {
@@ -79,22 +78,37 @@ document.addEventListener("DOMContentLoaded", async () => {
                             month: "long",
                             year: "numeric",
                         });
-                        expiresDateEls.forEach(el => el.textContent = `Expires: ${formattedDate}`);
+
+                        // Standard classes
+                        document.querySelectorAll(".current-plan-date").forEach(el => {
+                            // Check if it has a span child for the value
+                            const span = el.querySelector("span");
+                            if (span) span.textContent = ` ${formattedDate}`;
+                            else el.textContent = `Expires: ${formattedDate}`;
+                        });
                     }
         
-                    // Update Plan Name
-                    const planNameEls = document.querySelectorAll(".Current-plan-plan");
+                    // 2. Update Plan Name
                     if (userDetails.planId?.name) {
-                        planNameEls.forEach(el => el.textContent = `${userDetails.planId.name}`);
+                        const planName = userDetails.planId.name;
+                        document.querySelectorAll(".Current-plan-plan").forEach(el => {
+                            el.textContent = planName;
+                        });
                     }
         
-                    // Update Requests Left
-                    const apiRequestLeftEls = document.querySelectorAll(".api-request-left");
+                    // 3. Update Requests Left
                     if (userDetails.planId) {
                         const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
                         const durationInDays = userDetails.planId.durationInDays ?? 30;
-                        apiRequestLeftEls.forEach(el => {
-                            el.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+                        const usageText = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
+                        
+                        document.querySelectorAll(".api-request-left").forEach(el => {
+                            const span = el.querySelector("span");
+                            if (span) {
+                                span.textContent = apiRequestLeft.toLocaleString();
+                            } else {
+                                el.textContent = usageText;
+                            }
                         });
                     }
                 }

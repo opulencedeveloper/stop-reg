@@ -159,14 +159,20 @@
               </div>
               <div class="payments-hd-sect-one">
                 <p class="payments-hd-title">Payments</p>
-                <p class="payments-hd-subtitle">
+                <p class="payments-hd-subtitle banner-text payments-hd-sect-one-stle">
                   Upgrade now to get started with a paid plan.
                 </p>
-                <p class="payments-hd-plan-info">
-                  Currently on Scale plan
-                </p>
-                <p class="payments-hd-expiry-info">
-                  Expires: 12 October 2026
+                <div class="plan-status-info">
+                  <p class="payments-hd-plan-info">
+                    Currently on <span id="payments-plan-name" class="Current-plan-plan"> Scaaaale plan</span>
+                  </p>
+                  <p id="payments-plan-usage" class="plan-usage-text api-request-left"
+                    style="font-size: 14px; color: #737373; margin-top: -8px; margin-bottom: 12px;">
+                    <span>30,000</span> API requests in <span>30 days </span>
+                  </p>
+                </div>
+                <p id="payments-plan-expiry" class="payments-hd-expiry-info current-plan-date plan-status-expiry">
+                  Expires:<span> 12 October 2026</span>
                 </p>
               </div>
             </div>
@@ -303,7 +309,8 @@
   </main>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
-  <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
+  <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
+  <script src="/assets/js/dash/fetch-plan-details.js" defer></script>
   <!-- <script src="/assets/js/subscription-plan.js" defer></script> -->
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

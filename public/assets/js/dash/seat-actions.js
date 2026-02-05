@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (currentAction === "delete") {
                 // DELETE Request
-                response = await fetch(`http://localhost:8080/api/v1/seat/delete?seatId=${currentData.id}`, {
+                response = await fetch(`https://api-stop-reg.onrender.com/api/v1/seat/delete?seatId=${currentData.id}`, {
                     method: "DELETE", // Assuming DELETE method based on standard, user said "Send http request", implied REST. If GET, user usually specifies. Route name implies deletion.
                     // Wait, user provided URL parameters but didn't specify method. "seat/delete" is unusual for DELETE verb on resource, often POST.
                     // User Request: "Send a http request to this end point .../delete?seatId=..."
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 // RESEND Request
-                response = await fetch(`http://localhost:8080/api/v1/seat/resend-invitation`, {
+                response = await fetch(`https://api-stop-reg.onrender.com/api/v1/seat/resend-invitation`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

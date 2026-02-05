@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (reportedTableBody) reportedTableBody.innerHTML = loadingHtml;
 
         try {
-            const url = `http://localhost:8080/api/v1/user/info/requests?page=${page}&limit=${pageSize}`;
+            const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?page=${page}&limit=${pageSize}`;
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken");
-                const response = await fetch(`http://localhost:8080/api/v1/request/delete?id=${itemToDeleteId}`, {
+                const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/request/delete?id=${itemToDeleteId}`, {
                     method: 'DELETE',
                     headers: { "Authorization": `Bearer ${token}` }
                 });
