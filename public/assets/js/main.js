@@ -28,6 +28,31 @@ window.hideSpinner = function() {
         }
         if (content) {
           content.style.display = "block";
+          
+          // Handle anchor scrolling after reveal
+          if (window.location.hash) {
+            const id = window.location.hash.substring(1);
+            const target = document.getElementById(id);
+            if (target) {
+              // Small timeout to ensure layout is done
+            if (target) {
+              // Small timeout to ensure layout is done
+              setTimeout(() => {
+                const headerOffset = 100; // Adjust based on header height (~80px) + gap
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerOffset;
+  
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth"
+                });
+                
+                // Optional: Highlight it briefly
+                target.classList.add('highlight-pulse');
+              }, 100);
+            }
+            }
+          }
         }
         document.body.classList.remove('hidden-overflow');
       }

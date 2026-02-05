@@ -30,11 +30,74 @@ document.addEventListener("DOMContentLoaded", async () => {
   function requireAuth() {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      window.location.href = "/";
+      window.location.href = "/sign-in.html";
       return null;
     }
     return token;
   }
+
+  // --- CUSTOM VALIDATION HELPERS ---
+  function showInputError(input, message) {
+    const parent = input.parentElement;
+    let error = parent.querySelector(".custom-input-error");
+    if (!error) {
+      error = document.createElement("div");
+      error.className = "custom-input-error";
+      parent.appendChild(error);
+    }
+    // Only update text/animate if message changes or it was hidden
+    if (error.textContent !== message || error.style.display === 'none') {
+        error.textContent = message;
+        input.classList.add("input-error-border");
+        error.style.animation = 'none';
+        error.offsetHeight; /* trigger reflow */
+        error.style.animation = null; 
+    }
+  }
+
+  function clearInputError(input) {
+    const parent = input.parentElement;
+    const error = parent.querySelector(".custom-input-error");
+    if (error) error.remove();
+    input.classList.remove("input-error-border");
+  }
+
+  function clearAllErrors(form) {
+    const inputs = form.querySelectorAll("input");
+    inputs.forEach(input => clearInputError(input));
+  }
+
+  // Helper for active real-time validation
+  function attachActiveValidation(input, validatorFn, errorMsgFn) {
+      if (!input) return;
+      input.addEventListener("input", () => {
+          const val = input.value.trim();
+          const isErrorShown = input.classList.contains("input-error-border");
+          
+          if (validatorFn(val)) {
+              clearInputError(input);
+          } else if (isErrorShown || val.length > 0) {
+              const msg = errorMsgFn(val);
+              if (msg) showInputError(input, msg);
+          }
+      });
+  }
+
+  // Attach validation to inputs
+  const firstNameInputEl = document.getElementById("firstname");
+  const lastNameInputEl = document.getElementById("lastname");
+
+  attachActiveValidation(
+      firstNameInputEl, 
+      (val) => val.length > 0,
+      (val) => "First name is required"
+  );
+
+  attachActiveValidation(
+      lastNameInputEl,
+      (val) => val.length > 0,
+      (val) => "Last name is required"
+  );
 
   // ------------------------
   // Form submit handler
@@ -42,22 +105,50 @@ document.addEventListener("DOMContentLoaded", async () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideError();
+    clearAllErrors(form);
 
     const token = requireAuth();
     if (!token) return;
 
-    const fullNameInput = document.getElementById("fullname")?.value.trim();
-    if (!fullNameInput) return showError("Full name is required");
+    const firstNameInput = firstNameInputEl?.value.trim();
+    const lastNameInput = lastNameInputEl?.value.trim();
 
-    const payload = { fullName: fullNameInput };
+    let hasError = false;
+    let firstInvalidInput = null;
+
+    if (!firstNameInput) {
+        showInputError(firstNameInputEl, "First name is required");
+        hasError = true;
+        if (!firstInvalidInput) firstInvalidInput = firstNameInputEl;
+    }
+
+    if (!lastNameInput) {
+        showInputError(lastNameInputEl, "Last name is required");
+        hasError = true;
+        if (!firstInvalidInput) firstInvalidInput = lastNameInputEl;
+    }
+
+    if (hasError) {
+        if (firstInvalidInput) {
+            firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstInvalidInput.focus({ preventScroll: true });
+        }
+        return;
+    }
+
+    const fullNameInput = `${firstNameInput} ${lastNameInput}`.trim();
+    const payload = { 
+        firstName: firstNameInput,
+        lastName: lastNameInput
+    };
     const originalText = submitBtn.textContent;
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span class="btn-spinner"></span> ${originalText}`;
+    submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Processing...`;
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/user/update/fullname",
+        "http://localhost:8080/api/v1/user/update/fullname",
         {
           method: "PATCH",
           headers: {
@@ -79,6 +170,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.ok) {
         localStorage.setItem("userName", fullNameInput);
+        
+        // Update UI elements dynamically
+        const userFullNameEl = document.querySelector(".profile-name");
+        const headerNameEl = document.getElementById("user-name");
+        
+        if (userFullNameEl) userFullNameEl.textContent = fullNameInput;
+        if (headerNameEl) headerNameEl.textContent = fullNameInput;
+
         if (typeof iziToast !== 'undefined') {
           iziToast.success({
             title: 'Success',
@@ -90,9 +189,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             zindex: 100000000,
           });
         }
-
-        form.reset();
-        window.location.reload();
       } else {
         const errorMessage = data.description || data.message || "Update failed!";
         if (typeof iziToast !== 'undefined') {
@@ -138,7 +234,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/user/info",
+      "http://localhost:8080/api/v1/user/info",
       {
         method: "GET",
         headers: {
@@ -165,7 +261,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error fetching user info:", data);
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/";
+        localStorage.removeItem("role");
+        window.location.href = "/sign-in.html";
       } else {
         const errorMessage = data.description || data.message || "Failed to fetch user information.";
         if (typeof iziToast !== 'undefined') {

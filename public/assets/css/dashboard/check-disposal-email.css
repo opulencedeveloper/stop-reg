@@ -11,6 +11,7 @@
 .check-email-left {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .check-disposable-email-head {
@@ -99,7 +100,7 @@
   background-color: #FFFFFF;
   border-radius: 12px;
   padding: 20px;
-  height: fit-content;
+  height: 100%;
 }
 
 .disposal-result-main-title {
@@ -226,5 +227,38 @@
 
   .result-desc {
     font-size: 12px;
+  }
+}
+
+/* Empty State */
+.results-empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 492px;
+  /* Desktop Height */
+  width: 100%;
+}
+
+.empty-state-title {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 20px;
+  color: #101828;
+  margin-bottom: 8px;
+}
+
+.empty-state-desc {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #667085;
+  margin: 0;
+}
+
+@media only screen and (max-width: 650px) {
+  .results-empty-state {
+    height: 376px !important;
+    /* Mobile Height */
   }
 }

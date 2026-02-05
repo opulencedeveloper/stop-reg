@@ -161,15 +161,10 @@
                 <div class="banner-icon">
                   <img src="/assets/icons/bi_stars.svg" alt="Pro" />
                 </div>
-                <p class="banner-text">You are currently on the
-                  <span class="Current-plan-plan">free plan</span>
-                  with
-                  <span class="api-request-left">500 requests per month.</span>
-                  Upgrade to unlock
-                  bulk verification
-                </p>
+                <p class="banner-text">You are currently on the free plan with 500 requests per month. Upgrade to unlock
+                  bulk verification</p>
               </div>
-              <button id="bulk-domain-download" class="banner-btn hidden">Download CSV</button>
+              <a href="/dashboard/payments.html" class="banner-btn">Download CSV</a>
             </div>
 
             <div class="bulk-grid-container">
@@ -217,10 +212,9 @@
                       <th>SN</th>
                       <th>Input</th>
                       <th>Disposable</th>
-                      <th>Relay</th>
                       <th>Public</th>
                       <th>Role</th>
-                      <th>Alias</th>
+                      <th>Alais</th>
                       <th>Provider</th>
                       <th>Blocklisted</th>
                       <th>MX</th>
@@ -230,7 +224,6 @@
                     <!-- Placeholder Rows -->
                     <tr>
                       <td>1</td>
-                      <td>-</td>
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
@@ -250,11 +243,9 @@
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
-                      <td>-</td>
                     </tr>
                     <tr>
                       <td>3</td>
-                      <td>-</td>
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
@@ -274,11 +265,9 @@
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
-                      <td>-</td>
                     </tr>
                     <tr>
                       <td>5</td>
-                      <td>-</td>
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
@@ -298,7 +287,6 @@
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
-                      <td>-</td>
                     </tr>
                   </tbody>
                 </table>
@@ -308,7 +296,6 @@
               <div class="table-pagination">
                 <div class="pagination-select-container">
                   <select class="pagination-select">
-                    <option selected>6 per page </option>
                     <option>10 per page </option>
                     <option>20 per page</option>
                     <option>50 per page</option>
@@ -336,15 +323,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
     integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
   <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/dashboard/error-handler.js"></script>
   <script src="/assets/js/dash/header.js"></script>
   <script src="/assets/js/dash/domain.js"></script>
-  <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
-  <script src="/assets/js/dash/fetch-plan-details.js" defer></script>
+  <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
   <script src="/assets//js//dash/bulk-verification.js"></script>
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

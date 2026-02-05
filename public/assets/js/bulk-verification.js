@@ -181,7 +181,7 @@
 
 //     try {
 //       const response = await fetch(
-//         "https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification",
+//         "http://localhost:8080/api/v1/email-domains/bulk-verification",
 //         {
 //           method: "POST",
 //           headers: {
@@ -517,7 +517,7 @@
 //  console.log("called")
 //     try {
 //       const response = await fetch(
-//         "https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification",
+//         "http://localhost:8080/api/v1/email-domains/bulk-verification",
 //         {
 //           method: "POST",
 //           headers: {

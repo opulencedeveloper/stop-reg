@@ -68,24 +68,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Form Submit Placeholder
-    const form = document.getElementById('add-seats-form');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Simulate processing
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = 'Sending...';
-            
-            setTimeout(() => {
-                submitBtn.innerText = 'Sent!';
-                setTimeout(closeModal, 500);
-                setTimeout(() => {
-                    submitBtn.innerText = originalText;
-                    form.reset();
-                }, 1000);
-            }, 1000);
-        });
-    }
+    // Form Submit Placeholder REMOVED - Logic handled in invite-seat.js
 });

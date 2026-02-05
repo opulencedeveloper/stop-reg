@@ -18,6 +18,12 @@
   <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/payments.css" rel="stylesheet" />
+  <script>
+    // RBAC: Redirect "Seat" users away from this page
+    if (localStorage.getItem("role") === "Seat") {
+      window.location.href = "/dashboard/index.html";
+    }
+  </script>
 </head>
 
 <body>
@@ -297,7 +303,7 @@
   </main>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
-  <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
+  <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
   <!-- <script src="/assets/js/subscription-plan.js" defer></script> -->
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

@@ -24,8 +24,8 @@ header {
   max-width: var(--max-width);
   margin: auto;
   height: max-content;
-  padding-bottom: 155px;
-  padding-top: 155px;
+  padding-bottom: 121px;
+  padding-top: 121px;
   /* Add consistent bottom padding */
 }
 
@@ -2805,7 +2805,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
   .hero-container {
     padding-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
   }
 
   .docs-header-sect-one-hd {
@@ -4510,10 +4510,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
     width: 100% !important;
   }
 
-  .hero-container {
-
-    padding-top: 120px;
-  }
 
   .hero-sect-two {
     width: 100% !important;

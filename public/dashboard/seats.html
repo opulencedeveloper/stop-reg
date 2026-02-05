@@ -210,96 +210,18 @@
                                             <th class="table-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!-- Log Items matching the image -->
-
-                                        <!-- Row 1 -->
-                                        <tr>
-                                            <td>richard61@yahoo.com</td>
-                                            <td>Eklavya</td>
-                                            <td>Camille</td>
-                                            <td>25-12-2025 04:14:03</td>
-                                            <td>
-                                                Registered
-                                            </td>
-                                            <td class="table-center">
-                                                <div class="seat-actions">
-                                                    <button class="action-icon-btn" title="Resend Invitation">
-                                                        <img src="/assets/icons/email-resend-outline.svg"
-                                                            alt="Resend" />
-                                                    </button>
-                                                    <button class="action-icon-btn delete" title="Delete Seat">
-                                                        <img src="/assets/icons/delete.svg" alt="Delete" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row 2 -->
-                                        <tr>
-                                            <td>cookchelsea@pham.com</td>
-                                            <td>Willow</td>
-                                            <td>Immacula</td>
-                                            <td>25-12-2025 04:14:03</td>
-                                            <td>
-                                                Registered
-                                            </td>
-                                            <td class="table-center">
-                                                <div class="seat-actions">
-                                                    <button class="action-icon-btn" title="Resend Invitation">
-                                                        <img src="/assets/icons/email-resend-outline.svg"
-                                                            alt="Resend" />
-                                                    </button>
-                                                    <button class="action-icon-btn delete" title="Delete Seat">
-                                                        <img src="/assets/icons/delete.svg" alt="Delete" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row 3 -->
-                                        <tr>
-                                            <td>kdaniel@gmail.com</td>
-                                            <td>Albert</td>
-                                            <td>Bing</td>
-                                            <td>25-12-2025 04:14:03</td>
-                                            <td>
-                                                Registered
-                                            </td>
-                                            <td class="table-center">
-                                                <div class="seat-actions">
-                                                    <button class="action-icon-btn delete" title="Delete Seat">
-                                                        <img src="/assets/icons/delete.svg" alt="Delete" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <!-- Row 4 -->
-                                        <tr>
-                                            <td>allisonbrian@garcia-hill.com</td>
-                                            <td>Nathalie</td>
-                                            <td>Guofu</td>
-                                            <td>25-12-2025 04:14:03</td>
-                                            <td>
-                                                Registered
-                                            </td>
-                                            <td class="table-center">
-                                                <div class="seat-actions">
-                                                    <button class="action-icon-btn delete" title="Delete Seat">
-                                                        <img src="/assets/icons/delete.svg" alt="Delete" />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <!-- ... other rows ... -->
-
+                                    <tbody id="seats-table-body">
+                                        <!-- Populated via JS -->
                                     </tbody>
                                 </table>
 
                                 <!-- Pagination -->
-                                <div class="table-pagination">
+                                <div id="seats-pagination-container" class="table-pagination">
                                     <div class="pagination-select-container">
-                                        <select class="pagination-select">
-                                            <option>10 per page</option>
-                                            <option>20 per page</option>
+                                        <select id="seats-per-page-select" class="pagination-select">
+                                            <option value="10">10 per page</option>
+                                            <option value="20">20 per page</option>
+                                            <option value="50">50 per page</option>
                                         </select>
                                         <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -308,26 +230,8 @@
                                         </svg>
                                     </div>
 
-                                    <div class="pagination-controls">
-                                        <button class="page-nav-btn prev">
-                                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7 13L1 7L7 1" stroke="#344054" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
-                                        <button class="page-number active">1</button>
-                                        <button class="page-number">2</button>
-                                        <span class="page-dots">...</span>
-                                        <button class="page-number">9</button>
-                                        <button class="page-number">10</button>
-                                        <button class="page-nav-btn next">
-                                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1 13L7 7L1 1" stroke="#344054" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </button>
+                                    <div id="seats-pagination-controls" class="pagination-controls">
+                                        <!-- Populated via JS -->
                                     </div>
                                 </div>
                             </div>
@@ -356,8 +260,7 @@
                     <!-- Email -->
                     <div class="add-seats-form-group">
                         <label class="add-seats-label" for="seat-email">Email</label>
-                        <input type="email" id="seat-email" class="add-seats-input" placeholder="macdonald@gmail.com"
-                            required>
+                        <input type="email" id="seat-email" class="add-seats-input" placeholder="Enter email" required>
                     </div>
 
                     <!-- First Name -->
@@ -379,13 +282,36 @@
     </div>
     <!-- Add Seats Modal End -->
 
+    <!-- Generic Confirmation Modal -->
+    <div id="confirmation-modal-overlay" class="overlay" role="dialog" aria-modal="true"
+        aria-labelledby="confirm-modal-title">
+        <div class="delete-modal-box" style="background: white; margin: auto; position: relative;">
+            <div class="delete-icon-wrapper" id="confirm-icon-wrapper">
+                <img src="/assets/icons/delete.svg" class="delete-modal-icon" id="confirm-icon" alt="Warning">
+            </div>
+            <h2 id="confirm-modal-title" class="delete-modal-title">Confirm Action</h2>
+            <p id="confirm-modal-desc" class="delete-modal-desc">Are you sure you want to proceed?</p>
+
+            <div class="delete-modal-actions">
+                <button id="confirm-cancel-btn" class="btn-cancel-delete">Cancel</button>
+                <button id="confirm-action-btn" class="btn-confirm-delete">
+                    <span>Confirm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Confirmation Modal End -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
         integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
     <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/dash/index.js" defer></script>
     <script src="/assets/js/dash/header.js" defer></script>
-    <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
+    <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
+    <script src="/assets/js/dash/fetch-seats-table.js" defer></script>
+    <script src="/assets/js/dash/invite-seat.js" defer></script>
+    <script src="/assets/js/dash/seat-actions.js" defer></script>
     <script src="/assets/js/dashboard/add-seats-modal.js" defer></script>
     <!-- Zoho SalesIQ Live Chat Widget -->
     <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

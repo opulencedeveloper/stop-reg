@@ -758,7 +758,7 @@ const apiToken = 'YOUR_API_TOKEN';
 const email = 'test@example.com';
 
 const response = await fetch(
-  \` https://api-stop-reg.onrender.com/api/v1/check/\${apiToken}?email=\${email}\`,
+  \` http://localhost:8080/api/v1/check/\${apiToken}?email=\${email}\`,
   {
     method: 'GET',
     headers: {
@@ -770,14 +770,14 @@ const response = await fetch(
 const data = await response.json();
 console.log(data);`,
     curl: `curl -X GET \\
-  "https://api-stop-reg.onrender.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \\
+  "http://localhost:8080/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \\
   -H "Content-Type: application/json"`,
     python: `import requests
 
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
 
-url = f' https://api-stop-reg.onrender.com/api/v1/check/{api_token}?email={email}'
+url = f' http://localhost:8080/api/v1/check/{api_token}?email={email}'
 
 response = requests.get(url, headers={
     'Content-Type': 'application/json'
@@ -790,7 +790,7 @@ print(data)`,
 $apiToken = 'YOUR_API_TOKEN';
 $email = 'test@example.com';
 
-$url = "https://api-stop-reg.onrender.com/api/v1/check/{$apiToken}?email=" . urlencode($email);
+$url = "http://localhost:8080/api/v1/check/{$apiToken}?email=" . urlencode($email);
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -817,7 +817,7 @@ func main() {
     apiToken := "YOUR_API_TOKEN"
     email := "test@example.com"
     
-    baseURL := "https://api-stop-reg.onrender.com/api/v1/check/"
+    baseURL := "http://localhost:8080/api/v1/check/"
     params := url.Values{}
     params.Add("email", email)
     
@@ -846,7 +846,7 @@ public class ApiCheck {
         String apiToken = "YOUR_API_TOKEN";
         String email = "test@example.com";
         
-        String urlString = "https://api-stop-reg.onrender.com/api/v1/check/" 
+        String urlString = "http://localhost:8080/api/v1/check/" 
             + apiToken + "?email=" + URLEncoder.encode(email, "UTF-8");
         
         URL url = new URL(urlString);
@@ -878,7 +878,7 @@ class Program
         string apiToken = "YOUR_API_TOKEN";
         string email = "test@example.com";
         
-        string url = $"https://api-stop-reg.onrender.com/api/v1/check/{apiToken}?email={Uri.EscapeDataString(email)}";
+        string url = $"http://localhost:8080/api/v1/check/{apiToken}?email={Uri.EscapeDataString(email)}";
         
         using (HttpClient client = new HttpClient())
         {

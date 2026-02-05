@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/login",
+        "http://localhost:8080/api/v1/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -228,8 +228,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const hasValidPlan = data?.data?.hasValidPlan;
         const planId = data?.data?.planId;
         const tokenExpiresAt = data?.data?.tokenExpiresAt;
+        const role = data?.data?.role;
 
         localStorage.setItem("authToken", token);
+        if (role) localStorage.setItem("role", role);
 
         // Check if user has a valid subscription plan
         if (hasValidPlan && planId && tokenExpiresAt && new Date(tokenExpiresAt) > new Date()) {

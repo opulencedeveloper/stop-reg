@@ -51,6 +51,8 @@
   <link href="/assets/css/dashboard/header.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
+  <link href="/assets/css/dashboard/add-seats-modal.css" rel="stylesheet" />
+  <link href="/assets/css/dashboard/manage-domains.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
     integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
@@ -162,6 +164,8 @@
         </div>
         <h3 id="error-title" class="error-title">Access Denied</h3>
         <p id="error-message" class="error-message-text">You do not have permission to perform this action.</p>
+        <button id="error-retry-btn" class="add-seats-submit-btn"
+          style="display: none; margin-top: 15px; width: 100%;">Try Again</button>
       </div>
     </div>
     <!-- Premium Error Modal End -->
@@ -300,7 +304,7 @@
                   </div>
                   <div class="graph-sub-head">
                     <div class="graph-head-dot3 doting"></div>
-                    <p class="graph-sub-head-text">Email forwarding/alias</p>
+                    <p class="graph-sub-head-text">Relay domains</p>
                   </div>
                   <div class="graph-sub-head">
                     <div class="graph-head-dot4 doting"></div>
@@ -394,7 +398,7 @@
                   </div>
                 </div>
 
-                <div class="input-group">
+                <div class="input-group" id="api-token-section">
                   <label>API Token</label>
                   <div class="copy-input-field">
                     <span class="truncated-text" id="api-token-text">Loading...</span>
@@ -404,7 +408,9 @@
 
                 <div class="api-actions">
                   <button class="btn btn-primary" id="generate-token-btn">Generate API Token</button>
-                  <button class="btn btn-outline">Read the Docs</button>
+                  <a href="/documentation.html" class="btn btn-outline"
+                    style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Read the
+                    Docs</a>
                 </div>
 
                 <div class="divider"></div>
@@ -434,58 +440,26 @@
                 </div>
 
                 <div class="time-filter-container">
-                  <select class="time-filter-select">
-                    <option>Last 30 days</option>
-                  </select>
+                  <div class="custom-dropdown" id="month-dropdown">
+                    <div class="dropdown-trigger">
+                      <span class="selected-value">Select Month</span>
+                    </div>
+                    <div class="dropdown-menu">
+                      <!-- Populated by JS -->
+                    </div>
+                  </div>
                 </div>
 
                 <div class="chart-donut-container">
-                  <div class="donut-chart-wrapper">
-                    <!-- Donut Chart 200px -->
-                    <svg width="200" height="200" viewBox="0 0 200 200" class="donut-svg">
-                      <!-- Base Green Circle (Full, but we will dash it to show segment) -->
-                      <!-- Circumference 2*pi*70 = ~440. We want 63.5% green. -->
-                      <!-- Wait, user wants 200px width. Radius should be larger? -->
-                      <!-- ViewBox 200. Center 100. Stroke 40. Radius 80 (center of stroke). -->
-                      <!-- C = 2*pi*80 = 502.65 -->
-                      <!-- Red 36.5% = 183.5. Green 63.5% = 319.2. -->
-
-                      <!-- Green Segment -->
-                      <circle cx="100" cy="100" r="80" fill="transparent" stroke="#009900" stroke-width="40"
-                        stroke-dasharray="319.2 502.7" stroke-dashoffset="0" transform="rotate(-24.3 100 100)">
-                      </circle>
-
-                      <!-- Red Segment -->
-                      <circle cx="100" cy="100" r="80" fill="transparent" stroke="#F1416C" stroke-width="40"
-                        stroke-dasharray="183.5 502.7" stroke-dashoffset="0" transform="rotate(-155.7 100 100)"
-                        stroke-linecap="round"></circle>
-
-                      <!-- Text Labels -->
-                      <text x="100" y="20" text-anchor="middle" dominant-baseline="middle" dy=".3em" fill="white"
-                        font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600">36.5%</text>
-                      <text x="100" y="180" text-anchor="middle" dominant-baseline="middle" dy=".3em" fill="white"
-                        font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600">63.5%</text>
-                    </svg>
+                  <div class="chart-loading-state">
+                    <div class="chart-spinner"></div>
+                    <span class="chart-loading-text">Loading
+                      data...</span>
                   </div>
-                  <!-- <div class="chart-total-label">Total - 1500</div> Moved outside or keep? Image shows it to the right. Flex container handles it. -->
-                  <div class="chart-total-label">Total - 1500</div>
                 </div>
 
                 <div class="chart-legend">
-                  <div class="legend-item">
-                    <span class="legend-indicator indicator-blocked"></span>
-                    <div class="legend-text">
-                      <p class="legend-value">36.5% -300</p>
-                      <p class="legend-label">Blocked Email</p>
-                    </div>
-                  </div>
-                  <div class="legend-item">
-                    <span class="legend-indicator indicator-clean"></span>
-                    <div class="legend-text">
-                      <p class="legend-value">63.5% - 1200</p>
-                      <p class="legend-label">Clean Email</p>
-                    </div>
-                  </div>
+                  <!-- Legend will be populated by JS -->
                 </div>
               </div>
 
@@ -501,25 +475,18 @@
                   <p class="plan-usage api-request-left">...</p>
                 </div>
 
-                <button class="btn btn-light-blue">Upgrade</button>
+                <button id="dash-plan-upgrade-btn" class="btn btn-light-blue">Upgrade</button>
 
-                <div class="plan-divider"></div>
+                <div id="dash-plan-divider" class="plan-divider"></div>
 
-                <div class="dash-card-header">
+                <div id="dash-seats-header" class="dash-card-header">
                   <h3>Seats</h3>
                 </div>
 
-                <div class="seats-container">
-                  <p class="seats-title">You have invited 3 users</p>
-                  <div class="seat-list">
-                    <div class="seat-item">
-                      <span class="seat-email">cynthia44@gmail.com</span>
-                      <span class="seat-status">Registered</span>
-                    </div>
-                    <div class="seat-item">
-                      <span class="seat-email">cynthia44@gmail.com</span>
-                      <span class="seat-status">Registered</span>
-                    </div>
+                <div id="dash-seats-container" class="seats-container">
+                  <p id="dash-seats-title" class="seats-title">You have invited 0 users</p>
+                  <div id="dash-seats-list" class="seat-list">
+                    <!-- Populated via JS -->
                   </div>
                   <div class="seats-actions">
                     <a href="#" id="add-seats-trigger" class="action-link-blue">Add more</a>
@@ -538,10 +505,11 @@
                 <table class="req-table">
                   <thead>
                     <tr>
-                      <th>Endpoint</th>
-                      <th class="table-value-header">Value</th>
                       <th>Domain</th>
                       <th class="table-center">Status</th>
+                      <th class="table-center">Disposable</th>
+                      <th class="table-center">Relay</th>
+                      <th class="table-center">Free Provider</th>
                       <th class="table-center">Request Count</th>
                       <th class="table-center">Action</th>
                     </tr>
@@ -549,8 +517,6 @@
                   <tbody>
                     <!-- Row 1: Reported -->
                     <tr>
-                      <td>/email</td>
-                      <td class="req-value">zhwepdmrrmhqtf@questtechsystems.com</td>
                       <td>www.macdonald.com</td>
                       <td class="table-center">
                         <div class="status-badge status-reported">
@@ -571,8 +537,6 @@
 
                     <!-- Row 2: Blocked -->
                     <tr>
-                      <td>/email</td>
-                      <td class="req-value">zhwepdmrrmhqtf@questtechsystems.com</td>
                       <td>www.macdonald.com</td>
                       <td class="table-center">
                         <div class="status-badge status-blocked">
@@ -593,8 +557,6 @@
 
                     <!-- Row 3: Allowed -->
                     <tr>
-                      <td>/email</td>
-                      <td class="req-value">zhwepdmrrmhqtf@questtechsystems.com</td>
                       <td>www.macdonald.com</td>
                       <td class="table-center">
                         <div class="status-badge status-allowed">
@@ -613,8 +575,6 @@
 
                     <!-- Row 4: Reported -->
                     <tr>
-                      <td>/email</td>
-                      <td class="req-value">zhwepdmrrmhqtf@questtechsystems.com</td>
                       <td>www.macdonald.com</td>
                       <td class="table-center">
                         <div class="status-badge status-reported">
@@ -635,8 +595,6 @@
 
                     <!-- Row 5: Allowed -->
                     <tr>
-                      <td>/email</td>
-                      <td class="req-value">zhwepdmrrmhqtf@questtechsystems.com</td>
                       <td>www.macdonald.com</td>
                       <td class="table-center">
                         <div class="status-badge status-allowed">
@@ -680,8 +638,7 @@
                 <!-- Email -->
                 <div class="add-seats-form-group">
                   <label class="add-seats-label" for="seat-email">Email</label>
-                  <input type="email" id="seat-email" class="add-seats-input" placeholder="macdonald@gmail.com"
-                    required>
+                  <input type="email" id="seat-email" class="add-seats-input" placeholder="Enter email" required>
                 </div>
 
                 <!-- First Name -->
@@ -703,17 +660,132 @@
         </div>
         <!-- Add Seats Modal End -->
 
+        <!-- Generic Confirmation Modal -->
+        <div id="confirmation-modal-overlay" class="overlay" role="dialog" aria-modal="true"
+          aria-labelledby="confirm-modal-title">
+          <div class="delete-modal-box" style="background: white; margin: auto; position: relative;">
+            <div class="delete-icon-wrapper" id="confirm-icon-wrapper">
+              <img src="/assets/icons/delete.svg" class="delete-modal-icon" id="confirm-icon" alt="Warning">
+            </div>
+            <h2 id="confirm-modal-title" class="delete-modal-title">Confirm Action</h2>
+            <p id="confirm-modal-desc" class="delete-modal-desc">Are you sure you want to proceed?</p>
+
+            <div class="delete-modal-actions">
+              <button id="confirm-cancel-btn" class="btn-cancel-delete">Cancel</button>
+              <button id="confirm-action-btn" class="btn-confirm-delete">
+                <span>Confirm</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Confirmation Modal End -->
+
+        <!-- Block Domain Modal Start -->
+        <div id="block-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="block-modal-title">
+          <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+              <h2 id="block-modal-title" class="add-seats-title">Block a Domain</h2>
+              <button id="close-block-modal" class="add-seats-close-btn" aria-label="Close modal">
+                <img src="/assets/icons/close.svg" alt="Close" />
+              </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Block a Suspicious Domain Name</p>
+
+            <div class="add-seats-body block-modal-body">
+              <form id="block-domain-form">
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="block-domain-name">Domain Name</label>
+                  <input type="text" id="block-domain-name" class="add-seats-input" placeholder="www.macdonald.com"
+                    required>
+                </div>
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="block-comment">Comment</label>
+                  <textarea id="block-comment" class="add-seats-input add-seats-textarea"
+                    placeholder="Please type here"></textarea>
+                </div>
+                <button type="submit" class="add-seats-submit-btn btn-block-submit">Block</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Block Domain Modal End -->
+        <!-- Report Domain Modal Start -->
+        <div id="report-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="report-modal-title">
+          <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+              <h2 id="report-modal-title" class="add-seats-title">Report a Domain</h2>
+              <button id="close-report-modal" class="add-seats-close-btn" aria-label="Close modal">
+                <img src="/assets/icons/close.svg" alt="Close" />
+              </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Report a Suspicious Domain Name</p>
+
+            <div class="add-seats-body block-modal-body">
+              <form id="report-domain-form">
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="report-domain-name">Domain Name</label>
+                  <input type="text" id="report-domain-name" class="add-seats-input" placeholder="www.macdonald.com"
+                    required>
+                </div>
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="report-comment">Comment</label>
+                  <textarea id="report-comment" class="add-seats-input add-seats-textarea"
+                    placeholder="Please type here"></textarea>
+                </div>
+                <button type="submit" class="add-seats-submit-btn btn-report-submit">Report</button>
+                <button type="button" id="report-bottom-close" class="btn-text-close">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Report Domain Modal End -->
+        <!-- Allow Domain Modal Start -->
+        <div id="allow-domain-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="allow-modal-title">
+          <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+              <h2 id="allow-modal-title" class="add-seats-title">Allow a Domain</h2>
+              <button id="close-allow-modal" class="add-seats-close-btn" aria-label="Close modal">
+                <img src="/assets/icons/close.svg" alt="Close" />
+              </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Enter the domain name below to continue</p>
+
+            <div class="add-seats-body block-modal-body">
+              <form id="allow-domain-form">
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="allow-domain-name">Domain Name</label>
+                  <input type="text" id="allow-domain-name" class="add-seats-input" placeholder="www.macdonald.com"
+                    required>
+                </div>
+                <div class="add-seats-form-group">
+                  <label class="add-seats-label" for="allow-comment">Comment</label>
+                  <textarea id="allow-comment" class="add-seats-input add-seats-textarea"
+                    placeholder="Please type here"></textarea>
+                </div>
+                <button type="submit" class="add-seats-submit-btn btn-allow-submit">Continue</button>
+                <button type="button" id="allow-bottom-close" class="btn-text-close">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Allow Domain Modal End -->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
           integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
         <script src="/assets/js/main.js" defer></script>
         <script src="/assets/js/dash/index.js" defer></script>
+        <script src="/assets/js/dash/index-modals.js" defer></script>
         <script src="/assets/js/dash/header.js" defer></script>
         <script src="/assets/js/dash/chart.js" defer></script>
-        <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
-        <!-- <script src="/assets/js/regenerate-api-key.js" defer></script> -->
-        <link href="/assets/css/dashboard/add-seats-modal.css" rel="stylesheet" />
+        <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
+        <script src="/assets/js/dash/fetch-plan-details.js" defer></script>
+        <script src="/assets/js/regenerate-api-key.js" defer></script>
+
         <script src="/assets/js/dashboard/error-handler.js" defer></script>
+        <script src="/assets/js/dash/fetch-seats.js" defer></script>
+        <script src="/assets/js/dash/invite-seat.js" defer></script>
+        <script src="/assets/js/dash/seat-actions.js" defer></script>
         <script src="/assets/js/dashboard/add-seats-modal.js" defer></script>
         <script src="/assets/js/dashboard/image-fallback.js" defer></script>
         <!-- Zoho SalesIQ Live Chat Widget -->

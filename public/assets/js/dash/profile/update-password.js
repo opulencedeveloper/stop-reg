@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("form-container");
   const submitBtn = form.querySelector(".p-save-ch-btn");
 
+  // Hide global spinner
+  if (typeof window.hideSpinner === "function") {
+    window.hideSpinner();
+  }
+
   // Error modal
   let errorModal = document.createElement("div");
   errorModal.className = "error-modal";
@@ -28,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      window.location.href = "/";
+      window.location.href = "/sign-in.html";
       return;
     }
 
@@ -58,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/user/update/password",
+        "http://localhost:8080/api/v1/user/update/password",
         {
           method: "PATCH",
           headers: {
@@ -92,6 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = originalText;
         form.reset();
       } else {
+        if (response.status === 401) {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("role");
+          window.location.href = "/sign-in.html";
+          return;
+        }
         const errorMessage = data.description || data.message || "Failed to update password.";
         if (typeof iziToast !== 'undefined') {
           iziToast.error({

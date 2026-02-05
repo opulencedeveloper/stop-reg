@@ -166,6 +166,11 @@ tr.bulks-table-inner td {
   outline: none;
 }
 
+.fag-header-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .bulks-fags-hd,
 .fags-docs {
   font-size: 48px;

@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableBody = document.getElementById("table-body-inner");
 
   if (!token) {
-    window.location.href = "/";
+    window.location.href = "/sign-in.html";
     return;
   }
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
+      "http://localhost:8080/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              ` https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -101,7 +101,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/";
+        localStorage.removeItem("role");
+        window.location.href = "/sign-in.html";
       }
     }
   } catch (error) {
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableBody = document.getElementById("table-body-inner");
 
   if (!token) {
-    window.location.href = "/";
+    window.location.href = "/sign-in.html";
     return;
   }
 
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
+      "http://localhost:8080/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -176,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              ` https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -232,7 +233,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (response.status === 401) {
         localStorage.removeItem("authToken");
-        window.location.href = "/";
+        localStorage.removeItem("role");
+        window.location.href = "/sign-in.html";
       } else {
         const errorMessage =
           data.description || data.message || "Failed to fetch domains.";

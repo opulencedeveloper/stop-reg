@@ -499,6 +499,34 @@ canvas {
   }
 }
 
+.chart-spinner {
+  border: 3px solid var(--color-nine);
+  /* Transparent track */
+  border-top: 3px solid var(--secondary-color);
+  /* Primary blue spinner */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.8s linear infinite;
+  display: block;
+}
+
+.chart-loading-state {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chart-loading-text {
+  font-family: 'Inter_28pt-Regular';
+  font-size: 14px;
+  color: #6B7280;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -956,29 +984,87 @@ canvas {
   width: 100%;
 }
 
-.time-filter-select {
-  border: none;
-  outline: none;
+/* Custom Monitoring Date Dropdown */
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  min-width: 140px;
+}
+
+.dropdown-trigger {
   background-color: #F8F8F8;
   border-radius: 8px;
   padding: 8px 32px 8px 12px;
-  /* Extra right padding for arrow */
   font-family: "Inter_28pt-Regular";
   font-size: 14px;
   color: #6B7280;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
-  /* Remove default arrow */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  /* Custom Arrow */
+.dropdown-trigger::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 6px;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M10.59 0.589844L6 5.16984L1.41 0.589844L0 1.99984L6 7.99984L12 1.99984L10.59 0.589844Z' fill='%236B7280'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  /* 14px right to give 8px clearance + icon margin */
-  background-size: 10px;
+  background-size: contain;
+  transition: transform 0.2s ease;
+}
+
+.custom-dropdown.active .dropdown-trigger::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  /* below trigger */
+  left: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.custom-dropdown.active .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  padding: 10px 12px;
+  font-family: "Inter_28pt-Regular";
+  font-size: 14px;
+  color: #6B7280;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #F8F8F8;
+  color: #252525;
+}
+
+.dropdown-item.selected {
+  font-weight: 600;
+  color: #1452CA;
+  background-color: #ECF2FD;
 }
 
 .chart-donut-container {
@@ -987,8 +1073,9 @@ canvas {
   justify-content: flex-start;
   margin-top: 12px;
   margin-bottom: 8px;
-  width: 306px;
-  gap: 12px;
+  width: 100%;
+  gap: 0;
+  /* Removing gap, using negative margin on label to pull closer */
   position: relative;
   padding-left: 0;
 }
@@ -1009,11 +1096,14 @@ canvas {
   font-size: 16px;
   color: #000;
   position: absolute;
-  /* Position relative to flex container or absolute right? image implies right side of donut */
-  right: 0;
+  right: -80px;
+  /* Push it out to the right */
   top: 50%;
   transform: translateY(-50%);
+  /* Vertical Center */
   font-weight: 600;
+  width: max-content;
+  /* Ensure it doesn't wrap weirdly */
 }
 
 .chart-legend {
@@ -1371,6 +1461,82 @@ canvas {
   background: #EFF6FF;
 }
 
+
+/* Empty State Animation */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out forwards;
+  width: 100%;
+}
+
+.empty-state-svg {
+  width: 80px;
+  height: auto;
+  margin-bottom: 24px;
+  animation: float 6s ease-in-out infinite;
+  /* Filter to colorize the SVG to #252525 */
+  filter: brightness(0) saturate(100%) invert(13%) sepia(2%) saturate(4%) hue-rotate(324deg) brightness(96%) contrast(92%);
+  opacity: 0.8;
+}
+
+.empty-state-title {
+  font-family: 'Inter_28pt-SemiBold';
+  font-size: 18px;
+  color: #252525;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.2s forwards;
+}
+
+.empty-state-desc {
+  font-family: 'Inter_28pt-Regular';
+  font-size: 14px;
+  color: #737373;
+  opacity: 0;
+  animation: slideUp 0.6s ease-out 0.4s forwards;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media only screen and (max-width: 1151px) {
   .dash-api-content-sect1 {
     align-items: start;
@@ -1703,4 +1869,86 @@ canvas {
     height: 14px;
     width: 14px;
   }
+}
+
+/* Premium Error State */
+.fetch-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 200px;
+  animation: fadeIn 0.5s ease-out;
+  text-align: center;
+  gap: 12px;
+}
+
+.error-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: #FEF2F2;
+  /* Light Red BG */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.fetch-error-state svg {
+  width: 24px;
+  height: 24px;
+  color: #DC2626;
+  /* Red 600 */
+}
+
+.error-title {
+  font-family: "Inter_28pt-SemiBold";
+  font-size: 16px;
+  color: #252525;
+  font-weight: 600;
+  margin: 0;
+}
+
+.error-desc {
+  font-family: "Inter_28pt-Regular";
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+  max-width: 250px;
+}
+
+.retry-btn {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 6px;
+  font-family: "Inter_28pt-SemiBold";
+  font-size: 14px;
+  color: #252525;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.retry-btn:hover {
+  background-color: #F8F8F8;
+  border-color: #DC2626;
+  /* Hover border red? Or just grey */
+  color: #DC2626;
+}
+
+.retry-btn:active {
+  transform: scale(0.98);
+}
+
+.retry-btn svg {
+  width: 16px;
+  height: 16px;
 }

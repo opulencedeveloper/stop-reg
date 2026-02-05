@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     if (!token) {
-      window.location.href = "/";
+      window.location.href = "/sign-in.html";
       return;
     }
 
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/manage/domain/add",
+        "http://localhost:8080/api/v1/manage/domain/add",
         {
           method: "POST",
           headers: {
@@ -99,6 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
         addBlockForm.reset();
         reportDomainOverlay.style.display = "none";
       } else {
+        if (response.status === 401) {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("role");
+          window.location.href = "/sign-in.html";
+          return;
+        }
         const errorMessage = data.description || data.message || "Failed to allow domain.";
         if (typeof iziToast !== 'undefined') {
           iziToast.error({

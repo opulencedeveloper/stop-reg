@@ -17,7 +17,7 @@ async function handleRegenerate(btn) {
     
     // Loading state
     btn.disabled = true;
-    btn.innerHTML = `<span class="btn-spinner"></span> ${isNewBtn ? "Generating..." : "Requesting..."}`;
+    btn.innerHTML = `<div class="stopreg-btn-spinner" style="border-color: rgba(255,255,255,0.2) !important; border-top-color: #FFFFFF !important;"></div> ${isNewBtn ? "Generating..." : "Requesting..."}`;
 
     if (!token) {
         window.location.href = "/";
@@ -26,7 +26,7 @@ async function handleRegenerate(btn) {
 
     try {
         const response = await fetch(
-            "https://api-stop-reg.onrender.com/api/v1/user/regenerate/token",
+            "http://localhost:8080/api/v1/user/regenerate/token",
             {
                 method: "PATCH",
                 headers: {
@@ -61,7 +61,7 @@ async function handleRegenerate(btn) {
                 // 3. Update Link
                 const linkContainer = document.querySelector(".link-container");
                 if (linkContainer) {
-                    const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${newApiToken}?email=test@test.com`;
+                    const newLink = ` http://localhost:8080/api/v1/check/${newApiToken}?email=test@test.com`;
                     linkContainer.href = newLink;
                     
                     const linkTitle = linkContainer.querySelector(".token-link-title");
@@ -100,7 +100,8 @@ async function handleRegenerate(btn) {
 
             if (response.status === 401) {
                 localStorage.removeItem("authToken");
-                window.location.href = "/";
+                localStorage.removeItem("role");
+                window.location.href = "/sign-in.html";
             }
         }
     } catch (error) {

@@ -1,5 +1,5 @@
 .main-head-cont {
-    position: fixed;
+    position: sticky;
     top: 0px;
     left: 0;
     width: 100%;

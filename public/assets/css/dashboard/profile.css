@@ -395,3 +395,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
     margin-top: 5px;
   }
 }
+
+/* Read-only email input style */
+.email-readonly {
+  cursor: default;
+  opacity: 0.7;
+  background-color: #F2F2F2 !important;
+}

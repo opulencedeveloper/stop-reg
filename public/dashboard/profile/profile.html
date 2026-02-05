@@ -19,6 +19,12 @@
   <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/profile.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+  <script>
+    // RBAC: Redirect "Seat" users away from this page
+    if (localStorage.getItem("role") === "Seat") {
+      window.location.href = "/dashboard/index.html";
+    }
+  </script>
 </head>
 
 <body>
@@ -173,8 +179,16 @@
 
                   <form class="form-container" id="form-container">
                     <div class="form-item">
-                      <label for="fullname">Full Name</label>
-                      <input id="fullname" required type="text" placeholder="Victor Opulence" />
+                      <label for="firstname">First Name</label>
+                      <input id="firstname" required type="text" placeholder="Victor" />
+                    </div>
+                    <div class="form-item">
+                      <label for="lastname">Last Name</label>
+                      <input id="lastname" required type="text" placeholder="Opulence" />
+                    </div>
+                    <div class="form-item">
+                      <label for="email">Email</label>
+                      <input id="email" type="email" readonly class="email-readonly" />
                     </div>
 
                     <button class="p-save-ch-btn">Save Changes</button>
@@ -190,7 +204,7 @@
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
   <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
-  <script src="/assets/js/dash/profile//profile-update.js"></script>
+  <script src="/assets/js/dash/profile/profile-update.js"></script>
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>
   <script id="zsiqscript"

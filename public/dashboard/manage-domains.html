@@ -241,22 +241,33 @@
                                 </table>
                             </div>
                             <div class="pagination-container">
-                                <div class="page-size-selector">
-                                    <span>10 per page</span>
-                                    <img src="/assets/icons/drop-down.svg" alt="" class="icon-dropdown" />
-                                </div>
-                                <div class="pagination-nav">
-                                    <button class="page-btn" disabled>
-                                        <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
-                                    </button>
-                                    <button class="page-btn active">1</button>
-                                    <button class="page-btn">2</button>
-                                    <span>...</span>
-                                    <button class="page-btn">9</button>
-                                    <button class="page-btn">10</button>
-                                    <button class="page-btn">
-                                        <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
-                                    </button>
+                                <div class="table-pagination">
+                                    <div class="pagination-select-container">
+                                        <select class="pagination-select">
+                                            <option>10 per page</option>
+                                            <option>20 per page</option>
+                                        </select>
+                                        <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="pagination-controls">
+                                        <button class="page-nav-btn prev" disabled>
+                                            <img src="/assets/icons/angle-right.svg" alt="Previous"
+                                                class="rotate-180" />
+                                        </button>
+                                        <button class="page-number active">1</button>
+                                        <button class="page-number">2</button>
+                                        <span class="page-dots">...</span>
+                                        <button class="page-number">9</button>
+                                        <button class="page-number">10</button>
+                                        <button class="page-nav-btn next">
+                                            <img src="/assets/icons/angle-right.svg" alt="Next" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -317,22 +328,33 @@
                                 </table>
                             </div>
                             <div class="pagination-container">
-                                <div class="page-size-selector">
-                                    <span>10 per page</span>
-                                    <img src="/assets/icons/thin-drop-down.svg" alt="" />
-                                </div>
-                                <div class="pagination-nav">
-                                    <button class="page-btn" disabled>
-                                        <img src="/assets/icons/angle-right.svg" alt="Previous" class="icon-prev" />
-                                    </button>
-                                    <button class="page-btn active">1</button>
-                                    <button class="page-btn">2</button>
-                                    <span>...</span>
-                                    <button class="page-btn">9</button>
-                                    <button class="page-btn">10</button>
-                                    <button class="page-btn">
-                                        <img src="/assets/icons/angle-right.svg" alt="Next" class="icon-next" />
-                                    </button>
+                                <div class="table-pagination">
+                                    <div class="pagination-select-container">
+                                        <select class="pagination-select">
+                                            <option>10 per page</option>
+                                            <option>20 per page</option>
+                                        </select>
+                                        <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="pagination-controls">
+                                        <button class="page-nav-btn prev" disabled>
+                                            <img src="/assets/icons/angle-right.svg" alt="Previous"
+                                                class="rotate-180" />
+                                        </button>
+                                        <button class="page-number active">1</button>
+                                        <button class="page-number">2</button>
+                                        <span class="page-dots">...</span>
+                                        <button class="page-number">9</button>
+                                        <button class="page-number">10</button>
+                                        <button class="page-nav-btn next">
+                                            <img src="/assets/icons/angle-right.svg" alt="Next" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -421,6 +443,38 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- Pagination -->
+                            <div class="pagination-container">
+                                <div class="table-pagination">
+                                    <div class="pagination-select-container">
+                                        <select class="pagination-select">
+                                            <option>10 per page</option>
+                                            <option>20 per page</option>
+                                        </select>
+                                        <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="pagination-controls">
+                                        <button class="page-nav-btn prev" disabled>
+                                            <img src="/assets/icons/angle-right.svg" alt="Previous"
+                                                class="rotate-180" />
+                                        </button>
+                                        <button class="page-number active">1</button>
+                                        <button class="page-number">2</button>
+                                        <span class="page-dots">...</span>
+                                        <button class="page-number">9</button>
+                                        <button class="page-number">10</button>
+                                        <button class="page-nav-btn next">
+                                            <img src="/assets/icons/angle-right.svg" alt="Next" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                         </section>
                     </div>
                 </div>
@@ -521,16 +575,30 @@
         </div>
     </div>
     <!-- Allow Domain Modal End -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const spinner = document.getElementById('spinner-body');
-            if (spinner) {
-                setTimeout(() => {
-                    spinner.style.display = 'none';
-                }, 500);
-            }
-        });
-    </script>
+    <!-- Delete Confirmation Modal (Same as API Count) -->
+    <div id="delete-request-modal" class="overlay">
+        <div class="otp-box delete-modal-box">
+            <div class="delete-icon-wrapper">
+                <img src="/assets/icons/delete.svg" alt="Delete" class="delete-modal-icon">
+            </div>
+
+            <h3 class="delete-modal-title">Delete Request</h3>
+
+            <p class="delete-modal-desc">
+                Are you sure you want to delete this request? This action cannot be undone.
+            </p>
+
+            <div class="delete-modal-actions">
+                <button id="cancel-delete-btn" class="btn-cancel-delete">
+                    Cancel
+                </button>
+                <button id="confirm-delete-btn" class="btn-confirm-delete">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

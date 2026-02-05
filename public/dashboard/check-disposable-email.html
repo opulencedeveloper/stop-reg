@@ -170,9 +170,8 @@
                   </p>
                   <form id="verify-form">
                     <div class="check-disposable-email-form">
-                      <label for="disposal-email">Enter email</label>
-                      <input id="disposal-email" type="text" placeholder="macdonald@gmail.com"
-                        value="macdonald@gmail.com" />
+                      <label for="disposal-email">Enter email or domain</label>
+                      <input id="disposal-email" type="text" placeholder="Enter email or domain" />
                     </div>
                     <button class="bulk-check-email-btn">Verify</button>
                   </form>
@@ -181,54 +180,30 @@
 
               <!-- Right Column: Results -->
               <div class="check-email-right">
-                <h4 class="disposal-result-main-title">
-                  The email provided macdonald@aagmail.com is a verified disposable email
-                </h4>
 
-                <div class="disposal-results-list">
-                  <!-- Max Record (True) -->
-                  <div class="result-card status-true">
-                    <div class="result-content">
-                      <h3 class="result-head">Max Record</h3>
-                      <p class="result-desc">
-                        This domain has MX record. This means that it has a mail server and is able to receive emails
-                      </p>
-                    </div>
-                    <p class="result-boolean">True</p>
-                  </div>
+                <!-- Empty State (Default) -->
+                <div id="results-empty-state" class="results-empty-state">
+                  <h3 class="empty-state-title">No Verification yet</h3>
+                  <p class="empty-state-desc">Enter an email or domain to view results here</p>
+                </div>
 
-                  <!-- Disposable (True) -->
-                  <div class="result-card status-true">
-                    <div class="result-content">
-                      <h3 class="result-head">Disposable</h3>
-                      <p class="result-desc">
-                        This domain does not appear to be from a disposable email provider
-                      </p>
-                    </div>
-                    <p class="result-boolean">True</p>
-                  </div>
+                <!-- Results Container (Hidden by default) -->
+                <div id="results-container" style="display: none;">
+                  <h4 class="disposal-result-main-title">
+                    The email provided macdonald@aagmail.com is a verified disposable email
+                  </h4>
 
-                  <!-- Public Email (False) -->
-                  <div class="result-card status-false">
-                    <div class="result-content">
-                      <h3 class="result-head">Public email provider</h3>
-                      <p class="result-desc">
-                        This domain is from a public email provider. This means that anyone can generate emails from
-                        this domain for free
-                      </p>
+                  <div class="disposal-results-list">
+                    <!-- Disposable (True) -->
+                    <div class="result-card status-true">
+                      <div class="result-content">
+                        <h3 class="result-head">Disposable</h3>
+                        <p class="result-desc">
+                          This domain does not appear to be from a disposable email provider
+                        </p>
+                      </div>
+                      <p class="result-boolean">True</p>
                     </div>
-                    <p class="result-boolean">False</p>
-                  </div>
-
-                  <!-- Relay Domain (False) -->
-                  <div class="result-card status-false">
-                    <div class="result-content">
-                      <h3 class="result-head">Relay domain</h3>
-                      <p class="result-desc">
-                        This domain does not appear to be a relay domain
-                      </p>
-                    </div>
-                    <p class="result-boolean">False</p>
                   </div>
                 </div>
               </div>
@@ -242,7 +217,6 @@
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
   <script src="/assets/js/dash/domain.js"></script>
-  <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
   <script src="/assets/js/dash/check-disposal-email.js"></script>
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

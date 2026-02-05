@@ -51,10 +51,44 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
 });
 
-// const hamburger = document.querySelector(".hamburger");
-
-// hamburger.addEventListener("click", () => {
-//     console.log("clicked")
-//     hamburger.classList.toggle("active");
-//     // navMenu.classList.toggle("active");
+    // navMenu.classList.toggle("active");
 //   });
+
+    // Manual Logout Handler
+    const confirmLogoutBtn = document.querySelector('.y-log-out');
+    if (confirmLogoutBtn) {
+        confirmLogoutBtn.addEventListener('click', function(e) {
+            // e.preventDefault(); // Optional: if we want to redirect manually
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("role");
+            window.location.href = "/sign-in.html";
+        });
+    }
+
+    // Role-Based Access Control (RBAC) - Hide Restricted Links for "Seat" Users
+    const userRole = localStorage.getItem("role");
+    if (userRole === "Seat") {
+        const restrictedPaths = [
+            "/dashboard/profile",
+            "/dashboard/payments.html"
+        ];
+
+        // Hide links in Desktop/Mobile Nav & Quick Links
+        restrictedPaths.forEach(path => {
+            // Select all anchor tags containing the restricted path
+            const links = document.querySelectorAll(`a[href*="${path}"]`);
+            links.forEach(link => {
+                if (link) {
+                    link.style.display = "none"; 
+                    // Optional: Hide parent container if it leaves an empty box (e.g., in quick links grid?)
+                    // For now, display:none on the <a> tag is sufficient as per standard practices.
+                }
+            });
+        });
+
+        // Also explicitly hide the "Upgrade" button in header/dashboard if it exists (extra safety)
+        const upgradeBtns = document.querySelectorAll('.dash-cur-plan, .btn-light-blue, .payments-hd-sect-one, #dash-plan-upgrade-btn'); 
+        upgradeBtns.forEach(btn => {
+            if (btn) btn.style.display = "none";
+        });
+    }
