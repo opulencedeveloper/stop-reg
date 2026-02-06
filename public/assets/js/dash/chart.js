@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       // Show/Hide View More Button
       const viewMoreBtn = document.querySelector(".req-view-more-btn");
       if (viewMoreBtn) {
-          if (requests && requests.length > 20) {
+          if (requests && requests.length > 0) {
               viewMoreBtn.style.display = "block";
           } else {
               viewMoreBtn.style.display = "none";
