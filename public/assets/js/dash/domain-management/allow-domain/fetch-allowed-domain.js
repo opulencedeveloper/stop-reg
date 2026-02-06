@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:8080/api/v1/manage/domain/fetch",
+      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              ` http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:8080/api/v1/manage/domain/fetch",
+      "https://api-stop-reg.onrender.com/api/v1/manage/domain/fetch",
       {
         method: "GET",
         headers: {
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           try {
             const deleteResponse = await fetch(
-              ` http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`,
+              ` https://api-stop-reg.onrender.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
               {
                 method: "DELETE",
                 headers: {

@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Construct the URL with API token and email
-      const url = ` http://localhost:8080/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`;
+      const url = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`;
       
       const response = await fetch(url, {
         method: "GET",
