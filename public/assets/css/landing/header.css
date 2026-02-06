@@ -187,8 +187,8 @@
     display: flex;
     flex-direction: row;
     gap: 12px;
-    padding-left: var(--mobile-padding);
-    padding-right: var(--mobile-padding);
+    /* padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding); */
 }
 
 .mobile-nav-items {
@@ -196,8 +196,9 @@
     flex-direction: column;
     justify-items: center;
     gap: 32px;
-    padding-left: var(--mobile-padding);
-    padding-right: var(--mobile-padding);
+    margin-bottom: 32px;
+    /* padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding); */
 }
 
 .mobile-nav-items>a,

@@ -260,8 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="pagination-select-container">
                     <select class="pagination-select">
                         <option value="10" ${currentLimit === 10 ? 'selected' : ''}>10 per page</option>
-                        <option value="20" ${currentLimit === 20 ? 'selected' : ''}>20 per page</option>
-                        <option value="50" ${currentLimit === 50 ? 'selected' : ''}>50 per page</option>
                     </select>
                     <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
@@ -334,15 +332,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     let itemToDeleteId = null;
+    let btnTriggeringDelete = null;
 
-    function openDeleteModal(id) {
+    function openDeleteModal(id, btn) {
         itemToDeleteId = id;
+        btnTriggeringDelete = btn;
         if (deleteModal) deleteModal.style.display = 'flex';
     }
 
     function closeDeleteModal() {
         if (deleteModal) deleteModal.style.display = 'none';
         itemToDeleteId = null;
+        btnTriggeringDelete = null;
     }
 
     if (cancelDeleteBtn) cancelDeleteBtn.addEventListener('click', closeDeleteModal);
@@ -356,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.target.closest('.delete-action-btn');
         if (btn) {
             const id = btn.dataset.id;
-            if (id) openDeleteModal(id);
+            if (id) openDeleteModal(id, btn);
         }
     });
 
@@ -379,11 +380,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (typeof iziToast !== 'undefined') {
                         iziToast.success({ message: "Deleted successfully", position: "topRight" });
                     }
+                    
+                    // Local UI removal instead of refetching
+                    if (btnTriggeringDelete) {
+                        const row = btnTriggeringDelete.closest('tr');
+                        const tbody = row?.parentElement;
+                        if (row) row.remove();
+
+                        // If table becomes empty, show empty state and hide pagination
+                        if (tbody && tbody.querySelectorAll('tr').length === 0) {
+                            const status = Object.keys(configs).find(key => configs[key].tbody === tbody);
+                            if (status) {
+                                renderEmptyRow(tbody, configs[status].emptyTitle, configs[status].emptyDesc);
+                                if (configs[status].pagination) {
+                                    configs[status].pagination.style.display = 'none';
+                                }
+                            }
+                        }
+                    }
+                    
                     closeDeleteModal();
-                    // Refresh all tables (Safest since we don't know which one it was deleted from without extra metadata)
-                    Object.keys(configs).forEach(status => {
-                        fetchDomains(status, state[status].page, state[status].limit);
-                    });
                 } else {
                     const data = await response.json();
                     throw new Error(data.message || "Failed to delete");

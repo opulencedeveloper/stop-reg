@@ -79,36 +79,32 @@
     display: flex;
     align-items: center;
     background-color: #F5F5F7;
-    /* Light grey pill background */
-    border-radius: 8px;
-    /* Or 100px for full pill */
-    gap: 4px;
+    border-radius: 12px;
+    padding: 6px;
+    gap: 8px;
 }
 
 .header-nav-link {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding-left: 16px;
-    padding-right: 46px;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    border-radius: 8px;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 10px;
     text-decoration: none;
-    color: #252525;
-    font-family: 'Inter_18pt-Bold';
-    font-size: 16px;
+    color: #344054;
+    font-family: 'Inter_28pt-SemiBold';
+    font-size: 15px;
     transition: all 0.2s ease;
 }
 
 .header-nav-link:hover {
-    background-color: #E0E0E0;
+    background-color: #ECECED;
 }
 
 .header-nav-link.active {
-    background-color: var(--color-two);
-    /* Blue Active */
+    background-color: #1452CA;
     color: #ffffff;
+    font-family: 'Inter_18pt-Bold';
 }
 
 .header-nav-link .nav-icon {
