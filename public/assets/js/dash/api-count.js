@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (expiryEl) expiryEl.innerHTML = `Expires: ${loadingSpinner}`;
 
         try {
-            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+            const response = await fetch("http://localhost:8080/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Construct Query
             // Note: Endpoint /api/v1/user/info/requests is verified from user prompt
-            const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?page=${page}&limit=${pageSize}`;
+            const url = `http://localhost:8080/api/v1/user/info/requests?page=${page}&limit=${pageSize}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken"); // Ensure token is available scope-wise or fetch again
-                const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/request/delete?id=${requestToDeleteId}`, {
+                const response = await fetch(`http://localhost:8080/api/v1/request/delete?id=${requestToDeleteId}`, {
                     method: 'DELETE',
                     headers: {
                        "Authorization": `Bearer ${token}`

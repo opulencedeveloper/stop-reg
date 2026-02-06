@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ------------------------------------------------------
   async function fetchUserInfo() {
     try {
-      const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+      const response = await fetch("http://localhost:8080/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async () => {
            if (apiToken) {
               const linkContainer = document.querySelector(".link-container");
               if (linkContainer) {
-                const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
+                const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
                 linkContainer.href = newLink;
                 const linkTitle = linkContainer.querySelector(".token-link-title");
                 if (linkTitle) linkTitle.textContent = newLink;
@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info/requests", {
+       const response = await fetch("http://localhost:8080/api/v1/user/info/requests", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -274,6 +274,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     processRequests(requests);
     renderTable(requests);
   }
+  window.fetchRequests = fetchRequests;
   
   function handleRequestsError(tableBody, donutElem, trendElem, chartElem) {
       const retryFn = () => fetchRequests();
@@ -1113,7 +1114,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       try {
-          const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?month=${monthIndex}`;
+          const url = `http://localhost:8080/api/v1/user/info/requests?month=${monthIndex}`;
           const response = await fetch(url, {
                method: "GET",
                headers: {

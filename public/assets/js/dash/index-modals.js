@@ -90,8 +90,59 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModal(allowOverlay);
     }
 
-    // --- Event Delegation for Dynamic Buttons ---
+    // --- Event Delegation for Direct Submission (No Modals) ---
     const tableContainer = document.querySelector('.req-table-container');
+    const token = localStorage.getItem("authToken");
+
+    async function submitStatusUpdate(requestId, status, btn) {
+        if (!token) {
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "You are not logged in.", position: "topRight" });
+            return;
+        }
+
+        const originalContent = btn.innerHTML;
+        const width = btn.offsetWidth;
+        btn.style.width = `${width}px`; // Maintain width
+        btn.disabled = true;
+        btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; display: block; margin: 0 auto !important;"></span>`;
+
+        try {
+            const url = `http://localhost:8080/api/v1/request/status/update?id=${requestId}`;
+            const response = await fetch(url, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ status: status, comment: "" })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.success({ message: "Status updated successfully!", position: "topRight" });
+                }
+                // Refresh table data
+                if (typeof window.fetchRequests === 'function') {
+                    window.fetchRequests(); 
+                } else if (typeof fetchRequests === 'function') {
+                    fetchRequests();
+                }
+            } else {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({ message: data.message || "Failed to update status", position: "topRight" });
+                }
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
+        } catch (err) {
+            console.error(err);
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Network error occurred", position: "topRight" });
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
+        }
+    }
 
     if (tableContainer) {
         tableContainer.addEventListener('click', (e) => {
@@ -100,31 +151,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             e.preventDefault();
 
-            // Extract Data
-            const row = btn.closest('tr');
-            let domainName = '';
-            if (row) {
-                const domainCell = row.querySelector('td:first-child');
-                if (domainCell) {
-                    domainName = domainCell.textContent.trim();
-                }
-            }
-            
             const requestId = btn.dataset.id;
-            const comment = btn.dataset.comment;
+            if (!requestId) return;
 
-            // Detect button type and open appropriate modal with status context
+            // Detect target status based on button class
+            let targetStatus = '';
             if (btn.classList.contains('btn-add-allow')) {
-                 openModal(allowOverlay, domainName, comment, requestId, 'allow');
+                targetStatus = 'allow';
             } else if (btn.classList.contains('btn-report')) {
-                 openModal(reportOverlay, domainName, comment, requestId, 'reported');
+                targetStatus = 'reported';
             } else if (btn.classList.contains('btn-add-block')) {
-                 openModal(blockOverlay, domainName, comment, requestId, 'blocked');
+                targetStatus = 'blocked';
+            }
+
+            if (targetStatus) {
+                submitStatusUpdate(requestId, targetStatus, btn);
             }
         });
     }
 
-    // --- Close Button Listeners ---
+    // --- Close Button Listeners (Kept for other potential triggers) ---
     document.getElementById('close-block-modal')?.addEventListener('click', () => closeModal(blockOverlay));
     document.getElementById('close-report-modal')?.addEventListener('click', () => closeModal(reportOverlay));
     document.getElementById('report-bottom-close')?.addEventListener('click', () => closeModal(reportOverlay));
@@ -220,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const url = `https://api-stop-reg.onrender.com/api/v1/request/status/update?id=${currentRequestId}`;
+            const url = `http://localhost:8080/api/v1/request/status/update?id=${currentRequestId}`;
             
             const response = await fetch(url, {
                 method: "PATCH",
