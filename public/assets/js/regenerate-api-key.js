@@ -5,15 +5,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const legacyBtn = document.querySelector(".ratoken-btn");
     const generateBtn = document.getElementById("generate-token-btn");
+    const generateBtnCount = document.getElementById("generate-token-btn-count");
 
     if (legacyBtn) legacyBtn.addEventListener("click", () => handleRegenerate(legacyBtn));
     if (generateBtn) generateBtn.addEventListener("click", () => handleRegenerate(generateBtn));
+    if (generateBtnCount) generateBtnCount.addEventListener("click", () => handleRegenerate(generateBtnCount));
 });
 
 async function handleRegenerate(btn) {
     const token = localStorage.getItem("authToken");
     const originalText = btn.innerHTML; // Store HTML to preserve icon if any
-    const isNewBtn = btn.id === "generate-token-btn";
+    const isNewBtn = btn.id === "generate-token-btn" || btn.id === "generate-token-btn-count";
+    let isSuccess = false;
     
     // Loading state
     btn.disabled = true;
@@ -26,9 +29,9 @@ async function handleRegenerate(btn) {
 
     try {
         const response = await fetch(
-            "https://api-stop-reg.onrender.com/api/v1/user/regenerate/token",
+            "http://localhost:8080/api/v1/api-token/create",
             {
-                method: "PATCH",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -40,56 +43,34 @@ async function handleRegenerate(btn) {
         console.log("Regenerate Response:", data);
 
         if (response.ok) {
-            const newApiToken = data?.data?.apiToken;
-            console.log("New token:", newApiToken);
-
-            if (newApiToken) {
-                // 1. Update Legacy Token Display
-                const tokenElement = document.querySelector(".main-token");
-                if (tokenElement) {
-                    tokenElement.textContent = newApiToken;
-                }
-
-                // 2. Update New Token Display
-                const apiTokenTextEl = document.getElementById("api-token-text");
-                if (apiTokenTextEl) {
-                    const truncatedToken = newApiToken.length > 25 ? newApiToken.substring(0, 25) + "..." : newApiToken;
-                    apiTokenTextEl.textContent = truncatedToken;
-                    apiTokenTextEl.dataset.fullText = newApiToken;
-                }
-
-                // 3. Update Link
-                const linkContainer = document.querySelector(".link-container");
-                if (linkContainer) {
-                    const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${newApiToken}?email=test@test.com`;
-                    linkContainer.href = newLink;
-                    
-                    const linkTitle = linkContainer.querySelector(".token-link-title");
-                    if (linkTitle) {
-                        linkTitle.textContent = newLink;
-                    }
-                }
-
-                if (typeof iziToast !== 'undefined') {
-                    iziToast.success({
-                        title: 'Success',
-                        message: "API token regenerated successfully!",
-                        position: "topRight",
-                        timeout: 5000
-                    });
-                }
-            } else {
-                 if (typeof iziToast !== 'undefined') {
-                    iziToast.error({
-                        title: 'Error',
-                        message: "Failed to regenerate token.",
-                        position: "topRight"
-                    });
-                }
+            isSuccess = true;
+            if (typeof iziToast !== 'undefined') {
+                iziToast.success({
+                    title: 'Success',
+                    message: "API token generated successfully!",
+                    position: "topRight",
+                    timeout: 2000
+                });
             }
+            
+            // If we are on api-count page, refresh the table instead of redirecting
+            // Check if window.fetchApiRequests is available or if we are on the specific page
+            if (window.fetchApiRequests && typeof window.fetchApiRequests === 'function') {
+                // Wait a small moment to ensure the toast is seen/backend is ready?
+                // Usually instant is fine.
+                console.log("Refreshing API list...");
+                window.fetchApiRequests(1, 10); // Refresh first page
+            } else {
+                // Otherwise redirect
+                 // Redirect after short delay
+                setTimeout(() => {
+                    window.location.href = "/dashboard/api-count.html";
+                }, 1000);
+            }
+
         } else {
             console.error("Error regenerating token:", data);
-            const errorMessage = data.description || data.message || "Failed to regenerate token.";
+            const errorMessage = data.description || data.message || "Failed to generate token.";
              if (typeof iziToast !== 'undefined') {
                 iziToast.error({
                     title: 'Error',
@@ -114,8 +95,17 @@ async function handleRegenerate(btn) {
             });
         }
     } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalText;
+        // Reset if:
+        // 1. Error (success is false)
+        // 2. Success AND we are refreshing in place (not redirecting)
+        // If success and redirecting, keep spinner so user sees transition
+        
+        const isRedirecting = isSuccess && (!window.fetchApiRequests || typeof window.fetchApiRequests !== 'function');
+
+        if (!isRedirecting) {
+             btn.disabled = false;
+             btn.innerHTML = originalText;
+        }
     }
 }
  

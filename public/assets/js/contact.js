@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Contact form initialized successfully");
 
-    const API_URL = "https://api-stop-reg.onrender.com/api/v1/contact/us";
+    const API_URL = "http://localhost:8080/api/v1/contact/us";
 
     // Store Turnstile token and widget ID
     let turnstileToken = null;

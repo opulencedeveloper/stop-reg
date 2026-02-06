@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initial Load
     fetchApiRequests(currentPage, limit);
-    fetchUserInfo();
+    // fetchUserInfo(); // Commented out as it seems to be handled by header or redundant based on previous context, but will restore if needed. User asked for specific update.
 
     // Event Listeners
     if (limitSelect) {
@@ -37,128 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- User Info Fetching (Migrated from fetch-user-detail.js) ---
-    async function fetchUserInfo() {
-        const token = localStorage.getItem("authToken");
-        if (!token) return;
+    // Expose fetchApiRequests globally
+    window.fetchApiRequests = fetchApiRequests;
 
-        // Elements
-        const card = document.querySelector(".plan-status-card");
-        const planNameEl = document.querySelector(".plan-highlight");
-        const planUsageEl = document.querySelector(".plan-usage-text");
-        const expiryEl = document.querySelector(".plan-status-expiry");
-
-        // Loading State (Granular)
-        // Using chart-spinner from index.css. 
-        // Inline-block and vertical-align to align with text.
-        // Size reduced to 20px to fit in text lines.
-        // Loading State (Granular)
-        // Using chart-spinner from index.css. 
-        // Inline-block and vertical-align to align with text.
-        // Size reduced to 20px to fit in text lines.
-        // Explicitly faster animation (0.3s) to make it look very fast.
-        const loadingSpinner = `<div class="chart-spinner" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; animation: spin 0.3s linear infinite;"></div>`;
-        
-        if (planNameEl) planNameEl.innerHTML = loadingSpinner;
-        if (planUsageEl) planUsageEl.innerHTML = loadingSpinner;
-        if (expiryEl) expiryEl.innerHTML = `Expires: ${loadingSpinner}`;
-
-        try {
-            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                const container = data?.data || data;
-                const user = container.userDetails;
-
-                if (!user) throw new Error("No user details found");
-
-                // 1. Update Plan Name
-                if (planNameEl && user.planId?.name) {
-                    const name = user.planId.name; 
-                    planNameEl.textContent = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + " plan";
-                }
-
-                // 2. Update Usage
-                if (planUsageEl && user.planId) {
-                   const limit = user.apiRequestLeft ?? 0;
-                   planUsageEl.textContent = `${limit.toLocaleString()} API requests left`;
-                }
-
-                // 3. Update Expiry
-                if (expiryEl && user.tokenExpiresAt) {
-                    const date = new Date(user.tokenExpiresAt);
-                    const formattedDetails = date.toLocaleDateString("en-US", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                    });
-                    expiryEl.textContent = `Expires: ${formattedDetails}`;
-                }
-            } else {
-                throw new Error("Failed to fetch user info");
-            }
-        } catch (error) {
-            console.error("Error fetching user info:", error);
-            // Render Error State in the Card
-            if (card) {
-                renderCardError(card, fetchUserInfo);
-            }
-        }
-    }
-
-    function renderCardError(container, retryFn) {
-        // Using classes from index.css (assumed present since api-count.html links index.css)
-        container.innerHTML = `
-            <div class="fetch-error-state" style="padding: 20px; height: 100%; justify-content: center; flex-direction: row; gap: 12px;">
-                <div class="error-icon-wrapper" style="width: 32px; height: 32px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                </div>
-                <div style="flex: 1; text-align: left;">
-                     <h3 class="error-title" style="font-size: 14px; margin-bottom: 2px;">Load Failed</h3>
-                     <p class="error-desc" style="font-size: 12px; margin: 0;">Plan info unavailable.</p>
-                </div>
-                <button class="retry-btn" style="padding: 6px 12px; font-size: 12px; height: auto;">
-                    Retry
-                </button>
-            </div>
-        `;
-        const btn = container.querySelector('.retry-btn');
-        if (btn) btn.addEventListener('click', () => {
-             // Restore Skeleton
-             container.innerHTML = `
-                <div class="plan-status-card-inner">
-                    <div class="plan-status-icon">
-                        <img src="/assets/icons/bi_stars.svg" alt="" />
-                    </div>
-                    <div class="plan-status-info">
-                        <p class="plan-name-text">Currently on <span class="plan-highlight"></span></p>
-                        <p class="plan-usage-text"></p>
-                    </div>
-                </div>
-                <div class="plan-status-expiry"></div>
-             `;
-             retryFn();
-        });
-    }
-
-
-    // --- Core Functions ---
-
-    async function fetchApiRequests(page, pageSize) {
+    async function fetchApiRequests(page = 1, pageSize = 10) {
         if (isLoading) return;
         isLoading = true;
         
         renderLoadingState();
-        
         try {
             const token = localStorage.getItem('authToken');
             if (!token) {
@@ -168,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Construct Query
             // Note: Endpoint /api/v1/user/info/requests is verified from user prompt
-            const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?page=${page}&limit=${pageSize}`;
+            const url = `http://localhost:8080/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -180,16 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const result = await response.json();
-                // Expected Structure: { status, message, data: { docs: [], meta: {...} } }
+                // Structure: { message, description, data: { data: [], total: N, limit: N } }
                 
-                const docs = result?.data?.docs || [];
-                const meta = result?.data?.meta || { page: 1, totalPages: 1, totalDocs: 0 };
+                const docs = result?.data?.data || [];
+                const total = result?.data?.total || 0;
                 
-                currentPage = meta.page;
-                totalPages = meta.totalPages;
+                // Calculate total pages manually since API returns total count
+                totalPages = Math.ceil(total / pageSize);
+                if (totalPages < 1) totalPages = 1;
+                
+                currentPage = page;
                 
                 renderTable(docs);
-                renderPagination(meta);
+                renderPagination({ page: currentPage, totalPages: totalPages });
                 
             } else {
                 console.error("API Error:", await response.text());
@@ -208,10 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!tableBody) return;
         tableBody.innerHTML = `
             <tr>
-                <td colspan="4" style="height: 300px; text-align: center; vertical-align: middle;">
-                     <div class="chart-loading-state">
+                <td colspan="5" style="height: 300px; text-align: center; vertical-align: middle;">
+                     <div class="chart-loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
                         <div class="chart-spinner" style="animation: spin 0.3s linear infinite;"></div>
-                        <span class="chart-loading-text">Loading requests...</span>
+                        <span class="chart-loading-text">Loading tokens...</span>
                     </div>
                 </td>
             </tr>
@@ -222,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!tableBody) return;
         tableBody.innerHTML = `
             <tr>
-                <td colspan="4" style="height: 300px; padding: 0;">
+                <td colspan="5" style="height: 300px; padding: 0;">
                     <div class="fetch-error-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px;">
                         <div class="error-icon-wrapper" style="width: 48px; height: 48px; background: #FEF2F2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #DC2626;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -233,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h3 class="error-title" style="font-family: 'Inter_28pt-SemiBold'; font-size: 16px; color: #111827; margin-bottom: 4px;">Failed to load requests</h3>
                             <p class="error-desc" style="font-family: 'Inter_28pt-Regular'; font-size: 14px; color: #6B7280;">We couldn't fetch the latest data.</p>
                         </div>
-                        <button class="retry-btn" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #fff; border: 1px solid #D1D5DB; border-radius: 6px; font-family: 'Inter_28pt-Medium'; font-size: 14px; color: #374151; cursor: pointer; transition: all 0.2s;">
+                        <button class="retry-btn retry-btn-style">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                             </svg>
@@ -254,8 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (docs.length === 0) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="4" style="height: 200px; text-align: center; color: #6B7280; font-family: 'Inter_28pt-Regular';">
-                        No requests found.
+                    <td colspan="5" style="height: 200px; text-align: center; color: #6B7280; font-family: 'Inter_28pt-Regular';">
+                        No API tokens found.
                     </td>
                 </tr>
             `;
@@ -269,19 +158,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour: '2-digit', minute: '2-digit', second: '2-digit'
             }).replace(',', '');
             
+            // Format Last Used
+            const lastUsed = doc.lastUsed ? new Date(doc.lastUsed).toLocaleString('en-GB', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit'
+            }).replace(',', '') : 'Never';
+
             return `
                 <tr>
                     <td>
                         <div class="api-cell">
-                            <span>${doc.domain || 'Unknown'}</span>
-                            <button class="copy-icon-btn copy-api-btn" data-text="${doc.domain || ''}">
+                            <span>${doc.token ? (doc.token.length > 20 ? doc.token.substring(0, 20) + '...' : doc.token) : 'Unknown'}</span>
+                            <button class="copy-icon-btn copy-api-btn" data-text="${doc.token || ''}">
                                 <img src="/assets/icons/copy.svg" alt="Copy" style="pointer-events: none;" />
                             </button>
                         </div>
                     </td>
                     <td>${date}</td>
-                    <td>${doc.requestCount || 0}</td>
+                    <td>${lastUsed}</td>
+                    <td>${doc.count || 0}</td>
                     <td class="table-right">
+                         <!-- Assuming delete endpoint logic remains similar or needs update separately. 
+                              Keeping ID for potential delete action -->
                         <button class="action-icon-btn delete-red" title="Delete" data-id="${doc._id}">
                             <img src="/assets/icons/delete.svg" alt="Delete" />
                         </button>
@@ -296,11 +194,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     let requestToDeleteId = null;
+    let rowToDelete = null;
 
     // Functions to Open/Close Modal
-    function openDeleteModal(id) {
+    function openDeleteModal(id, rowElement) {
         if (!deleteModal) return;
         requestToDeleteId = id;
+        rowToDelete = rowElement; // Store the row
         deleteModal.style.display = 'flex';
         // Simple animation class if supported, or rely on flex
         const box = deleteModal.querySelector('.otp-box');
@@ -313,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!deleteModal) return;
         deleteModal.style.display = 'none';
         requestToDeleteId = null;
+        rowToDelete = null;
     }
 
     // Event Delegation for Table Actions
@@ -339,8 +240,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const deleteBtn = e.target.closest('.delete-red');
             if (deleteBtn) {
                 const id = deleteBtn.dataset.id;
+                const row = deleteBtn.closest('tr');
                 if (id) {
-                    openDeleteModal(id);
+                    openDeleteModal(id, row);
                 }
             }
         });
@@ -366,8 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmDeleteBtn.innerHTML = `<span class="stopreg-btn-spinner" style="width: 16px; height: 16px; border-width: 2px;"></span> Deleting...`;
 
             try {
-                const token = localStorage.getItem("authToken"); // Ensure token is available scope-wise or fetch again
-                const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/request/delete?id=${requestToDeleteId}`, {
+                const token = localStorage.getItem("authToken"); 
+                const response = await fetch(`http://localhost:8080/api/v1/api-token/delete?id=${requestToDeleteId}`, {
                     method: 'DELETE',
                     headers: {
                        "Authorization": `Bearer ${token}`
@@ -379,20 +281,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     if (typeof iziToast !== 'undefined') {
                         iziToast.success({
-                            message: "Request deleted successfully",
+                            message: "Token deleted successfully",
                             position: "topRight"
                         });
                     }
+                    // Remove row locally
+                    if (rowToDelete) {
+                        rowToDelete.remove();
+                        // Check if table is empty
+                        const rows = tableBody.querySelectorAll('tr');
+                        if (rows.length === 0) {
+                            renderTable([]);
+                        }
+                    }
                     closeDeleteModal();
-                    // Refresh Table
-                    fetchApiRequests(currentPage, limit);
                 } else {
                     throw new Error(data.message || "Failed to delete");
                 }
             } catch (error) {
                 console.error("Delete failed:", error);
                 
-                let msg = error.message || "Failed to delete request";
+                let msg = error.message || "Failed to delete token";
                 if (msg === 'Failed to fetch' || msg.toLowerCase().includes('network')) {
                     msg = "Network Error: Please check your connection.";
                 }

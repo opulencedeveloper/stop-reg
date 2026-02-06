@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ------------------------------------------------------
   async function fetchUserInfo() {
     try {
-      const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+      const response = await fetch("http://localhost:8080/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -104,12 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
            const planNameEl = document.querySelector(".Current-plan-plan");
            const apiRequestLeftEl = document.querySelector(".api-request-left");
            
-           // Update Token
-           const apiToken = userDetails.apiToken;
-           if (apiTokenEl && apiToken) {
-               apiTokenEl.textContent = apiToken;
-               apiTokenEl.dataset.fullText = apiToken;
-           }
 
            // Update Plan Details
            if (expiresDateEl && userDetails.tokenExpiresAt) {
@@ -127,11 +121,15 @@ document.addEventListener("DOMContentLoaded", async () => {
              apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
            }
            
+
+           // Restoring variable for link container usage
+           const apiToken = userDetails.apiToken;
+           
            // Update Link Container
            if (apiToken) {
               const linkContainer = document.querySelector(".link-container");
               if (linkContainer) {
-                const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
+                const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
                 linkContainer.href = newLink;
                 const linkTitle = linkContainer.querySelector(".token-link-title");
                 if (linkTitle) linkTitle.textContent = newLink;
@@ -240,7 +238,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info/requests", {
+       const response = await fetch("http://localhost:8080/api/v1/user/info/requests", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -1114,7 +1112,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       try {
-          const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?month=${monthIndex}`;
+          const url = `http://localhost:8080/api/v1/user/info/requests?month=${monthIndex}`;
           const response = await fetch(url, {
                method: "GET",
                headers: {
@@ -1137,4 +1135,56 @@ document.addEventListener("DOMContentLoaded", async () => {
           renderErrorState(donutContainer, () => fetchMonthData(monthIndex));
       }
   }
+
+    // ------------------------------------------------------
+    // 3.1 FETCH API TOKEN (Default)
+    // ------------------------------------------------------
+    async function fetchApiToken() {
+        const apiTokenEl = document.getElementById("api-token-text");
+        if (!apiTokenEl) return;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/api-token/fetch/default", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const tokenData = result?.data;
+                const apiToken = tokenData?.token;
+
+                if (apiToken) {
+                    apiTokenEl.textContent = apiToken;
+                    apiTokenEl.dataset.fullText = apiToken;
+
+                    // Update Link Container if needed
+                    const linkContainer = document.querySelector(".link-container");
+                    if (linkContainer) {
+                        const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
+                        linkContainer.href = newLink;
+                        const linkTitle = linkContainer.querySelector(".token-link-title");
+                        if (linkTitle) linkTitle.textContent = newLink;
+                    }
+                } else {
+                    apiTokenEl.textContent = "No Default Token";
+                }
+            } else {
+                console.error("Failed to fetch default API token");
+                apiTokenEl.textContent = "Error loading token";
+            }
+        } catch (error) {
+            console.error("Error fetching API token:", error);
+            apiTokenEl.textContent = "Error loading token";
+        }
+    }
+
+    // Call fetchApiToken along with other fetches
+    fetchApiToken();
+
 });
+
+

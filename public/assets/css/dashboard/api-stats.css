@@ -466,3 +466,98 @@
     justify-content: center;
     gap: 8px;
 }
+
+/* Page Actions Wrapper */
+.actions-wrapper {
+    display: flex;
+    gap: 12px;
+}
+
+/* Primary Solid Button */
+.btn-primary-solid {
+    background: #1452CA;
+    border: 1px solid #1452CA;
+    border-radius: 8px;
+    padding: 12px 32px;
+    width: max-content;
+    font-family: 'Inter_28pt-SemiBold';
+    font-size: 16px;
+    color: #FDFDFD;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary-solid:hover {
+    background: #0F42A6;
+    border-color: #0F42A6;
+}
+
+/* Endpoint Row */
+.endpoint-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.endpoint-row .input-group {
+    flex: 1;
+}
+
+.endpoint-row label {
+    color: #000000;
+}
+
+/* Specific Style for these input fields */
+.copy-input-field.primary-border {
+    background: #fff;
+    border: 0.3px solid #1452CA;
+}
+
+@media only screen and (max-width: 768px) {
+    .actions-wrapper {
+        flex-direction: column;
+        width: fit-content;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .endpoint-row {
+        flex-direction: column;
+        gap: 0px;
+        width: fit-content;
+        margin-bottom: 12px;
+    }
+
+    .actions-wrapper a {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .btn-primary-solid {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px 24px;
+    }
+}
+
+/* Retry Button Style */
+.retry-btn-style {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    font-family: 'Inter_28pt-SemiBold';
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.retry-btn-style:hover {
+    background: #F9FAFB;
+}

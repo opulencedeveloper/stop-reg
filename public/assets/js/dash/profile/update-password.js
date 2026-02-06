@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/user/update/password",
+        "http://localhost:8080/api/v1/user/update/password",
         {
           method: "PATCH",
           headers: {
