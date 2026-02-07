@@ -1156,6 +1156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const result = await response.json();
                 const tokenData = result?.data;
                 const apiToken = tokenData?.token;
+                console.log("apiToken", apiToken);
 
                 if (apiToken) {
                     apiTokenEl.textContent = apiToken;
@@ -1163,18 +1164,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     // Update Link Container if needed
                     const linkContainer = document.querySelector(".link-container");
-                    if (linkContainer) {
-                        const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
-                        linkContainer.href = newLink;
-                        const linkTitle = linkContainer.querySelector(".token-link-title");
-                        if (linkTitle) linkTitle.textContent = newLink;
-                    }
+                    // if (linkContainer) {
+                    //     const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
+                    //     linkContainer.href = newLink;
+                    //     const linkTitle = linkContainer.querySelector(".token-link-title");
+                    //     if (linkTitle) linkTitle.textContent = newLink;
+                    // }
                 } else {
                     apiTokenEl.textContent = "No Default Token";
                 }
             } else {
-                console.error("Failed to fetch default API token");
-                apiTokenEl.textContent = "Error loading token";
+                const errorText = await response.text();
+                console.error("Failed to fetch default API token. Status:", response.status, "Response:", errorText);
+                let displayMsg = "Error loading token";
+                try {
+                    const errorJson = JSON.parse(errorText);
+                    if(errorJson.message) displayMsg = errorJson.description;
+                } catch (e) {
+                    // Not JSON, keep default or use status
+                    if(response.status !== 200) displayMsg = `Error: ${response.status}`;
+                }
+                apiTokenEl.textContent = displayMsg;
             }
         } catch (error) {
             console.error("Error fetching API token:", error);
