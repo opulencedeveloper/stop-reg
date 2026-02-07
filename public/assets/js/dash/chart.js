@@ -503,18 +503,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   function processRequests(requests) {
      // --- A. Calculate Card Totals ---
      let total = 0;
-     let successful = 0; // unresolved + publicProvider
-     let blocked = 0;    // relayDomains
+     let successful = 0; 
+     let blocked = 0;    
      
      requests.forEach(req => {
         // Calculate components first
-        const reqUnresolved = (req.unresolved || 0);
-        const reqPublic = (req.publicProvider || 0);
-        const reqBlocked = (req.relayDomains || 0);
+        const isSuccessful = (req.publicProvider || 0) > 0;
+        const isBlocked = (req.isDiposableDomain === true || (req.relayDomains || 0) > 1);
         
-        // Accumulate
-        successful += (reqUnresolved + reqPublic);
-        blocked += reqBlocked;
+        // Accumulate counts (assuming 1 request per doc)
+        if (isSuccessful) successful++;
+        if (isBlocked) blocked++;
+        
+        // Total is sum of all requests (length of array), or should it be sum of these two?
+        // User didn't specify total logic, but usually it's total requests.
+        // Let's keep total as requests.length for "Total Request" card, 
+        // OR as sum of successful + blocked if those are the only two types.
+        // Given "Total Request" usually implies all hits, I'll use requests.length if available, 
+        // or sum of the specific counters if they are exclusive.
+        // Looking at the data, a request has a status. 
+        // Let's stick to the specific definitions for Success/Blocked and use array length for Total.
      });
      
      // Total is sum of Successful + Blocked per user request
@@ -558,23 +566,22 @@ document.addEventListener("DOMContentLoaded", async () => {
      };
 
      requests.forEach(req => {
-         const rTotal = (req.requestCount || 0);
-         const rSuccess = ((req.unresolved || 0) + (req.publicProvider || 0));
-         const rBlocked = (req.relayDomains || 0);
-
          // Helper to check date match
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
+         const isSuccessful = (req.publicProvider || 0) > 0;
+         const isBlocked = (req.isDiposableDomain === true || (req.relayDomains || 0) > 1);
+
          if (isToday) {
-            stats.today.total += rTotal;
-            stats.today.successful += rSuccess;
-            stats.today.blocked += rBlocked;
+            stats.today.total += 1;
+            if (isSuccessful) stats.today.successful += 1;
+            if (isBlocked) stats.today.blocked += 1;
          }
          if (isYesterday) {
-            stats.yesterday.total += rTotal;
-            stats.yesterday.successful += rSuccess;
-            stats.yesterday.blocked += rBlocked;
+            stats.yesterday.total += 1;
+            if (isSuccessful) stats.yesterday.successful += 1;
+            if (isBlocked) stats.yesterday.blocked += 1;
          }
 
          // Chart Data (Current Month)
@@ -628,7 +635,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             // 4. Update Main Value Color (Sync with trend)
             // Override the hardcoded CSS classes (.dash-total-1, etc) to match trend
-            const valueEl = row.parentElement ? row.parentElement.querySelector(".dash-plan-total") : null;
+            const valueEl = row.parentElement ? row.parentElement.parentElement.querySelector(".dash-plan-total") : null;
             if (valueEl) {
                 const color = isPositive ? "#049286" : "#cc0000";
                 valueEl.style.setProperty("color", color, "important");
@@ -647,15 +654,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   function updateMonitoringCard(requests) {
       // 1. Calculate Counts
       let blockedCount = 0;
-      let cleanCount = 0; // 'allow' status
+      let cleanCount = 0; // 'publicProvider' > 0
       
       requests.forEach(req => {
-          const status = (req.status || "").toLowerCase();
-          if (status === "blocked") {
-              blockedCount++;
-          } else if (status === "allow") {
-              cleanCount++;
-          }
+        // Blocked: isDiposableDomain=true OR relayDomains > 1
+        if (req.isDiposableDomain === true || (req.relayDomains || 0) > 1) {
+            blockedCount++;
+        }
+        // Clean: publicProvider > 0
+        if ((req.publicProvider || 0) > 0) {
+            cleanCount++;
+        }
       });
       
       const total = blockedCount + cleanCount;
