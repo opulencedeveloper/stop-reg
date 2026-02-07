@@ -508,24 +508,18 @@ document.addEventListener("DOMContentLoaded", async () => {
      
      requests.forEach(req => {
         // Calculate components first
-        const isSuccessful = (req.publicProvider || 0) > 0;
-        const isBlocked = (req.isDiposableDomain === true || (req.relayDomains || 0) > 1);
+        // Successful: unresolved > 0 OR isFreeEmailProvider is true
+        const isSuccessful = (req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true);
+        
+        // Blocked: isDiposableDomain is true OR isRelayDomain is true
+        const isBlocked = (req.isDiposableDomain === true || req.isRelayDomain === true);
         
         // Accumulate counts (assuming 1 request per doc)
         if (isSuccessful) successful++;
         if (isBlocked) blocked++;
-        
-        // Total is sum of all requests (length of array), or should it be sum of these two?
-        // User didn't specify total logic, but usually it's total requests.
-        // Let's keep total as requests.length for "Total Request" card, 
-        // OR as sum of successful + blocked if those are the only two types.
-        // Given "Total Request" usually implies all hits, I'll use requests.length if available, 
-        // or sum of the specific counters if they are exclusive.
-        // Looking at the data, a request has a status. 
-        // Let's stick to the specific definitions for Success/Blocked and use array length for Total.
      });
      
-     // Total is sum of Successful + Blocked per user request
+     // Total is sum of Successful + Blocked per user request (as per user request)
      total = successful + blocked;
      
      // Re-select total elements
@@ -570,24 +564,45 @@ document.addEventListener("DOMContentLoaded", async () => {
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
-         const isSuccessful = (req.publicProvider || 0) > 0;
-         const isBlocked = (req.isDiposableDomain === true || (req.relayDomains || 0) > 1);
+         // Apply same logic for trends
+         const isSuccessful = (req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true);
+         const isBlocked = (req.isDiposableDomain === true || req.isRelayDomain === true);
 
          if (isToday) {
-            stats.today.total += 1;
-            if (isSuccessful) stats.today.successful += 1;
-            if (isBlocked) stats.today.blocked += 1;
+            // Total for trend is also sum of successful + blocked
+            if (isSuccessful) {
+                stats.today.successful += 1;
+                stats.today.total += 1;
+            }
+            if (isBlocked) {
+                stats.today.blocked += 1;
+                stats.today.total += 1;
+            }
          }
          if (isYesterday) {
-            stats.yesterday.total += 1;
-            if (isSuccessful) stats.yesterday.successful += 1;
-            if (isBlocked) stats.yesterday.blocked += 1;
+            if (isSuccessful) {
+                stats.yesterday.successful += 1;
+                stats.yesterday.total += 1;
+            }
+            if (isBlocked) {
+                stats.yesterday.blocked += 1;
+                stats.yesterday.total += 1;
+            }
          }
 
          // Chart Data (Current Month)
          if (req.month === currentMonth && req.year === currentYear) {
              const dayIdx = req.day - 1;
              if (dayIdx >= 0 && dayIdx < daysInMonth) {
+                 // Note: These chart data arrays track specific properties, 
+                 // which might be slightly different from the "Successful/Blocked" aggregation.
+                 // However, "dataPublic" was likely intended for the green line, etc.
+                 // Given the new definitions, maybe we should adjust what these arrays represent?
+                 // The user didn't explicitly ask to change the line chart data points, 
+                 // but "Successful Request" usually correlates to what's shown on the chart.
+                 // The renderChart function takes: dPublic, dDisposable, dRelay, dUnresolved.
+                 // I will leave these as raw counts for now unless asked, 
+                 // as they plot specific metrics.
                  dataPublic[dayIdx] += (req.publicProvider || 0);
                  dataDisposable[dayIdx] += (req.disposableDomainsCount || 0);
                  dataRelay[dayIdx] += (req.relayDomains || 0);
@@ -654,15 +669,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   function updateMonitoringCard(requests) {
       // 1. Calculate Counts
       let blockedCount = 0;
-      let cleanCount = 0; // 'publicProvider' > 0
+      let cleanCount = 0; // 'allow' status
       
       requests.forEach(req => {
-        // Blocked: isDiposableDomain=true OR relayDomains > 1
-        if (req.isDiposableDomain === true || (req.relayDomains || 0) > 1) {
+        // Blocked: isDiposableDomain=true OR isRelayDomain=true
+        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
             blockedCount++;
         }
-        // Clean: publicProvider > 0
-        if ((req.publicProvider || 0) > 0) {
+        // Clean: unresolved > 0 OR isFreeEmailProvider=true
+        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
             cleanCount++;
         }
       });
