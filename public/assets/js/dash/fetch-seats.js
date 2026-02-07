@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Fetch top 3 recent seats
-            const response = await fetch("http://localhost:8080/api/v1/seat/fetch?limit=3&page=1", {
+            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/seat/fetch?limit=3&page=1", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
