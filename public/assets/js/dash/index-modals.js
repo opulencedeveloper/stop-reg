@@ -119,6 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
+            if (response.status === 401) {
+                localStorage.removeItem("authToken");
+                localStorage.removeItem("role");
+                window.location.href = "/sign-in.html";
+                return;
+            }
+
             if (response.ok) {
                 if (typeof iziToast !== 'undefined') {
                     iziToast.success({ message: "Status updated successfully!", position: "topRight" });

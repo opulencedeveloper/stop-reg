@@ -68,6 +68,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             const deleteData = await deleteResponse.json();
             console.log("Delete response:", deleteData);
 
+            if (deleteResponse.status === 401) {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("role");
+              window.location.href = "/sign-in.html";
+              return;
+            }
+
             if (deleteResponse.ok) {
               // Remove row from UI
               document.getElementById(domainId)?.remove();
