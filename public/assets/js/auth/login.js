@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api-stop-reg.onrender.com/api/v1/auth/login",
+        "http://localhost:8080/api/v1/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
