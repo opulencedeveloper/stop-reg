@@ -652,8 +652,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Override the hardcoded CSS classes (.dash-total-1, etc) to match trend
             const valueEl = row.parentElement ? row.parentElement.parentElement.querySelector(".dash-plan-total") : null;
             if (valueEl) {
-                const color = isPositive ? "#049286" : "#cc0000";
-                valueEl.style.setProperty("color", color, "important");
+                // If it's the 3rd card (Blocked Request), always red
+                if (valueEl.classList.contains("dash-total-3")) {
+                     valueEl.style.setProperty("color", "#cc0000", "important");
+                } else {
+                     const color = isPositive ? "#049286" : "#cc0000";
+                     valueEl.style.setProperty("color", color, "important");
+                }
             }
             }
         }
