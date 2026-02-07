@@ -22,7 +22,59 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initial Load
     fetchApiRequests(currentPage, limit);
-    // fetchUserInfo(); // Commented out as it seems to be handled by header or redundant based on previous context, but will restore if needed. User asked for specific update.
+    fetchUserInfo(); 
+
+    async function fetchUserInfo() {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (!token) return;
+
+            // Select Elements
+            const planHighlightEl = document.querySelector(".plan-highlight");
+            const planUsageEl = document.querySelector(".plan-usage-text");
+            const planExpiryEl = document.querySelector(".plan-status-expiry");
+
+            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const user = data?.data || data;
+                const userDetails = user.userDetails;
+
+                if (userDetails) {
+                    // 1. Update Plan Name
+                    if (planHighlightEl && userDetails.planId?.name) {
+                        planHighlightEl.textContent = `${userDetails.planId.name} plan`;
+                    }
+
+                    // 2. Update Usage
+                    if (planUsageEl) {
+                        const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
+                        planUsageEl.textContent = `${apiRequestLeft} API requests left`;
+                    }
+
+                    // 3. Update Expiry
+                    if (planExpiryEl && userDetails.tokenExpiresAt) {
+                        const expiresDate = new Date(userDetails.tokenExpiresAt);
+                        const formattedDate = expiresDate.toLocaleDateString('en-GB', { 
+                            day: 'numeric', month: 'long', year: 'numeric' 
+                        });
+                        planExpiryEl.textContent = `Expires: ${formattedDate}`;
+                    }
+                }
+            } else {
+                console.error("Failed to fetch user info for plan details");
+            }
+        } catch (error) {
+            console.error("Error fetching user info:", error);
+        }
+    }
 
     // Event Listeners
     if (limitSelect) {
