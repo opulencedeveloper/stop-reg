@@ -507,19 +507,23 @@ document.addEventListener("DOMContentLoaded", async () => {
      let blocked = 0;    
      
      requests.forEach(req => {
-        // Calculate components first
-        // Successful: unresolved > 0 OR isFreeEmailProvider is true
-        const isSuccessful = (req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true);
-        
-        // Blocked: isDiposableDomain is true OR isRelayDomain is true
-        const isBlocked = (req.isDiposableDomain === true || req.isRelayDomain === true);
-        
-        // Accumulate counts (assuming 1 request per doc)
-        if (isSuccessful) successful++;
-        if (isBlocked) blocked++;
+        // 1. Successful Request Logic
+        // IF (unresolved > 0 OR isFreeEmailProvider is true)
+        // THEN add requestCount
+        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
+            successful += (req.requestCount || 0);
+        }
+
+        // 2. Blocked Request Logic
+        // IF (isDiposableDomain is true OR isRelayDomain is true)
+        // THEN add requestCount
+        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
+            blocked += (req.requestCount || 0);
+        }
      });
      
-     // Total is sum of Successful + Blocked per user request (as per user request)
+     // 3. Total
+     // Successful Request + Blocked Request
      total = successful + blocked;
      
      // Re-select total elements
@@ -564,56 +568,55 @@ document.addEventListener("DOMContentLoaded", async () => {
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
-         // Apply same logic for trends
-         const isSuccessful = (req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true);
-         const isBlocked = (req.isDiposableDomain === true || req.isRelayDomain === true);
+         // Calculate values for this request based on same logic
+         let sVal = 0;
+         let bVal = 0;
+
+         if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
+            sVal = (req.requestCount || 0);
+         }
+
+         if (req.isDiposableDomain === true || req.isRelayDomain === true) {
+            bVal = (req.requestCount || 0);
+         }
+         
+         const tVal = sVal + bVal;
 
          if (isToday) {
-            // Total for trend is also sum of successful + blocked
-            if (isSuccessful) {
-                stats.today.successful += 1;
-                stats.today.total += 1;
-            }
-            if (isBlocked) {
-                stats.today.blocked += 1;
-                stats.today.total += 1;
-            }
+            stats.today.successful += sVal;
+            stats.today.blocked += bVal;
+            stats.today.total += tVal;
          }
          if (isYesterday) {
-            if (isSuccessful) {
-                stats.yesterday.successful += 1;
-                stats.yesterday.total += 1;
-            }
-            if (isBlocked) {
-                stats.yesterday.blocked += 1;
-                stats.yesterday.total += 1;
-            }
+            stats.yesterday.successful += sVal;
+            stats.yesterday.blocked += bVal;
+            stats.yesterday.total += tVal;
          }
 
          // Chart Data (Current Month)
          if (req.month === currentMonth && req.year === currentYear) {
              const dayIdx = req.day - 1;
              if (dayIdx >= 0 && dayIdx < daysInMonth) {
-                 // Note: These chart data arrays track specific properties, 
-                 // which might be slightly different from the "Successful/Blocked" aggregation.
-                 // However, "dataPublic" was likely intended for the green line, etc.
-                 // Given the new definitions, maybe we should adjust what these arrays represent?
-                 // The user didn't explicitly ask to change the line chart data points, 
-                 // but "Successful Request" usually correlates to what's shown on the chart.
-                 // The renderChart function takes: dPublic, dDisposable, dRelay, dUnresolved.
-                 // I will leave these as raw counts for now unless asked, 
-                 // as they plot specific metrics.
-                 dataPublic[dayIdx] += (req.publicProvider || 0);
-                 dataDisposable[dayIdx] += (req.disposableDomainsCount || 0);
-                 dataRelay[dayIdx] += (req.relayDomains || 0);
-                 dataUnresolved[dayIdx] += (req.unresolved || 0);
+                 // Add requestCount if category is active
+                 if ((req.publicProvider || 0) > 0 || req.isFreeEmailProvider === true) {
+                    dataPublic[dayIdx] += (req.requestCount || 0);
+                 }
+                 if ((req.disposableDomainsCount || 0) > 0 || req.isDiposableDomain === true) {
+                    dataDisposable[dayIdx] += (req.requestCount || 0);
+                 }
+                 if ((req.relayDomains || 0) > 0 || req.isRelayDomain === true) {
+                    dataRelay[dayIdx] += (req.requestCount || 0);
+                 }
+                 if ((req.unresolved || 0) > 0) {
+                    dataUnresolved[dayIdx] += (req.requestCount || 0);
+                 }
              }
          }
      });
      
      // Update Trends
      const calculateTrend = (curr, prev) => {
-        if (prev === 0) return curr > 0 ? 100 : 0; // If prev is 0, 100% increase if current > 0, else 0%
+        if (prev === 0) return curr > 0 ? 100 : 0; 
         return Math.round(((curr - prev) / prev) * 100);
      };
 
@@ -633,13 +636,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Remove spinner
             if(textEl) {
                 // Determine Class & Icon
-                // 1. Remove old classes
-                row.classList.remove("positive", "negative");
-                textEl.classList.remove("text-green", "text-red");
                 
                 // 2. Add new
                 row.classList.add(isPositive ? "positive" : "negative");
-                textEl.classList.add(isPositive ? "text-green" : "text-red");
+                
+                // Explicitly set text color
+                textEl.style.color = isPositive ? "#008000" : "#CC0000";
                 textEl.textContent = `${isPositive ? '+' : ''}${pct}%`;
                 
                 // 3. Update Icon
@@ -655,10 +657,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // If it's the 3rd card (Blocked Request), always red
                 if (valueEl.classList.contains("dash-total-3")) {
                      valueEl.style.setProperty("color", "#cc0000", "important");
-                } else {
-                     const color = isPositive ? "#049286" : "#cc0000";
-                     valueEl.style.setProperty("color", color, "important");
-                }
+                } 
             }
             }
         }
@@ -674,16 +673,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   function updateMonitoringCard(requests) {
       // 1. Calculate Counts
       let blockedCount = 0;
-      let cleanCount = 0; // 'allow' status
+      let cleanCount = 0; 
       
       requests.forEach(req => {
-        // Blocked: isDiposableDomain=true OR isRelayDomain=true
+        // Blocked: isDiposableDomain=true OR isRelayDomain=true -> add requestCount
         if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            blockedCount++;
+            blockedCount += (req.requestCount || 0);
         }
-        // Clean: unresolved > 0 OR isFreeEmailProvider=true
+        // Clean: unresolved > 0 OR isFreeEmailProvider=true -> add requestCount
         if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            cleanCount++;
+            cleanCount += (req.requestCount || 0);
         }
       });
       
