@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/seat/fetch?limit=${limit}&page=${page}`, {
+            const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/seat/fetch?limit=${limit}&page=${page}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
