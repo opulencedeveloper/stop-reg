@@ -25,14 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchUserInfo(); 
 
     async function fetchUserInfo() {
+        // Select Elements
+        const planHighlightEl = document.querySelector(".plan-highlight");
+        const planUsageEl = document.querySelector(".plan-usage-text");
+        const planExpiryEl = document.querySelector(".plan-status-expiry");
+        
+        // Spinner HTML (Fast loading spinner)
+        const spinnerSmall = `<div class="chart-spinner" style="animation: spin 0.3s linear infinite; width: 16px; height: 16px; border-width: 2px; display: inline-block; vertical-align: middle;"></div>`;
+
+        // Set Loading State
+        if (planHighlightEl) planHighlightEl.innerHTML = spinnerSmall;
+        if (planUsageEl) planUsageEl.innerHTML = spinnerSmall;
+        if (planExpiryEl) planExpiryEl.innerHTML = spinnerSmall;
+
         try {
             const token = localStorage.getItem("authToken");
             if (!token) return;
-
-            // Select Elements
-            const planHighlightEl = document.querySelector(".plan-highlight");
-            const planUsageEl = document.querySelector(".plan-usage-text");
-            const planExpiryEl = document.querySelector(".plan-status-expiry");
 
             const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
                 method: "GET",
@@ -51,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 1. Update Plan Name
                     if (planHighlightEl && userDetails.planId?.name) {
                         planHighlightEl.textContent = `${userDetails.planId.name} plan`;
+                    } else if (planHighlightEl) {
+                        planHighlightEl.textContent = "Plan not found";
                     }
 
                     // 2. Update Usage
@@ -66,13 +76,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             day: 'numeric', month: 'long', year: 'numeric' 
                         });
                         planExpiryEl.textContent = `Expires: ${formattedDate}`;
+                    } else if (planExpiryEl) {
+                        planExpiryEl.textContent = "Expires: -";
                     }
                 }
             } else {
                 console.error("Failed to fetch user info for plan details");
+                const errorHtml = `<span style="color: #DC2626; font-size: 13px;">Error loading data</span>`;
+                if(planHighlightEl) planHighlightEl.innerHTML = errorHtml;
+                if(planUsageEl) planUsageEl.innerHTML = errorHtml;
+                if(planExpiryEl) planExpiryEl.innerHTML = errorHtml;
             }
         } catch (error) {
             console.error("Error fetching user info:", error);
+            const errorHtml = `<span style="color: #DC2626; font-size: 13px;">Error loading data</span>`;
+            if(planHighlightEl) planHighlightEl.innerHTML = errorHtml;
+            if(planUsageEl) planUsageEl.innerHTML = errorHtml;
+            if(planExpiryEl) planExpiryEl.innerHTML = errorHtml;
         }
     }
 
