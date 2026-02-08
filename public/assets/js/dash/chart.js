@@ -608,19 +608,10 @@ document.addEventListener("DOMContentLoaded", async () => {
          if (req.month === currentMonth && req.year === currentYear) {
              const dayIdx = req.day - 1;
              if (dayIdx >= 0 && dayIdx < daysInMonth) {
-                 // Add requestCount if category is active
-                 if ((req.publicProvider || 0) > 0 || req.isFreeEmailProvider === true) {
-                    dataPublic[dayIdx] += (req.requestCount || 0);
-                 }
-                 if ((req.disposableDomainsCount || 0) > 0 || req.isDiposableDomain === true) {
-                    dataDisposable[dayIdx] += (req.requestCount || 0);
-                 }
-                 if ((req.relayDomains || 0) > 0 || req.isRelayDomain === true) {
-                    dataRelay[dayIdx] += (req.requestCount || 0);
-                 }
-                 if ((req.unresolved || 0) > 0) {
-                    dataUnresolved[dayIdx] += (req.requestCount || 0);
-                 }
+                 dataPublic[dayIdx] += (req.publicProvider || 0);
+                 dataDisposable[dayIdx] += (req.disposableDomainsCount || 0);
+                 dataRelay[dayIdx] += (req.relayDomains || 0);
+                 dataUnresolved[dayIdx] += (req.unresolved || 0);
              }
          }
      });
