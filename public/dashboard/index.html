@@ -537,11 +537,11 @@
                   <thead>
                     <tr>
                       <th>Domain</th>
+                      <th class="table-center">Free Provider</th>
+                      <th class="table-center">Unresolved</th>
                       <th class="table-center">Status</th>
                       <th class="table-center">Disposable</th>
                       <th class="table-center">Relay</th>
-                      <th class="table-center">Free Provider</th>
-                      <th class="table-center">Unresolved</th>
                       <th class="table-center">Request Count</th>
                       <th class="table-center">Action</th>
                     </tr>
@@ -550,12 +550,16 @@
                     <!-- Row 1: Reported -->
                     <tr>
                       <td>www.macdonald.com</td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">
                         <div class="status-badge status-reported">
                           <img src="/assets/icons/flag-linear.svg" alt="Reported" />
                           <span>Reported</span>
                         </div>
                       </td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">5</td>
                       <td class="table-center">
                         <button class="action-btn btn-report">
@@ -570,12 +574,16 @@
                     <!-- Row 2: Blocked -->
                     <tr>
                       <td>www.macdonald.com</td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">
                         <div class="status-badge status-blocked">
                           <img src="/assets/icons/block-outline.svg" alt="Blocked" />
                           <span>Blocked</span>
                         </div>
                       </td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">6</td>
                       <td class="table-center">
                         <button class="action-btn btn-report">
@@ -590,17 +598,23 @@
                     <!-- Row 3: Allowed -->
                     <tr>
                       <td>www.macdonald.com</td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">
                         <div class="status-badge status-allowed">
                           <img src="/assets/icons/approve-outline.svg" alt="Allow" />
                           <span>Allow</span>
                         </div>
                       </td>
+                      <td class="table-center">-</td>
+                      <td class="table-center">-</td>
                       <td class="table-center">3</td>
                       <td class="table-center">
-                        <button class="action-btn btn-add-allow">
-                          <img src="/assets/icons/add-duotone.svg" alt="Add" />
-                          Add to allowlist
+                        <button class="action-btn btn-report">
+                          <div class="action-icon-wrapper">
+                            <img src="/assets/icons/flag-linear-blue.svg" alt="Report" />
+                          </div>
+                          Report
                         </button>
                       </td>
                     </tr>

@@ -199,9 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const isRole = formatValue(item.isRoleDomain);
         const isAlias = formatValue(item.isAliasDomain);
-        const isProvider = formatValue(item.isProvider); // 'Provider' column title, mapped to isProvider
+        const isProvider = item.provider || '-';
         const isBlocklisted = formatValue(item.isBlocklisted);
         const isMx = formatValue(item.hasMxRecords);
+        const date = item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : '-';
         
         // Unresolved: 0=False(No/Green), 1=True(Yes/Red)
         const unresolvedVal = (item.unresolved || 0);
@@ -213,15 +214,16 @@ document.addEventListener("DOMContentLoaded", () => {
         tr.innerHTML = `
           <td>${index + 1}</td>
           <td>${domain}</td>
+          <td>${isProvider}</td>
+          <td>${isUnresolved}</td>
           <td>${isDisposable}</td>
           <td>${isRelay}</td>
           <td>${isPublic}</td>
           <td>${isRole}</td>
           <td>${isAlias}</td>
-          <td>${isProvider}</td>
           <td>${isBlocklisted}</td>
           <td>${isMx}</td>
-          <td>${isUnresolved}</td>
+          <td>${date}</td>
         `;
         disposableResult.appendChild(tr);
 

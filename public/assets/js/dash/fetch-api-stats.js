@@ -178,11 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             row.innerHTML = `
                 <td>${domainName}</td>
+                <td class="table-center">${getBoolIcon(req.isFreeEmailProvider)}</td>
+                <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
                 <td class="table-center">${getStatusBadge(req.status)}</td>
                 <td class="table-center">${getBoolIcon(req.isDiposableDomain)}</td>
                 <td class="table-center">${getBoolIcon(req.isRelayDomain)}</td>
-                <td class="table-center">${getBoolIcon(req.isFreeEmailProvider)}</td>
-                <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
                 <td class="table-center">${req.requestCount || 1}</td>
                 <td class="table-center">
                     ${getActionBtn(req.status, domainName, reqId, comment)}
