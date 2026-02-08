@@ -493,17 +493,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const disposableHtml = getFlagHtml(req.isDiposableDomain);
           const relayHtml = getFlagHtml(req.isRelayDomain);
-          const freeHtml = getFlagHtml(req.isFreeEmailProvider);
+          const providerHtml = req.provider || '-';
           const unresolvedHtml = getUnresolvedHtml(req.unresolved || 0);
 
           return `
             <tr>
               <td>${req.domain || "Unknown"}</td>
+              <td class="table-center">${providerHtml}</td>
+              <td class="table-center">${unresolvedHtml}</td>
               <td class="table-center">${badgeHtml}</td>
               <td class="table-center">${disposableHtml}</td>
               <td class="table-center">${relayHtml}</td>
-              <td class="table-center">${freeHtml}</td>
-              <td class="table-center">${unresolvedHtml}</td>
               <td class="table-center">${req.requestCount || 0}</td>
               <td class="table-center">${actionBtn}</td>
             </tr>
