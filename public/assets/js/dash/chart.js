@@ -482,9 +482,19 @@ document.addEventListener("DOMContentLoaded", async () => {
              return `<span style="color: ${textColor}">${text}</span>`;
           };
 
+          const getUnresolvedHtml = (val) => {
+             // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
+             // (Corrected per user request: "if it is 0 it is false... Yes should be red")
+             const isTrue = val > 0;
+             const text = isTrue ? "Yes" : "No";
+             const color = isTrue ? "#cc0000" : "#008000"; 
+             return `<span style="color: ${color}">${text}</span>`;
+          };
+
           const disposableHtml = getFlagHtml(req.isDiposableDomain);
           const relayHtml = getFlagHtml(req.isRelayDomain);
           const freeHtml = getFlagHtml(req.isFreeEmailProvider);
+          const unresolvedHtml = getUnresolvedHtml(req.unresolved || 0);
 
           return `
             <tr>
@@ -493,6 +503,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               <td class="table-center">${disposableHtml}</td>
               <td class="table-center">${relayHtml}</td>
               <td class="table-center">${freeHtml}</td>
+              <td class="table-center">${unresolvedHtml}</td>
               <td class="table-center">${req.requestCount || 0}</td>
               <td class="table-center">${actionBtn}</td>
             </tr>

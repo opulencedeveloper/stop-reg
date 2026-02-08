@@ -80,6 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    // --- Helper: Unresolved Icon ---
+    function getUnresolvedIcon(val) {
+        // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
+        // (Corrected per user request: "if it is 0 it is false... Yes should be red")
+        const isTrue = val > 0;
+        const text = isTrue ? "Yes" : "No";
+        const color = isTrue ? "#cc0000" : "#008000"; 
+        return `<span style="color: ${color}">${text}</span>`;
+    }
+
     // --- Fetch Data ---
     async function fetchApiStats(page = 1) {
         // Show Spinner
@@ -172,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="table-center">${getBoolIcon(req.isDiposableDomain)}</td>
                 <td class="table-center">${getBoolIcon(req.isRelayDomain)}</td>
                 <td class="table-center">${getBoolIcon(req.isFreeEmailProvider)}</td>
+                <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
                 <td class="table-center">${req.requestCount || 1}</td>
                 <td class="table-center">
                     ${getActionBtn(req.status, domainName, reqId, comment)}

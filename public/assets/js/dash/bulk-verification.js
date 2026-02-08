@@ -190,21 +190,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const isAlias = formatValue(item.alias);
         const provider = formatValue(item.provider);
         const isBlocklisted = formatValue(item.blocklisted);
-        const hasMx = formatValue(item.mx);
+        const isMx = formatValue(item.mx);
+        const isUnresolved = typeof item.unresolved === 'boolean' 
+            ? `<span style="color: ${item.unresolved ? '#cc0000' : '#008000'}">${item.unresolved ? 'Yes' : 'No'}</span>`
+            : formatValue(item.unresolved);
 
         tr.innerHTML = `
-          <td>${realIndex}</td>
-          <td>${input}</td>
-          <td>${isDisposable}</td>
-          <td>${isRelay}</td>
-          <td>${isPublic}</td>
-          <td>${isRole}</td>
-          <td>${isAlias}</td>
-          <td>${provider}</td>
-          <td>${isBlocklisted}</td>
-          <td>${hasMx}</td>
+          <td>${index + 1 + (currentPage - 1) * rowsPerPage}</td>
+          <td>${item.input}</td>
+          <td>${formatValue(item.disposable)}</td>
+          <td>${formatValue(item.isRelay !== undefined ? item.isRelay : item.relay)}</td>
+          <td>${formatValue(item.public)}</td>
+          <td>${formatValue(item.role)}</td>
+          <td>${formatValue(item.alias)}</td>
+          <td>${formatValue(item.provider)}</td>
+          <td>${formatValue(item.blocklisted)}</td>
+          <td>${isMx}</td>
+          <td>${isUnresolved}</td>
         `;
         disposableResult.appendChild(tr);
+
     });
     
     renderPaginationControls();
