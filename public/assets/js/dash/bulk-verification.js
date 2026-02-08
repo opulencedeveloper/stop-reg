@@ -163,13 +163,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!disposableResult) return;
     disposableResult.innerHTML = "";
     
-    // Show pagination controls again
+    // Hide pagination controls as we are showing all data for 30 days
     const paginationContainer = document.querySelector('.table-pagination');
-    if(paginationContainer) paginationContainer.style.display = 'flex'; // or 'block' depending on CSS, but usually flex for this design
+    if(paginationContainer) paginationContainer.style.display = 'none';
 
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const endIndex = Math.min(startIndex + rowsPerPage, storedResponseData.length);
-    const displayedData = storedResponseData.slice(startIndex, endIndex);
+    // Show download button if we have data
+    if (downloadBtn && storedResponseData.length > 0) {
+        downloadBtn.classList.remove("hidden");
+    } else if (downloadBtn) {
+        downloadBtn.classList.add("hidden");
+    }
+
+    // No pagination slicing - show all data
+    const displayedData = storedResponseData;
 
     // Helper for formatting values
     const formatValue = (val) => {
@@ -181,30 +187,39 @@ document.addEventListener("DOMContentLoaded", () => {
     displayedData.forEach((item, index) => {
         const tr = document.createElement("tr");
 
-        const realIndex = startIndex + index + 1;
-        const input = item.input || '-';
-        const isDisposable = formatValue(item.disposable);
-        const isRelay = formatValue(item.isRelay !== undefined ? item.isRelay : item.relay);
-        const isPublic = formatValue(item.public);
-        const isRole = formatValue(item.role);
-        const isAlias = formatValue(item.alias);
-        const provider = formatValue(item.provider);
-        const isBlocklisted = formatValue(item.blocklisted);
-        const isMx = formatValue(item.mx);
-        const isUnresolved = typeof item.unresolved === 'boolean' 
-            ? `<span style="color: ${item.unresolved ? '#cc0000' : '#008000'}">${item.unresolved ? 'Yes' : 'No'}</span>`
-            : formatValue(item.unresolved);
+        const domain = item.domain || '-';
+        
+        // Map API fields
+        const isDisposable = formatValue(item.isDiposableDomain);
+        const isRelay = formatValue(item.isRelayDomain);
+        
+        // Conversion for Public (0=False, 1=True)
+        const publicVal = item.publicProvider === 1;
+        const isPublic = formatValue(publicVal);
+        
+        const isRole = formatValue(item.isRoleDomain);
+        const isAlias = formatValue(item.isAliasDomain);
+        const isProvider = formatValue(item.isProvider); // 'Provider' column title, mapped to isProvider
+        const isBlocklisted = formatValue(item.isBlocklisted);
+        const isMx = formatValue(item.hasMxRecords);
+        
+        // Unresolved: 0=False(No/Green), 1=True(Yes/Red)
+        const unresolvedVal = (item.unresolved || 0);
+        const isUnresolvedBool = unresolvedVal > 0; // True if > 0 (1)
+        const unresolvedText = isUnresolvedBool ? "Yes" : "No";
+        const unresolvedColor = isUnresolvedBool ? "#cc0000" : "#008000";
+        const isUnresolved = `<span style="color: ${unresolvedColor}">${unresolvedText}</span>`;
 
         tr.innerHTML = `
-          <td>${index + 1 + (currentPage - 1) * rowsPerPage}</td>
-          <td>${item.input}</td>
-          <td>${formatValue(item.disposable)}</td>
-          <td>${formatValue(item.isRelay !== undefined ? item.isRelay : item.relay)}</td>
-          <td>${formatValue(item.public)}</td>
-          <td>${formatValue(item.role)}</td>
-          <td>${formatValue(item.alias)}</td>
-          <td>${formatValue(item.provider)}</td>
-          <td>${formatValue(item.blocklisted)}</td>
+          <td>${index + 1}</td>
+          <td>${domain}</td>
+          <td>${isDisposable}</td>
+          <td>${isRelay}</td>
+          <td>${isPublic}</td>
+          <td>${isRole}</td>
+          <td>${isAlias}</td>
+          <td>${isProvider}</td>
+          <td>${isBlocklisted}</td>
           <td>${isMx}</td>
           <td>${isUnresolved}</td>
         `;
@@ -212,8 +227,63 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
     
-    renderPaginationControls();
+    // No need to call renderPaginationControls()
   }
+
+  // Fetch Requests on Load
+  const fetchRequests = async () => {
+    // Show Spinner
+    if (disposableResult) {
+        disposableResult.innerHTML = `
+            <tr>
+                <td colspan="11" style="text-align: center; padding: 40px;">
+                    <div class="stopreg-spinner" style="border-top-color: #1452CA; border-right-color: #1452CA; margin: 0 auto;"></div>
+                </td>
+            </tr>
+        `;
+    }
+
+    try {
+        // Fetch last 30 days requests with limit=0 (no limit)
+        const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const result = await response.json();
+        
+        if (response.status === 401) {
+             localStorage.removeItem("authToken");
+             localStorage.removeItem("role");
+             window.location.href = "/sign-in.html";
+             return;
+        }
+
+        if(result.message === "success" && result.data && result.data.docs) {
+             storedResponseData = result.data.docs;
+             renderTablePage();
+        } else {
+             // Fallback to error or empty state if weird response
+             throw new Error(result.message || "Failed to load requests");
+        }
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+        if (disposableResult) {
+            disposableResult.innerHTML = `
+                <tr>
+                    <td colspan="11" style="text-align: center; color: var(--error-color); padding: 20px;">
+                        Failed to load data. <button onclick="window.retryBulkFetch()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+  };
+  
+  // Expose for retry button
+  window.retryBulkFetch = fetchRequests;
+  
+  fetchRequests();
 
   function renderPaginationControls() {
       const totalPages = Math.ceil(storedResponseData.length / rowsPerPage);
@@ -341,9 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
   async function downloadTableData() {
     if (storedResponseData.length === 0) return;
     
-    // Extract just the input values (domains/emails) for the backend
-    const emailDomains = storedResponseData.map(item => item.input);
-    const originalText = downloadBtn.innerHTML; // Store innerHTML to preserve any structure if needed, or textContent
+    // Send full request history to backend for CSV generation
+    const requests = storedResponseData; 
+    const originalText = downloadBtn.innerHTML; 
     downloadBtn.disabled = true;
     downloadBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Downloading...`;
 
@@ -354,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ emailDomains }),
+            body: JSON.stringify({ requests }),
         });
 
         if (response.ok) {
@@ -422,7 +492,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const data = await response.json();
         if (response.ok) {
-          populateTable(data?.data || []);
+          // Refetch table data to show updated history (background)
+          fetchRequests();
           bulkLinks.value = "";
           if (typeof iziToast !== 'undefined') {
             iziToast.success({
