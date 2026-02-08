@@ -853,8 +853,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           {
             label: 'Public Provider',
             data: dPublic,
-            borderColor: '#377DFF',
-            backgroundColor: '#377DFF',
+            borderColor: '#0000ff',
+            backgroundColor: '#0000ff',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
@@ -863,8 +863,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           {
             label: 'Disposable Domains',
             data: dDisposable,
-            borderColor: '#FF5630',
-            backgroundColor: '#FF5630',
+            borderColor: '#cc0000',
+            backgroundColor: '#cc0000',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
@@ -873,8 +873,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           {
             label: 'Relay domains',
             data: dRelay,
-            borderColor: '#FFAB00',
-            backgroundColor: '#FFAB00',
+            borderColor: '#CCCCCC',
+            backgroundColor: '#CCCCCC',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
@@ -883,8 +883,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           {
             label: 'Unresolved',
             data: dUnresolved,
-            borderColor: '#36B37E',
-            backgroundColor: '#36B37E',
+            borderColor: '#049286',
+            backgroundColor: '#049286',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
