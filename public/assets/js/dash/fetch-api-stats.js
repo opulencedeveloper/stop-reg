@@ -49,25 +49,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Helper: Action Button HTML ---
+    // --- Helper: Action Button HTML ---
     function getActionBtn(status, domain, reqId, comment) {
         const s = (status || '').toLowerCase();
         const safeComment = comment ? comment.replace(/"/g, '&quot;') : "";
         const btnAttrs = `data-id="${reqId}" data-comment="${safeComment}"`;
         
-        let actionBtn = "";
-
-        // Logic matched from chart.js
-        if (s === "blocked") {
-             actionBtn = `<button class="action-btn btn-add-allow" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Add" /></div>Add to allowlist</button>`;
-        } else if (s === "allow" || s === "allowed") {
-             actionBtn = `<button class="action-btn btn-add-block" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Block" /></div>Add to block list</button>`;
-        } else if (s === "reported") {
-             actionBtn = `<button class="action-btn btn-add-block" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Block" /></div>Add to block list</button>`;
-        } else {
-             // Default / Unresolved / Other
-             actionBtn = `<button class="action-btn btn-report" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/flag-linear-blue.svg" alt="Report" /></div>Report</button>`;
-        }
-        return actionBtn;
+        // Return Dropdown Markup
+        return `
+            <div class="action-dropdown">
+                <button class="action-menu-trigger" aria-label="Actions">
+                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                </button>
+                <div class="action-dropdown-menu">
+                    <!-- Add to Allowlist -->
+                    <button class="dropdown-item action-btn btn-add-allow" ${btnAttrs}>
+                        <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                        <span>Add to Allowlist</span>
+                    </button>
+                    <!-- Add to Blocklist -->
+                    <button class="dropdown-item action-btn btn-add-block" ${btnAttrs}>
+                        <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                        <span>Add to blocklist</span>
+                    </button>
+                    <!-- Report -->
+                    <button class="dropdown-item action-btn btn-report" ${btnAttrs}>
+                        <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                        <span>Report</span>
+                    </button>
+                </div>
+            </div>
+        `;
     }
     
     // --- Helper: Boolean Check Icon ---
@@ -145,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (errorMessage === 'Failed to fetch' || errorMessage.includes('NetworkError')) {
                     errorTitle = 'Network Error';
-                    errorMessage = 'Please check your internet connection and try again.';
+                    errorMessage = 'Please check your internet connection and try aagain.';
                 }
 
                 window.showPremiumError(errorTitle, errorMessage, () => fetchApiStats(page));

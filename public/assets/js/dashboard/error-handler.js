@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Handle Retry Button
         if (retryBtn) {
             if (typeof retryCallback === 'function') {
-                retryBtn.style.display = "inline-flex";
+                retryBtn.style.display = "flex";
                 currentRetryCallback = retryCallback;
             } else {
                 retryBtn.style.display = "none";

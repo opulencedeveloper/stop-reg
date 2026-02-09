@@ -201,6 +201,74 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeAllModals();
+            // Also close all dropdowns
+             document.querySelectorAll('.action-dropdown-menu.active').forEach(menu => {
+                menu.classList.remove('active');
+            });
+        }
+    });
+
+    // --- Action Dropdown Logic ---
+    if (tableContainer) {
+        // Toggle Dropdown (Click works for mobile & sticky desktop)
+        tableContainer.addEventListener('click', (e) => {
+            const trigger = e.target.closest('.action-menu-trigger');
+            if (trigger) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const dropdown = trigger.parentElement.querySelector('.action-dropdown-menu');
+                
+                // Close other open sticky dropdowns
+                document.querySelectorAll('.action-dropdown-menu.active').forEach(menu => {
+                    if (menu !== dropdown) menu.classList.remove('active');
+                });
+                
+                if (dropdown) {
+                   // Toggle sticky state
+                   // On desktop, this allows "pinning" the menu open if desired, 
+                   // or just opening it on touch devices.
+                    dropdown.classList.toggle('active');
+                }
+                return;
+            }
+            
+            // If clicking inside a dropdown but not a button/link (e.g. padding), don't close immediately?
+            // Actually, usually helpful to close if clicking a non-active area, but items are buttons.
+            
+            // If clicking an action button (dropdown item), we should close the dropdown 
+            const actionBtn = e.target.closest('.action-btn');
+             if (actionBtn && actionBtn.closest('.action-dropdown-menu')) {
+                 // Close the menu containing this button
+                const menu = actionBtn.closest('.action-dropdown-menu');
+                if(menu) menu.classList.remove('active');
+                // Creating spinner inside might look weird if menu closes.
+                // But submitStatusUpdate disables the button.
+                // If we close the menu, the user sees the table.
+                // But we want to show feedback.
+                // Let's NOT close the menu immediately if we want to show the spinner in place?
+                // Text: "The button is for submitting...".
+                // If I close the menu, the spinner is gone.
+                // So I should KEEP the menu open while loading?
+                // The `submitStatusUpdate` disables the button.
+                // Let's keep it open so they see the spinner.
+                // So I will NOT remove 'active' class here.
+                // However, `submitStatusUpdate` refreshes the table upon success, which re-renders HTML, effectively closing it.
+             }
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.action-dropdown')) {
+                 document.querySelectorAll('.action-dropdown-menu.active').forEach(menu => {
+                    menu.classList.remove('active');
+                });
+            }
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAllModals();
         }
     });
     

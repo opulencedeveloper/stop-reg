@@ -109,9 +109,13 @@
 /* req-table-title styles inherited from index.css */
 
 /* Pagination container spacing */
+/* Pagination container spacing */
 .req-table-container {
-    overflow-x: auto;
+    overflow-x: visible !important;
     width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
 }
 
 .req-table-scroll-wrapper {

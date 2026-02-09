@@ -429,35 +429,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           // Action Button Logic
           // Action Button Logic
+          // Action Button Logic (Dropdown)
           const reqId = req._id || req.id || "";
           const reqComment = req.comment ? req.comment.replace(/"/g, '&quot;') : ""; // Escape quotes
-          
           const btnAttrs = `data-id="${reqId}" data-comment="${reqComment}"`;
 
-          // Priority 1: Status is 'blocked' -> Add to allowlist
-          if (status.toLowerCase() === "blocked") {
-              actionBtn = `<button class="action-btn btn-add-allow" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Add" /></div>Add to allowlist</button>`;
-          }
-          // Priority 2: Status is 'allow' -> Add to block list
-          else if (status.toLowerCase() === "allow") {
-              actionBtn = `<button class="action-btn btn-add-block" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Block" /></div>Add to block list</button>`;
-          }
-          // Priority 3: Status is 'reported' -> Add to block list (escalate report to block)
-          else if (status.toLowerCase() === "reported") {
-              actionBtn = `<button class="action-btn btn-add-block" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Block" /></div>Add to block list</button>`;
-          }
-           // Priority 4: Unresolved > 0 -> Report (Only if no explicit status)
-          else if ((req.unresolved || 0) > 0) {
-              actionBtn = `<button class="action-btn btn-report" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/flag-linear-blue.svg" alt="Report" /></div>Report</button>`;
-          }
-          // Priority 5: PublicProvider > 0 -> Add to block list
-          else if ((req.publicProvider || 0) > 0) {
-              actionBtn = `<button class="action-btn btn-add-block" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/add-duotone.svg" alt="Block" /></div>Add to block list</button>`;
-          }
-          // Default: Report
-          else {
-               actionBtn = `<button class="action-btn btn-report" style="color: #1452CA;" ${btnAttrs}><div class="action-icon-wrapper"><img src="/assets/icons/flag-linear-blue.svg" alt="Report" /></div>Report</button>`;
-          }
+          // Construct Dropdown Menu
+          actionBtn = `
+            <div class="action-dropdown">
+                <button class="action-menu-trigger" aria-label="Actions">
+                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                </button>
+                <div class="action-dropdown-menu">
+                    <!-- Add to Allowlist -->
+                    <button class="dropdown-item action-btn btn-add-allow" ${btnAttrs}>
+                        <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                        <span>Add to Allowlist</span>
+                    </button>
+                    <!-- Add to Blocklist -->
+                    <button class="dropdown-item action-btn btn-add-block" ${btnAttrs}>
+                        <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                        <span>Add to blocklist</span>
+                    </button>
+                    <!-- Report -->
+                    <button class="dropdown-item action-btn btn-report" ${btnAttrs}>
+                        <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                        <span>Report</span>
+                    </button>
+                </div>
+            </div>
+          `;
 
           // If valid status, build badge HTML
           let badgeHtml = "";
