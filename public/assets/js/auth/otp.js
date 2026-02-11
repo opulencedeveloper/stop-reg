@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===================
   //  CONSTANTS & CONFIG
   // ===================
-  const API_BASE = "https://api-stop-reg.onrender.com/api/v1/auth";
+  const API_BASE = "https://api.stopreg.com/api/v1/auth";
   const SELECTORS = {
     otpModal: "#otp-modal",
     otpInputs: ".otp-input",

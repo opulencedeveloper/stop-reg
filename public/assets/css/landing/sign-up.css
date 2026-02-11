@@ -29,19 +29,144 @@ html {
     /* Full height */
     overflow: hidden;
     /* No scroll on left */
-    background-color: #0A011F;
-    /* Deep Navy/Purple from design */
-    background-image: url('/assets/images/auth/auth-bg.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 100%;
     position: relative;
     flex-direction: column;
     justify-content: center;
     /* Center content vertically */
+    /* Center content vertically */
     padding: 60px 40px 60px 96px;
     color: white;
     box-sizing: border-box;
+
+    /* Parallax Vars */
+    --move-x: 0;
+    --move-y: 0;
+    perspective: 1000px;
+}
+
+/* Layer 1: The Deep Space Background */
+.auth-left-section::before {
+    content: "";
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    /* Oversize for parallax movement */
+    height: 110%;
+    background-color: #0A011F;
+    background-image: url('/assets/images/auth/auth-bg.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: 0;
+
+    /* Animation: Breathe + Drift + Entrance */
+    transform: scale(1.1);
+    animation: cosmicEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, cosmicDrift 25s linear infinite alternate 1.5s;
+    opacity: 0;
+}
+
+/* Floating Particles (Threats being blocked) */
+.threat-particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    /* Sprinkles/Dots */
+    pointer-events: none;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    animation: particleRise 8s linear infinite;
+    opacity: 0;
+}
+
+@keyframes particleRise {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Ensure content stays on top of background */
+.auth-left-logo,
+.auth-left-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Cinematic Entrance */
+@keyframes cosmicEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(1.4) translate(0, 40px);
+        filter: blur(30px) brightness(0.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.1) translate(0, 0);
+        filter: blur(0) brightness(1);
+    }
+}
+
+/* Infinite Background Drift - Much more noticeable movement */
+@keyframes cosmicDrift {
+    0% {
+        transform: scale(1.1) translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.2) translate(-5%, 2%) rotate(2deg);
+    }
+
+    50% {
+        transform: scale(1.15) translate(3%, -4%) rotate(-1deg);
+    }
+
+    75% {
+        transform: scale(1.25) translate(-2%, -2%) rotate(1deg);
+    }
+
+    100% {
+        transform: scale(1.1) translate(4%, 3%) rotate(0deg);
+    }
+}
+
+
+
+@keyframes bgPulse {
+    0% {
+        transform: translate(calc(var(--move-x) * -20px), calc(var(--move-y) * -20px)) scale(1.05);
+    }
+
+    100% {
+        transform: translate(calc(var(--move-x) * -20px), calc(var(--move-y) * -20px)) scale(1.1);
+    }
+}
+
+/* Ensure content stays on top of background */
+.auth-left-logo,
+.auth-left-content {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes bgZoom {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.15);
+    }
 }
 
 .auth-left-logo {
@@ -60,7 +185,7 @@ html {
 .auth-left-content {
     /* margins removed, flex parent handles centering */
     width: 100%;
-    max-width: 528px;
+    max-width: 500px;
 }
 
 .auth-left-header {
@@ -71,6 +196,15 @@ html {
     /* Removed to fix centering */
     opacity: 0;
     /* Anim init */
+}
+
+.auth-left-tle {
+    margin-top: 12px;
+    font-family: 'Inter_28pt-Regular', serif !important;
+    font-size: 20px;
+    color: white;
+    line-height: 1.6;
+    opacity: 0;
 }
 
 /* --- Right Section (Form) --- */

@@ -211,6 +211,7 @@
       }
     </script>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js" defer></script>
 </head>
 
@@ -352,31 +353,42 @@
       <div class="hero-container">
         <div class="hero-sect-one">
           <h1 class="hero-header">
-            Validate Emails.
+            Block fake signups. Grow with real users.
+            <!-- Validate Emails.
             <br>
             Stop Abuse.
             <br>
-            Improve Sign-Ups.
+            Improve Sign-Ups. -->
           </h1>
           <p class="hero-title">
-            Advanced email intelligence API that blocks fake, disposable, and risky email addresses in real-time.
-            Protect your platform with multiple validation checks in a single request.
+            Real-time email intelligence API to block disposable, fake, and risky emails addresses in a single request
           </p>
           <div class="hero-btn-wrapper">
             <a href="/sign-up.html" class="hero-btn-link">Sign up for free</a>
             <a href="/documentation.html" class="view-docs-btn">View Documentation</a>
           </div>
         </div>
-        <div class="hero-sect-two">
-          <div class="hero-sect-two-image-container">
-            <picture style="width: 100%; height: 100%;">
-              <source media="(max-width: 550px)" srcset="/assets/images/landing/index/hero-mobile.svg">
-              <img src="/assets/images/landing/index/hero-image.svg" alt="Email Validation Results"
-                class="hero-sect-image" />
-            </picture>
+        <form class="hero-sect-two box premium-reveal" style="animation-delay: 0.2s;" novalidate>
+
+          <p class="hero-sect-two-inner-two-title ">Live API demo</p>
+
+          <div class="api-live-demo-row">
+            <input type="text" placeholder="Enter an email address or domain" class="api-live-demo-input" />
+            <button class="api-live-demo-btn">
+              <img src="/assets/icons/send.svg" />
+            </button>
+          </div>
+
+          <div class="api-live-demo-cloudflaire-cont"></div>
+
+          <div class="api-live-demo-result-cont">
+            <p class="api-live-demo-result-default-tle">
+              Results will show here
+            </p>
+            <p class="api-live-demo-result-default-stle">You have not made any request</p>
 
           </div>
-        </div>
+        </form>
       </div>
     </section>
     <!-- Hero End -->
@@ -1070,6 +1082,7 @@
   <script id="zsiqscript"
     src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
     defer></script>
+  <script src="/assets/js/verify-email-domain.js" defer></script>
   <!-- Code injected by live-server -->
   <script>
     // <![CDATA[  <-- For SVG support

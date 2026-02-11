@@ -29,7 +29,7 @@ async function handleRegenerate(btn) {
 
     try {
         const response = await fetch(
-            "https://api-stop-reg.onrender.com/api/v1/api-token/create",
+            "https://api.stopreg.com/api/v1/api-token/create",
             {
                 method: "POST",
                 headers: {

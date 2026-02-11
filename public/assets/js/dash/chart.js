@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ------------------------------------------------------
   async function fetchUserInfo() {
     try {
-      const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+      const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
            if (apiToken) {
               const linkContainer = document.querySelector(".link-container");
               if (linkContainer) {
-                const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
+                const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
                 linkContainer.href = newLink;
                 const linkTitle = linkContainer.querySelector(".token-link-title");
                 if (linkTitle) linkTitle.textContent = newLink;
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info/requests", {
+       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -476,20 +476,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           // Helper to get color for boolean flags
           const getFlagHtml = (val) => {
-             const color = val ? "#FF0000" : "#008000"; // Red for true (risk), Green for false (clean)? 
-             // Actually user might want simple labels. Let's use simple labels.
-             const text = val ? "Yes" : "No";
-             const textColor = val ? "#f1416c" : "#737373"; 
-             return `<span style="color: ${textColor}">${text}</span>`;
+              const text = val ? 'Yes' : 'No';
+              const className = val ? 'status-bool-yes' : 'status-bool-no';
+              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
           const getUnresolvedHtml = (val) => {
              // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
-             // (Corrected per user request: "if it is 0 it is false... Yes should be red")
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
-             const color = isTrue ? "#cc0000" : "#008000"; 
-             return `<span style="color: ${color}">${text}</span>`;
+             const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+             return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
           const disposableHtml = getFlagHtml(req.isDiposableDomain);
@@ -502,10 +499,10 @@ document.addEventListener("DOMContentLoaded", async () => {
               <td>${req.domain || "Unknown"}</td>
               <td class="table-center">${providerHtml}</td>
               <td class="table-center">${unresolvedHtml}</td>
-              <td class="table-center">${badgeHtml}</td>
               <td class="table-center">${disposableHtml}</td>
               <td class="table-center">${relayHtml}</td>
               <td class="table-center">${req.requestCount || 0}</td>
+              <td class="table-center">${badgeHtml}</td>
               <td class="table-center">${actionBtn}</td>
             </tr>
           `;
@@ -1143,7 +1140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       try {
-          const url = `https://api-stop-reg.onrender.com/api/v1/user/info/requests?month=${monthIndex}`;
+          const url = `https://api.stopreg.com/api/v1/user/info/requests?month=${monthIndex}`;
           const response = await fetch(url, {
                method: "GET",
                headers: {
@@ -1175,7 +1172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!apiTokenEl) return;
 
         try {
-            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/api-token/fetch/default", {
+            const response = await fetch("https://api.stopreg.com/api/v1/api-token/fetch/default", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -1196,7 +1193,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     // Update Link Container if needed
                     const linkContainer = document.querySelector(".link-container");
                     // if (linkContainer) {
-                    //     const newLink = ` https://api-stop-reg.onrender.com/api/v1/check/${apiToken}?email=test@test.com`;
+                    //     const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
                     //     linkContainer.href = newLink;
                     //     const linkTitle = linkContainer.querySelector(".token-link-title");
                     //     if (linkTitle) linkTitle.textContent = newLink;

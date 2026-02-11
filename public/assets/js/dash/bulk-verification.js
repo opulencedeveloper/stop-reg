@@ -179,8 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Helper for formatting values
     const formatValue = (val) => {
-        if (val === true) return "Yes";
-        if (val === false) return "No";
+        if (val === true) return `<div class="status-badge status-bool-yes"><span>Yes</span></div>`;
+        if (val === false) return `<div class="status-badge status-bool-no"><span>No</span></div>`;
         return val || '-';
     };
 
@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const unresolvedVal = (item.unresolved || 0);
         const isUnresolvedBool = unresolvedVal > 0; // True if > 0 (1)
         const unresolvedText = isUnresolvedBool ? "Yes" : "No";
-        const unresolvedColor = isUnresolvedBool ? "#cc0000" : "#008000";
-        const isUnresolved = `<span style="color: ${unresolvedColor}">${unresolvedText}</span>`;
+        const unresolvedClass = isUnresolvedBool ? "status-bool-yes" : "status-bool-no";
+        const isUnresolved = `<div class="status-badge ${unresolvedClass}"><span>${unresolvedText}</span></div>`;
 
         tr.innerHTML = `
           <td>${index + 1}</td>
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         // Fetch last 30 days requests with limit=0 (no limit)
-        const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
+        const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Downloading...`;
 
     try {
-        const response = await fetch("https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification-csv", {
+        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification-csv", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -484,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Verifying...`;
       try {
-        const response = await fetch("https://api-stop-reg.onrender.com/api/v1/email-domains/bulk-verification", {
+        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

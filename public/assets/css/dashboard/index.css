@@ -1445,6 +1445,16 @@ canvas {
   color: #008000;
 }
 
+.status-bool-yes {
+  background: #FFEBEB;
+  color: #FF0000;
+}
+
+.status-bool-no {
+  background: #EBFFEB;
+  color: #008000;
+}
+
 .action-icon-wrapper {
   width: 20px;
   height: 20px;

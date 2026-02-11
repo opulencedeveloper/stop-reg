@@ -128,9 +128,14 @@ body {
 }
 
 .hero-sect-two {
-  height: 464px;
-  width: 524px;
-  position: relative;
+  height: max-content !important;
+  width: 100%;
+  max-width: 606px !important;
+  box-shadow: 20px 20px 40px 0px #25252514;
+  background-color: white;
+  border-radius: 16px;
+  padding: 20px;
+
 }
 
 .hero-sect-two-inner-one {
@@ -178,214 +183,109 @@ body {
 }
 
 .hero-sect-two-inner-two-title {
-  color: var(--color-four);
-  font-family: "PlusJakartaSans-ExtraBold";
+  color: #252525;
+  font-family: "Inter_28pt-SemiBold";
   font-size: 24px;
   margin: 0px auto 20px auto;
+  margin-bottom: 12px;
 }
 
-.hero-sect-two-inner-two-title-update {
-  color: var(--color-four);
-  font-family: "PlusJakartaSans-ExtraBold";
-  font-weight: 800;
-  font-size: 24px;
-  margin: 0px auto 0px auto;
-  padding-top: 79.89px;
-}
-
-.hero-sec-inner-email-img-cont {
-  padding-top: 30px;
-
+.api-live-demo-row {
   display: flex;
-  justify-content: center;
-  height: fit-content;
-}
-
-.hero-sect-two-inner-two-cont {
-  display: flex;
-
-  flex-direction: column;
-  /* padding-right: 51px;
-  padding-left: 27px; */
-  padding: 40px 24px 0px 24px;
-
-  /* gap: 52px; */
-
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  /* padding-bottom: 107px; */
-}
-
-.hero-sect-two-inner-two-item-img {
-  height: 52px;
-  width: 52px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  justify-items: center;
-  border: 1px solid var(--color-nine);
-}
-
-.hero-sect-two-inner-two-item-img>img {
-  width: 20px;
-  height: 26.7px;
-}
-
-.hero-sect-two-inner-two-item {
-  display: flex;
-  align-items: center;
   flex-direction: row;
-  width: 100%;
-  gap: 8px;
-
-}
-
-.hero-sect-two-inner-two-item>p:last-child {
-  font-size: 20px;
-  font-family: "PlusJakartaSans-Regular";
-}
-
-.hero-sect-two-inner-two-item-inner {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   gap: 12px;
 }
 
-.hero-sect-two-inner-two-item-inner>p {
+.api-live-demo-input {
+  outline: none;
+  height: 50px;
+  width: 100%;
+  border: 0.3px solid #737373;
+  border-radius: 8px;
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold";
-
+  color: #252525;
+  padding-left: 16px;
+  margin-bottom: 12px;
 }
 
-.hero-sect-two-prog-bar {
-  width: 100%;
-  height: 5px;
-  background-color: var(--color-nine);
+.api-live-demo-input::placeholder {
+  color: #737373;
+}
+
+.api-live-demo-btn {
+  height: 50px;
+  width: 52px;
+  background-color: black;
   border-radius: 10px;
-  box-sizing: content-box;
-
-}
-
-.hero-sect-two-prog-bar>div {
-  border-radius: 10px;
-  height: 100%;
-  background-color: var(--color-twenty-four);
-  flex-shrink: 0;
-
-}
-
-.hero-sect-two-inner-two-badge-one {
-  position: absolute;
-  top: -39px;
-  right: 39px;
   display: flex;
-  align-items: center;
   justify-items: center;
+  align-items: center;
   justify-content: center;
-  text-align: center;
-  height: 105.88px;
-  width: 129.41px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  box-shadow: 0px 25px 40px 0px var(--color-five);
-  background-color: var(--color-six);
-  border-radius: 18px;
-  font-size: 28px;
-  font-family: "PlusJakartaSans-ExtraBold";
 }
 
-.hero-sect-two-inner-two-badge-two-wrapper {
-  position: absolute;
-  bottom: -100px;
-  right: 60px;
+.api-live-demo-btn>img {
+  height: 24px;
+  width: 24px;
+  margin-left: 3px;
+}
+
+
+/* Spinner styles for API button */
+.stopreg-btn-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: btn-spin 1s linear infinite;
+}
+
+@keyframes btn-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.api-live-demo-cloudflaire-cont {
   width: 300px;
-  height: 115px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  box-shadow: 0px 25px 40px 0px var(--color-five);
-  background-color: var(--color-six);
-  border-radius: 25px;
-  flex-direction: row;
+  height: 65px;
+  border: 1px solid #E0E0E0;
 }
 
-.hero-sect-two-inner-two-badge-two-inner-one>div:first-child {
+.api-live-demo-result-cont {
+  height: 300px;
+  margin-top: 24px;
+  background-color: #253238;
+  border-radius: 8px;
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 7px;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-one>div:first-child>p:first-child {
-  font-size: 40px;
-  font-family: "PlusJakartaSans-ExtraBold";
-}
-
-.hero-sect-two-inner-two-badge-two-inner-one>div:first-child>div:last-child {
-  width: 14.83px;
-  height: 14px;
-  display: flex;
+  flex-direction: column;
+  justify-items: center;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 }
 
-.hero-sect-two-inner-two-badge-two-inner-one>div:first-child>div:last-child>img {
-  height: 100%;
-  width: 100%;
+.api-live-demo-result-default-tle,
+.api-live-demo-result-default-stle {
+  color: #FDFDFD;
+  text-align: center;
 }
 
-.hero-sect-two-inner-two-badge-two-inner-one>p:last-child {
-  font-size: 14px;
-  color: var(--color-eight);
+.api-live-demo-result-default-tle {
+  font-size: 24px;
+  font-family: "Inter_18pt-Bold";
 }
 
-.hero-sect-two-inner-two-badge-two-inner-two {
-  width: 55%;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 3px;
-  margin-bottom: 3px;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item>p:first-child {
-  font-size: 14px;
-  width: 10px;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item>div:nth-child(2) {
-  height: 9px;
-  width: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item>div:nth-child(2)>img {
-  height: 100%;
-  width: 100%;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item>div:last-child {
-  flex: 1;
-  height: 5px;
-  flex-shrink: 0;
-  border-radius: 9px;
-}
-
-.hero-sect-two-inner-two-badge-two-inner-two-item>div:last-child>div {
-  border-radius: 9px;
-  background-color: var(--color-seven);
-  height: 100%;
-  flex-shrink: 0;
+.api-live-demo-result-default-stle {
+  font-size: 16px;
+  font-family: "Inter_28pt-Regular";
 }
 
 .hero-review-one {
@@ -1111,6 +1011,54 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Validation Error Styles */
+.custom-input-error {
+  color: #d92d20;
+  font-size: 14px;
+  /* Increased legibility */
+  margin-top: -4px;
+  /* Pull closer to input */
+  margin-bottom: 12px;
+  /* Push next content down */
+  font-family: "PlusJakartaSans-SemiBold";
+  /* slightly bolder */
+  animation: inputErrorFadeIn 0.3s ease-in-out forwards;
+}
+
+.input-error-border {
+  border-color: #d92d20 !important;
+  box-shadow: 0 0 0 4px #fee4e2 !important;
+}
+
+/* Fix spacing for Live API Demo Input */
+.api-live-demo-input {
+  margin-bottom: 0 !important;
+  /* Remove internal margin */
+}
+
+.api-live-demo-row {
+  margin-bottom: 12px;
+  /* Move spacing to row */
+  transition: margin-bottom 0.2s;
+}
+
+/* When error follows row, reduce row margin to connect them */
+.api-live-demo-row:has(+ .custom-input-error) {
+  margin-bottom: 8px;
+}
+
+@keyframes inputErrorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .land-pricing-sect-yr {
@@ -2130,7 +2078,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
     padding-top: 80px;
     padding-bottom: 80px;
     flex-direction: column;
-    padding-bottom: 330px;
     gap: 100px;
   }
 
@@ -2447,16 +2394,32 @@ input[type="password"]::-webkit-textfield-decoration-container {
     font-size: 16px;
   }
 
-  .hero-sect-two-inner-two-cont {
-    padding-right: 33.9px;
-    padding-left: 16px;
-    padding-bottom: 0px !important;
-    gap: 32px;
+  .api-live-demo-btn>img {
+    height: 20px;
+    width: 20px;
   }
 
-  .hero-sect-two,
-  .hero-sect-two-inner-one {
-    height: 296px;
+  .api-live-demo-input,
+  .api-live-demo-btn {
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .api-live-demo-result-cont {
+    margin-top: 16px;
+    gap: 4px;
+  }
+
+  .api-live-demo-result-default-tle {
+    font-size: 16px;
+  }
+
+  .api-live-demo-result-default-stle {
+    font-size: 12px;
+  }
+
+  .hero-sect-two {
+    height: max-content;
     width: 100%;
   }
 
@@ -2471,13 +2434,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
     height: max-content;
   }
 
-  .hero-sect-two-inner-two-badge-one {
-    right: 14px;
-    height: 72px;
-    width: 100px;
-    border-radius: 18px;
-    font-size: 16px;
-  }
 
   .hero-sect-two-inner-two-badge-two-wrapper {
     bottom: -115px;
@@ -2866,10 +2822,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
     padding-top: 70px;
   }
 
-  .hero-sect-two-inner-two-item>p:last-child {
-    font-size: 14px;
-  }
-
   .form-container {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
@@ -3005,7 +2957,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 /* Update Hero Section Container Dimensions */
 .hero-sect-two {
-  height: 464px;
+  height: max-content;
   width: 524px;
   position: relative;
 }
@@ -3041,11 +2993,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .hero-sect-two {
-    height: 296px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    /* Center the image container */
+    padding: 12px;
   }
 
 
@@ -4513,12 +4462,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
   .hero-sect-two {
     width: 100% !important;
-    height: auto !important;
-    display: flex !important;
-    justify-content: center !important;
     padding-bottom: 40px !important;
-    margin-right: 0 !important;
-    padding-right: 0 !important;
   }
 
   .hero-sect-two-inner-one {
@@ -4531,13 +4475,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
   .hero-sect-two-inner-two {
     width: 100% !important;
     height: 100% !important;
-  }
-
-  .hero-sect-two-inner-two-badge-one {
-    transform: scale(0.6) !important;
-    top: -50px !important;
-    right: 15px !important;
-    /* Pulled in further */
   }
 
   .hero-sect-two-inner-two-badge-two-wrapper {

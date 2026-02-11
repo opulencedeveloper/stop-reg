@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem("authToken");
             if (!token) return;
 
-            const response = await fetch("https://api-stop-reg.onrender.com/api/v1/user/info", {
+            const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Construct Query
             // Note: Endpoint /api/v1/user/info/requests is verified from user prompt
-            const url = `https://api-stop-reg.onrender.com/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
+            const url = `https://api.stopreg.com/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken"); 
-                const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/api-token/delete?id=${requestToDeleteId}`, {
+                const response = await fetch(`https://api.stopreg.com/api/v1/api-token/delete?id=${requestToDeleteId}`, {
                     method: 'DELETE',
                     headers: {
                        "Authorization": `Bearer ${token}`

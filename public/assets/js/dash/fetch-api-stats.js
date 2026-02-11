@@ -84,22 +84,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Helper: Boolean Check Icon ---
     function getBoolIcon(value) {
-        // user wants "Disposable", "Relay", "Free Provider" columns
-        // index.html implementation usually uses a checkmark or 'Yes'/'No' text?
-        // Let's assume text or simple check based on design. 
-        // If not specified, text is safest.
-        return value ? 'Yes' : 'No';
+        const text = value ? 'Yes' : 'No';
+        const className = value ? 'status-bool-yes' : 'status-bool-no';
+        return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
 
     // --- Helper: Unresolved Icon ---
     function getUnresolvedIcon(val) {
         // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
-        // (Corrected per user request: "if it is 0 it is false... Yes should be red")
         const isTrue = val > 0;
         const text = isTrue ? "Yes" : "No";
-        const color = isTrue ? "#cc0000" : "#008000"; 
-        return `<span style="color: ${color}">${text}</span>`;
+        const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+        return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
     // --- Fetch Data ---
@@ -114,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         try {
-            const response = await fetch(`https://api-stop-reg.onrender.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true`, {
+            const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -192,10 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${domainName}</td>
                 <td class="table-center">${req.provider || '-'}</td>
                 <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
-                <td class="table-center">${getStatusBadge(req.status)}</td>
                 <td class="table-center">${getBoolIcon(req.isDiposableDomain)}</td>
                 <td class="table-center">${getBoolIcon(req.isRelayDomain)}</td>
                 <td class="table-center">${req.requestCount || 1}</td>
+                <td class="table-center">${getStatusBadge(req.status)}</td>
                 <td class="table-center">
                     ${getActionBtn(req.status, domainName, reqId, comment)}
                 </td>
