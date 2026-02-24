@@ -382,11 +382,15 @@
           <div class="api-live-demo-cloudflaire-cont"></div>
 
           <div class="api-live-demo-result-cont">
-            <p class="api-live-demo-result-default-tle">
-              Results will show here
-            </p>
-            <p class="api-live-demo-result-default-stle">You have not made any request</p>
-
+            <div class="terminal-header">
+              <div class="terminal-title">API Response</div>
+            </div>
+            <div class="terminal-body placeholder-mode">
+              <p class="api-live-demo-result-default-tle">
+                Results will show here
+              </p>
+              <p class="api-live-demo-result-default-stle">You have not made any request</p>
+            </div>
           </div>
         </form>
       </div>
@@ -441,11 +445,11 @@
           <!-- Step 3 -->
           <div class="hiw-step hiw-step-3">
             <div class="hiw-icon-box">
-              <img src="/assets/icons/mail.svg" alt="User Submits an Email">
+              <img src="/assets/icons/mail.svg" alt="User Submits an Email or Domain">
               <span class="hiw-badge">3</span>
             </div>
             <div class="hiw-step-content">
-              <h3 class="hiw-step-title">User Submits an Email</h3>
+              <h3 class="hiw-step-title">User Submits an Email or Domain</h3>
               <p class="hiw-step-desc">Send an email or domain to our API</p>
             </div>
           </div>
@@ -561,51 +565,84 @@
     <!-- Why Stopreg.com Start -->
     <section id="why-stopreg">
       <div class="why-wrapper">
-        <div class="why-header">
-          <h2 class="why-header-title">Why Stopreg.com?</h2>
-          <p class="why-header-subtitle">Built for developers who demand quality and privacy</p>
+        <div class="why-wrapper-sect-one">
+          <div class="why-header">
+            <h2 class="why-header-title">Why Stopreg.com?</h2>
+            <p class="why-header-subtitle">Built for developers who demand quality and privacy</p>
+          </div>
+
+          <div class="why-stopreg-grid">
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Auto-Updated Database</p>
+              <p class="why-stopreg-grid-stle">Disposable email detection with continuously updated database</p>
+            </div>
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Production Ready</p>
+              <p class="why-stopreg-grid-stle">Built for scale and enterprise reliability</p>
+            </div>
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Two API Endpoints</p>
+              <p class="why-stopreg-grid-stle">Full email or domain-only validation options</p>
+            </div>
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Lightning Fast</p>
+              <p class="why-stopreg-grid-stle">Developer-friendly REST API with millisecond responses</p>
+            </div>
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Reduce Fake & Low Quality Signups</p>
+              <p class="why-stopreg-grid-stle">Temporary inboxes allow users to register without real intent. Blocking
+                them increases the quality of your user base.</p>
+            </div>
+            <div class="why-stopreg-grid-item">
+              <p class="why-stopreg-grid-tle">Improve Conversion & Lifetime Value</p>
+              <p class="why-stopreg-grid-stle">Real users = higher engagement, retention and monetisation. Filtering
+                throwaway accounts leads to a cleaner and more valuable user list</p>
+            </div>
+          </div>
         </div>
 
-        <div class="why-content-container">
+        <div class="why-wrapper-sect-two">
+          <img alt="email-status" src="/assets/images/landing/index/email-status-image.svg" />
+        </div>
+        <!-- <div class="why-header">
+          <h2 class="why-header-title">Why Stopreg.com?</h2>
+          <p class="why-header-subtitle">Built for developers who demand quality and privacy</p>
+        </div> -->
+
+        <!-- <div class="why-content-container">
           <div class="why-bg-image">
             <img src="/assets/images/landing/index/question.svg" alt="Question">
           </div>
 
           <div class="why-card">
-            <!-- Item 1 -->
             <div class="why-item">
               <h3 class="why-item-title">Auto-Updated Database</h3>
               <p class="why-item-desc">Disposable email detection with continuously updated database</p>
             </div>
-            <!-- Item 2 -->
             <div class="why-item">
               <h3 class="why-item-title">Reduce Fake & Low Quality Signups</h3>
               <p class="why-item-desc">Temporary inboxes allow users to register without real intent. Blocking them
                 increases the quality of your user base.</p>
             </div>
-            <!-- Item 3 -->
             <div class="why-item">
               <h3 class="why-item-title">Two API Endpoints</h3>
               <p class="why-item-desc">Full email or domain-only validation options</p>
             </div>
-            <!-- Item 4 -->
             <div class="why-item">
               <h3 class="why-item-title">Lightning Fast</h3>
               <p class="why-item-desc">Developer-friendly REST API with millisecond responses</p>
             </div>
-            <!-- Item 5 -->
             <div class="why-item">
               <h3 class="why-item-title">Production Ready</h3>
               <p class="why-item-desc">Built for scale and enterprise reliability</p>
             </div>
-            <!-- Item 6 -->
             <div class="why-item why-item-last">
               <h3 class="why-item-title">Improve Conversion & Lifetime Value</h3>
               <p class="why-item-desc">Real users = higher engagement, retention and monetisation. Filtering throwaway
                 accounts leads to a cleaner and more valuable user list</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
     <!-- Why Stopreg.com End -->
@@ -628,45 +665,48 @@
 
 
     <!-- Fast and simple integration Start -->
-    <section id="api" class="fasi-wrapper">
-      <div class="fasi-sect-one">
-        <h2 class="fasi-sect-one-hd">Two Flexible API Endpoints</h2>
+    <section id="api" class="fasi-wrapper-main">
 
-        <div class="fasi-items-wrapper">
-          <div class="fasi-api-item">
-            <h3 class="fasi-api-title">Full Email Validation API</h3>
-            <p class="fasi-api-desc">
-              Complete validation with disposable detection, role-based checks, public provider identification, syntax
-              validation, and MX verification. Perfect for user registrations and lead forms.
-            </p>
-          </div>
+      <div class="fasi-wrapper">
+        <div class="fasi-sect-one">
+          <h2 class="fasi-sect-one-hd">Two Flexible API Endpoints</h2>
 
-          <div class="fasi-api-item fasi-api-item-last">
-            <h3 class="fasi-api-title">Domain-Only API (Privacy-First)</h3>
-            <p class="fasi-api-desc">
-              Validate without transmitting full email addresses. Ideal for privacy-focused platforms and regulated
-              environments. Performs disposable detection, public provider identification, and MX verification.
-            </p>
+          <div class="fasi-items-wrapper">
+            <div class="fasi-api-item">
+              <h3 class="fasi-api-title">Full Email Validation API</h3>
+              <p class="fasi-api-desc">
+                Complete validation with disposable detection, role-based checks, public provider identification, syntax
+                validation, and MX verification. Perfect for user registrations and lead forms.
+              </p>
+            </div>
+
+            <div class="fasi-api-item fasi-api-item-last">
+              <h3 class="fasi-api-title">Domain-Only API (Privacy-First)</h3>
+              <p class="fasi-api-desc">
+                Validate without transmitting full email addresses. Ideal for privacy-focused platforms and regulated
+                environments. Performs disposable detection, public provider identification, and MX verification.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="fasi-sect-two">
-        <div class="code-snippet-container">
-          <div class="code-snippet-content">
-            <div class="code-block" id="code-content"></div>
-          </div>
-          <button class="code-copy-btn" aria-label="Copy code">
-            <img src="/assets/icons/white-copy.svg" alt="Copy" />
-            <span>Copy</span>
-          </button>
-          <div class="code-snippet-tabs">
-            <button class="code-tab active" data-lang="nodejs">Node.js</button>
-            <button class="code-tab" data-lang="curl">cURL</button>
-            <button class="code-tab" data-lang="python">Python</button>
-            <button class="code-tab" data-lang="php">PHP</button>
-            <button class="code-tab" data-lang="go">GO</button>
-            <button class="code-tab" data-lang="java">Java</button>
-            <button class="code-tab" data-lang="csharp">C#</button>
+        <div class="fasi-sect-two">
+          <div class="code-snippet-container">
+            <div class="code-snippet-content">
+              <div class="code-block" id="code-content"></div>
+            </div>
+            <button class="code-copy-btn" aria-label="Copy code">
+              <img src="/assets/icons/white-copy.svg" alt="Copy" />
+              <span>Copy</span>
+            </button>
+            <div class="code-snippet-tabs">
+              <button class="code-tab active" data-lang="nodejs">Node.js</button>
+              <button class="code-tab" data-lang="curl">cURL</button>
+              <button class="code-tab" data-lang="python">Python</button>
+              <button class="code-tab" data-lang="php">PHP</button>
+              <button class="code-tab" data-lang="go">GO</button>
+              <button class="code-tab" data-lang="java">Java</button>
+              <button class="code-tab" data-lang="csharp">C#</button>
+            </div>
           </div>
         </div>
       </div>
@@ -697,7 +737,8 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a1729f">Get
+              Started</a>
           </div>
 
           <!-- Scale Plan (Recommended) -->
@@ -718,7 +759,8 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-filled">Get Started</a>
+            <a href="/sign-up.html" class="pricing-btn btn-pricing-filled" data-plan-id="6984c3f3c3a2b4bb21a172a0">Get
+              Started</a>
           </div>
 
           <!-- Boost Plan -->
@@ -738,7 +780,8 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a1">Get
+              Started</a>
           </div>
 
           <!-- Power Plan -->
@@ -758,7 +801,8 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a2">Get
+              Started</a>
           </div>
 
           <!-- Elite Plan -->
@@ -778,7 +822,8 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a3">Get
+              Started</a>
           </div>
 
           <!-- Enterprise Plan -->
@@ -798,7 +843,7 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
-            <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+            <a href="/contact.html" class="pricing-btn btn-pricing-outline">Get Started</a>
           </div>
         </div>
       </div>

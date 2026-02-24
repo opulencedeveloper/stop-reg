@@ -962,12 +962,14 @@ body.hidden-overflow .auth-page-wrapper {
   /* Red-600 */
   font-family: 'PlusJakartaSans-SemiBold', sans-serif;
   font-size: 13px;
-  margin-top: 6px;
+  margin-top: 8px;
+  /* Increased for better clearance */
   display: flex;
   align-items: center;
   gap: 6px;
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(0);
+  /* Removed negative pull */
   animation: slideDownFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   /* Mind-blowing smooth spring */
   will-change: transform, opacity;
@@ -1002,7 +1004,7 @@ body.hidden-overflow .auth-page-wrapper {
 @keyframes slideDownFade {
   0% {
     opacity: 0;
-    transform: translateY(-8px) scale(0.95);
+    transform: translateY(-4px) scale(0.95);
   }
 
   100% {

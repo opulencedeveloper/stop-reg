@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- CUSTOM VALIDATION HELPERS ---
   function showInputError(input, message) {
     let parent = input.parentElement;
+    // Climb up if inside a password wrapper to ensure error is outside
     if (parent.classList.contains('password-input-wrapper')) {
         parent = parent.parentElement;
     }

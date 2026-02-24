@@ -42,6 +42,7 @@
   <link href="/assets/css/landing/header.css" rel="stylesheet" />
   <link href="/assets/css/landing/index.css" rel="stylesheet" />
   <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <!-- Schema: WebApplication + Breadcrumbs -->
   <script type="application/ld+json">
@@ -194,15 +195,9 @@
       </div>
       <div class="mobile-nav-items">
         <a href="/#what-stopreg-check">Feature</a>
-        <button content-data-target="api" class="section-scroller">
-          API
-        </button>
-        <button content-data-target="wordpress-plugin" class="section-scroller">
-          WordPress Plugin
-        </button>
-        <button content-data-target="pricing" class="section-scroller">
-          Pricing
-        </button>
+        <a href="/#api">API</a>
+        <!-- <a href="/#wordpress-plugin">WordPress Plugin</a> -->
+        <a href="/#pricing">Pricing</a>
         <button content-data-target="fags" class="section-scroller">
           FAQs
         </button>
@@ -223,18 +218,10 @@
         </a>
         <nav class="nav-wrapper">
           <a href="/#what-stopreg-check">Feature</a>
-          <button content-data-target="api" class="section-scroller">
-            API
-          </button>
-          <button content-data-target="wordpress-plugin" class="section-scroller">
-            WordPress Plugin
-          </button>
-          <button content-data-target="pricing" class="section-scroller">
-            Pricing
-          </button>
-          <button content-data-target="fags" class="section-scroller">
-            FAQs
-          </button>
+          <a href="/#api">API</a>
+          <!-- <a href="/#wordpress-plugin">WordPress Plugin</a> -->
+          <a href="/#pricing">Pricing</a>
+          <a href="/#fags">FAQs</a>
           <a href="/documentation.html">Documentation</a>
         </nav>
         <div class="auth-wrapper">
@@ -270,8 +257,8 @@
                 <div class="email-container">
                   <input type="email" required placeholder="Enter email address" id="email" name="email" />
                 </div>
-                <div>
-                  <img src="/assets/images/landing/common/Captcha.png" alt="">
+                <div id="captcha-container" style="margin-bottom: 24px;">
+                  <div id="turnstile-widget" data-sitekey="0x4AAAAAACEca11RLVJeokxF"></div>
                 </div>
 
                 <button class="bulk-verify-domain-btn">Verify Domains</button>
@@ -282,9 +269,9 @@
       </section>
 
       <!-- Results Section (Overlay) -->
-      <section class="results-overlay-section">
+      <section id="verify-email-result-section" class="results-overlay-section" style="display: none;">
         <div class="public-results-card">
-          <h4 class="disposal-result-main-title">
+          <h4 id="verify-email-result-title" class="disposal-result-main-title">
             The email provided macdonald@gmail.com is a verified disposable email
           </h4>
 
@@ -293,7 +280,7 @@
             <div class="result-card status-true">
               <p class="result-boolean">True</p>
               <div class="result-content">
-                <h3 class="result-head">Max Record</h3>
+                <h3 class="result-head">Mx Record</h3>
                 <p class="result-desc">
                   This domain has MX record. This means that it has a mail server and is able to receive emails
                 </p>
@@ -487,6 +474,7 @@
 
   <script src="/assets/js/landing/landing.js"></script>
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/verify-email-domain.js" defer></script>
   <script src="/assets/js/privacy-animations.js"></script>
 </body>
 

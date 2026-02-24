@@ -103,13 +103,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Set Endpoints (Static for now, but ready for dynamic if needed)
         // We also set data-full-text to simplify the copy logic consistency
         if (emailEndpointEl) {
-            const emailEndpoint = "https://api.stopreg.com/v1/email/check"; 
+            const emailEndpoint = "https://api.stopreg.com/api/v1/verify/email"; 
             emailEndpointEl.textContent = emailEndpoint;
             emailEndpointEl.dataset.fullText = emailEndpoint;
         }
   
         if (domainEndpointEl) {
-            const domainEndpoint = "https://api.stopreg.com/v1/domain/check";
+            const domainEndpoint = "https://api.stopreg.com/api/v1/verify/domain";
             domainEndpointEl.textContent = domainEndpoint;
             domainEndpointEl.dataset.fullText = domainEndpoint;
         }

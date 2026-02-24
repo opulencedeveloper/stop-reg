@@ -379,9 +379,9 @@
                 <li>Make your first API call to validate an email address</li>
               </ol>
               <p>
-                The API endpoint is simple and straightforward. You'll use a
-                GET request with your API token and the email address you want
-                to validate. Continue reading the next sections to learn about
+                The API endpoint is simple and secure. You'll use a
+                POST request with your API token in the header and the email address in the body. Continue reading the
+                next sections to learn about
                 authentication, endpoints, and code examples.
               </p>
             </article>
@@ -399,7 +399,10 @@
                   Log in to your
                   <a href="/dashboard/index.html" style="color: #1452ca">StopReg dashboard</a>
                 </li>
-                <li>Navigate to your account settings or API section</li>
+                <li>
+                  Navigate to the <b>API</b> section or locate the API token on
+                  your <a href="/dashboard/index.html" style="color: #1452ca">Dashboard home</a>
+                </li>
                 <li>
                   Copy your API token (you can regenerate it at any time if
                   needed)
@@ -407,23 +410,20 @@
               </ol>
               <h3>Using Your API Token</h3>
               <p>
-                Your API token is included directly in the API endpoint URL.
-                The format is:
+                We recommend using the <code>x-api-token</code> header for all requests. This keeps your token out of
+                URL logs and follows industry standards.
               </p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre
-                    class="code-block"><code>https://api.stopreg.com/api/v1/check/<span class="keyword">YOUR_API_TOKEN</span>?email=<span class="string">user@example.com</span></code></pre>
+                  <pre class="code-block"><code><span class="keyword">Headers:</span>
+  <span class="variable">x-api-token</span>: <span class="string">YOUR_API_TOKEN</span></code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
                   <span>Copy</span>
                 </button>
               </div>
-              <p>
-                Replace <code>YOUR_API_TOKEN</code> with your actual API token
-                from the dashboard.
-              </p>
+
               <h3>Security Best Practices</h3>
               <ul>
                 <li>
@@ -458,36 +458,52 @@
                 StopReg provides a simple REST API endpoint for email
                 validation. All endpoints use HTTPS and return JSON responses.
               </p>
-              <h3>Email Validation Endpoint</h3>
+              <h3>Email Verification</h3>
               <p><strong>Endpoint:</strong></p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre
-                    class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/check/<span class="variable">{apiToken}</span>?email=<span class="string">{email}</span></code></pre>
+                    class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/email</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
                   <span>Copy</span>
                 </button>
               </div>
-              <h3>Parameters</h3>
+              <h3>Domain Verification</h3>
+              <p><strong>Endpoint:</strong></p>
+              <div class="code-snippet-container">
+                <div class="code-snippet-content">
+                  <pre
+                    class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/domain</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+              </div>
+              <h3>Body Parameters (JSON)</h3>
               <ul>
                 <li>
-                  <strong>apiToken</strong> (path parameter, required): Your
-                  StopReg API token
+                  <strong>email</strong> (string, required for /email): The
+                  email address to validate
                 </li>
                 <li>
-                  <strong>email</strong> (query parameter, required): The
-                  email address to validate
+                  <strong>domain</strong> (string, required for /domain): The
+                  domain name to validate (e.g., example.com)
                 </li>
               </ul>
               <h3>Request Example</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/check/<span class="keyword">YOUR_API_TOKEN</span>?email=<span class="string">test@example.com</span>
+                  <pre class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/email
 
 <span class="keyword">Headers:</span>
-  <span class="variable">Content-Type</span>: <span class="string">application/json</span></code></pre>
+  <span class="variable">x-api-token</span>: <span class="string">YOUR_API_TOKEN</span>
+  <span class="variable">Content-Type</span>: <span class="string">application/json</span>
+
+<span class="keyword">Body:</span>
+  { <span class="string">"email"</span>: <span class="string">"test@example.com"</span> }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -501,10 +517,35 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code>{
+  <span class="string">"status"</span>: <span class="keyword">200</span>,
   <span class="string">"message"</span>: <span class="string">"success"</span>,
-  <span class="string">"data"</span>: {
-    <span class="string">"isDisposable"</span>: <span class="keyword">false</span>
-  }
+  <span class="string">"description"</span>: <span class="string">"Check successful"</span>,
+  <span class="string">"input"</span>: {
+    <span class="string">"email"</span>: <span class="string">"user@example.com"</span>,
+    <span class="string">"normalized"</span>: <span class="string">"user@example.com"</span>,
+    <span class="string">"suggestion"</span>: <span class="keyword">null</span>
+  },
+  <span class="string">"domain"</span>: {
+    <span class="string">"name"</span>: <span class="string">"example.com"</span>,
+    <span class="string">"provider"</span>: <span class="string">"Google"</span>
+  },
+  <span class="string">"mail_server"</span>: {
+    <span class="string">"mx_found"</span>: <span class="keyword">true</span>,
+    <span class="string">"mx_records"</span>: [<span class="string">"aspmx.l.google.com"</span>]
+  },
+  <span class="string">"classification"</span>: {
+    <span class="string">"is_disposable"</span>: <span class="keyword">false</span>,
+    <span class="string">"is_role_based"</span>: <span class="keyword">false</span>,
+    <span class="string">"is_relay"</span>: <span class="keyword">false</span>,
+    <span class="string">"is_alias"</span>: <span class="keyword">false</span>,
+    <span class="string">"is_unresolved"</span>: <span class="keyword">false</span>,
+    <span class="string">"is_public"</span>: <span class="keyword">true</span>
+  },
+  <span class="string">"policy"</span>: {
+    <span class="string">"blocklisted"</span>: <span class="keyword">false</span>,
+    <span class="string">"allowlisted"</span>: <span class="keyword">false</span>
+  },
+  <span class="string">"data"</span>: { <span class="comment">/* copy of above results */</span> }
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
@@ -515,32 +556,43 @@
               <h3>Response Fields</h3>
               <ul>
                 <li>
-                  <strong>message:</strong> Status of the request ("success"
-                  or "error")
+                  <strong>status:</strong> HTTP status code of the response
                 </li>
                 <li>
-                  <strong>data.email:</strong> The email address that was
-                  checked
+                  <strong>message:</strong> Status text ("success" or "error")
                 </li>
                 <li>
-                  <strong>data.isDisposable:</strong> Boolean indicating if
-                  the email is from a disposable provider
+                  <strong>description:</strong> Human-readable description of the result
                 </li>
                 <li>
-                  <strong>data.domain:</strong> The domain part of the email
-                  address
+                  <strong>input:</strong> Contains raw input, normalized value, and typo suggestions
+                </li>
+                <li>
+                  <strong>domain:</strong> Details about the domain and its identified provider
+                </li>
+                <li>
+                  <strong>mail_server:</strong> MX record status and resolved hosts
+                </li>
+                <li>
+                  <strong>classification:</strong> Boolean flags for disposable, relay, public, role-based, alias, and
+                  unresolved status
+                </li>
+                <li>
+                  <strong>policy:</strong> User-specific blocklist and allowlist status
                 </li>
               </ul>
               <h3>Error Responses</h3>
               <p>
-                If an error occurs, the API returns a JSON response with an
-                error message:
+                If an error occurs, the API returns a JSON response with standardized error codes:
               </p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code>{
+  <span class="string">"status"</span>: <span class="keyword">401</span>,
   <span class="string">"message"</span>: <span class="string">"error"</span>,
-  <span class="string">"description"</span>: <span class="string">"Error description here"</span>
+  <span class="string">"description"</span>: <span class="string">"The provided API token is invalid."</span>,
+  <span class="string">"error"</span>: <span class="string">"invalid_token"</span>,
+  <span class="string">"data"</span>: <span class="keyword">null</span>
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
@@ -552,18 +604,19 @@
               <ul>
                 <li><strong>200 OK:</strong> Request successful</li>
                 <li>
-                  <strong>400 Bad Request:</strong> Invalid parameters
-                  (missing email or API token)
+                  <strong>400 Bad Request:</strong> Invalid parameters (e.g., <code>invalid_email</code>,
+                  <code>invalid_domain</code>)
                 </li>
                 <li>
-                  <strong>401 Unauthorized:</strong> Invalid or missing API
-                  token
+                  <strong>401 Unauthorized:</strong> Authentication issues (<code>missing_token</code>,
+                  <code>invalid_token</code>, <code>token_expired</code>)
                 </li>
                 <li>
-                  <strong>429 Too Many Requests:</strong> Rate limit exceeded
+                  <strong>429 Too Many Requests:</strong> Rate limit exceeded (<code>rate_limited</code>) or quota
+                  exhausted (<code>token_exhausted</code>)
                 </li>
                 <li>
-                  <strong>500 Internal Server Error:</strong> Server error
+                  <strong>500 Internal Server Error:</strong> Unexpected server error
                 </li>
               </ul>
             </article>
@@ -578,26 +631,23 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
-<span class="keyword">const</span> <span class="variable">email</span> = <span class="string">'test@example.com'</span>;
+<span class="keyword">const</span> <span class="variable">email</span> = <span class="string">'test@disposable.com'</span>;
 
-<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(
-  <span class="string">`https://api.stopreg.com/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`</span>,
-  {
-    <span class="variable">method</span>: <span class="string">'GET'</span>,
+<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email'</span>, {
+    <span class="variable">method</span>: <span class="string">'POST'</span>,
     <span class="variable">headers</span>: {
+      <span class="string">'x-api-token'</span>: <span class="variable">apiToken</span>,
       <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,
     },
+    <span class="variable">body</span>: <span class="variable">JSON</span>.<span class="function">stringify</span>({ <span class="variable">email</span> }),
   }
 );
 
 <span class="keyword">const</span> <span class="variable">data</span> = <span class="keyword">await</span> <span class="variable">response</span>.<span class="function">json</span>();
-
 <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">data</span>);
 
-<span class="keyword">if</span> (<span class="variable">data</span>.data?.isDisposable) {
-  <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Email is disposable - block registration'</span>);
-} <span class="keyword">else</span> {
-  <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Email is valid - allow registration'</span>);
+<span class="keyword">if</span> (<span class="variable">data</span>.classification?.is_disposable) {
+  <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Domain is blocked'</span>);
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
@@ -611,24 +661,18 @@
                   <pre class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">api_token</span> = <span class="string">'YOUR_API_TOKEN'</span>
-<span class="variable">email</span> = <span class="string">'test@example.com'</span>
+<span class="variable">email</span> = <span class="string">'test@disposable.com'</span>
 
-<span class="variable">url</span> = <span class="string">f'https://api.stopreg.com/api/v1/check/{api_token}?email={email}'</span>
+<span class="variable">url</span> = <span class="string">'https://api.stopreg.com/api/v1/verify/email'</span>
 
-<span class="variable">response</span> = requests.<span class="function">get</span>(
-    <span class="variable">url</span>, 
-    <span class="variable">headers</span>={
-        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>
-    }
+<span class="variable">response</span> = requests.<span class="function">post</span>(
+    <span class="variable">url</span>,
+    <span class="variable">json</span>={<span class="string">'email'</span>: <span class="variable">email</span>},
+    <span class="variable">headers</span>={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
 )
 
 <span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()
-<span class="function">print</span>(<span class="variable">data</span>)
-
-<span class="keyword">if</span> <span class="variable">data</span>.<span class="function">get</span>(<span class="string">'data'</span>, {}).<span class="function">get</span>(<span class="string">'isDisposable'</span>):
-    <span class="function">print</span>(<span class="string">'Email is disposable - block registration'</span>)
-<span class="keyword">else</span>:
-    <span class="function">print</span>(<span class="string">'Email is valid - allow registration'</span>)</code></pre>
+<span class="function">print</span>(<span class="variable">data</span>)</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -641,14 +685,17 @@
                   <pre class="code-block"><code><span class="keyword">&lt;?php</span>
 
 <span class="variable">$apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
-<span class="variable">$email</span> = <span class="string">'test@example.com'</span>;
+<span class="variable">$email</span> = <span class="string">'test@disposable.com'</span>;
 
-<span class="variable">$url</span> = <span class="string">"https://api.stopreg.com/api/v1/check/{$apiToken}?email="</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>);
+<span class="variable">$url</span> = <span class="string">"https://api.stopreg.com/api/v1/verify/email"</span>;
 
 <span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="variable">$url</span>);
 
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, <span class="keyword">CURLOPT_POST</span>, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, <span class="keyword">CURLOPT_POSTFIELDS</span>, <span class="function">json_encode</span>([<span class="string">'email'</span> => <span class="variable">$email</span>]));
 <span class="function">curl_setopt</span>(<span class="variable">$ch</span>, <span class="keyword">CURLOPT_RETURNTRANSFER</span>, <span class="keyword">true</span>);
 <span class="function">curl_setopt</span>(<span class="variable">$ch</span>, <span class="keyword">CURLOPT_HTTPHEADER</span>, [
+    <span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>,
     <span class="string">'Content-Type: application/json'</span>
 ]);
 
@@ -657,10 +704,8 @@
 
 <span class="function">curl_close</span>(<span class="variable">$ch</span>);
 
-<span class="keyword">if</span> (<span class="variable">$data</span>[<span class="string">'data'</span>][<span class="string">'isDisposable'</span>]) {
-    <span class="keyword">echo</span> <span class="string">'Email is disposable - block registration'</span>;
-} <span class="keyword">else</span> {
-    <span class="keyword">echo</span> <span class="string">'Email is valid - allow registration'</span>;
+<span class="keyword">if</span> (<span class="variable">$data</span>[<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>]) {
+    <span class="keyword">echo</span> <span class="string">'Domain is blocked'</span>;
 }
 <span class="keyword">?&gt;</span></code></pre>
                 </div>
@@ -672,9 +717,11 @@
               <h3>cURL</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre class="code-block"><code><span class="keyword">curl</span> <span class="keyword">-X</span> <span class="keyword">GET</span> \
-  <span class="string">"https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com"</span> \
-  <span class="keyword">-H</span> <span class="string">"Content-Type: application/json"</span></code></pre>
+                  <pre class="code-block"><code><span class="keyword">curl</span> <span class="keyword">-X</span> <span class="keyword">POST</span> \
+  <span class="string">"https://api.stopreg.com/api/v1/verify/email"</span> \
+  <span class="keyword">-H</span> <span class="string">"x-api-token: YOUR_API_TOKEN"</span> \
+  <span class="keyword">-H</span> <span class="string">"Content-Type: application/json"</span> \
+  <span class="keyword">-d</span> <span class="string">'{"email": "test@disposable.com"}'</span></code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -685,7 +732,7 @@
               <p>
                 When integrating StopReg into your registration or signup
                 forms, validate the email address before allowing the user to
-                complete registration. If <code>isDisposable</code> is
+                complete registration. If <code>classification.is_disposable</code> is
                 <code>true</code>, show an error message asking the user to
                 use a valid email address.
               </p>

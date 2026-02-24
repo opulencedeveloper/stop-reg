@@ -22,48 +22,52 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hardcoded plans array
     const plans = [
       {
-        "_id": "6919d59af89bb2679ddadbb2",
-        "name": "Starter",
-        "monthlyPrice": 5,
+        "_id": "6984c3f3c3a2b4bb21a1729f",
+        "name": "Launch",
+        "monthlyPrice": 10,
         "apiLimit": 10000,
         "durationInDays": 30,
-        "isRecommended": false,
-        "createdAt": "2025-11-16T13:46:02.466Z",
-        "updatedAt": "2025-11-16T13:46:02.466Z",
-        "__v": 0
+        "isRecommended": false
       },
       {
-        "_id": "6919d5b9f89bb2679ddadbb4",
-        "name": "Developer",
-        "monthlyPrice": 10,
+        "_id": "6984c3f3c3a2b4bb21a172a0",
+        "name": "Scale",
+        "monthlyPrice": 20,
         "apiLimit": 30000,
         "durationInDays": 30,
-        "isRecommended": false,
-        "createdAt": "2025-11-16T13:46:33.953Z",
-        "updatedAt": "2025-11-16T13:46:33.953Z",
-        "__v": 0
+        "isRecommended": true
       },
       {
-        "_id": "6919d5d8f89bb2679ddadbb6",
-        "name": "Business",
-        "monthlyPrice": 40,
-        "apiLimit": 200000,
+        "_id": "6984c3f3c3a2b4bb21a172a1",
+        "name": "Boost",
+        "monthlyPrice": 50,
+        "apiLimit": 300000,
         "durationInDays": 30,
-        "isRecommended": true,
-        "createdAt": "2025-11-16T13:47:04.399Z",
-        "updatedAt": "2025-11-16T13:47:04.399Z",
-        "__v": 0
+        "isRecommended": false
       },
       {
-        "_id": "6919d5f5f89bb2679ddadbb8",
+        "_id": "6984c3f3c3a2b4bb21a172a2",
+        "name": "Power",
+        "monthlyPrice": 100,
+        "apiLimit": 700000,
+        "durationInDays": 30,
+        "isRecommended": false
+      },
+      {
+        "_id": "6984c3f3c3a2b4bb21a172a3",
+        "name": "Elite",
+        "monthlyPrice": 200,
+        "apiLimit": 1500000,
+        "durationInDays": 30,
+        "isRecommended": false
+      },
+      {
+        "_id": "enterprise_plan_id",
         "name": "Enterprise",
         "monthlyPrice": null,
         "apiLimit": null,
         "durationInDays": null,
-        "isRecommended": false,
-        "createdAt": "2025-11-16T13:47:33.901Z",
-        "updatedAt": "2025-11-16T13:47:33.901Z",
-        "__v": 0
+        "isRecommended": false
       }
     ];
 

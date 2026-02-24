@@ -207,7 +207,8 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline"
+                    data-plan-id="6984c3f3c3a2b4bb21a1729f">Get Started</a>
                 </div>
 
                 <!-- Scale Plan (Recommended) -->
@@ -228,7 +229,8 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-filled">Get Started</a>
+                  <a href="/sign-up.html" class="pricing-btn btn-pricing-filled"
+                    data-plan-id="6984c3f3c3a2b4bb21a172a0">Get Started</a>
                 </div>
 
                 <!-- Boost Plan -->
@@ -248,7 +250,8 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline"
+                    data-plan-id="6984c3f3c3a2b4bb21a172a1">Get Started</a>
                 </div>
 
                 <!-- Power Plan -->
@@ -268,7 +271,8 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline"
+                    data-plan-id="6984c3f3c3a2b4bb21a172a2">Get Started</a>
                 </div>
 
                 <!-- Elite Plan -->
@@ -288,7 +292,8 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline"
+                    data-plan-id="6984c3f3c3a2b4bb21a172a3">Get Started</a>
                 </div>
 
                 <!-- Enterprise Plan -->
@@ -308,7 +313,7 @@
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
                     <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
                   </ul>
-                  <a href="/sign-up.html" class="pricing-btn btn-pricing-outline">Get Started</a>
+                  <a href="/contact.html" class="pricing-btn btn-pricing-outline">Get Started</a>
                 </div>
               </div>
             </div>
@@ -317,10 +322,18 @@
       </div>
     </div>
   </main>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <script type="text/javascript">
+    Paddle.Environment.set("sandbox");
+    Paddle.Initialize({
+      token: "test_bee7a039123b0d822213f7dc839"
+    });
+  </script>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
   <script src="/assets/js/dash/fetch-user-detail.js" defer></script>
   <script src="/assets/js/dash/fetch-plan-details.js" defer></script>
+  <script src="/assets/js/dash/payment-init.js" defer></script>
   <!-- <script src="/assets/js/subscription-plan.js" defer></script> -->
   <!-- Zoho SalesIQ Live Chat Widget -->
   <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

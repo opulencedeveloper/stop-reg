@@ -86,7 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- CUSTOM VALIDATION HELPERS ---
   function showInputError(input, message) {
-    const parent = input.parentElement;
+    let parent = input.parentElement;
+    // Climb up if inside a password wrapper to ensure error is outside
+    if (parent.classList.contains('password-input-wrapper')) {
+        parent = parent.parentElement;
+    }
+
     let error = parent.querySelector(".custom-input-error");
     if (!error) {
       error = document.createElement("div");
@@ -104,7 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function clearInputError(input) {
-    const parent = input.parentElement;
+    let parent = input.parentElement;
+    if (parent.classList.contains('password-input-wrapper')) {
+        parent = parent.parentElement;
+    }
     const error = parent.querySelector(".custom-input-error");
     if (error) error.remove();
     input.classList.remove("input-error-border");

@@ -9,7 +9,6 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 90px;
   /* Offset fixed header */
   position: relative;
   z-index: 1;
@@ -482,12 +481,7 @@ tr.bulk-table-inner td {
     /* Reduced margin for mobile */
   }
 
-  @media only screen and (max-width: 550px) {
-    .verifyEmail-hero {
-      margin-top: 80px;
-      /* Restore margin for mobile */
-    }
-  }
+  @media only screen and (max-width: 550px) {}
 
   /* Update padding for mobile */
   .bulk-content-section {
@@ -791,4 +785,9 @@ tr.bulk-table-inner td {
   .result-desc {
     font-size: 12px;
   }
+}
+
+/* Utility for full width result cards in the check page */
+.full-width-card {
+  grid-column: 1 / -1;
 }

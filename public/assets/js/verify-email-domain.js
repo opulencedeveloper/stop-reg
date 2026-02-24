@@ -8,16 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Landing Page Elements (index.html)
   const landingForm = document.querySelector(".hero-sect-two");
   
-  // Verify Email Page Elements (verify-email.html)
+  // Verify Email Page Elements (verify-email.html / check-disposable-email.html)
   const verifyPageForm = document.querySelector(".verifyEmail-hero form");
-
+  
   // If neither form exists, exit
   if (!landingForm && !verifyPageForm) return;
 
-  // Set active context variables based on which form is found (prioritize landing if both exist?)
-  // We'll stick to one active form controller for simplicity unless both needed on same page (unlikely).
+  // Set active context variables based on which form is found
   let form, input, submitBtn, resultContainer, turnstileContainerSelector;
   let isLandingPage = false;
+  let isCheckPage = false;
 
   if (landingForm) {
     isLandingPage = true;
@@ -27,10 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer = form.querySelector(".api-live-demo-result-cont");
     turnstileContainerSelector = ".api-live-demo-cloudflaire-cont";
   } else {
+    isCheckPage = window.location.pathname.includes('check-disposable-email.html');
     form = verifyPageForm;
     input = form.querySelector("#email");
     submitBtn = form.querySelector(".bulk-verify-domain-btn");
-    resultContainer = document.getElementById("verify-email-result-container");
+    resultContainer = isCheckPage 
+        ? document.getElementById("verify-email-result-section")
+        : document.getElementById("verify-email-result-container");
     turnstileContainerSelector = "#captcha-container"; // or look for #turnstile-widget directly
   }
 
@@ -76,6 +79,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Fallback if no toast library
     alert(message);
+  }
+
+  function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+      json = JSON.stringify(json, undefined, 2);
+    }
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+      let cls = 'json-number';
+      if (/^"/.test(match)) {
+        if (/:$/.test(match)) {
+          cls = 'json-key';
+        } else {
+          cls = 'json-string';
+        }
+      } else if (/true|false/.test(match)) {
+        cls = 'json-boolean';
+      } else if (/null/.test(match)) {
+        cls = 'json-null';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+    });
   }
 
   // -------------------------------------------------------------------------
@@ -300,10 +325,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const responseData = data?.data;
       
-      const isDisposable = responseData.disposableEmail !== false;
-      const emailData = typeof responseData.disposableEmail === 'object' ? responseData.disposableEmail : {};
+      const isDisposable = responseData?.classification?.is_disposable === true;
       
-      renderResults(inputValue, isDisposable, emailData);
+      renderResults(inputValue, isDisposable, responseData, data);
       showToast("Check successful", "success");
 
       // Reset Turnstile
@@ -332,20 +356,108 @@ document.addEventListener("DOMContentLoaded", () => {
   // 5. Result Rendering (Dashboard Style)
   // -------------------------------------------------------------------------
   
-  function renderResults(inputVal, isDisposable, details) {
+  function renderResults(inputVal, isDisposable, details, fullResponse = null) {
     if (!resultContainer) return;
 
-    // Fix for landing page container styles (reset default placeholder styles)
     if (isLandingPage) {
-        resultContainer.style.height = "auto";
-        resultContainer.style.backgroundColor = "transparent";
-        resultContainer.style.justifyContent = "normal";
-        resultContainer.style.alignItems = "normal";
+        const terminalBody = resultContainer.querySelector(".terminal-body");
+        if (!terminalBody) return;
+
+        terminalBody.classList.remove("placeholder-mode");
+        
+        // Use fullResponse if provided, otherwise reconstruct the approved format
+        const responseToShow = fullResponse || {
+            message: "success",
+            description: "Check successful",
+            data: {
+                disposableEmail: isDisposable
+            }
+        };
+
+        terminalBody.innerHTML = `<pre style="margin: 0;">${syntaxHighlight(responseToShow)}</pre>`;
+        return;
     }
 
-    // Logic for individual checks
+    if (isCheckPage) {
+        const resultTitle = document.getElementById("verify-email-result-title");
+        const listContainer = resultContainer.querySelector(".disposal-results-list");
+
+        const typeLabel = inputVal.includes('@') ? "email" : "domain";
+        const headerVerificationText = isDisposable 
+            ? `is a verified disposable ${typeLabel}` 
+            : `is NOT a verified disposable ${typeLabel}`;
+
+        if (resultTitle) {
+            resultTitle.innerHTML = `The ${typeLabel} provided <b>${inputVal}</b> ${headerVerificationText}`;
+        }
+
+        if (listContainer) {
+            const hasMx = details?.mail_server?.mx_found === true;
+            const isPublic = details?.classification?.is_public === true;
+            const isRelay = details?.classification?.is_relay === true;
+
+            listContainer.innerHTML = `
+                <!-- Mx Record (True/False) -->
+                <div class="result-card ${hasMx ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${hasMx ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Mx Record</h3>
+                        <p class="result-desc">
+                            ${hasMx 
+                                ? "This domain has MX record. This means that it has a mail server and is able to receive emails" 
+                                : "This domain does not have an MX record. It may not be able to receive emails."}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Disposable (True/False) -->
+                <div class="result-card ${isDisposable ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${isDisposable ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Disposable</h3>
+                        <p class="result-desc">
+                            ${isDisposable 
+                                ? "This domain appears to be from a disposable email provider"
+                                : "This domain does not appear to be from a disposable email provider"}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Public Email (True/False) -->
+                <div class="result-card ${isPublic ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${isPublic ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Public email provider</h3>
+                        <p class="result-desc">
+                            ${isPublic
+                                ? "This domain is from a public email provider. This means that anyone can generate emails from this domain for free"
+                                : "This domain is not from a public email provider"}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Relay Domain (True/False) -->
+                <div class="result-card ${isRelay ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${isRelay ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Relay domain</h3>
+                        <p class="result-desc">
+                            ${isRelay
+                                ? "This domain is identified as a relay domain service"
+                                : "This domain does not appear to be a relay domain"}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        resultContainer.style.display = 'block';
+        return;
+    }
+
+    // Logic for individual checks (verify-email.html style)
     // MX Record
-    const hasMx = details.mx_record && details.mx_record !== '';
+    const hasMx = details?.mail_server?.mx_found === true;
     const mxStatus = hasMx ? "YES" : "NO";
     const mxClass = hasMx ? "status-true" : "status-false"; 
     
@@ -357,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : "This domain does not appear to be from a disposable email provider";
 
     // Public Provider
-    const isPublic = !!details.public_email_provider;
+    const isPublic = !!details?.classification?.is_public;
     const publicStatus = isPublic ? "True" : "False";
     const publicClass = isPublic ? "status-true" : "status-false";
     const publicDesc = isPublic
@@ -370,13 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ? `is a verified disposable ${typeLabel}` 
         : `is NOT a verified disposable ${typeLabel}`;
 
-    // Construct HTML matching dashboard structure
-    // We use inline styles to ensure it works on Landing Page without extra CSS files, 
-    // while reusing dashboard classes if they exist (or falling back to inline).
-    
-    // Note: On Landing page, we might not have dashboard CSS classes like 'result-card', 'status-true'.
-    // So we kept inline styles in the previous step. Validating they are sufficient.
-    
     const html = `
       <h4 class="disposal-result-main-title" style="margin-top: 24px; margin-bottom: 16px; font-size: 16px; font-weight: 500; color: #101828;">
         The input provided <b>${inputVal}</b> ${headerVerificationText}
@@ -425,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.innerHTML = html;
     resultContainer.style.display = 'block';
   }
+
 
 });
 
