@@ -111,18 +111,16 @@
 /* Pagination container spacing */
 /* Pagination container spacing */
 .req-table-container {
-    overflow-x: visible !important;
     width: 100%;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
 }
 
 .req-table-scroll-wrapper {
     min-width: 100%;
     width: max-content;
-    display: flex;
-    flex-direction: column;
 }
 
 

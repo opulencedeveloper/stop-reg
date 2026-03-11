@@ -177,9 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
               clearInputError(passwordInput);
           } else if (isErrorShown || val.length > 0) {
               if (val.length === 0) {
-                  showInputError(passwordInput, "Password is required");
+                  showInputError(passwordInput, "Password is required.");
+              } else if (val.length < 8) {
+                  showInputError(passwordInput, "Password must be at least 8 characters long.");
               } else {
-                  showInputError(passwordInput, "Must have 1 uppercase, 1 lowercase, 1 number, 8+ chars");
+                  showInputError(passwordInput, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
               }
           }
       });
@@ -251,11 +253,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Validate Password
       if (!password) {
-           showInputError(passwordInput, "Password is required");
+           showInputError(passwordInput, "Password is required.");
+           hasError = true;
+           if (!firstInvalidInput) firstInvalidInput = passwordInput;
+      } else if (password.length < 8) {
+           showInputError(passwordInput, "Password must be at least 8 characters long.");
            hasError = true;
            if (!firstInvalidInput) firstInvalidInput = passwordInput;
       } else if (!passwordPattern.test(password)) {
-           showInputError(passwordInput, "Must have 1 uppercase, 1 lowercase, 1 number, 8+ chars");
+           showInputError(passwordInput, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
            hasError = true;
            if (!firstInvalidInput) firstInvalidInput = passwordInput;
       }

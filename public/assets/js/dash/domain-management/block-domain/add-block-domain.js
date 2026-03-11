@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     if (!token) {
+      window.clearUserSession();
       window.location.href = "/sign-in.html";
       return;
     }
@@ -100,9 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         reportDomainOverlay.style.display = "none";
       } else {
         if (response.status === 401) {
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("role");
-          window.location.href = "/sign-in.html";
+          window.handleAuthError(401);
           return;
         }
         const errorMessage = data.description || data.message || "Failed to block domain.";

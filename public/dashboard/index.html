@@ -457,8 +457,7 @@
                 <div class="input-group">
                   <label>Domain Verification API Endpoint</label>
                   <div class="copy-input-field grey-bg">
-                    <span class="truncated-text"
-                      id="domain-endpoint-text">https://api.stopreg.com/v1/domain/check</span>
+                    <span class="truncated-text" id="domain-endpoint-text">https://api.stopreg.com/v1/domain/check</span>
                     <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
                   </div>
                 </div>
@@ -531,7 +530,7 @@
             </section>
 
             <section class="dash-requests-section">
-              <h3 class="req-table-title">Last 20 API Requests</h3>
+              <h3 class="req-table-title">Last 10 API Requests</h3>
 
               <div class="req-table-container">
                 <table class="req-table">
@@ -563,12 +562,25 @@
                         </div>
                       </td>
                       <td class="table-center">
-                        <button class="action-btn btn-report">
-                          <div class="action-icon-wrapper">
-                            <img src="/assets/icons/flag-linear-blue.svg" alt="Report" />
+                        <div class="action-dropdown">
+                          <button class="action-menu-trigger" aria-label="Actions">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                          </button>
+                          <div class="action-dropdown-menu">
+                            <button class="dropdown-item action-btn btn-add-allow" data-id="mock1">
+                              <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                              <span>Add to Allowlist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-add-block" data-id="mock1">
+                              <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                              <span>Add to blocklist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-report" data-id="mock1">
+                              <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                              <span>Report</span>
+                            </button>
                           </div>
-                          Report
-                        </button>
+                        </div>
                       </td>
                     </tr>
 
@@ -587,12 +599,25 @@
                         </div>
                       </td>
                       <td class="table-center">
-                        <button class="action-btn btn-add-allow">
-                          <div class="action-icon-wrapper">
-                            <img src="/assets/icons/add-duotone.svg" alt="Allow" />
+                        <div class="action-dropdown">
+                          <button class="action-menu-trigger" aria-label="Actions">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                          </button>
+                          <div class="action-dropdown-menu">
+                            <button class="dropdown-item action-btn btn-add-allow" data-id="mock2">
+                              <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                              <span>Add to Allowlist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-add-block" data-id="mock2">
+                              <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                              <span>Add to blocklist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-report" data-id="mock2">
+                              <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                              <span>Report</span>
+                            </button>
                           </div>
-                          Add to Allowlist
-                        </button>
+                        </div>
                       </td>
                     </tr>
 
@@ -611,12 +636,25 @@
                         </div>
                       </td>
                       <td class="table-center">
-                        <button class="action-btn btn-add-block">
-                          <div class="action-icon-wrapper">
-                            <img src="/assets/icons/add-duotone-grey.svg" alt="Block" />
+                        <div class="action-dropdown">
+                          <button class="action-menu-trigger" aria-label="Actions">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                          </button>
+                          <div class="action-dropdown-menu">
+                            <button class="dropdown-item action-btn btn-add-allow" data-id="mock3">
+                              <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                              <span>Add to Allowlist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-add-block" data-id="mock3">
+                              <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                              <span>Add to blocklist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-report" data-id="mock3">
+                              <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                              <span>Report</span>
+                            </button>
                           </div>
-                          Add to blocklist
-                        </button>
+                        </div>
                       </td>
                     </tr>
 
@@ -635,12 +673,25 @@
                         </div>
                       </td>
                       <td class="table-center">
-                        <button class="action-btn btn-report">
-                          <div class="action-icon-wrapper">
-                            <img src="/assets/icons/flag-linear-blue.svg" alt="Report" />
+                        <div class="action-dropdown">
+                          <button class="action-menu-trigger" aria-label="Actions">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                          </button>
+                          <div class="action-dropdown-menu">
+                            <button class="dropdown-item action-btn btn-add-allow" data-id="mock4">
+                              <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                              <span>Add to Allowlist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-add-block" data-id="mock4">
+                              <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                              <span>Add to blocklist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-report" data-id="mock4">
+                              <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                              <span>Report</span>
+                            </button>
                           </div>
-                          Report
-                        </button>
+                        </div>
                       </td>
                     </tr>
 
@@ -659,12 +710,25 @@
                         </div>
                       </td>
                       <td class="table-center">
-                        <button class="action-btn btn-add-block">
-                          <div class="action-icon-wrapper">
-                            <img src="/assets/icons/add-duotone-grey.svg" alt="Block" />
+                        <div class="action-dropdown">
+                          <button class="action-menu-trigger" aria-label="Actions">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                          </button>
+                          <div class="action-dropdown-menu">
+                            <button class="dropdown-item action-btn btn-add-allow" data-id="mock5">
+                              <img src="/assets/icons/add-duotone.svg" alt="Add" />
+                              <span>Add to Allowlist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-add-block" data-id="mock5">
+                              <img src="/assets/icons/add-duotone.svg" alt="Block" />
+                              <span>Add to blocklist</span>
+                            </button>
+                            <button class="dropdown-item action-btn btn-report" data-id="mock5">
+                              <img src="/assets/icons/flag-linear.svg" alt="Report" />
+                              <span>Report</span>
+                            </button>
                           </div>
-                          Add to blocklist
-                        </button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -832,6 +896,7 @@
         <script src="/assets/js/dash/index.js" defer></script>
         <script src="/assets/js/dash/index-modals.js" defer></script>
         <script src="/assets/js/dash/header.js" defer></script>
+        <script src="/assets/js/dash/portal-manager.js" defer></script>
         <script src="/assets/js/dash/chart.js" defer></script>
         <!-- <script src="/assets/js/dash/fetch-user-detail.js" defer></script> -->
         <script src="/assets/js/dash/fetch-plan-details.js" defer></script>

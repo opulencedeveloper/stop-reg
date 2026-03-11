@@ -175,9 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             
             if (response.status === 401) {
-                localStorage.removeItem("authToken");
-                localStorage.removeItem("role");
-                window.location.href = "/sign-in.html";
+                window.handleAuthError(401);
                 return;
             }
 

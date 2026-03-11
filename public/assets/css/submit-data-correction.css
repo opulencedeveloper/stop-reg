@@ -1,0 +1,195 @@
+/* Data Correction Form Styles */
+
+.submit-correction-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* User Figma design: linear-gradient(0deg, rgba(20, 82, 202, 0.16) 2.44%, rgba(20, 82, 202, 0.48) 100%) */
+    /* Lightened version as requested */
+    background: linear-gradient(180deg, rgba(20, 82, 202, 0.10) 0%, rgba(20, 82, 202, 0.20) 100%);
+    padding: 100px var(--desktop-padding);
+    min-height: calc(100vh - 80px);
+    /* Adjust based on header height */
+    box-sizing: border-box;
+}
+
+/* Header Text Animation (Performance Optimized) */
+.submit-correction-header {
+    text-align: center;
+    margin-bottom: 32px;
+    max-width: 600px;
+    /* Hardware acceleration properties */
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-5deg) translate3d(0, 30px, 0);
+    will-change: transform, opacity;
+}
+
+.submit-correction-header.visible-ani {
+    animation: premiumEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.submit-correction-title {
+    font-family: 'Inter_18pt-Bold', sans-serif;
+    font-size: 40px;
+    color: #252525;
+    margin-bottom: 12px;
+}
+
+.submit-correction-subtitle {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    line-height: 1.6;
+}
+
+/* Form Container Animation (Staggered) */
+.submit-correction-form-container {
+    width: 100%;
+    max-width: 680px;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 20px 20px 40px 0px #25252514;
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-5deg) translate3d(0, 40px, 0) scale(0.98);
+    will-change: transform, opacity;
+    box-sizing: border-box;
+}
+
+.submit-correction-form-container.visible-ani {
+    animation: premiumEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #344054;
+    margin-bottom: 12px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #D0D5DD;
+    border-radius: 8px;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: #101828;
+    background: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #9CA3AF;
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: #1452CA;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(20, 82, 202, 0.1);
+}
+
+.form-captcha-placeholder {
+    margin-bottom: 32px;
+    width: 300px;
+    /* Approximate width of standard recaptcha */
+}
+
+.form-captcha-placeholder img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    display: block;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 50px;
+    background-color: #1452CA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter_18pt-Bold', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #0F3F9C;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* High-Performance 60fps Animation */
+@keyframes premiumEntrance {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateX(-5deg) translate3d(0, 40px, 0) scale(0.98);
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateX(0deg) translate3d(0, 0, 0) scale(1);
+    }
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .submit-correction-header,
+    .submit-correction-form-container {
+        animation: none;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 768px) {
+    .submit-correction-section {
+        padding: 60px 16px 80px;
+    }
+
+    .submit-correction-form-container {
+        padding: 24px;
+    }
+
+    .submit-correction-title {
+        font-size: 20px;
+    }
+
+    .submit-correction-header {
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 12px;
+    }
+
+    .submit-correction-section {
+        padding: 48px var(--mobile-padding);
+    }
+
+}

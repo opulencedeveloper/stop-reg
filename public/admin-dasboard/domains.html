@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Domains - StopReg</title>
+  <meta name="description" content="StopReg Admin Domains Management." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-domains.css" rel="stylesheet" />
+
+  <script src="/assets/js/admin/admin-domains.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link active">
+          <img src="/assets/icons/domains-active.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link active">
+          <img src="/assets/icons/domains-active.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">My Account</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <div class="domains-page-container">
+          <!-- Domains Header -->
+          <div class="domains-header">
+            <div class="domains-header-info">
+              <h2>Domains</h2>
+            </div>
+            <div class="domains-tabs">
+              <button class="tab-btn active" data-tab="reported">Reported</button>
+              <button class="tab-btn" data-tab="blocked">Blocked</button>
+              <button class="tab-btn" data-tab="allowlist">Allowlist</button>
+            </div>
+          </div>
+
+          <!-- Domains Table Section -->
+          <div class="domains-table-container">
+            <!-- Reported Tab Content -->
+            <div class="tab-content active" id="reported-content">
+              <div class="domains-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Domain</th>
+                      <th>Comment</th>
+                      <th>Our status</th>
+                      <th>Your status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Row 3: Reported Status -->
+                    <tr>
+                      <td>randycabre@gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum nyss makrode emedan ran. Bed parapatologi.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 5: Reported -->
+                    <tr>
+                      <td>ramosmargaret@hotmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum karen tresa os och sarid. Infrasade digt.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle blue-glow">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+                    <!-- Row 6: Reported -->
+                    <tr>
+                      <td>jrichrichardson@hotmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum karen tresa os och sarid. Infrasade digt.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge allowed">
+                          <img src="/assets/icons/approve-outline.svg" alt="" />
+                          <span>Allow</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 7: Reported -->
+                    <tr>
+                      <td>kent.clark@dailyplanet.com</td>
+                      <td>metropolis.com</td>
+                      <td>
+                        <div class="comment-text">Is it a bird? Is it a plane? No, it's just another reported domain.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 8: Reported -->
+                    <tr>
+                      <td>bruce.wayne@waynetech.com</td>
+                      <td>gotham.city</td>
+                      <td>
+                        <div class="comment-text">Suspicious activity detected in the shipping department.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge allowed">
+                          <img src="/assets/icons/approve-outline.svg" alt="" />
+                          <span>Allow</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 9: Reported -->
+                    <tr>
+                      <td>diana.prince@themiscira.gov</td>
+                      <td>amazon.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum nevis anade. Kontrakrati remivis eller födat fast sahånera.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 10: Reported -->
+                    <tr>
+                      <td>barry.allen@centralcity.pd</td>
+                      <td>speedforce.io</td>
+                      <td>
+                        <div class="comment-text">Fast tracked for review. Needs investigation into registration velocity.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge allowed">
+                          <img src="/assets/icons/approve-outline.svg" alt="" />
+                          <span>Allow</span>
+                        </div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge reported">
+                          <img src="/assets/icons/flag-linear.svg" alt="" />
+                          <span>Reported</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/gg_unblock.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Blocked Tab Content -->
+            <div class="tab-content" id="blocked-content">
+              <div class="domains-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Domain</th>
+                      <th>Comment</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Row 1: Blocked Status -->
+                    <tr>
+                      <td>curtispowll@yahoo.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum nevis anade. Kontrakrati remivis eller födat fast sahånera.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/stop.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 2: Blocked -->
+                    <tr>
+                      <td>ramosco@hotmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum influerare gynde kosämigt pseudorar. Hexaktigt säsasade poska.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/stop.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 6: Blocked -->
+                    <tr>
+                      <td>kingpeter@gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum karen tresa os och sarid. Infrasade digt.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/stop.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 7: Blocked -->
+                    <tr>
+                      <td>nicholsangela@hotmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>
+                        <div class="comment-text">Lörem ipsum karen tresa os och sarid. Infrasade digt.</div>
+                      </td>
+                      <td class="status-cell">
+                        <div class="status-badge blocked">
+                          <img src="/assets/icons/block-outline.svg" alt="" />
+                          <span>Blocked</span>
+                        </div>
+                      </td>
+                      <td>
+                        <button class="action-btn-circle">
+                          <img src="/assets/icons/stop.svg" alt="Actions" />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Allowlist Tab Content -->
+            <div class="tab-content" id="allowlist-content">
+              <div class="domains-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>Domain</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Row 4: Allowed Status -->
+                    <tr>
+                      <td>hernande@hotmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td class="status-cell">
+                        <div class="status-badge allowed">
+                          <img src="/assets/icons/approve-outline.svg" alt="" />
+                          <span>Allow</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>curtispowell@yahoo.com	</td>
+                      <td>macdonald.com</td>
+                      <td class="status-cell">
+                        <div class="status-badge allowed">
+                          <img src="/assets/icons/approve-outline.svg" alt="" />
+                          <span>Allow</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="domains-footer">
+            <div class="per-page-selector">
+              <select id="per-page-select">
+                <option value="10">10 per page</option>
+                <option value="20">20 per page</option>
+                <option value="50">50 per page</option>
+              </select>
+            </div>
+            <div class="pagination-controls">
+              <button class="pagination-btn prev-btn" disabled>
+                <img src="/assets/icons/angle-right.svg" alt="Previous" class="rotate-180" />
+              </button>
+              <button class="pagination-btn active">1</button>
+              <button class="pagination-btn">2</button>
+              <span class="pagination-ellipsis">...</span>
+              <button class="pagination-btn">9</button>
+              <button class="pagination-btn">10</button>
+              <button class="pagination-btn next-btn">
+                <img src="/assets/icons/angle-right.svg" alt="Next"  />
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+
+</html>

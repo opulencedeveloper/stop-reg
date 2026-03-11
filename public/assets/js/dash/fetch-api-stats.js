@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('authToken');
     if (!token) {
+        window.clearUserSession();
         window.location.href = '/sign-in.html';
         return;
     }
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Helper: Unresolved Icon ---
     function getUnresolvedIcon(val) {
-        // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
+        // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
         const isTrue = val > 0;
         const text = isTrue ? "Yes" : "No";
         const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
@@ -120,9 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (response.status === 401) {
-                localStorage.removeItem("authToken");
-                localStorage.removeItem("role");
-                window.location.href = "/sign-in.html";
+                window.handleAuthError(401);
                 return;
             }
 

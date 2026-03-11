@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function requireAuth() {
     const token = localStorage.getItem("authToken");
     if (!token) {
+      window.clearUserSession();
       window.location.href = "/sign-in.html";
       return null;
     }
@@ -169,9 +170,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("role");
-        window.location.href = "/sign-in.html";
+        window.handleAuthError(401);
         return;
       }
 
@@ -267,9 +266,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       console.error("Error fetching user info:", data);
       if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("role");
-        window.location.href = "/sign-in.html";
+        window.handleAuthError(401);
       } else {
         const errorMessage = data.description || data.message || "Failed to fetch user information.";
         if (typeof iziToast !== 'undefined') {

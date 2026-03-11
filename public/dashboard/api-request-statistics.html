@@ -21,6 +21,12 @@
     <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
 
     <!-- Stylesheets -->
+
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="/assets/fonts/PlusJakartaSans-Regular.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous" />
+    <link rel="preload" href="/assets/fonts/PlusJakartaSans-Bold.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous" />
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/styles.css" rel="stylesheet" />
@@ -307,57 +313,54 @@
                             <h3 class="req-table-title">Requests Count (Last 30 Days)</h3>
 
                             <div class="req-table-container">
-                                <div class="req-table-scroll-wrapper">
-                                    <table class="req-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Domain</th>
-                                                <th class="table-center">Provider</th>
-                                                <th class="table-center">Unresolved</th>
-                                                <th class="table-center">Disposable</th>
-                                                <th class="table-center">Relay</th>
-                                                <th class="table-center">Request Count</th>
-                                                <th class="table-center">Status</th>
-                                                <th class="table-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="api-stats-table-body">
-                                            <!-- Rows will be populated by fetch-api-stats.js -->
-                                        </tbody>
-                                    </table>
+                                <table class="req-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain</th>
+                                            <th class="table-center">Provider</th>
+                                            <th class="table-center">Unresolved</th>
+                                            <th class="table-center">Disposable</th>
+                                            <th class="table-center">Relay</th>
+                                            <th class="table-center">Request Count</th>
+                                            <th class="table-center">Status</th>
+                                            <th class="table-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="api-stats-table-body">
+                                        <!-- Rows will be populated by fetch-api-stats.js -->
+                                    </tbody>
+                                </table>
 
-                                    <!-- Pagination -->
-                                    <div class="table-pagination">
-                                        <div class="pagination-select-container">
-                                            <select class="pagination-select">
-                                                <option>10 per page</option>
-                                                <option>20 per page</option>
-                                            </select>
-                                            <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6"
-                                                fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
-                                        </div>
+                                <!-- Pagination -->
+                                <div class="table-pagination">
+                                    <div class="pagination-select-container">
+                                        <select class="pagination-select">
+                                            <option>10 per page</option>
+                                            <option>20 per page</option>
+                                        </select>
+                                        <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
 
-                                        <div class="pagination-controls">
-                                            <button class="page-nav-btn prev" disabled>
-                                                <img src="/assets/icons/angle-right.svg" alt="Previous"
-                                                    class="rotate-180" />
-                                            </button>
-                                            <button class="page-number active">1</button>
-                                            <button class="page-number">2</button>
-                                            <span class="page-dots">...</span>
-                                            <button class="page-number">9</button>
-                                            <button class="page-number">10</button>
-                                            <button class="page-nav-btn next">
-                                                <img src="/assets/icons/angle-right.svg" alt="Next" />
-                                            </button>
-                                        </div>
+                                    <div class="pagination-controls">
+                                        <button class="page-nav-btn prev" disabled>
+                                            <img src="/assets/icons/angle-right.svg" alt="Previous"
+                                                class="rotate-180" />
+                                        </button>
+                                        <button class="page-number active">1</button>
+                                        <button class="page-number">2</button>
+                                        <span class="page-dots">...</span>
+                                        <button class="page-number">9</button>
+                                        <button class="page-number">10</button>
+                                        <button class="page-nav-btn next">
+                                            <img src="/assets/icons/angle-right.svg" alt="Next" />
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
                         </section>
                     </div>
                 </div>
@@ -402,6 +405,7 @@
     <script src="/assets/js/dashboard/error-handler.js" defer></script>
     <script src="/assets/js/dash/index-modals.js" defer></script>
     <script src="/assets/js/dash/fetch-plan-details.js" defer></script>
+    <script src="/assets/js/dash/portal-manager.js" defer></script>
     <script src="/assets/js/dash/fetch-api-stats.js" defer></script>
     <!-- Zoho SalesIQ Live Chat Widget -->
     <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>

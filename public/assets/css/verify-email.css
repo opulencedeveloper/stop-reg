@@ -477,7 +477,6 @@ tr.bulk-table-inner td {
     /* Adjust padding for mobile if needed, or keep consistent */
     box-sizing: border-box;
     height: fit-content;
-    margin-top: 80px;
     /* Reduced margin for mobile */
   }
 

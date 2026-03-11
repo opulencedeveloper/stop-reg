@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'PlusJakartaSans-Regular';
-    src: url('../fonts/PlusJakartaSans-Regular.ttf') format('truetype');
+    src: url('../fonts/PlusJakartaSans-Regular.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
     font-style: normal;
@@ -8,15 +8,15 @@
 
 @font-face {
     font-family: 'Inter_28pt-Regular';
-    src: url('../fonts/Inter_28pt-Regular.ttf') format('truetype');
-    font-weight: 400; 
+    src: url('../fonts/Inter_28pt-Regular.woff2') format('woff2');
+    font-weight: 400;
     font-display: swap;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'PlusJakartaSans-SemiBold';
-    src: url('../fonts/PlusJakartaSans-SemiBold.ttf') format('truetype');
+    src: url('../fonts/PlusJakartaSans-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
     font-style: normal;
@@ -24,16 +24,16 @@
 
 @font-face {
     font-family: 'Inter_28pt-SemiBold';
-    src: url('../fonts/Inter_28pt-SemiBold.ttf') format('truetype');
+    src: url('../fonts/Inter_28pt-SemiBold.woff2') format('woff2');
     font-weight: 600;
-    font-display: swap;
-    font-style: normal; 
+    font-display: swap; 
+    font-style: normal;
 }
 
 
 @font-face {
     font-family: 'PlusJakartaSans-Bold';
-    src: url('../fonts/PlusJakartaSans-Bold.ttf') format('truetype');
+    src: url('../fonts/PlusJakartaSans-Bold.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
     font-style: normal;
@@ -41,7 +41,7 @@
 
 @font-face {
     font-family: 'Inter_18pt-Bold';
-    src: url('../fonts/Inter_18pt-Bold.ttf') format('truetype');
+    src: url('../fonts/Inter_18pt-Bold.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
     font-style: normal;
@@ -49,7 +49,7 @@
 
 @font-face {
     font-family: 'PlusJakartaSans-ExtraBold';
-    src: url('../fonts/PlusJakartaSans-ExtraBold.ttf') format('truetype');
+    src: url('../fonts/PlusJakartaSans-ExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
     font-style: normal;
@@ -57,7 +57,7 @@
 
 @font-face {
     font-family: 'PlayfairDisplay-ExtraBold';
-    src: url('../fonts/PlayfairDisplay-ExtraBold.ttf') format('truetype');
+    src: url('../fonts/PlayfairDisplay-ExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-display: swap;
     font-style: normal;

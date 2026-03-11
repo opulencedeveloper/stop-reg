@@ -117,18 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let siteKey = "0x4AAAAAACEca11RLVJeokxF"; // Default/Hardcoded site key
 
     if (isLandingPage) {
-        // For landing page, we append a div if not present, or use the container
-        const container = document.querySelector(turnstileContainerSelector);
-        if (container) {
-            // Check if widget div already exists
-            let widget = document.getElementById("landing-turnstile-widget");
-            if (!widget) {
-                widget = document.createElement("div");
-                widget.id = "landing-turnstile-widget";
-                container.appendChild(widget);
-            }
-            widgetTarget = widget;
-        }
+        // Render directly into the container
+        widgetTarget = document.querySelector(turnstileContainerSelector);
     } else {
         // For verify-email.html, it expects #turnstile-widget
         widgetTarget = document.getElementById("turnstile-widget");
@@ -330,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderResults(inputValue, isDisposable, responseData, data);
       showToast("Check successful", "success");
 
-      // Reset Turnstile
+      // Reset Turnstile on success
       turnstileToken = null;
       if (window.turnstile && turnstileWidgetId !== null) {
         window.turnstile.reset(turnstileWidgetId);
@@ -344,6 +334,12 @@ document.addEventListener("DOMContentLoaded", () => {
         : (err.message || "An unexpected error occurred.");
         
       showToast(msg, "error");
+
+      // CRITICAL: Reset Turnstile on error so the user can try again without a page refresh
+      turnstileToken = null;
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnContent;
@@ -395,6 +391,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const hasMx = details?.mail_server?.mx_found === true;
             const isPublic = details?.classification?.is_public === true;
             const isRelay = details?.classification?.is_relay === true;
+            const isRole = details?.classification?.is_role_based === true;
+            const isAlias = details?.classification?.is_alias === true;
+            const isUnresolved = details?.classification?.is_unresolved === true;
 
             listContainer.innerHTML = `
                 <!-- Mx Record (True/False) -->
@@ -445,6 +444,45 @@ document.addEventListener("DOMContentLoaded", () => {
                             ${isRelay
                                 ? "This domain is identified as a relay domain service"
                                 : "This domain does not appear to be a relay domain"}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Role-based (True/False) -->
+                <div class="result-card ${isRole ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${isRole ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Role-based</h3>
+                        <p class="result-desc">
+                            ${isRole
+                                ? "This email is identified as a role-based or generic address (e.g. admin@, support@)"
+                                : "This email does not appear to be a role-based address"}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Alias (True/False) -->
+                <div class="result-card ${isAlias ? 'status-true' : 'status-false'}">
+                    <p class="result-boolean">${isAlias ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Alias Detection</h3>
+                        <p class="result-desc">
+                            ${isAlias
+                                ? "This email is an alias address (contains + or . characters that may be stripped)"
+                                : "This email is not an alias address"}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Unresolved (True/False) -->
+                <div class="result-card ${isUnresolved ? 'status-true' : 'status-false'}" style="border-bottom: none;">
+                    <p class="result-boolean">${isUnresolved ? 'True' : 'False'}</p>
+                    <div class="result-content">
+                        <h3 class="result-head">Unresolved</h3>
+                        <p class="result-desc">
+                            ${isUnresolved
+                                ? "This domain could not be resolved or found in our global database. It may be a dead or inactive domain"
+                                : "This domain was resolved successfully via DNS or Database"}
                         </p>
                     </div>
                 </div>

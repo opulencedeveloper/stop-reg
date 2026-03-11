@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("authToken");
   
     if (!token) {
+        window.clearUserSession();
         window.location.href = "/sign-in.html";
         return;
     }
@@ -79,12 +80,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                             year: "numeric",
                         });
 
-                        // Standard classes
                         document.querySelectorAll(".current-plan-date").forEach(el => {
-                            // Check if it has a span child for the value
-                            const span = el.querySelector("span");
-                            if (span) span.textContent = ` ${formattedDate}`;
-                            else el.textContent = `Expires: ${formattedDate}`;
+                            // Clear innerHTML to remove any spinners (from chart.js)
+                            el.innerHTML = "";
+                            el.textContent = `Expires: ${formattedDate}`;
                         });
                     }
         
@@ -92,7 +91,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     if (userDetails.planId?.name) {
                         const planName = userDetails.planId.name;
                         document.querySelectorAll(".Current-plan-plan").forEach(el => {
-                            el.textContent = planName;
+                            el.innerHTML = "";
+                            el.textContent = `${planName} Account`;
                         });
                     }
         
@@ -103,19 +103,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const usageText = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
                         
                         document.querySelectorAll(".api-request-left").forEach(el => {
-                            const span = el.querySelector("span");
-                            if (span) {
-                                span.textContent = apiRequestLeft.toLocaleString();
-                            } else {
-                                el.textContent = usageText;
-                            }
+                            el.innerHTML = "";
+                            el.textContent = usageText;
                         });
                     }
                 }
             } else {
                 if (response.status === 401) {
-                    localStorage.removeItem("authToken");
-                    window.location.href = "/sign-in.html";
+                    window.handleAuthError(401);
                 }
                 throw new Error("Failed to load user info");
             }

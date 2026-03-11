@@ -54,13 +54,10 @@
             sessionStorage.setItem('stopreg_has_visited', 'true');
 
             if (overlayElement) {
-                // Random Exit Animation
-                const exitAnimations = ['exit-zoom-in', 'exit-zoom-out', 'exit-slide-up', 'exit-slide-down'];
-                const randomExit = exitAnimations[Math.floor(Math.random() * exitAnimations.length)];
+                // Apply the premium lift exit animation
+                overlayElement.classList.add('entrance-hidden', 'exit-premium-lift');
                 
-                overlayElement.classList.add('entrance-hidden', randomExit);
-                
-                // Cleanup DOM & Dispatch Event after animation
+                // Cleanup DOM & Dispatch Event after animation (1000ms to match CSS transform)
                 setTimeout(() => {
                     if (overlayElement && overlayElement.parentNode) {
                         try {

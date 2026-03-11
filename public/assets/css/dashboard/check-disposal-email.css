@@ -43,30 +43,47 @@
 .check-disposable-email-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .check-disposable-email-form label {
-  font-family: 'Inter_28pt-Regular', sans-serif;
-  font-size: 14px;
+  display: block;
+  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-size: 16px;
   color: #252525;
+  margin-bottom: 0px;
+  /* gap handles this */
 }
 
 .check-disposable-email-form input {
-  height: 46px;
-  border: 0.3px solid #1452CA;
+  width: 100%;
+  height: 50px;
+  padding: 0px 16px;
+  border: 0.3px solid #737373;
   border-radius: 8px;
-  padding: 0 16px;
+  font-family: 'PlusJakartaSans-Regular', sans-serif;
   font-size: 16px;
   color: #101828;
-  font-family: 'Inter_28pt-Regular', sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
   outline: none;
 }
 
 .check-disposable-email-form input:focus {
   border-color: #1452CA;
-  box-shadow: 0 0 0 4px #F2F4F7;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+/* Neutralize Browser Autofill Background */
+.check-disposable-email-form input:-webkit-autofill,
+.check-disposable-email-form input:-webkit-autofill:hover,
+.check-disposable-email-form input:-webkit-autofill:focus,
+.check-disposable-email-form input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 50px white inset !important;
+  -webkit-text-fill-color: #101828 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .bulk-check-email-btn {
@@ -219,6 +236,15 @@
   .disposable-email-disc {
     font-size: 14px !important;
     margin-bottom: 12px !important;
+  }
+
+  .check-disposable-email-form label {
+    font-size: 14px !important;
+  }
+
+  .check-disposable-email-form input {
+    height: 44px !important;
+    font-size: 14px !important;
   }
 
   .result-head {

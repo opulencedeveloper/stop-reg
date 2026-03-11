@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Helper for formatting values
     const formatValue = (val) => {
         if (val === true) return `<div class="status-badge status-bool-yes"><span>Yes</span></div>`;
-        if (val === false) return `<div class="status-badge status-bool-no"><span>No</span></div>`;
+        if (val === false) return '-';
         return val || '-';
     };
 
@@ -207,9 +207,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Unresolved: 0=False(No/Green), 1=True(Yes/Red)
         const unresolvedVal = (item.unresolved || 0);
         const isUnresolvedBool = unresolvedVal > 0; // True if > 0 (1)
-        const unresolvedText = isUnresolvedBool ? "Yes" : "No";
-        const unresolvedClass = isUnresolvedBool ? "status-bool-yes" : "status-bool-no";
-        const isUnresolved = `<div class="status-badge ${unresolvedClass}"><span>${unresolvedText}</span></div>`;
+        const isUnresolved = isUnresolvedBool 
+            ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>` 
+            : '-';
 
         tr.innerHTML = `
           <td>${index + 1}</td>
@@ -255,9 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const result = await response.json();
         
         if (response.status === 401) {
-             localStorage.removeItem("authToken");
-             localStorage.removeItem("role");
-             window.location.href = "/sign-in.html";
+             window.handleAuthError(401);
              return;
         }
 
@@ -441,9 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.removeChild(a);
         } else {
             if (response.status === 401) {
-                localStorage.removeItem("authToken");
-                localStorage.removeItem("role");
-                window.location.href = "/sign-in.html";
+                window.handleAuthError(401);
                 return;
             }
             const data = await response.json().catch(() => ({}));
@@ -468,7 +464,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!token) return (window.location.href = "/sign-in.html");
+      if (!token) {
+          window.clearUserSession();
+          window.location.href = "/sign-in.html";
+          return;
+      }
       const links = getLinksArray();
       if (links.length === 0) {
         if (typeof iziToast !== 'undefined') {
@@ -506,9 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } else {
           if (response.status === 401) {
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("role");
-            window.location.href = "/sign-in.html";
+            window.handleAuthError(401);
             return;
           }
           const errorMessage = data.description || data.message || "Verification failed!";

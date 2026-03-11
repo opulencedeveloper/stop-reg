@@ -2,7 +2,7 @@
 
  
   
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const legacyBtn = document.querySelector(".ratoken-btn");
     const generateBtn = document.getElementById("generate-token-btn");
     const generateBtnCount = document.getElementById("generate-token-btn-count");
@@ -10,9 +10,44 @@ document.addEventListener("DOMContentLoaded", () => {
     if (legacyBtn) legacyBtn.addEventListener("click", () => handleRegenerate(legacyBtn));
     if (generateBtn) generateBtn.addEventListener("click", () => handleRegenerate(generateBtn));
     if (generateBtnCount) generateBtnCount.addEventListener("click", () => handleRegenerate(generateBtnCount));
+
+    // --- RUTHLESS PLAN CHECK ---
+    const token = localStorage.getItem("authToken");
+    if (token) {
+        try {
+            const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            if (response.ok) {
+                const user = data?.data || data;
+                const planName = user.userDetails?.planId?.name;
+                if (planName === "Free") {
+                    window.isStopRegFreeUser = true;
+                }
+            }
+        } catch (error) {
+            console.error("Plan check failed:", error);
+        }
+    }
 });
 
 async function handleRegenerate(btn) {
+    if (window.isStopRegFreeUser) {
+        if (typeof iziToast !== 'undefined') {
+            iziToast.info({
+                title: 'Premium Feature',
+                message: "The Free plan is limited to one API token. Please upgrade your plan to generate more.",
+                position: "topRight"
+            });
+        }
+        return;
+    }
+
     const token = localStorage.getItem("authToken");
     const originalText = btn.innerHTML; // Store HTML to preserve icon if any
     const isNewBtn = btn.id === "generate-token-btn" || btn.id === "generate-token-btn-count";
@@ -23,7 +58,8 @@ async function handleRegenerate(btn) {
     btn.innerHTML = `<div class="stopreg-btn-spinner" style="border-color: rgba(255,255,255,0.2) !important; border-top-color: #FFFFFF !important;"></div> ${isNewBtn ? "Generating..." : "Requesting..."}`;
 
     if (!token) {
-        window.location.href = "/";
+        window.clearUserSession();
+        window.location.href = "/sign-in.html";
         return;
     }
 
@@ -80,9 +116,7 @@ async function handleRegenerate(btn) {
             }
 
             if (response.status === 401) {
-                localStorage.removeItem("authToken");
-                localStorage.removeItem("role");
-                window.location.href = "/sign-in.html";
+                window.handleAuthError(401);
             }
         }
     } catch (error) {

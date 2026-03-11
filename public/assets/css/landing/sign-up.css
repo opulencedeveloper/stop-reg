@@ -255,11 +255,25 @@ html {
     padding: 0;
 }
 
+.signin-password-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forgot-password-lnk {
+    text-decoration: none;
+    color: #1452CA;
+    font-size: 16px;
+    font-family: 'Inter_28pt-Regular';
+}
+
 /* --- Typography & Form --- */
 .auth-title {
-    font-family: 'PlusJakartaSans-ExtraBold', sans-serif;
+    font-family: 'Inter_18pt-Bold', sans-serif;
     font-size: 32px;
-    color: #101828;
+    color: #252525;
     margin-bottom: 18px;
     text-align: center;
     /* Mobile default */
@@ -483,6 +497,8 @@ html {
         margin-bottom: 40px;
         /* Space between logo and text */
     }
+
+
 }
 
 /* --- Spacing Updates (117px Desktop / 8px Mobile) --- */
@@ -555,6 +571,10 @@ html {
 
     .form-group label {
         font-size: 14px;
+    }
+
+    .forgot-password-lnk {
+        font-size: 12px;
     }
 
     .toggle-password img {

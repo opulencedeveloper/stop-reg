@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
   if (!token) {
+    window.clearUserSession();
     window.location.href = "/sign-in.html";
     return;
   }
@@ -108,17 +109,20 @@ document.addEventListener("DOMContentLoaded", async () => {
            // Update Plan Details
            if (expiresDateEl && userDetails.tokenExpiresAt) {
              const expiresDate = new Date(userDetails.tokenExpiresAt);
+             expiresDateEl.innerHTML = "";
              expiresDateEl.textContent = `Expires: ${expiresDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}`;
            }
 
            if (planNameEl && userDetails.planId?.name) {
+             planNameEl.innerHTML = "";
              planNameEl.textContent = `${userDetails.planId.name} Account`;
            }
 
            if (apiRequestLeftEl && userDetails.planId) {
              const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
              const durationInDays = userDetails.planId.durationInDays ?? 30;
-             apiRequestLeftEl.textContent = `${apiRequestLeft} API requests in ${durationInDays} days`;
+             apiRequestLeftEl.innerHTML = "";
+             apiRequestLeftEl.textContent = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
            }
            
 
@@ -138,9 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       } else {
           if (response.status === 401) {
-             localStorage.removeItem("authToken");
-             localStorage.removeItem("role");
-             window.location.href = "/sign-in.html";
+             window.handleAuthError(401);
              return;
           }
           handleUserInfoError();
@@ -255,9 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
        } else {
             console.error("Error fetching requests:", await response.text());
             if (response.status === 401) {
-                localStorage.removeItem("authToken");
-                localStorage.removeItem("role");
-                window.location.href = "/sign-in.html";
+                window.handleAuthError(401);
                 return;
             }
             handleRequestsError(tableBody, donutContainer, trendContainer, lineChartContainer);
@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Mind blowing empty state animation
           tableBody.innerHTML = `
             <tr>
-              <td colspan="7" style="padding: 0; border: none;">
+              <td colspan="8" style="padding: 0; border: none;">
                 <div class="empty-state-container">
                   <img src="/assets/icons/empty.svg" alt="No Data" class="empty-state-svg" />
                   <h4 class="empty-state-title">No Requests Yet</h4>
@@ -394,8 +394,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
       }
 
-      // Sort by createdAt desc (Newest first) and take top 20
-      const sortedReqs = [...requests].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 20);
+      // Sort by createdAt desc (Newest first) and take top 10
+      const sortedReqs = [...requests].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
 
       tableBody.innerHTML = sortedReqs.map(req => {
           const status = req.status || "-";
@@ -482,7 +482,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           };
 
           const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Red), 0 -> False (No/Green)
+             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
              const className = isTrue ? 'status-bool-yes' : 'status-bool-no';

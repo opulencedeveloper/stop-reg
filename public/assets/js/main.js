@@ -1,3 +1,22 @@
+// Session & Authentication Helper
+window.clearUserSession = function() {
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("role");
+  localStorage.removeItem("planName");
+  // Add any other session-related items here in the future
+};
+
+window.handleAuthError = function(error, source = "API") {
+  console.error(`${source} Error:`, error);
+  // Check if it's a 401 Unauthorized or specific "token" error
+  if (error === 401 || (error && error.status === 401) || (error && error.message && error.message.includes("401"))) {
+    window.clearUserSession();
+    window.location.href = "/sign-in.html";
+    return true;
+  }
+  return false;
+};
+
 // Spinner utility functions for dashboard pages
 window.spinnerCount = 0; // Track number of active data fetches
 
@@ -232,6 +251,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Dynamic Public Auth Navigation
+document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem("authToken");
 
-
+  // Only run on public pages (not dashboard)
+  const isDashboardPage = window.location.pathname.includes('/dashboard/');
   
+  if (token && !isDashboardPage) {
+    // 1. Update Desktop/Main Nav (.auth-wrapper)
+    const authWrappers = document.querySelectorAll('.auth-wrapper');
+    authWrappers.forEach(wrapper => {
+      wrapper.innerHTML = `
+        <a href="/dashboard/index.html" class="auth-btn-link" style="background-color: var(--color-two); color: var(--color-one); border: none;">
+          Dashboard
+        </a>
+      `;
+    });
+
+    // 2. Update Mobile Nav (.mobile-nav-btns)
+    const mobileNavBtns = document.querySelectorAll('.mobile-nav-btns');
+    mobileNavBtns.forEach(wrapper => {
+      wrapper.innerHTML = `
+        <a href="/dashboard/index.html" style="text-decoration:none; flex:1; background-color: var(--color-two); color: var(--color-one); border: none;" class="mobile-nav-btn-link">
+          Dashboard
+        </a>
+      `;
+    });
+  }
+});

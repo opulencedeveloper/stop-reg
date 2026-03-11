@@ -73,6 +73,15 @@
     padding-top: 58px;
     /* 20px base + 38px offset */
     overflow: hidden;
+    /* Ensure visibility against dashboard background */
+    z-index: 1;
+}
+
+/* Explicit Title Visibility Override for Scale Plan */
+.pricing-card.recommended .pricing-title {
+    color: #101828 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* Offset ONLY for Grid Layout (Desktop/Tablet Landscape) */
@@ -105,6 +114,9 @@
     color: #101828;
     margin-bottom: 12px;
     text-align: center;
+    /* Guarantee visibility on all cards */
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .pricing-price {
@@ -220,8 +232,9 @@
     }
 
     .pricing-card.recommended {
-        margin-top: 0;
-        /* Reset offset for mobile stack */
+        margin-top: 0 !important;
+        padding-top: 36px !important;
+        /* Compact mobile padding from landing */
     }
 }
 
@@ -360,4 +373,39 @@
     font-size: 14px;
     color: #404040;
     margin-bottom: 80px;
+}
+
+/* Pricing Button Loading States */
+.pricing-btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pricing-btn-spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    animation: stopreg-btn-spin 0.27s linear infinite;
+    display: inline-block;
+}
+
+/* Scale Plan (Filled) Spinner Skin */
+.btn-pricing-filled .pricing-btn-loading {
+    color: #fff !important;
+}
+
+.btn-pricing-filled .pricing-btn-spinner {
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    border-top-color: #fff !important;
+}
+
+/* Outline Plans Spinner Skin */
+.btn-pricing-outline .pricing-btn-loading {
+    color: #1452CA !important;
+}
+
+.btn-pricing-outline .pricing-btn-spinner {
+    border: 2px solid rgba(20, 82, 202, 0.1) !important;
+    border-top-color: #1452CA !important;
 }

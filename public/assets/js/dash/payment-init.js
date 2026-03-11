@@ -17,28 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const isFilled = button.classList.contains("btn-pricing-filled");
-        const spinnerColor = isFilled ? "#fff" : "#222";
-
         // Show loading state
         const originalContent = button.innerHTML;
         button.disabled = true;
         button.innerHTML = `
-            <span style="display: inline-flex; align-items: center; gap: 8px;">
-                <span class="stopreg-btn-spinner" style="border: 2px solid rgba(0, 0, 0, 0.1); border-top-color: ${spinnerColor}; width: 16px; height: 16px; border-radius: 50%; animation: stopreg-spin 0.8s linear infinite;"></span>
+            <span class="pricing-btn-loading">
+                <span class="pricing-btn-spinner"></span>
                 Processing...
             </span>
         `;
-
-        // Add a quick animation style if not exists
-        if (!document.getElementById("stopreg-spinner-style")) {
-            const style = document.createElement("style");
-            style.id = "stopreg-spinner-style";
-            style.innerHTML = `
-                @keyframes stopreg-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-            `;
-            document.head.appendChild(style);
-        }
 
         try {
             const response = await fetch("https://api.stopreg.com/api/v1/payment/initialize", {

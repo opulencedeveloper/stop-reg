@@ -14,6 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Action Functions ---
 
     const openModal = () => {
+        const planName = localStorage.getItem("planName");
+        if (planName === "Free") {
+            if (typeof iziToast !== 'undefined') {
+                iziToast.info({
+                    title: 'Premium Feature',
+                    message: 'Seat management is available on paid plans. Update your plan to invite team members.',
+                    position: 'topRight'
+                });
+            } else {
+                alert("Seat management is a premium feature. Please upgrade your plan.");
+            }
+            return;
+        }
+
         // Prevent background scroll
         document.head.insertAdjacentHTML('beforeend', '<style id="modal-lock">body{overflow:hidden !important;}</style>');
 

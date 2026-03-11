@@ -1,6 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const role = localStorage.getItem("role");
+    const planName = localStorage.getItem("planName");
     const upgradeBtn = document.getElementById("dash-plan-upgrade-btn");
     const divider = document.getElementById("dash-plan-divider");
     const seatsHeader = document.getElementById("dash-seats-header");
@@ -8,13 +9,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const seatsList = document.getElementById("dash-seats-list");
     const seatsTitle = document.getElementById("dash-seats-title");
 
-    // 1. RBAC Check: Hide if "Seat" user
+    // 1. RBAC & Plan Check
+    const isFreePlan = planName === "Free";
+    
     if (role === "Seat") {
         if (upgradeBtn) upgradeBtn.style.display = "none";
         if (divider) divider.style.display = "none";
         if (seatsHeader) seatsHeader.style.display = "none";
         if (seatsContainer) seatsContainer.style.display = "none";
-        return; // Stop execution
+        return;
+    }
+
+    if (isFreePlan) {
+        // Show rationale instead of hiding completely
+        if (seatsTitle) {
+            seatsTitle.innerHTML = `<span style="color: #667085; font-size: 13px;">Premium Feature</span>`;
+        }
+        if (seatsList) {
+            seatsList.innerHTML = `
+                <div class="premium-notice-box" style="padding: 12px; background: #F9FAFB; border-radius: 8px; border: 1px dashed #EAECF0; text-align: center;">
+                    <p style="font-size: 13px; color: #475467; margin: 0;">Seat management is available on <strong style="color: #1452CA;">Launch</strong> or higher plans.</p>
+                </div>
+            `;
+        }
+        const addSeatsTrigger = document.getElementById("add-seats-trigger");
+        if (addSeatsTrigger) {
+            addSeatsTrigger.style.opacity = "0.5";
+            addSeatsTrigger.style.cursor = "not-allowed";
+        }
+        return; 
     }
 
     // 2. Fetch Logic for Owners

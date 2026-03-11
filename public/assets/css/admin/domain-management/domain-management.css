@@ -1,0 +1,442 @@
+/* Domain Management Page Styles */
+
+.domain-mgmt-page-container {
+  background: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+/* Header Section */
+.domain-mgmt-header {
+  padding: 24px 24px 0 24px;
+}
+
+.domain-mgmt-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.domain-mgmt-header-top h2 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 20px;
+  color: #252525;
+  margin: 0;
+}
+
+.add-more-btn {
+  background-color: #1452CA;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 40px;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-more-btn:hover {
+  background-color: #1041a3;
+}
+
+.domain-mgmt-header-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid #EDEDED;
+  padding-bottom: 12px;
+}
+
+/* Tabs */
+.domain-mgmt-tabs {
+  display: flex;
+  gap: 20px;
+}
+
+.domain-mgmt-tabs .tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #252525;
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap !important;
+}
+
+.domain-mgmt-tabs .tab-btn.active {
+  color: #1452CA;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+}
+
+.domain-mgmt-tabs .tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #1452CA;
+}
+
+/* Search Box */
+.domain-mgmt-search-wrapper {
+  flex: none;
+}
+
+.domain-mgmt-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  height: 42px;
+  padding: 0px 12px;
+  width: 280px;
+  gap: 8px;
+}
+
+.domain-mgmt-search-box img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+
+.domain-mgmt-search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #252525;
+}
+
+.domain-search-shortcut {
+  font-size: 12px;
+  color: #98A2B3;
+  background: #F9FAFB;
+  border: 1px solid #F2F4F7;
+  border-radius: 4px;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+/* Table Section */
+.domain-mgmt-table-container {
+  background: white;
+  border: none;
+  /* Removed border here as container has it */
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.domain-mgmt-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 16px 24px;
+  background: #F9FAFB;
+  color: #475467;
+  font-family: 'Inter_28pt-Medium', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #EDEDED;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 16px 24px;
+  color: #252525;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  border-bottom: 1px solid #EDEDED;
+}
+
+.username-col {
+  width: 100%;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-right .action-btn {
+  margin-left: auto;
+}
+
+/* Footer & Pagination */
+.domain-mgmt-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-top: 1px solid #EDEDED;
+}
+
+.per-page-selector select {
+  padding: 6px 12px;
+  border: 1px solid #EDEDED;
+  border-radius: 6px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 13px;
+  color: #737373;
+  outline: none;
+  cursor: pointer;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #EDEDED;
+  border-radius: 4px;
+  background: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #737373;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #F9F9F9;
+  border-color: #D1D5DB;
+}
+
+.pagination-btn.active {
+  background: #FFFFFF;
+  border-color: #252525;
+  color: #252525;
+  font-weight: 600;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .domain-mgmt-header-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .domain-mgmt-tabs {
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .domain-mgmt-search-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-table td {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+
+  .admin-table th {
+    padding: 12px 16px;
+  }
+
+  .domain-mgmt-footer {
+    flex-direction: column;
+    align-items: start;
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .add-more-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .domain-mgmt-header {
+    padding: 12px 12px 0 12px;
+  }
+}
+
+/* Modal Styles */
+.domain-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, visibility;
+}
+
+.domain-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.domain-modal-container {
+  background: #FFFFFF;
+  width: 90%;
+  max-width: 536px;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transform: scale(0.8) translateY(20px) rotateX(-10deg);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, opacity;
+  perspective: 1000px;
+}
+
+.domain-modal-overlay.active .domain-modal-container {
+  transform: scale(1) translateY(0) rotateX(0deg);
+  opacity: 1;
+}
+
+.domain-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.domain-modal-header h3 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 18px;
+  color: #131313;
+  margin: 0;
+}
+
+.domain-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.domain-modal-close:hover {
+  transform: rotate(90deg);
+}
+
+.domain-modal-form .form-group {
+  margin-bottom: 16px;
+}
+
+.domain-modal-form label {
+  display: block;
+  font-family: 'Inter_28pt-Medium', sans-serif;
+  font-size: 14px;
+  color: #252525;
+  margin-bottom: 8px;
+}
+
+.domain-modal-form input[type="text"] {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #131313;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.domain-modal-form input[type="text"]:focus {
+  border-color: #1452CA;
+}
+
+.domain-submit-btn {
+  width: 100%;
+  height: 48px;
+  background: #ECF2FD;
+  border: none;
+  border-radius: 8px;
+  color: #1452CA;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.domain-submit-btn:hover {
+  background: #1452CA;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.2);
+}
+
+.domain-submit-btn:active {
+  transform: translateY(0);
+}
+
+@media screen and (max-width: 480px) {
+  .domain-modal-container {
+    padding: 20px;
+    width: 85%;
+  }
+}

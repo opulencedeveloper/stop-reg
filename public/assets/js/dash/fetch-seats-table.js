@@ -8,6 +8,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let limit = 10;
     let totalItems = 0;
 
+    // Plan Check: Disable seats management for Free users
+    const planName = localStorage.getItem("planName");
+    const isFreePlan = planName === "Free";
+    const addSeatBtn = document.getElementById("add-seats-trigger");
+
+    if (isFreePlan) {
+        if (addSeatBtn) {
+            addSeatBtn.disabled = true;
+            addSeatBtn.classList.add("btn-disabled");
+            addSeatBtn.title = "Seat management is a premium feature";
+        }
+        
+        if (tableBody) {
+             tableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty-state-cell">
+                        <div class="empty-state-content premium-restriction">
+                            <img src="/assets/icons/lock-blue.svg" alt="Premium" />
+                            <p class="empty-state-title">Premium Feature</p>
+                            <p class="empty-state-subtitle">Seat management is available on paid plans. <br>Please upgrade to <strong>Launch</strong> or higher to invite team members.</p>
+                            <a href="/dashboard/payments.html" class="btn btn-primary btn-upgrade">Upgrade Now</a>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+        forceHideSpinner();
+        return; // Stop execution for Free plan
+    }
+
     // Initial Fetch
     fetchSeatsTable(currentPage, limit);
 
@@ -84,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <tr>
                     <td colspan="6" class="empty-state-cell">
                         <div class="empty-state-content">
-                            <p class="empty-state-title">No Seat yeat</p>
+                            <p class="empty-state-title">No Seat yet</p>
                             <p class="empty-state-subtitle">Add your first seat to view results here</p>
                         </div>
                     </td>

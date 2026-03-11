@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
+      window.clearUserSession();
       window.location.href = "/sign-in.html";
       return;
     }
@@ -49,10 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return showError("Passwords do not match!");
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!password) {
+      return showError("New password is required.");
+    }
+    if (password.length < 8) {
+      return showError("New password must be at least 8 characters long.");
+    }
     if (!passwordPattern.test(password)) {
-      return showError(
-        "Password must contain uppercase, lowercase, number and 8+ characters."
-      );
+      return showError("New password must contain at least one uppercase letter, one lowercase letter, and one number.");
     }
 
     const payload = { currentPassword, confirmPassword, password };
@@ -98,9 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         form.reset();
       } else {
         if (response.status === 401) {
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("role");
-          window.location.href = "/sign-in.html";
+          window.handleAuthError(401);
           return;
         }
         const errorMessage = data.description || data.message || "Failed to update password.";

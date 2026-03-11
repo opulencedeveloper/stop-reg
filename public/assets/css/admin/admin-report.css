@@ -1,0 +1,155 @@
+/* Admin Report Page Styles */
+
+/* 2x3 Grid for stats cards */
+.report-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 32px;
+}
+
+.report-stat-card {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.report-stat-card .card-top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.trend-up {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #008000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trend-up img {
+  font-family: 'Inter_28pt-Regular', sans-serif !important;
+}
+
+.report-stat-card .card-middle {
+  margin: 4px 0;
+}
+
+.stat-value {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  color: #252525;
+}
+
+.stat-value.color-blue {
+  color: #0000FF;
+}
+
+.stat-value.color-green {
+  color: #049286;
+}
+
+.stat-value.color-red {
+  color: #CC0000;
+}
+
+.report-stat-card .card-bottom {
+  margin-top: auto;
+}
+
+.stat-label {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  color: #737373;
+}
+
+/* Chart Title Group */
+.chart-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-title-group h3 {
+  font-size: 16px;
+}
+
+.info-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-btn img {
+  height: 100%;
+  width: 100%;
+}
+
+/* Legend dots enhancements */
+.dot-grey {
+  background-color: #D3D3D3;
+}
+
+.dot-teal {
+  background-color: #049286;
+}
+
+/* Responsive Grid */
+@media screen and (max-width: 1024px) {
+  .report-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .report-stats-grid {
+    grid-template-columns: 1fr;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    gap: 12px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+  }
+
+  .report-stat-card {
+    padding: 20px;
+  }
+
+  .trend-up {
+    font-size: 14px;
+    gap: 4px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+  }
+
+  .report-stat-card {
+    gap: 10px;
+  }
+}

@@ -23,12 +23,7 @@
   </url>
 
   <!-- Tools -->
-  <url>
-    <loc>https://stopreg.com/api-check.html</loc>
-    <lastmod>2024-03-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
   <url>
     <loc>https://stopreg.com/bulk-verification.html</loc>
     <lastmod>2024-03-20</lastmod>
@@ -36,10 +31,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://stopreg.com/verify-email.html</loc>
-    <lastmod>2024-03-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://stopreg.com/check-disposable-email.html</loc>
+    <lastmod>2026-03-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Legal & Auth -->

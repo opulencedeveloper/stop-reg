@@ -22,6 +22,12 @@
     <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
 
     <!-- Stylesheets -->
+
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="/assets/fonts/PlusJakartaSans-Regular.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous" />
+    <link rel="preload" href="/assets/fonts/PlusJakartaSans-Bold.woff2" as="font" type="font/woff2"
+        crossorigin="anonymous" />
     <link href="/assets/css/fonts.css" rel="stylesheet" />
     <link href="/assets/css/variables.css" rel="stylesheet" />
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
@@ -163,7 +169,11 @@
 
                         <!-- Password -->
                         <div class="form-group">
-                            <label for="signin-password">Password</label>
+                            <div class="signin-password-group">
+                                <label for="signin-password">Password</label>
+                                <a href="/forgot-password.html" class="forgot-password-lnk">Forgot Password</a>
+                            </div>
+
                             <div class="password-input-wrapper">
                                 <input type="password" id="signin-password" class="form-input"
                                     placeholder="Enter password" required />

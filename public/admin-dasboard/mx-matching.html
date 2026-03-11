@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin MX Matching - StopReg</title>
+  <meta name="description" content="StopReg Admin MX Matching Management." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/mx-matching/mx-matching.css" rel="stylesheet" />
+
+  <script src="/assets/js/admin/mx-matching/mx-matching.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">My Account</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <div class="mx-matching-page-container">
+          <!-- MX Header -->
+          <div class="mx-header">
+            <div class="mx-header-top">
+              <h2>MX matching</h2>
+              <button class="add-more-btn">Add more</button>
+            </div>
+            
+            <div class="mx-header-bottom">
+              <div class="mx-tabs">
+                <button class="tab-btn active" data-tab="disposable">Disposable</button>
+                <button class="tab-btn" data-tab="relay">Relay</button>
+              </div>
+              
+              <div class="mx-search-wrapper">
+                <div class="mx-search-box">
+                  <img src="/assets/icons/search.svg" alt="" />
+                  <input type="text" placeholder="Search" id="mx-search-input" />
+                  <span class="mx-search-shortcut">&#8984; 1</span>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <!-- Table Section -->
+          <div class="mx-table-container">
+            <!-- Disposable Content -->
+            <div class="tab-content active" id="disposable-content">
+              <div class="mx-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Providers</th>
+                      <th>Domain</th>
+                      <th>MX Record</th>
+                      <th>Disposable</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Yahoo.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>12</td>
+                      <td>True</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>4</td>
+                      <td>True</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>43</td>
+                      <td>True</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>9</td>
+                      <td>True</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>0</td>
+                      <td>True</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>11</td>
+                      <td>False</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>57</td>
+                      <td>False</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>94</td>
+                      <td>False</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>73</td>
+                      <td>False</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                    <tr>
+                      <td>Gmail.com</td>
+                      <td>macdonald@gmail.com</td>
+                      <td>74</td>
+                      <td>False</td>
+                      <td><button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Relay Content (Placeholder) -->
+            <div class="tab-content" id="relay-content">
+              <div class="mx-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Providers</th>
+                      <th>Domain</th>
+                      <th>MX Record</th>
+                      <th>Disposable</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No relay data available.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Section -->
+          <div class="mx-footer">
+            <div class="per-page-selector">
+              <select id="per-page-select">
+                <option value="10">10 per page</option>
+                <option value="20">20 per page</option>
+                <option value="50">50 per page</option>
+              </select>
+            </div>
+            <div class="pagination-controls">
+              <button class="pagination-btn prev-btn" disabled>
+                <img src="/assets/icons/angle-right.svg" alt="Previous" class="rotate-180" />
+              </button>
+              <button class="pagination-btn active">1</button>
+              <button class="pagination-btn">2</button>
+              <span class="pagination-ellipsis">...</span>
+              <button class="pagination-btn">9</button>
+              <button class="pagination-btn">10</button>
+              <button class="pagination-btn next-btn">
+                <img src="/assets/icons/angle-right.svg" alt="Next" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add More Modal -->
+  <div class="mx-modal-overlay" id="add-more-modal">
+    <div class="mx-modal-container">
+      <div class="mx-modal-header">
+        <h3>Add More</h3>
+        <button class="mx-modal-close" id="close-modal-btn">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+      
+      <form class="mx-modal-form" id="add-mx-form">
+        <div class="form-group">
+          <label for="email-provider">Email Provider</label>
+          <input type="text" id="email-provider" placeholder="Please type here" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="domain-name">Domain Name</label>
+          <input type="text" id="domain-name" placeholder="Please type here" required>
+        </div>
+        
+        <div class="form-group">
+          <label>Please select</label>
+          <div class="mx-radio-group">
+            <label class="mx-radio-box" data-value="true">
+              <input type="radio" name="disposable-status" value="true" checked>
+              <img src="/assets/icons/radio-on.svg" alt="" class="radio-icon" />
+              <span class="radio-label">True</span>
+            </label>
+            <label class="mx-radio-box" data-value="false">
+              <input type="radio" name="disposable-status" value="false">
+              <img src="/assets/icons/radio-off.svg" alt="" class="radio-icon" />
+              <span class="radio-label">False</span>
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit" class="mx-submit-btn">Continue</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

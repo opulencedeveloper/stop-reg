@@ -1,0 +1,390 @@
+/* Admin Dashboard Layout and Content Styles */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #FAFCFE;
+  /* Very light background from design */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* Important for flexbox layout with scrolling tables */
+  width: 100%;
+}
+
+.admin-content {
+  padding: 0px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Base Utility Classes */
+.text-blue {
+  color: #1452CA !important;
+}
+
+.text-purple {
+  color: #8A2BE2 !important;
+  /* Adjust if a specific purple variable exists */
+}
+
+.text-green {
+  color: #049286 !important;
+}
+
+/* Stats Row */
+.admin-stats-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+
+.admin-stat-card {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-stat-card .stat-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #737373;
+}
+
+.admin-stat-card .stat-left img {
+  width: 24px;
+  height: 24px;
+}
+
+.admin-stat-card .stat-right {
+  font-family: 'Inter_18pt-Bold', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Chart Section */
+.admin-chart-section {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-chart-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.chart-container {
+  width: 100%;
+  position: relative;
+  height: 220px;
+}
+
+/* Custom tooltip bubble */
+.custom-tooltip {
+  width: 125.6px;
+  height: 62px;
+  position: absolute;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  background-image: url("/assets/icons/custom-too-tip.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.15s ease-out;
+  z-index: 10;
+}
+
+.custom-tooltip strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin-top: 10px;
+}
+
+.custom-tooltip span {
+  font-size: 12px;
+  color: #696974;
+}
+
+.admin-chart-header h3 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  color: #252525;
+  margin: 0;
+}
+
+.admin-chart-legend {
+  display: flex;
+  gap: 24px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 14px;
+  color: #737373;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-blue {
+  background-color: #1452CA;
+}
+
+.dot-purple {
+  background-color: #800080;
+}
+
+.dot-green {
+  background-color: #049286;
+}
+
+/* Table Section */
+.admin-table-section {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.admin-table-tabs {
+  display: flex;
+  border-bottom: 1px solid #EDEDED;
+  padding: 16px 24px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  margin-right: 12px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #252525;
+  cursor: pointer;
+  position: relative;
+  font-weight: 400;
+}
+
+.tab-btn.active {
+  color: #1452CA;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-weight: 600;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #1452CA;
+}
+
+.admin-table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 16px 24px;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  color: #252525;
+  background-color: #F7F7F7;
+}
+
+.admin-table td {
+  padding: 16px 24px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #484848;
+  border-bottom: 1px solid #EDEDED;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toggles Section */
+.admin-toggles-section {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 40px;
+}
+
+.admin-toggle-row {
+  display: flex;
+  gap: 8px !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.toggle-info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #252525;
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.toggle-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.toggle-status {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-family: 400 !important;
+  font-size: 16px;
+  color: #737373;
+}
+
+.divider {
+  height: 1px;
+  background-color: #F5F5F7;
+  width: 100%;
+}
+
+/* Responsive Content */
+/* @media screen and (max-width: 1024px) {
+  .admin-content {
+    padding: 24px 20px 40px;
+  }
+} */
+
+@media screen and (max-width: 768px) {
+  .admin-content {
+    padding: 16px;
+  }
+
+  .admin-stats-row {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+  }
+
+  .admin-chart-legend {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 12px 16px;
+    white-space: nowrap;
+  }
+
+  .stat-left img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .admin-stat-card {
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .stat-right {
+    font-size: 16px;
+  }
+
+  .admin-chart-section {
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+
+  .legend-item {
+    font-size: 12px;
+  }
+
+  .tab-btn,
+  .admin-table td,
+  .admin-table th,
+  .toggle-info,
+  .toggle-status {
+    font-size: 14px;
+  }
+
+  .admin-toggle-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toggle-info {
+    gap: 4px;
+  }
+
+  .toggle-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+}

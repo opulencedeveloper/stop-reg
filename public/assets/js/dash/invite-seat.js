@@ -84,6 +84,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Form Submission ---
     inviteForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        
+        const planName = localStorage.getItem("planName");
+        if (planName === "Free") {
+            if (typeof iziToast !== 'undefined') {
+                iziToast.error({
+                    title: 'Restricted',
+                    message: 'Seat management is a premium feature. Please upgrade your plan.',
+                    position: 'topRight'
+                });
+            }
+            return;
+        }
+
         clearAllErrors();
 
         const email = emailInput.value.trim();

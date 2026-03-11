@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableBody = document.getElementById("table-body-inner");
 
   if (!token) {
+    window.clearUserSession();
     window.location.href = "/sign-in.html";
     return;
   }
@@ -73,9 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.log("Delete response:", deleteData);
 
             if (deleteResponse.status === 401) {
-              localStorage.removeItem("authToken");
-              localStorage.removeItem("role");
-              window.location.href = "/sign-in.html";
+              window.handleAuthError(401);
               return;
             }
 
@@ -107,9 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error fetching user:", data);
 
       if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("role");
-        window.location.href = "/sign-in.html";
+        window.handleAuthError(401);
       }
     }
   } catch (error) {
@@ -122,6 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tableBody = document.getElementById("table-body-inner");
 
   if (!token) {
+    window.clearUserSession();
     window.location.href = "/sign-in.html";
     return;
   }
@@ -239,9 +237,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Error fetching user:", data);
 
       if (response.status === 401) {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("role");
-        window.location.href = "/sign-in.html";
+        window.handleAuthError(401);
       } else {
         const errorMessage =
           data.description || data.message || "Failed to fetch domains.";

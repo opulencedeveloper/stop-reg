@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin - Profile - StopReg</title>
+  <meta name="description" content="StopReg Admin Profile Settings." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/profile/profile.css" rel="stylesheet" />
+
+  <script src="/assets/js/admin/profile/profile.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link active">
+          <img src="/assets/icons/profile-active.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dasboard/profile.html" class="admin-nav-link active">
+          <img src="/assets/icons/profile-active.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">My Account</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <div class="admin-profile-container">
+          <!-- Mobile Tabs (Visible only on mobile) -->
+          <div class="profile-mobile-tabs">
+            <button class="mobile-tab-btn active" data-tab="details">Personal Details</button>
+            <button class="mobile-tab-btn" data-tab="password">Update Password</button>
+          </div>
+
+          <div class="profile-layout-wrapper">
+            <!-- Left Sidebar Navigation (Desktop) -->
+            <div class="profile-side-nav">
+              <button class="profile-nav-btn active" data-tab="details">Personal Details</button>
+              <button class="profile-nav-btn" data-tab="password">Update Password</button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="profile-content-area">
+              <!-- Personal Details Pane -->
+              <div class="profile-pane active" id="details-pane">
+                <div class="pane-header">
+                  <h3>Personal Details</h3>
+                </div>
+                <div class="pane-body">
+                  <div class="profile-avatar-section">
+                    <div class="profile-avatar-large">
+                      <img src="/assets/icons/user-avatar-filled.svg" alt="User Avatar" />
+                    </div>
+                    <p class="profile-display-name">Macdonald Anyanwu</p>
+                  </div>
+
+                  <form class="profile-form" id="personal-details-form">
+                    <div class="form-group">
+                      <label for="full-name">Full Name</label>
+                      <input type="text" id="full-name" value="Macdonald Anyanwu" placeholder="Enter full name"
+                        required />
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" id="email" value="xyz@gmail.com" placeholder="Enter email" readonly
+                        class="readonly-input" />
+                    </div>
+                    <div class="form-actions">
+                      <button type="submit" class="profile-submit-btn">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Update Password Pane -->
+              <div class="profile-pane" id="password-pane">
+                <div class="pane-header">
+                  <h3>Update Password</h3>
+                </div>
+                <div class="pane-body">
+                  <form class="profile-form" id="update-password-form">
+                    <div class="form-group password-group">
+                      <label for="current-password">Current Password</label>
+                      <div class="password-input-wrapper">
+                        <input type="password" id="current-password" placeholder="Enter password" required />
+                        <button type="button" class="password-toggle">
+                          <img src="/assets/icons/obsured.svg" alt="Toggle visibility" />
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group password-group">
+                      <label for="new-password">New Password</label>
+                      <div class="password-input-wrapper">
+                        <input type="password" id="new-password" placeholder="Enter password" required />
+                        <button type="button" class="password-toggle">
+                          <img src="/assets/icons/obsured.svg" alt="Toggle visibility" />
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group password-group">
+                      <label for="retype-password">Retype Password</label>
+                      <div class="password-input-wrapper">
+                        <input type="password" id="retype-password" placeholder="Enter password" required />
+                        <button type="button" class="password-toggle">
+                          <img src="/assets/icons/obsured.svg" alt="Toggle visibility" />
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-actions">
+                      <button type="submit" class="profile-submit-btn">Save Changes</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+
+</html>

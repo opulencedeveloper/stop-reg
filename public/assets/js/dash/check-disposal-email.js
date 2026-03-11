@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const token = localStorage.getItem("authToken");
 
         if (!token) {
+            window.clearUserSession();
             window.location.href = "/sign-in.html";
             return;
         }
@@ -109,7 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log("Verification Response:", data);
 
             if (response.ok) {
-                const isDisposable = data?.data?.isDisposable;
+                const results = data?.data;
+                const isDisposable = results?.classification?.is_disposable === true;
 
                 // Show results, hide empty state
                 if (resultsContainer) resultsContainer.style.display = "block";
@@ -129,30 +131,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Update individual result cards
                 if (resultsList) {
-                    const cards = resultsList.querySelectorAll(".result-card");
-                    
+                    const hasMx = results?.mail_server?.mx_found === true;
+                    const isPublic = results?.classification?.is_public === true;
+                    const isRelay = results?.classification?.is_relay === true;
+                    const isRole = results?.classification?.is_role_based === true;
+                    const isAlias = results?.classification?.is_alias === true;
+                    const isUnresolved = results?.classification?.is_unresolved === true;
 
-                    // Update single Disposable Card
-                    const disposableCard = cards[0];
-                    if (disposableCard) {
-                        disposableCard.classList.remove("status-true", "status-false");
-                        disposableCard.classList.add(isDisposable ? "status-true" : "status-false");
-                        
-                        const desc = disposableCard.querySelector(".result-desc");
-                        const bool = disposableCard.querySelector(".result-boolean");
-                        
-                        if (desc) {
-                            desc.textContent = isDisposable 
-                                ? "This domain appears to be from a disposable email provider"
-                                : "This domain does not appear to be from a disposable email provider";
-                        }
-                        if (bool) {
-                            bool.textContent = isDisposable ? "True" : "False";
-                        }
-                    }
-                    
-                    // Note: Other cards (MX Record, Public Email, Relay Domain) are not updated 
-                    // as the API response provided is strictly `{ isDisposable: boolean }`.
+                    resultsList.innerHTML = `
+                        <!-- MX Record (True/False) -->
+                        <div class="result-card ${hasMx ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">MX Record</h3>
+                                <p class="result-desc">
+                                    ${hasMx 
+                                        ? "This domain has a valid MX record. It is able to receive emails" 
+                                        : "This domain does not have a valid MX record."}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${hasMx ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Disposable (True/False) -->
+                        <div class="result-card ${isDisposable ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Disposable</h3>
+                                <p class="result-desc">
+                                    ${isDisposable 
+                                        ? "This domain appears to be from a disposable email provider"
+                                        : "This domain does not appear to be from a disposable email provider"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isDisposable ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Public Email (True/False) -->
+                        <div class="result-card ${isPublic ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Public email provider</h3>
+                                <p class="result-desc">
+                                    ${isPublic
+                                        ? "This domain is from a public email provider. Anyone can generate emails for free"
+                                        : "This domain is not from a public email provider"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isPublic ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Relay Domain (True/False) -->
+                        <div class="result-card ${isRelay ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Relay domain</h3>
+                                <p class="result-desc">
+                                    ${isRelay
+                                        ? "This domain is identified as a relay domain service"
+                                        : "This domain does not appear to be a relay domain"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isRelay ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Role-based (True/False) -->
+                        <div class="result-card ${isRole ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Role-based</h3>
+                                <p class="result-desc">
+                                    ${isRole
+                                        ? "This email is identified as a role-based or generic address (e.g. admin@, support@)"
+                                        : "This email does not appear to be a role-based address"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isRole ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Alias Detection (True/False) -->
+                        <div class="result-card ${isAlias ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Alias Detection</h3>
+                                <p class="result-desc">
+                                    ${isAlias
+                                        ? "This email is an alias address (contains + or . characters that may be stripped)"
+                                        : "This email is not an alias address"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isAlias ? 'True' : 'False'}</p>
+                        </div>
+
+                        <!-- Unresolved (True/False) -->
+                        <div class="result-card ${isUnresolved ? 'status-true' : 'status-false'}">
+                            <div class="result-content">
+                                <h3 class="result-head">Unresolved</h3>
+                                <p class="result-desc">
+                                    ${isUnresolved
+                                        ? "This domain could not be resolved or found in our global database."
+                                        : "This domain was resolved successfully via DNS or Database"}
+                                </p>
+                            </div>
+                            <p class="result-boolean">${isUnresolved ? 'True' : 'False'}</p>
+                        </div>
+                    `;
                 }
 
                 if (typeof iziToast !== 'undefined') {
@@ -166,9 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } else {
                 if (response.status === 401) {
-                    localStorage.removeItem("authToken");
-                    localStorage.removeItem("role");
-                    window.location.href = "/sign-in.html";
+                    window.handleAuthError(401);
                     return;
                 }
                 const errorMessage = data.description || data.message || "Verification failed!";

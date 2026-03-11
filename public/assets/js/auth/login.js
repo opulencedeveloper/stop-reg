@@ -238,8 +238,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const tokenExpiresAt = data?.data?.tokenExpiresAt;
         const role = data?.data?.role;
 
+        const planName = data?.data?.planName;
         localStorage.setItem("authToken", token);
         if (role) localStorage.setItem("role", role);
+        if (planName) localStorage.setItem("planName", planName);
 
         // Check if user has a valid subscription plan
         if (hasValidPlan && planId && tokenExpiresAt && new Date(tokenExpiresAt) > new Date()) {

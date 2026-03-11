@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
 
   if (!token) {
+    window.clearUserSession();
     window.location.href = "/sign-in.html";
     return;
   }
@@ -247,9 +248,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error fetching user:", data);
   
         if (response.status === 401) {
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("role");
-          window.location.href = "/sign-in.html";
+          window.handleAuthError(401);
         } else {
             // Logic handled in catch block mostly, but for API errors:
             throw new Error(data.description || data.message || "Failed to fetch user information.");

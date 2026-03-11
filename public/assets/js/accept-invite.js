@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById("password");
     const confirmPasswordInput = document.getElementById("confirmPassword");
+    const otpInput = document.getElementById("otp");
 
     let currentInviteId = null;
     let currentOtp = null;
@@ -176,6 +177,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Attach Live Validation
     const attachLiveValidation = () => {
+        // OTP Code
+        otpInput.addEventListener("input", () => {
+            const val = otpInput.value.trim();
+            if (val.length > 0 && val.length < 6) {
+                showInputError(otpInput, "OTP must be 6 digits.");
+            } else if (val.length === 6) {
+                clearInputError(otpInput);
+            }
+        });
+
         // Password
         passwordInput.addEventListener("input", () => {
             const val = passwordInput.value.trim();
@@ -185,9 +196,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clearInputError(passwordInput);
             } else if (isErrorShown || val.length > 0) {
                  if (val.length === 0) {
-                     showInputError(passwordInput, "Password is required");
+                     showInputError(passwordInput, "Password is required.");
+                 } else if (val.length < 8) {
+                     showInputError(passwordInput, "Password must be at least 8 characters long.");
                  } else {
-                     showInputError(passwordInput, "Must have 1 uppercase, 1 lowercase, 1 number, 8+ chars");
+                     showInputError(passwordInput, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
                  }
             }
             
@@ -195,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (confirmPasswordInput.value.trim()) {
                 const cVal = confirmPasswordInput.value.trim();
                 if (cVal !== val) {
-                    showInputError(confirmPasswordInput, "Passwords do not match");
+                    showInputError(confirmPasswordInput, "Passwords do not match.");
                 } else {
                     clearInputError(confirmPasswordInput);
                 }
@@ -212,9 +225,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clearInputError(confirmPasswordInput);
             } else if (isErrorShown || val.length > 0) {
                 if (!val) {
-                    showInputError(confirmPasswordInput, "Please confirm your password");
+                    showInputError(confirmPasswordInput, "Confirm password is required.");
                 } else if (val !== pass) {
-                    showInputError(confirmPasswordInput, "Passwords do not match");
+                    showInputError(confirmPasswordInput, "Passwords do not match.");
                 }
             }
         });
@@ -289,21 +302,37 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Custom Validation Check on Submit
         if (!password) {
-            showInputError(passwordInput, "Password is required");
+            showInputError(passwordInput, "Password is required.");
             hasError = true;
             if (!firstInvalidInput) firstInvalidInput = passwordInput;
+        } else if (password.length < 8) {
+            showInputError(passwordInput, "Password must be at least 8 characters long.");
+             hasError = true;
+            if (!firstInvalidInput) firstInvalidInput = passwordInput;
         } else if (!passwordPattern.test(password)) {
-            showInputError(passwordInput, "Must have 1 uppercase, 1 lowercase, 1 number, 8+ chars");
+            showInputError(passwordInput, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
              hasError = true;
             if (!firstInvalidInput) firstInvalidInput = passwordInput;
         }
 
+        // OTP Check
+        const otp = otpInput.value.trim();
+        if (!otp) {
+            showInputError(otpInput, "Verification code is required.");
+            hasError = true;
+            if (!firstInvalidInput) firstInvalidInput = otpInput;
+        } else if (otp.length !== 6) {
+            showInputError(otpInput, "OTP must be 6 digits.");
+            hasError = true;
+            if (!firstInvalidInput) firstInvalidInput = otpInput;
+        }
+
         if (!confirmPassword) {
-            showInputError(confirmPasswordInput, "Please confirm your password");
+            showInputError(confirmPasswordInput, "Confirm password is required.");
              hasError = true;
             if (!firstInvalidInput) firstInvalidInput = confirmPasswordInput;
         } else if (password !== confirmPassword) {
-             showInputError(confirmPasswordInput, "Passwords do not match");
+             showInputError(confirmPasswordInput, "Passwords do not match.");
              hasError = true;
             if (!firstInvalidInput) firstInvalidInput = confirmPasswordInput;
         }
@@ -321,7 +350,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             inviteId: currentInviteId,
             password: password,
             confirmPassword: confirmPassword,
-            otp: currentOtp
+            otp: otpInput.value.trim()
         };
 
         // Loading State for Button
@@ -388,6 +417,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const { id, token, email } = getQueryParams();
         currentInviteId = id;
         currentOtp = token;
+        
+        // Auto-fill OTP if present
+        if (token) {
+            otpInput.value = token;
+        }
 
         attachLiveValidation();
         retryBtn.addEventListener('click', () => {

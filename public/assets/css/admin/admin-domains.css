@@ -1,0 +1,247 @@
+/* Admin Domains Page Styles */
+
+.domains-page-container {
+  background: #FFFFFF !important;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+/* Tab Content Visibility */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Domains Header & Tabs */
+.domains-header {
+  padding: 24px 24px 0 24px;
+}
+
+.domains-header-info h2 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #252525;
+}
+
+.domains-tabs {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.domains-tabs .tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 16px;
+  color: #252525;
+  cursor: pointer;
+  position: relative;
+}
+
+.domains-tabs .tab-btn.active {
+  color: #1452CA;
+  font-family: 'Inter_28pt-Medium', sans-serif;
+}
+
+.domains-tabs .tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #1452CA;
+}
+
+/* Table Wrapper */
+.domains-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.domains-table-wrapper .admin-table td {
+  font-size: 16px;
+  color: #252525;
+}
+
+.domains-table-wrapper .admin-table th {
+  white-space: nowrap;
+}
+
+.domains-table-wrapper .admin-table td.status-cell {
+  font-size: 14px;
+}
+
+/* Comment column specific */
+.comment-text {
+  max-width: 280px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #252525;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.status-badge img {
+  width: 20px;
+  height: 20px;
+}
+
+.status-badge.blocked {
+  background: #FFEBEB;
+  color: #FF0000;
+}
+
+.status-badge.reported {
+  background: #FFF7CC;
+  color: #A38A00;
+}
+
+.status-badge.allowed {
+  background: #EBFFEB;
+  color: #008000;
+}
+
+/* Custom Action Buttons */
+.action-btn-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn-circle img {
+  width: 100%px;
+  height: 100%px;
+}
+
+.action-btn-circle:hover {
+  background: #F9F9F9;
+  border-color: #D1D5DB;
+}
+
+/* Footer & Pagination (Reusing Users Page Styles) */
+.domains-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-top: 1px solid #EDEDED;
+}
+
+.per-page-selector select {
+  padding: 6px 12px;
+  border: 1px solid #EDEDED;
+  border-radius: 6px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 13px;
+  color: #737373;
+  outline: none;
+  cursor: pointer;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #EDEDED;
+  border-radius: 4px;
+  background: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #737373;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.pagination-btn img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #F9F9F9;
+  border-color: #D1D5DB;
+}
+
+.pagination-btn.active {
+  background: #FFFFFF;
+  border-color: #252525;
+  color: #252525;
+  font-weight: 600;
+}
+
+.pagination-btn:disabled {
+  background: #F9F9F9;
+  border-color: #EDEDED;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .domains-header {
+    padding: 16px 12px 0 12px;
+  }
+
+  .domains-tabs {
+    gap: 16px;
+  }
+
+  .domains-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px 12px;
+  }
+
+  .domains-page-container {
+    margin-top: 0;
+  }
+
+  .domains-tabs {
+    gap: 12px;
+  }
+
+  .domains-tabs .tab-btn {
+    font-size: 14px;
+  }
+}

@@ -53,8 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (confirmLogoutBtn) {
     confirmLogoutBtn.addEventListener('click', function (e) {
       e.preventDefault(); 
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("role");
+      window.clearUserSession();
       window.location.href = "/sign-in.html";
     });
   }
