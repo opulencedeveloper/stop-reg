@@ -7,7 +7,6 @@
   width: 100%;
   height: 664px;
   position: relative;
-  margin-top: 90px;
   /* Offset for fixed header */
 }
 
@@ -201,7 +200,6 @@ label {
 
   .main-wrapper {
     height: 720px;
-    margin-top: 80px;
     /* Mobile header offset */
   }
 
