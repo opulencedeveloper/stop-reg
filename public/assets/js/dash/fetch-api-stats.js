@@ -1,11 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-        window.clearUserSession();
-        window.location.href = '/sign-in.html';
-        return;
-    }
 
     const tableBody = document.getElementById('api-stats-table-body');
     const prevBtn = document.querySelector('.prev');
@@ -112,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         try {
-            const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true`, {
+            const response = await fetch(`http://localhost:8080/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -120,8 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (await window.handleAuthError(response)) {
                 return;
             }
 

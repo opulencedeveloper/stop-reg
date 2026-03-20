@@ -1,10 +1,10 @@
-@font-face {
-    font-family: 'PlusJakartaSans-Regular';
+/* @font-face {
+     font-family: 'PlusJakartaSans-Regular';
     src: url('../fonts/PlusJakartaSans-Regular.woff2') format('woff2');
     font-weight: 400;
     font-display: swap;
     font-style: normal;
-}
+} */
 
 @font-face {
     font-family: 'Inter_28pt-Regular';
@@ -14,13 +14,13 @@
     font-style: normal;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'PlusJakartaSans-SemiBold';
     src: url('../fonts/PlusJakartaSans-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-display: swap;
     font-style: normal;
-} 
+}  */
 
 @font-face {
     font-family: 'Inter_28pt-SemiBold';
@@ -31,13 +31,13 @@
 }
 
 
-@font-face {
+/* @font-face {
     font-family: 'PlusJakartaSans-Bold';
     src: url('../fonts/PlusJakartaSans-Bold.woff2') format('woff2');
     font-weight: 700;
     font-display: swap;
     font-style: normal;
-}
+} */
 
 @font-face {
     font-family: 'Inter_18pt-Bold';
@@ -69,7 +69,7 @@ html {
 
 body,
 p {
-    font-family: 'PlusJakartaSans-Regular';
+    font-family: 'Inter_28pt-Regular';
     margin: 0px;
 }
 

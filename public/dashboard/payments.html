@@ -22,6 +22,9 @@
   <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
   <link href="/assets/css/dashboard/payments.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+    integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
     // RBAC: Redirect "Seat" users away from this page
     if (localStorage.getItem("role") === "Seat") {
@@ -87,20 +90,6 @@
     </div>
     <!-- Mobile Navigation End -->
 
-    <!-- Logout Dialog Start -->
-    <div id="logout-overlay" class="overlay">
-      <div id="logout-container" class="logout-container overlay-animate">
-        <div class="logout-icon">
-          <img src="/assets/icons/logout.svg" />
-        </div>
-        <p class="logout-tle">Log Out?</p>
-        <p class="logout-subtle">Are you sure you want to proceed?</p>
-
-        <a href="/" class="y-log-out">Yes, Log Out</a>
-        <button id="n-log-out" class="n-log-out">No, Don't Log Out</button>
-      </div>
-    </div>
-    <!-- Logout Dialog End -->
 
     <div class="dash-wrapper">
       <div class="dash-bdy">
@@ -333,6 +322,9 @@
       token: "test_bee7a039123b0d822213f7dc839"
     });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/dash/header.js"></script>
   <script src="/assets/js/dash/fetch-user-detail.js" defer></script>

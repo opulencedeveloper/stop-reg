@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.disabled = true;
 
     try {
-      const response = await fetch(`https://api.stopreg.com/api/v1/data-correction`, {
+      const response = await fetch(`http://localhost:8080/api/v1/data-correction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

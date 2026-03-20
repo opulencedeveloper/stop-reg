@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     turnstileContainerSelector = "#captcha-container"; // or look for #turnstile-widget directly
   }
 
-  const API_URL = "https://api.stopreg.com/api/v1/check/public";
+  const API_URL = "http://localhost:8080/api/v1/check/public";
 
   // -------------------------------------------------------------------------
   // 2. Helper Functions (Domain Extraction & Validation)

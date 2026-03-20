@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inviteSubmitBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-top-color: #fff"></span> Sending...`;
 
         try {
-            const response = await fetch("https://api.stopreg.com/api/v1/seat/invite", {
+            const response = await fetch("http://localhost:8080/api/v1/seat/invite", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -177,7 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
             } else {
-                // Error
+                if (window.handleAuthError && await window.handleAuthError(response)) {
+                    return;
+                }
                 throw new Error(data.description || "Failed to send invitation");
             }
 
@@ -195,6 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     message: error.message,
                     position: "topRight"
                 });
+             }
+             
+             if (window.handleAuthError && await window.handleAuthError(error)) {
+                return;
              }
              
              // 2. Also map to updated "Error UI" 

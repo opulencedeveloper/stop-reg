@@ -294,11 +294,15 @@
     margin-bottom: 40px;
 }
 
+.logout-actions {
+    display: flex;
+    flex-direction: column;
+    padding: 0 32px;
+}
+
 .y-log-out {
     background-color: var(--color-twenty-two);
     height: 46px;
-    margin-left: 32px;
-    margin-right: 32px;
     text-decoration: none;
     text-align: center;
     display: flex;
@@ -311,19 +315,19 @@
     font-family: 'Inter_18pt-Bold';
     color: var(--secondary-color);
     cursor: pointer;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
 .n-log-out {
-    margin-left: 32px;
-    margin-right: 32px;
     border-radius: 8px;
-    margin-top: 16px;
     border: none;
     background-color: transparent;
     font-family: 'Inter_18pt-Bold';
     font-size: 16px;
     height: 46px;
     cursor: pointer;
+    width: 100%;
 }
 
 @media only screen and (max-width: 550px) {

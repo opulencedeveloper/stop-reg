@@ -310,7 +310,6 @@
     align-items: center;
     justify-content: center;
     opacity: 0.6;
-    transition: opacity 0.2s ease;
 }
 
 .copy-icon-btn:hover {

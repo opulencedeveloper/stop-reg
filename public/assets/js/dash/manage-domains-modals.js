@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const baseUrl = "https://api.stopreg.com/api/v1/manage/domain";
+            const baseUrl = "http://localhost:8080/api/v1/manage/domain";
             const url = isUpdate ? `${baseUrl}/update?domainId=${currentEditId}` : `${baseUrl}/add`;
             const method = isUpdate ? "PATCH" : "POST";
 
@@ -174,8 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const data = await response.json();
             
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (window.handleAuthError && await window.handleAuthError(response)) {
                 return;
             }
 
@@ -203,7 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error(err);
-            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Network error occurred", position: "topRight" });
+            if (window.handleAuthError && await window.handleAuthError(err)) {
+                return;
+            }
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Network error, occurred", position: "topRight" });
         } finally {
             btn.disabled = false;
             btn.innerHTML = originalText;

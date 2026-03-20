@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/manage/domain/add",
+        "http://localhost:8080/api/v1/manage/domain/add",
         {
           method: "POST",
           headers: {
@@ -100,8 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addBlockForm.reset();
         reportDomainOverlay.style.display = "none";
       } else {
-        if (response.status === 401) {
-          window.handleAuthError(401);
+        if (window.handleAuthError && await window.handleAuthError(response)) {
           return;
         }
         const errorMessage = data.description || data.message || "Failed to report domain.";
@@ -122,10 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
       addBlockForm.reset();
     } catch (err) {
       console.error("Error:", err);
+      if (window.handleAuthError && await window.handleAuthError(err)) {
+        return;
+      }
       if (typeof iziToast !== 'undefined') {
         iziToast.error({
           title: 'Network Error',
-          message: "Network error — please try again later.",
+          message: "Network error,  please try again later.",
           position: "topRight",
           timeout: 5000,
           drag: false,

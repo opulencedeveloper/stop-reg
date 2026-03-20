@@ -1,0 +1,49 @@
+/* Admin Login Page Specific Styles */
+@import url('/assets/css/landing/sign-up.css');
+
+/* Admin overrides for the brand colors or specific layout adjustments */
+.auth-title {
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+    font-weight: 500;
+}
+
+/* Hardened UI: No "Sign Up" or "Forgot Password" links on Admin portals by default for security through obfuscation */
+.auth-footer, .forgot-password-lnk {
+    display: none !important;
+}
+
+/* Custom error styling for the admin portal */
+.custom-input-error {
+    color: #d93025;
+    font-size: 13px;
+    margin-top: 6px;
+    font-weight: 500;
+    animation: slideInUp 0.3s ease;
+}
+
+.input-error-border {
+    border-color: #d93025 !important;
+}
+
+/* Administrative Badge or Theme (Optional - deep purple or navy) */
+.auth-left-section::before {
+    background-color: #050110; /* Darker cosmic theme for admin */
+}
+
+.submit-btn {
+    background-color: #000; /* Professional black for admin portal */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background-color: #333;
+    transform: translateY(-1px);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}

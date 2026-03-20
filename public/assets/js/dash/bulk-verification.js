@@ -247,15 +247,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         // Fetch last 30 days requests with limit=0 (no limit)
-        const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
+        const response = await fetch(`http://localhost:8080/api/v1/user/info/requests?last30Days=true&limit=0`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
         const result = await response.json();
         
-        if (response.status === 401) {
-             window.handleAuthError(401);
+        if (await window.handleAuthError(response)) {
              return;
         }
 
@@ -268,6 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     } catch (error) {
         console.error("Error fetching requests:", error);
+        if (window.handleAuthError && await window.handleAuthError(error)) {
+            return;
+        }
         if (disposableResult) {
             disposableResult.innerHTML = `
                 <tr>
@@ -418,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Downloading...`;
 
     try {
-        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification-csv", {
+        const response = await fetch("http://localhost:8080/api/v1/email-domains/bulk-verification-csv", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -438,8 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
         } else {
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (await window.handleAuthError(response)) {
                 return;
             }
             const data = await response.json().catch(() => ({}));
@@ -450,6 +451,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     } catch (err) {
         console.error(err);
+        if (window.handleAuthError && await window.handleAuthError(err)) {
+            return;
+        }
         if (typeof iziToast !== 'undefined') {
             iziToast.error({ title: 'Network Error', message: "Failed to download CSV.", position: "topRight" });
         }
@@ -464,11 +468,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!token) {
-          window.clearUserSession();
-          window.location.href = "/sign-in.html";
-          return;
-      }
       const links = getLinksArray();
       if (links.length === 0) {
         if (typeof iziToast !== 'undefined') {
@@ -484,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Verifying...`;
       try {
-        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification", {
+        const response = await fetch("http://localhost:8080/api/v1/email-domains/bulk-verification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -505,8 +504,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           }
         } else {
-          if (response.status === 401) {
-            window.handleAuthError(401);
+          if (await window.handleAuthError(response)) {
             return;
           }
           const errorMessage = data.description || data.message || "Verification failed!";
@@ -516,8 +514,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         console.error(err);
+        if (window.handleAuthError && await window.handleAuthError(err)) {
+          return;
+        }
         if (typeof iziToast !== 'undefined') {
-          iziToast.error({ title: 'Network Error', message: "Network error — please try again later.", position: "topRight" });
+          iziToast.error({ title: 'Network Error', message: "Network error,  please try again later.", position: "topRight" });
         }
       } finally {
         submitBtn.disabled = false;

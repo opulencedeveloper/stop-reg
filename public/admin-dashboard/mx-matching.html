@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin MX Matching - StopReg</title>
+  <meta name="description" content="StopReg Admin MX Matching Management." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/mx-matching/mx-matching.css" rel="stylesheet" />
+
+  <script src="/assets/js/admin/mx-matching/mx-matching.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">My Account</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <div class="mx-matching-page-container">
+          <!-- MX Header -->
+          <div class="mx-header">
+            <div class="mx-header-top">
+              <h2>MX matching</h2>
+              <button class="add-more-btn" id="admin-add-more-btn">Add more</button>
+            </div>
+            
+            <div class="mx-header-bottom">
+              <div class="mx-tabs">
+                <button class="tab-btn active" data-tab="disposable">Disposable</button>
+                <button class="tab-btn" data-tab="relay">Relay</button>
+              </div>
+              
+              <div class="mx-search-wrapper">
+                <div class="mx-search-box">
+                  <img src="/assets/icons/search.svg" alt="" />
+                  <input type="text" placeholder="Search" id="mx-search-input" />
+                  <span class="mx-search-shortcut">&#8984; 1</span>
+                </div>
+              </div>
+            </div> 
+          </div>
+
+          <!-- Loading Spinner -->
+          <div class="chart-loading-state" id="admin-mx-loading" style="display: none;">
+            <div class="chart-spinner"></div>
+            <span class="chart-loading-text">Loading data...</span>
+          </div>
+
+          <!-- Table Section -->
+          <div id="admin-mx-error-target">
+            <div class="mx-table-container">
+              <!-- Disposable Content -->
+              <div class="tab-content active" id="disposable-content">
+                <div class="mx-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Providers</th>
+                        <th>MX Records</th>
+                        <th>Service Type</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="disposable-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Relay Content -->
+              <div class="tab-content" id="relay-content">
+                <div class="mx-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Providers</th>
+                        <th>MX Records</th>
+                        <th>Service Type</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="relay-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="mx-footer" id="mx-pagination">
+              <div class="per-page-selector">
+                <select id="per-page-select">
+                  <option value="10">10 per page</option>
+                  <option value="20">20 per page</option>
+                  <option value="50">50 per page</option>
+                </select>
+              </div>
+              <div class="pagination-controls">
+                <!-- Pagination injected here -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add More Modal (Now also handles Edit) -->
+  <div class="mx-modal-overlay" id="add-more-modal">
+    <div class="mx-modal-container">
+      <div class="mx-modal-header">
+        <h3 id="modal-title">Add More</h3>
+        <button class="mx-modal-close" id="close-modal-btn">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+      
+      <form class="mx-modal-form" id="add-mx-form">
+        <input type="hidden" id="mx-record-id" value="">
+        <div class="form-group">
+          <label for="email-provider">Email Provider</label>
+          <input type="text" id="email-provider" placeholder="Please type here" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="domain-name">MX Record (Comma separated)</label>
+          <input type="text" id="domain-name" placeholder="mx1.example.com, mx2.example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="mx-grade">Grade</label>
+          <select id="mx-grade" style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
+            <option value="standard">Standard</option>
+            <option value="professional">Professional</option>
+            <option value="basic">Basic</option>
+            <option value="null">Null</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Service Type</label>
+          <div class="mx-radio-group">
+            <label class="mx-radio-box" data-value="disposable">
+              <input type="radio" name="service-type" value="disposable" checked>
+              <img src="/assets/icons/radio-on.svg" alt="" class="radio-icon" />
+              <span class="radio-label">Disposable</span>
+            </label>
+            <label class="mx-radio-box" data-value="relay">
+              <input type="radio" name="service-type" value="relay">
+              <img src="/assets/icons/radio-off.svg" alt="" class="radio-icon" />
+              <span class="radio-label">Relay</span>
+            </label>
+          </div>
+        </div>
+        
+        <button type="submit" class="mx-submit-btn" id="submit-mx-btn">Continue</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Removal Confirmation Modal (Industrial Standard) -->
+  <div class="remove-mx-modal-overlay" id="remove-mx-modal">
+    <div class="remove-mx-modal-container">
+      <div class="remove-modal-header">
+        <div class="remove-icon-wrapper">
+          <img src="/assets/icons/delete.svg" alt="Delete" />
+        </div>
+        <button class="remove-modal-close" id="close-remove-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+      <div class="remove-modal-content">
+        <h3>Remove this record?</h3>
+        <p id="remove-modal-text">Are you sure you want to remove this MX matching record? This action cannot be
+          undone and may affect email verification for certain providers.</p>
+      </div>
+      <div class="remove-modal-actions">
+        <button class="btn-cancel" id="cancel-remove-btn">Cancel</button>
+        <button class="btn-confirm-remove" id="confirm-remove-btn">Remove this record</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+</body>
+
+</html>

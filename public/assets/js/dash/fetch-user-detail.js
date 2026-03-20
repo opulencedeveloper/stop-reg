@@ -1,11 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("authToken");
-
-  if (!token) {
-    window.clearUserSession();
-    window.location.href = "/sign-in.html";
-    return;
-  }
 
   // Increment spinner counter to track this data fetch
   // Hide global spinner immediately on page load
@@ -54,7 +47,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+   console.log("Token=====?", token);
+      const response = await fetch("http://localhost:8080/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   
       const data = await response.json();
-      console.log("User Info Response:", data);
+      console.log("User Info Response: ==>>>>", data);
   
       if (response.ok) {
         const user = data?.data || data;
@@ -104,13 +98,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Set Endpoints (Static for now, but ready for dynamic if needed)
         // We also set data-full-text to simplify the copy logic consistency
         if (emailEndpointEl) {
-            const emailEndpoint = "https://api.stopreg.com/api/v1/verify/email"; 
+            const emailEndpoint = "http://localhost:8080/api/v1/verify/email"; 
             emailEndpointEl.textContent = emailEndpoint;
             emailEndpointEl.dataset.fullText = emailEndpoint;
         }
   
         if (domainEndpointEl) {
-            const domainEndpoint = "https://api.stopreg.com/api/v1/verify/domain";
+            const domainEndpoint = "http://localhost:8080/api/v1/verify/domain";
             domainEndpointEl.textContent = domainEndpoint;
             domainEndpointEl.dataset.fullText = domainEndpoint;
         }
@@ -119,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (apiToken) {
           const linkContainer = document.querySelector(".link-container");
           if (linkContainer) {
-            const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
+            const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
             linkContainer.href = newLink;
             
             const linkTitle = linkContainer.querySelector(".token-link-title");
@@ -247,10 +241,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else {
         console.error("Error fetching user:", data);
   
-        if (response.status === 401) {
-          window.handleAuthError(401);
+        // Delegate to global security gate for 401/403 handling
+        if (window.handleAuthError && await window.handleAuthError(response)) {
+          return;
         } else {
-            // Logic handled in catch block mostly, but for API errors:
+            // Non-auth error, allow catch block to handle UI
             throw new Error(data.description || data.message || "Failed to fetch user information.");
         }
       }

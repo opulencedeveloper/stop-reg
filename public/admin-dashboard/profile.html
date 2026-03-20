@@ -20,17 +20,52 @@
   <!-- Stylesheets -->
   <link href="/assets/css/fonts.css" rel="stylesheet" />
   <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
   <link href="/assets/css/styles.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" defer></script>
   <link href="/assets/css/admin/profile/profile.css" rel="stylesheet" />
 
-  <script src="/assets/js/admin/profile/profile.js" defer></script>
+  <script src="/assets/js/main.js"></script>
   <script src="/assets/js/admin/admin-main.js" defer></script>
+  <script src="/assets/js/admin/profile.js" defer></script>
 </head>
 
 <body>
+  <!-- Loading Spinner Start -->
+  <div id="spinner-body" class="spinner-body">
+    <div class="stopreg-spinner"></div>
+</div>
+<!-- Loading Spinner End -->
+
+  <main id="content">
+    <!-- Premium Error Modal Start -->
+    <div id="premium-error-backdrop" class="error-backdrop">
+      <div class="premium-error">
+        <button id="error-close-btn" class="error-close-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 1L1 13M1 1L13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="error-icon-wrapper">
+          <svg class="error-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </div>
+        <h3 id="error-title" class="error-title">Access Denied</h3>
+        <p id="error-message" class="error-message-text">You do not have permission to view this data.</p>
+        <button id="error-retry-btn" class="cr-btn" style="display: none; margin-top: 20px; width: 100%;">Try
+          Again</button>
+      </div>
+    </div>
+    <!-- Premium Error Modal End -->
+
   <!-- Mobile Navigation overlay -->
   <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
     <div class="admin-mobile-nav">
@@ -46,31 +81,31 @@
         </button>
       </div>
       <nav class="admin-nav-links">
-        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
           <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
           <span>Dashboard</span>
         </a>
-        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
           <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
           <span>Report</span>
         </a>
-        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
           <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
           <span>Users</span>
         </a>
-        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
           <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
           <span>Manage Domains</span>
         </a>
-        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dasboard/profile.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link active">
           <img src="/assets/icons/profile-active.svg" alt="" class="nav-icon" />
           <span>Profile</span>
         </a>
@@ -93,31 +128,31 @@
         </a>
       </div>
       <nav class="admin-nav-links">
-        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
           <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
           <span>Dashboard</span>
         </a>
-        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
           <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
           <span>Report</span>
         </a>
-        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
           <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
           <span>Users</span>
         </a>
-        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
           <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
           <span>Manage Domains</span>
         </a>
-        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dasboard/profile.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link active">
           <img src="/assets/icons/profile-active.svg" alt="" class="nav-icon" />
           <span>Profile</span>
         </a>
@@ -166,7 +201,11 @@
             </div>
 
             <!-- Content Area -->
-            <div class="profile-content-area">
+            <div class="profile-content-area" id="admin-profile-error-target">
+              <div class="chart-loading-state" id="admin-profile-loading" style="display: none;">
+                <div class="chart-spinner"></div>
+                <span class="chart-loading-text">Loading profile data...</span>
+              </div>
               <!-- Personal Details Pane -->
               <div class="profile-pane active" id="details-pane">
                 <div class="pane-header">
@@ -177,14 +216,17 @@
                     <div class="profile-avatar-large">
                       <img src="/assets/icons/user-avatar-filled.svg" alt="User Avatar" />
                     </div>
-                    <p class="profile-display-name">Macdonald Anyanwu</p>
+                    <p class="profile-display-name" id="display-name">Loading...</p>
                   </div>
 
                   <form class="profile-form" id="personal-details-form">
                     <div class="form-group">
-                      <label for="full-name">Full Name</label>
-                      <input type="text" id="full-name" value="Macdonald Anyanwu" placeholder="Enter full name"
-                        required />
+                      <label for="first-name">First Name</label>
+                      <input type="text" id="first-name" placeholder="Enter first name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="last-name">Last Name</label>
+                      <input type="text" id="last-name" placeholder="Enter last name" required />
                     </div>
                     <div class="form-group">
                       <label for="email">Email</label>

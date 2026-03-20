@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Construct the URL with API token and email
-      const url = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`;
+      const url = ` http://localhost:8080/api/v1/check/${apiToken}?email=${encodeURIComponent(email)}`;
       
       const response = await fetch(url, {
         method: "GET",
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof iziToast !== 'undefined') {
         iziToast.error({
           title: 'Network Error',
-          message: err.message || "Network error — please try again later.",
+          message: err.message || "Network error,  please try again later.",
           position: "topRight",
           timeout: 5000,
           drag: false,
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="disposable-result-cont">
               <h3 class="disposal-result-head">Error</h3>
               <p class="disposal-result-para">
-                ${err.message || "Network error — please try again later."}
+                ${err.message || "Network error,  please try again later."}
               </p>
             </div>
           </div>

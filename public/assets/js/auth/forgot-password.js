@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`https://api.stopreg.com/api/v1/auth/forgot-password`, {
+                const response = await fetch(`http://localhost:8080/api/v1/auth/forgot-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (error) {
                 // If the error message is "Failed to fetch", it's a network error
                 const errorMessage = error.message === "Failed to fetch" 
-                    ? "Network error — please check your connection and try again." 
+                    ? "Network error,  please check your connection and try again." 
                     : error.message;
 
                 if (typeof iziToast !== 'undefined') {
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`https://api.stopreg.com/api/v1/auth/verify-reset-otp`, {
+                const response = await fetch(`http://localhost:8080/api/v1/auth/verify-reset-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: userEmail, otp: otpValue })
@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } catch (error) {
                 const errorMessage = error.message === "Failed to fetch" 
-                    ? "Network error — please check your connection and try again." 
+                    ? "Network error,  please check your connection and try again." 
                     : error.message;
 
                 // Attach error to the last input for positioning
@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 resendBtn.disabled = true;
                 
                 try {
-                    const response = await fetch(`https://api.stopreg.com/api/v1/auth/forgot-password`, {
+                    const response = await fetch(`http://localhost:8080/api/v1/auth/forgot-password`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: userEmail })
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     resendBtn.disabled = false;
                     
                     const errorMessage = error.message === "Failed to fetch" 
-                        ? "Network error — please check your connection and try again." 
+                        ? "Network error,  please check your connection and try again." 
                         : error.message;
 
                     if (typeof iziToast !== 'undefined') {
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`https://api.stopreg.com/api/v1/auth/reset-password`, {
+                const response = await fetch(`http://localhost:8080/api/v1/auth/reset-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -421,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } catch (error) {
                 const errorMessage = error.message === "Failed to fetch" 
-                    ? "Network error — please check your connection and try again." 
+                    ? "Network error,  please check your connection and try again." 
                     : error.message;
 
                 if (typeof iziToast !== 'undefined') {

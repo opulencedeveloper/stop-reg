@@ -24,6 +24,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="StopReg Blog" />
     <meta name="twitter:description" content="Latest insights on email intelligence and SaaS protection." />
+    <meta name="twitter:image" content="https://stopreg.com/assets/logo/stopreg-logo.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
@@ -63,7 +64,6 @@
         <div class="stopreg-spinner"></div>
     </div>
     <!-- Loading Spinner End -->
-    <!-- Loading Spinner End -->
 
     <main id="content">
         <!-- Mobile Navigation Start -->
@@ -84,7 +84,6 @@
             <div class="mobile-nav-items">
                 <a href="/#what-stopreg-check">Feature</a>
                 <a href="/#api">API</a>
-                <!-- <a href="/#wordpress-plugin">WordPress Plugin</a> -->
                 <a href="/#pricing">Pricing</a>
                 <button content-data-target="fags" class="section-scroller">
                     FAQs
@@ -110,7 +109,6 @@
                 <nav class="nav-wrapper">
                     <a href="/#what-stopreg-check">Feature</a>
                     <a href="/#api">API</a>
-                    <!-- <a href="/#wordpress-plugin">WordPress Plugin</a> -->
                     <a href="/#pricing">Pricing</a>
                     <a href="/#fags">FAQs</a>
                     <a href="/documentation.html">Documentation</a>
@@ -148,12 +146,9 @@
                         <div class="hori-rule"></div>
                         <div class="blog-share-icons">
                             <span>Share with others:</span>
-                            <a href="#" class="share-link" aria-label="Share on Telegram"><img
-                                    src="/assets/icons/blog/telegram.svg" alt=""></a>
-                            <a href="#" class="share-link" aria-label="Share on X (Twitter)"><img
-                                    src="/assets/icons/blog/new-twitter-ellipse.svg" alt=""></a>
-                            <a href="#" class="share-link" aria-label="Share on Facebook"><img
-                                    src="/assets/icons/blog/facebook.svg" alt=""></a>
+                            <a href="#" class="share-link share-telegram" aria-label="Share on Telegram"><img src="/assets/icons/blog/telegram.svg" alt=""></a>
+                            <a href="#" class="share-link share-twitter" aria-label="Share on X (Twitter)"><img src="/assets/icons/blog/new-twitter-ellipse.svg" alt=""></a>
+                            <a href="#" class="share-link share-facebook" aria-label="Share on Facebook"><img src="/assets/icons/blog/facebook.svg" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -170,48 +165,14 @@
                     <div class="blog-cta-card">
                         <h4>Stop Fake Signups Before They Happen</h4>
                         <p>Detect disposable emails and block fake users with real-time email verification.</p>
-                        <a href="#" class="blog-cta-btn">Get 1,000 free tokens every month</a>
+                        <a href="/sign-up.html" class="blog-cta-btn">Get 1,000 free tokens every month</a>
                         <p class="blog-cta-note">No credit card required.</p>
                     </div>
 
                     <div class="related-articles-section">
                         <p class="sidebar-section-title">More Articles for you</p>
-                        <div class="related-articles-list">
-                            <a href="/blog?slug=how-to-stop-fake-signups-saas" class="related-article-item">
-                                <h5>How to Stop Fake Signups on Your SaaS Platform</h5>
-                                <div class="related-meta">
-                                    <span>March 13, 2026</span>
-                                    <div class="dot-separator"></div>
-                                    <span>2 min read</span>
-                                </div>
-                            </a>
-                            <a href="/blog?slug=privacy-relay-vs-disposable-emails" class="related-article-item">
-                                <h5>Privacy Relay Emails vs Disposable Emails: Understanding the Difference and
-                                    Protecting
-                                    Your SaaS</h5>
-                                <div class="related-meta">
-                                    <span>March 13, 2026</span>
-                                    <div class="dot-separator"></div>
-                                    <span>2 min read</span>
-                                </div>
-                            </a>
-                            <a href="/blog?slug=complete-guide-disposable-email-detection" class="related-article-item">
-                                <h5>The Complete Guide to Disposable Email Detection</h5>
-                                <div class="related-meta">
-                                    <span>March 13, 2026</span>
-                                    <div class="dot-separator"></div>
-                                    <span>2 min read</span>
-                                </div>
-                            </a>
-                            <a href="/blog?slug=why-disposable-emails-increase-bounce-rates"
-                                class="related-article-item">
-                                <h5>Why Disposable Emails Increase Bounce Rates</h5>
-                                <div class="related-meta">
-                                    <span>March 13, 2026</span>
-                                    <div class="dot-separator"></div>
-                                    <span>2 min read</span>
-                                </div>
-                            </a>
+                        <div class="related-articles-list" id="related-articles-list">
+                            <!-- Populated dynamically to ensure correct links -->
                         </div>
                     </div>
                 </aside>
@@ -223,7 +184,6 @@
         <footer class="land-foot">
             <div class="land-foot-wrapp">
                 <div class="land-foot-wrapp-sct-one">
-                    <!-- Column 1: Logo & Info -->
                     <div class="foot-col foot-col-brand">
                         <a href="/" class="foot-logo"><img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg"></a>
                         <p class="foot-desc">
@@ -234,7 +194,6 @@
                     </div>
 
                     <div class="foot-links-group">
-                        <!-- Column 2: Support -->
                         <div class="foot-col">
                             <h4 class="foot-hd">Support</h4>
                             <div class="foot-links">
@@ -245,17 +204,15 @@
                             </div>
                         </div>
 
-                        <!-- Column 3: Resources -->
                         <div class="foot-col">
                             <h4 class="foot-hd">Resources</h4>
                             <div class="foot-links">
-                                <a href="/#about" class="foot-link">About</a>
-                                <a href="/documentation.html" class="foot-link">Guides</a>
+                                <a href="/about.html" class="foot-link">About</a>
+                                <a href="/blogs.html" class="foot-link">Blog</a>
                                 <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
                             </div>
                         </div>
 
-                        <!-- Column 4: Legal -->
                         <div class="foot-col">
                             <h4 class="foot-hd">Legal</h4>
                             <div class="foot-links">
@@ -266,14 +223,12 @@
                     </div>
                 </div>
 
-                <!-- Bottom Bar -->
                 <section class="land-foot-wrapp-sct-two">
                     <p class="foot-copy">&copy; Stopreg</p>
                     <p class="foot-rights">All Right Reserved.</p>
                 </section>
             </div>
         </footer>
-        <!-- Footer End -->
     </main>
     <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/landing/index.js" defer></script>
@@ -284,15 +239,12 @@
     <script src="/assets/js/doc-animations.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            /**
-             * Professional URL Routing & Masking
-             * Supports both path-based (/blog/slug) and query-based (?slug=) entry
-             */
             const getSlug = () => {
                 // 1. Try to extract from path (e.g., /blog/how-to-stop-fake-signups)
                 const pathParts = window.location.pathname.split('/').filter(p => p);
                 if (pathParts.length >= 2 && pathParts[0] === 'blog') {
-                    return pathParts[1];
+                    // Remove .html from slug if present
+                    return pathParts[1].replace('.html', '');
                 }
 
                 // 2. Fallback to query parameter (e.g., ?slug=...)
@@ -301,13 +253,11 @@
             };
 
             const slug = getSlug();
-
-            // Industrial Standard: Default to the flagship post if no slug provided
             const postSlug = (slug && window.BLOG_POSTS[slug]) ? slug : 'how-disposable-emails-hurt-marketing';
             const post = window.BLOG_POSTS[postSlug];
 
             if (post) {
-                // Update text content with high fidelity
+                // Update text content
                 document.title = `${post.title} | StopReg Blog`;
                 document.getElementById('blog-title').textContent = post.title;
                 document.getElementById('blog-description').textContent = post.description;
@@ -316,7 +266,7 @@
 
                 const prettyUrl = `https://stopreg.com/blog/${postSlug}`;
 
-                // SEO: Dynamic Meta Tag Updates
+                // SEO: Dynamic Meta Tag Updates (Fallbacks for client-side navigation)
                 const updateMeta = (selector, attr, value) => {
                     const el = document.querySelector(selector);
                     if (el) el.setAttribute(attr, value);
@@ -331,54 +281,35 @@
                 updateMeta('meta[name="twitter:description"]', 'content', post.description);
                 updateMeta('link[rel="canonical"]', 'href', prettyUrl);
 
-                // Industrial Standard: Dynamic JSON-LD Schema Injection
-                const schemaData = {
-                    "@context": "https://schema.org",
-                    "@graph": [
-                        {
-                            "@type": "BreadcrumbList",
-                            "itemListElement": [
-                                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://stopreg.com/" },
-                                { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://stopreg.com/blogs.html" },
-                                { "@type": "ListItem", "position": 3, "name": post.title, "item": prettyUrl }
-                            ]
-                        },
-                        {
-                            "@type": "BlogPosting",
-                            "headline": post.title,
-                            "description": post.description,
-                            "image": "https://stopreg.com/assets/logo/stopreg-logo.png",
-                            "author": {
-                                "@type": "Organization",
-                                "name": "StopReg Team",
-                                "url": "https://stopreg.com/"
-                            },
-                            "publisher": {
-                                "@type": "Organization",
-                                "name": "StopReg",
-                                "logo": {
-                                    "@type": "ImageObject",
-                                    "url": "https://stopreg.com/assets/logo/stopreg-logo.png"
-                                }
-                            },
-                            "datePublished": "2024-01-01",
-                            "url": prettyUrl,
-                            "mainEntityOfPage": {
-                                "@type": "WebPage",
-                                "@id": prettyUrl
-                            }
-                        }
-                    ]
-                };
-                const schemaScript = document.getElementById('blog-schema');
-                if (schemaScript) {
-                    schemaScript.textContent = JSON.stringify(schemaData);
+                // Populate Sidebar
+                const relatedList = document.getElementById('related-articles-list');
+                if (relatedList) {
+                    const otherPosts = Object.keys(window.BLOG_POSTS).filter(s => s !== postSlug).slice(0, 4);
+                    relatedList.innerHTML = otherPosts.map(s => {
+                        const p = window.BLOG_POSTS[s];
+                        return `
+                            <a href="/blog/${s}.html" class="related-article-item">
+                                <h5>${p.title}</h5>
+                                <div class="related-meta">
+                                    <span>${p.publishedDate}</span>
+                                    <div class="dot-separator"></div>
+                                    <span>${p.readTime}</span>
+                                </div>
+                            </a>
+                        `;
+                    }).join('');
                 }
 
-                // Industrial Standard Masking: Update the address bar to the professional format
-                if (window.location.search.includes('slug=')) {
-                    window.history.replaceState(null, '', `/blog/${postSlug}`);
-                }
+                // Share Button Logic
+                const setShareLinks = () => {
+                    const title = encodeURIComponent(post.title);
+                    const url = encodeURIComponent(prettyUrl);
+                    
+                    document.querySelector('.share-telegram').href = `https://t.me/share/url?url=${url}&text=${title}`;
+                    document.querySelector('.share-twitter').href = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    document.querySelector('.share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                };
+                setShareLinks();
 
                 // Smooth scroll to top
                 window.scrollTo({ top: 0, behavior: 'instant' });
@@ -386,52 +317,6 @@
         });
     </script>
     <script src="/assets/js/code-snippets.js" defer></script>
-    <!-- Zoho SalesIQ Live Chat Widget -->
-    <script>
-        window.$zoho = window.$zoho || {};
-        $zoho.salesiq = $zoho.salesiq || { ready: function () { } };
-    </script>
-    <script id="zsiqscript"
-        src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
-        defer></script>
-    <!-- Code injected by live-server -->
-    <script>
-        // <![CDATA[  <-- For SVG support
-        if ('WebSocket' in window) {
-            (function () {
-                function refreshCSS() {
-                    var sheets = [].slice.call(document.getElementsByTagName("link"));
-                    var head = document.getElementsByTagName("head")[0];
-                    for (var i = 0; i < sheets.length; ++i) {
-                        var elem = sheets[i];
-                        var parent = elem.parentElement || head;
-                        parent.removeChild(elem);
-                        var rel = elem.rel;
-                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-                        }
-                        parent.appendChild(elem);
-                    }
-                }
-                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-                var address = protocol + window.location.host + window.location.pathname + '/ws';
-                var socket = new WebSocket(address);
-                socket.onmessage = function (msg) {
-                    if (msg.data == 'reload') window.location.reload();
-                    else if (msg.data == 'refreshcss') refreshCSS();
-                };
-                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-                    console.log('Live reload enabled.');
-                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-                }
-            })();
-        }
-        else {
-            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-        }
-        // ]]>
-    </script>
 </body>
 
 </html>

@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (currentAction === "delete") {
                 // DELETE Request
-                response = await fetch(`https://api.stopreg.com/api/v1/seat/delete?seatId=${currentData.id}`, {
+                response = await fetch(`http://localhost:8080/api/v1/seat/delete?seatId=${currentData.id}`, {
                     method: "DELETE", // Assuming DELETE method based on standard, user said "Send http request", implied REST. If GET, user usually specifies. Route name implies deletion.
                     // Wait, user provided URL parameters but didn't specify method. "seat/delete" is unusual for DELETE verb on resource, often POST.
                     // User Request: "Send a http request to this end point .../delete?seatId=..."
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 // RESEND Request
-                response = await fetch(`https://api.stopreg.com/api/v1/seat/resend-invitation`, {
+                response = await fetch(`http://localhost:8080/api/v1/seat/resend-invitation`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -173,16 +173,24 @@ document.addEventListener("DOMContentLoaded", () => {
                      window.fetchSeatsTable(1, limit);
                 }
             } else {
+                if (window.handleAuthError && await window.handleAuthError(response)) {
+                    return;
+                }
                 throw new Error(data.description || data.message || "Action failed");
             }
 
         } catch (error) {
             console.error("Action Error:", error);
+            
+            // Delegate to global guard if it's an auth error
+            if (window.handleAuthError && await window.handleAuthError(error)) {
+                return;
+            }
+
             // Close the confirmation modal so we can show the error modal
             closeModal(); 
             
-            // Show Error Modal (Reuse existing global error modal logic from other files)
-            // Or just use iziToast and the premium error backdrop
+            // Show Error Modal
              setTimeout(() => {
                 showModalError(error.message);
              }, 300); // Wait for confirm modal to close

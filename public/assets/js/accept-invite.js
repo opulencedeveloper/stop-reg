@@ -7,7 +7,7 @@
  * - Handles Form Validation (Custom) and Submission
  */
 
-const API_BASE_URL = 'https://api.stopreg.com/api/v1';
+const API_BASE_URL = 'http://localhost:8080/api/v1';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // -------------------------------------------------------------------------
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } catch (err) {
             console.error("Submission Error:", err);
-            const msg = "Network error — please try again later.";
+            const msg = "Network error,  please try again later.";
              if (typeof iziToast !== 'undefined') {
                     iziToast.error({
                         message: msg,

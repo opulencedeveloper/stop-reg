@@ -20,13 +20,14 @@
   <!-- Stylesheets -->
   <link href="/assets/css/fonts.css" rel="stylesheet" />
   <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
   <link href="/assets/css/styles.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
   <link href="/assets/css/admin/domain-management/domain-management.css" rel="stylesheet" />
 
-  <script src="/assets/js/admin/domain-management/domain-management.js" defer></script>
+  <script src="/assets/js/admin/domain-management.js" defer></script>
   <script src="/assets/js/admin/admin-main.js" defer></script>
 </head>
 
@@ -46,31 +47,31 @@
         </button>
       </div>
       <nav class="admin-nav-links">
-        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
           <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
           <span>Dashboard</span>
         </a>
-        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
           <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
           <span>Report</span>
         </a>
-        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
           <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
           <span>Users</span>
         </a>
-        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
           <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
           <span>Manage Domains</span>
         </a>
-        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link active">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
           <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
           <span>Profile</span>
         </a>
@@ -93,31 +94,31 @@
         </a>
       </div>
       <nav class="admin-nav-links">
-        <a href="/admin-dasboard/index.html" class="admin-nav-link">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
           <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
           <span>Dashboard</span>
         </a>
-        <a href="/admin-dasboard/report.html" class="admin-nav-link">
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
           <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
           <span>Report</span>
         </a>
-        <a href="/admin-dasboard/users.html" class="admin-nav-link">
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
           <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
           <span>Users</span>
         </a>
-        <a href="/admin-dasboard/domains.html" class="admin-nav-link">
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
           <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
           <span>Manage Domains</span>
         </a>
-        <a href="/admin-dasboard/domain-management.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link active">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dasboard/mx-matching.html" class="admin-nav-link">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dasboard/profile.html" class="admin-nav-link">
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
           <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
           <span>Profile</span>
         </a>
@@ -158,14 +159,14 @@
               <div class="domain-mgmt-header-info">
                 <h2>Domains</h2>
               </div>
-              <button class="add-more-btn">Add more</button>
+              <button class="add-more-btn" id="admin-add-more-btn">Add more</button>
             </div>
             
             <div class="domain-mgmt-header-bottom">
               <div class="domain-mgmt-tabs">
-                <button class="tab-btn active" data-tab="username">Username</button>
-                <button class="tab-btn" data-tab="relay">Relay</button>
-                <button class="tab-btn" data-tab="disposable">Disposable</button>
+                <button class="tab-btn active" data-tab="username">Restricted Username</button>
+                <button class="tab-btn" data-tab="relay">Relay Domain</button>
+                <button class="tab-btn" data-tab="disposable">Disposable Email Provider</button>
                 <button class="tab-btn" data-tab="public">Public Email Provider</button>
               </div>
               
@@ -180,7 +181,11 @@
           </div>
 
           <!-- Table Section -->
-          <div class="domain-mgmt-table-container">
+          <div class="domain-mgmt-table-container" id="admin-mgmt-error-target">
+            <!-- Loading Spinner -->
+            <div class="chart-loading-state" id="admin-mgmt-loading" style="display: none; align-items: center; justify-content: center; padding: 60px 0;">
+              <div class="stopreg-btn-spinner" style="border-width: 3px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 40px; height: 40px;"></div>
+            </div>
             <!-- Username Tab Content -->
             <div class="tab-content active" id="username-content">
               <div class="domain-mgmt-table-wrapper">
@@ -190,7 +195,7 @@
                       <th class="username-col">Username</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="username-tbody">
                     <tr><td>rhodessand</td></tr>
                     <tr><td>williamoco</td></tr>
                     <tr><td>mlopez</td></tr>
@@ -217,7 +222,7 @@
                       <th class="text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="relay-tbody">
                     <tr>
                       <td>Yahoo.com</td>
                       <td>macdonald@gmail.com</td>
@@ -245,7 +250,7 @@
                       <th class="text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="disposable-tbody">
                     <tr>
                       <td>Yahoo.com</td>
                       <td>macdonald@gmail.com</td>
@@ -267,7 +272,7 @@
                       <th class="text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="public-tbody">
                     <tr>
                       <td>Yahoo.com</td>
                       <td>macdonald@gmail.com</td>
@@ -280,7 +285,7 @@
           </div>
 
           <!-- Footer Section -->
-          <div class="domain-mgmt-footer">
+          <div class="domain-mgmt-footer" id="admin-pagination">
             <div class="per-page-selector">
               <select id="per-page-select">
                 <option value="10">10 per page</option>
@@ -317,12 +322,22 @@
       
       <form class="domain-modal-form" id="add-domain-form">
         <div class="form-group">
-          <label for="email-provider">Email Provider</label>
+          <label for="domain-type">Category Type</label>
+          <select id="domain-type" style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
+            <option value="username">Restricted Username</option>
+            <option value="relay">Relay Domain</option>
+            <option value="disposable">Disposable Email Provider</option>
+            <option value="public">Public Email Provider</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="email-provider">Provider Name (e.g. Gmail, System)</label>
           <input type="text" id="email-provider" placeholder="Please type here" required>
         </div>
         
         <div class="form-group">
-          <label for="domain-name">Domain Name</label>
+          <label for="domain-name">Value (Domain or Username)</label>
           <input type="text" id="domain-name" placeholder="Please type here" required>
         </div>
         
@@ -330,6 +345,9 @@
       </form>
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 </body>
 
 </html>

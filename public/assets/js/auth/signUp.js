@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       try {
         const response = await fetch(
-          "https://api.stopreg.com/api/v1/auth/register",
+          "http://localhost:8080/api/v1/auth/register",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
              showError(data.description || data.message || "Registration failed!");
         }
       } catch (err) {
-        showError("Network error — please try again later.");
+        showError("Network error,  please try again later.");
         console.error(err);
         submitBtn.innerHTML = originalTextString;
       } finally {

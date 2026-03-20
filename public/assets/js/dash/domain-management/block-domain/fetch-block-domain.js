@@ -1,266 +1,96 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("authToken");
-  const tableBody = document.getElementById("table-body-inner");
-  if (!token) {
-    window.clearUserSession();
-    window.location.href = "/sign-in.html";
-    return;
-  }
+    const token = localStorage.getItem("authToken"); // Needed for Authorization header
+    const tableBody = document.getElementById("table-body-inner");
 
-  try {
-    const response = await fetch(
-      "https://api.stopreg.com/api/v1/manage/domain/fetch",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ send token here
-        },
-      }
-    );
-
-    const data = await response.json();
-    console.log("User Info Response:", data);
-
-    if (response.ok) {
-      const userDomain = data?.data || data;
-      //   console.log("User domans:", userDomain);
-      const blockedDomain = userDomain.filter(
-        (blocked) => blocked.type === "blocked"
-      );
-      //  console.log("User  blocked domans:", blockedDomain);
-
-      tableBody.innerHTML = blockedDomain
-        .map((user) => {
-          return `
-    <tr class="table-inner" id="${user._id}">
-      <td class="table-inner-inner">${user.domain}</td>
-      <td>${user.status}</td>
-      <td class="comment-td">${user.comment}</td>
-      <td>
-        <button class="deleteEmail" data-id="${user._id}">
-         Delete
-        </button>
-      </td>
-    </tr>
-  `;
-        })
-        .join("");
-      document.querySelectorAll(".deleteEmail").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const domainId = btn.getAttribute("data-id");
-
-          // Show spinner inside button
-          const originalText = btn.textContent;
-          btn.disabled = true;
-          btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
-
-          try {
-            const deleteResponse = await fetch(
-              ` https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
-              {
-                method: "DELETE",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-
-            const deleteData = await deleteResponse.json();
-            console.log("Delete response:", deleteData);
-
-            if (deleteResponse.status === 401) {
-              window.handleAuthError(401);
-              return;
-            }
-
-            if (deleteResponse.ok) {
-              // Remove row from UI
-              document.getElementById(domainId)?.remove();
-            } else {
-              iziToast.error({
-                title: "Error",
-                message: deleteData.message || "Failed to delete domain.",
-                position: "topRight",
-                timeout: 5000,
-                drag: false,
-                displayMode: 1,
-                zindex: 9999,
-              });
-            }
-          } catch (error) {
-            console.error("Delete error:", error);
-          } finally {
-            btn.disabled = false;
-            btn.textContent = originalText;
-          }
-        });
-      });
-    } else {
-      console.error("Error fetching user:", data);
-
-      if (response.status === 401) {
-        window.handleAuthError(401);
-      }
+    // Spinner management
+    if (typeof window.showSpinner === "function") {
+        window.showSpinner();
     }
-  } catch (error) {
-    console.error("Network error:", error);
-  }
-});
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("authToken");
-  const tableBody = document.getElementById("table-body-inner");
-  if (!token) {
-    window.clearUserSession();
-    window.location.href = "/sign-in.html";
-    return;
-  }
-
-  // Spinner is already visible for dashboard pages
-  // Increment counter to keep it visible during fetch
-  if (typeof window.showSpinner === "function") {
-    window.showSpinner();
-  }
-
-  try {
-    const response = await fetch(
-      "https://api.stopreg.com/api/v1/manage/domain/fetch",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ send token here
-        },
-      }
-    );
-
-    const data = await response.json();
-    console.log("User Info Response:", data);
-
-    if (response.ok) {
-      const userDomain = data?.data || data;
-      //   console.log("User domans:", userDomain);
-      const blockedDomain = userDomain.filter(
-        (blocked) => blocked.type === "blocked"
-      );
-      //  console.log("User  blocked domans:", blockedDomain);
-
-      tableBody.innerHTML = blockedDomain
-        .map((user) => {
-          return `
-    <tr class="table-inner" id="${user._id}">
-      <td class="table-inner-inner">${user.domain}</td>
-      <td>${user.status}</td>
-      <td class="comment-td">${user.comment}</td>
-      <td>
-        <button class="deleteEmail" data-id="${user._id}">
-         Delete
-        </button>
-      </td>
-    </tr>
-  `;
-        })
-        .join("");
-      document.querySelectorAll(".deleteEmail").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const domainId = btn.getAttribute("data-id");
-
-          // Show spinner inside button
-          const originalText = btn.textContent;
-          btn.disabled = true;
-          btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
-
-          try {
-            const deleteResponse = await fetch(
-              ` https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`,
-              {
-                method: "DELETE",
+    const fetchBlockedDomains = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/manage/domain/fetch", {
+                method: "GET",
                 headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                 },
-              }
-            );
+            });
 
-            const deleteData = await deleteResponse.json();
-            console.log("Delete response:", deleteData);
+                    if (await window.handleAuthError(response)) return;
 
-            if (deleteResponse.ok) {
-              // Remove row from UI
-              document.getElementById(domainId)?.remove();
+            const data = await response.json();
+            if (response.ok) {
+                const userDomain = data?.data || data;
+                const blockedDomains = userDomain.filter(d => d.type === "blocked");
+
+                if (tableBody) {
+                    tableBody.innerHTML = blockedDomains.map(user => `
+                        <tr class="table-inner" id="${user._id}">
+                            <td class="table-inner-inner">${user.domain}</td>
+                            <td>${user.status}</td>
+                            <td class="comment-td">${user.comment}</td>
+                            <td>
+                                <button class="deleteEmail" data-id="${user._id}">Delete</button>
+                            </td>
+                        </tr>
+                    `).join("");
+                    
+                    attachDeleteHandlers();
+                }
             } else {
-              const errorMessage =
-                deleteData.message || "Failed to delete domain.";
-              if (typeof iziToast !== "undefined") {
-                iziToast.error({
-                  title: "Error",
-                  message: errorMessage,
-                  position: "topRight",
-                  timeout: 5000,
-                  drag: false,
-                  displayMode: 1,
-                  zindex: 9999,
-                });
-              } else {
-                iziToast.error({
-                  title: "Error",
-                  message: errorMessage,
-                  position: "topRight",
-                  timeout: 5000,
-                  drag: false,
-                  displayMode: 1,
-                  zindex: 9999,
-                });
-              }
+                throw new Error(data.description || data.message || "Failed to fetch domains.");
             }
-          } catch (error) {
-            console.error("Delete error:", error);
-          } finally {
-            btn.disabled = false;
-            btn.textContent = originalText;
-          }
-        });
-      });
-    } else {
-      console.error("Error fetching user:", data);
-
-      if (response.status === 401) {
-        window.handleAuthError(401);
-      } else {
-        const errorMessage =
-          data.description || data.message || "Failed to fetch domains.";
-        if (typeof iziToast !== "undefined") {
-          iziToast.error({
-            title: "Error",
-            message: errorMessage,
-            position: "topRight",
-            timeout: 5000,
-            drag: false,
-            displayMode: 1,
-            zindex: 9999,
-          });
+        } catch (error) {
+            console.error("Fetch error:", error);
+            if (typeof iziToast !== "undefined") {
+                iziToast.error({ title: "Error", message: error.message, position: "topRight" });
+            }
+        } finally {
+            if (typeof window.hideSpinner === "function") {
+                window.hideSpinner();
+            }
         }
-      }
-    }
-  } catch (error) {
-    console.error("Network error:", error);
-    if (typeof iziToast !== "undefined") {
-      iziToast.error({
-        title: "Network Error",
-        message: "Network error — please try again later.",
-        position: "topRight",
-        timeout: 5000,
-        drag: false,
-        displayMode: 1,
-        zindex: 9999,
-      });
-    }
-  } finally {
-    // Hide spinner after data is loaded
-    if (typeof window.hideSpinner === "function") {
-      window.hideSpinner();
-    }
-  }
+    };
+
+    const attachDeleteHandlers = () => {
+        document.querySelectorAll(".deleteEmail").forEach(btn => {
+            btn.addEventListener("click", async () => {
+                const domainId = btn.getAttribute("data-id");
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
+
+                try {
+                    const response = await fetch(`http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (window.handleAuthError(response)) return;
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        document.getElementById(domainId)?.remove();
+                    } else {
+                        throw new Error(data.message || "Failed to delete domain.");
+                    }
+                } catch (error) {
+                    console.error("Delete error:", error);
+                    if (typeof iziToast !== "undefined") {
+                        iziToast.error({ title: "Error", message: error.message, position: "topRight" });
+                    }
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+        });
+    };
+
+    // Initial load
+    fetchBlockedDomains();
 });

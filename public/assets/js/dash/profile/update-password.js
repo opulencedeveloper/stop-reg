@@ -32,11 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     hideError();
     const token = localStorage.getItem("authToken");
 
-    if (!token) {
-      window.clearUserSession();
-      window.location.href = "/sign-in.html";
-      return;
-    }
 
     const currentPassword = document
       .getElementById("signup-password")
@@ -68,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/user/update/password",
+        "http://localhost:8080/api/v1/user/update/password",
         {
           method: "PATCH",
           headers: {
@@ -102,8 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.textContent = originalText;
         form.reset();
       } else {
-        if (response.status === 401) {
-          window.handleAuthError(401);
+        if (await window.handleAuthError(response)) {
           return;
         }
         const errorMessage = data.description || data.message || "Failed to update password.";
@@ -126,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (typeof iziToast !== 'undefined') {
         iziToast.error({
           title: 'Network Error',
-          message: "Network error — please try again later.",
+          message: "Network error,  please try again later.",
           position: "topRight",
           timeout: 5000,
           drag: false,
@@ -134,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
           zindex: 100000000,
         });
       } else {
-        showError("Network error — please try again later.");
+        showError("Network error,  please try again later.");
       }
     } finally {
       submitBtn.disabled = false;

@@ -1,178 +1,504 @@
 /**
- * MX Matching Admin Page JavaScript
- * Handles tab switching, search keyboard shortcuts, and table interactions.
+ * Admin MX Matching JavaScript
+ * Handles paginated management of Disposable and Relay MX matching patterns.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    initTabs();
-    initSearchShortcut();
-    initActionButtons();
-    initModal();
-});
+document.addEventListener("DOMContentLoaded", () => {
+    const adminToken = localStorage.getItem("adminToken");
+    const BASE_URL = "http://localhost:8080/api/v1/admin";
 
-/**
- * Initializes modal open/close logic
- */
-function initModal() {
-    const addMoreBtn = document.querySelector('.add-more-btn');
-    const modal = document.getElementById('add-more-modal');
-    const closeBtn = document.getElementById('close-modal-btn');
-    const form = document.getElementById('add-mx-form');
+    // --- DOM ELEMENTS ---
+    const getEl = (id) => document.getElementById(id);
+    const mxContainer = getEl("admin-mx-error-target");
+    const mxLoading = getEl("admin-mx-loading");
+    const paginationContainer = getEl("mx-pagination");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const searchInput = getEl("mx-search-input");
+    const perPageSelect = getEl("per-page-select");
+    const addMoreBtn = getEl("admin-add-more-btn");
+    const addModal = getEl("add-more-modal");
+    const closeModalBtn = getEl("close-modal-btn");
+    const addMxForm = getEl("add-mx-form");
+    const modalTitle = getEl("modal-title");
+    const submitMxBtn = getEl("submit-mx-btn");
 
-    if (!addMoreBtn || !modal || !closeBtn) return;
+    // Deletion Modal Elements
+    const removeModal = getEl("remove-mx-modal");
+    const confirmRemoveBtn = getEl("confirm-remove-btn");
+    const cancelRemoveBtn = getEl("cancel-remove-btn");
+    const closeRemoveBtn = getEl("close-remove-modal");
 
-    // Open modal
-    addMoreBtn.addEventListener('click', () => {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scroll
+    let currentType = "disposable"; // Default type
+    let currentPage = 1;
+    let currentLimit = parseInt(perPageSelect?.value) || 10;
+    let currentSearch = "";
+    let currentEditingId = null;
+    let currentDeletingId = null;
+
+    // Cache to store records for quick lookup during edit
+    let loadedRecords = [];
+
+    // Preserve original HTML for restoration after error (Tab content container)
+    const originalHTML = mxContainer ? mxContainer.innerHTML : "";
+
+    // --- API UTILITIES ---
+    async function apiFetch(endpoint, options = {}) {
+        const url = `${BASE_URL}${endpoint}`;
+        const defaultOptions = {
+            headers: {
+                "Authorization": `Bearer ${adminToken}`,
+                "Content-Type": "application/json"
+            }
+        };
+
+        try {
+            const response = await fetch(url, { ...defaultOptions, ...options });
+
+            if (window.handleAdminAuthError(response)) {
+                return null;
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("API Fetch Error:", error);
+            if (error.message.includes("Failed to fetch") || error instanceof TypeError) {
+                throw new Error("Network error, please check your connection and try again.");
+            }
+            throw error;
+        }
+    }
+
+    // --- UI HELPERS ---
+    const showLoading = () => {
+        if (mxLoading) mxLoading.style.display = "flex";
         
-        // Focus first input
-        setTimeout(() => {
-            const firstInput = form.querySelector('input[type="text"]');
-            if (firstInput) firstInput.focus();
-        }, 400); // Wait for entrance animation
-    });
-
-    // Close modal function
-    const closeModal = () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+        document.querySelectorAll(".tab-content").forEach(c => {
+            c.style.display = "none";
+            c.classList.remove("active");
+        });
+        
+        if (paginationContainer) paginationContainer.style.display = "none";
     };
 
-    closeBtn.addEventListener('click', closeModal);
+    const hideLoading = () => {
+        if (mxLoading) mxLoading.style.display = "none";
+    };
 
-    // Close on backdrop click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    const renderSectionError = (message, retryFn) => {
+        hideLoading();
+        if (!mxContainer) return;
 
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
+        mxContainer.innerHTML = `
+            <div class="fetch-error-state" style="padding: 60px 20px; text-align: center; background: white; border-radius: 12px; border: 1px solid #EDEDED;">
+                <div class="error-icon-wrapper" style="margin: 0 auto 24px; background: #FEF2F2; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #DC2626;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8V12M12 16H12.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                    </svg>
+                </div>
+                <h3 style="font-family: 'Inter_28pt-SemiBold', sans-serif; font-size: 18px; margin-bottom: 8px; color: #111827;">Failed to load data</h3>
+                <p style="font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; color: #6B7280; margin-bottom: 24px; max-width: 320px; margin-left: auto; margin-right: auto;">${message}</p>
+                <button class="retry-btn" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background-color: #FFFFFF; border: 1px solid #D1D5DB; border-radius: 8px; font-family: 'Inter_28pt-SemiBold', sans-serif; font-size: 14px; color: #374151; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Try Again
+                </button>
+            </div>
+        `;
 
-    // Form submission handling
-    if (form) {
-        form.addEventListener('submit', (e) => {
+        const btn = mxContainer.querySelector(".retry-btn");
+        if (btn) btn.onclick = (e) => {
             e.preventDefault();
-            
-            // Industrial feedback on button
-            const submitBtn = form.querySelector('.mx-submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Processing...';
-            submitBtn.disabled = true;
+            mxContainer.innerHTML = originalHTML;
+            retryFn();
+        };
+    };
 
-            // Simulate industrial processing
-            setTimeout(() => {
-                console.log('Form submitted successfully');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                closeModal();
-                
-                // Reset form
-                form.reset();
-                updateRadioIcons(form); // Reset icons to default
-            }, 1000);
+    // --- DATA LOADING & RENDERING ---
+    async function loadData(type = "disposable", page = 1, limit = 10, search = "") {
+        showLoading();
+        try {
+            const url = `/mx-matching?type=${type}&page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`;
+            const result = await apiFetch(url);
+            
+            if (!result || result.message === "error" || result.message === "Error") {
+                throw new Error(result?.description || "Failed to fetch MX matching data.");
+            }
+
+            hideLoading();
+            loadedRecords = result.data.records; // Cache for editing
+            renderTable(type, loadedRecords);
+            renderPaginationUI(result.data.pagination);
+            
+            const activeTabContent = getEl(`${type}-content`);
+            if (activeTabContent) {
+                activeTabContent.style.display = "block";
+                activeTabContent.classList.add("active");
+            }
+            if (paginationContainer) paginationContainer.style.display = "flex";
+
+        } catch (error) {
+            renderSectionError(error.message, () => loadData(type, page, limit, search));
+        }
+    }
+
+    function renderTable(type, records) {
+        const tbody = getEl(`${type}-tbody`);
+        if (!tbody) return;
+
+        if (records.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No ${type} MX patterns found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = records.map(r => `
+            <tr>
+                <td>${r.provider}</td>
+                <td>
+                  <span title="${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}">
+                    ${Array.isArray(r.mx_record) ? r.mx_record.length : (r.mx_record ? 1 : 0)} records
+                  </span>
+                </td>
+                <td style="text-transform: capitalize;">${r.service_type}</td>
+                <td style="text-transform: capitalize;">${r.grade}</td>
+                <td class="text-right">
+                    <div class="action-btn-container">
+                        <button class="action-btn" data-id="${r.id}">
+                            <img src="/assets/icons/more-vert.svg" alt="More" />
+                        </button>
+                        <div class="action-dropdown" id="dropdown-${r.id}">
+                            <button class="dropdown-item-edit" data-id="${r.id}">
+                                <img src="/assets/icons/edit-outline.svg" alt="" />
+                                <span>Edit Record</span>
+                            </button>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item-remove" data-id="${r.id}">
+                                <img src="/assets/icons/delete.svg" alt="" />
+                                <span>Remove Record</span>
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function renderPaginationUI(pagination) {
+        if (!paginationContainer) return;
+
+        const { page, pages } = pagination;
+        const controls = paginationContainer.querySelector(".pagination-controls");
+        if (!controls) return;
+
+        if (pages <= 1) {
+            controls.innerHTML = "";
+            return;
+        }
+
+        let html = `
+            <button class="pagination-btn prev-btn" ${page <= 1 ? "disabled" : ""}>
+                <img src="/assets/icons/angle-right.svg" alt="Prev" style="transform: rotate(180deg);" />
+            </button>
+        `;
+
+        for (let i = 1; i <= pages; i++) {
+            if (i === 1 || i === pages || (i >= page - 1 && i <= page + 1)) {
+                html += `<button class="pagination-btn ${i === page ? "active" : ""}" data-page="${i}">${i}</button>`;
+            } else if (i === page - 2 || i === page + 2) {
+                html += `<span class="pagination-ellipsis">...</span>`;
+            }
+        }
+
+        html += `
+            <button class="pagination-btn next-btn" ${page >= pages ? "disabled" : ""}>
+                <img src="/assets/icons/angle-right.svg" alt="Next" />
+            </button>
+        `;
+
+        controls.innerHTML = html;
+
+        controls.querySelectorAll(".pagination-btn").forEach(btn => {
+            btn.onclick = () => {
+                let targetPage = page;
+                if (btn.classList.contains("prev-btn")) targetPage--;
+                else if (btn.classList.contains("next-btn")) targetPage++;
+                else targetPage = parseInt(btn.getAttribute("data-page"));
+
+                if (targetPage !== page) {
+                    currentPage = targetPage;
+                    loadData(currentType, currentPage, currentLimit, currentSearch);
+                }
+            };
         });
     }
 
-    // Radio button icon switching logic
-    const radioBoxes = modal.querySelectorAll('.mx-radio-box');
-    radioBoxes.forEach(box => {
-        box.addEventListener('click', () => {
-            updateRadioIcons(form);
-        });
-    });
-}
+    // --- ACTION HANDLERS ---
+    const handleEdit = (id) => {
+        const record = loadedRecords.find(r => r.id === id);
+        if (!record) return;
 
-/**
- * Updates radio button icons based on selection
- */
-function updateRadioIcons(form) {
-    const radioBoxes = form.querySelectorAll('.mx-radio-box');
-    radioBoxes.forEach(box => {
-        const input = box.querySelector('input');
-        const icon = box.querySelector('.radio-icon');
-        if (input.checked) {
-            icon.src = '/assets/icons/radio-on.svg';
-        } else {
-            icon.src = '/assets/icons/radio-off.svg';
+        currentEditingId = id;
+        if (modalTitle) modalTitle.textContent = "Edit Record";
+        if (submitMxBtn) submitMxBtn.textContent = "Update Record";
+
+        // Prepopulate form
+        getEl("email-provider").value = record.provider;
+        getEl("domain-name").value = Array.isArray(record.mx_record) ? record.mx_record.join(", ") : record.mx_record;
+        getEl("mx-grade").value = record.grade;
+
+        const radioToSelect = addMxForm.querySelector(`input[name="service-type"][value="${record.service_type}"]`);
+        if (radioToSelect) {
+            radioToSelect.checked = true;
+            syncRadioIcons();
         }
-    });
-}
 
-/**
- * Initializes tab switching logic
- */
-function initTabs() {
-    const tabs = document.querySelectorAll('.mx-tabs .tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
-    
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabName = tab.getAttribute('data-tab');
-            const targetId = `${tabName}-content`;
-            
-            // Remove active class from all tabs and contents
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-            
-            // Add active class to clicked tab and its content
-            tab.classList.add('active');
-            const targetContent = document.getElementById(targetId);
-            if (targetContent) {
-                targetContent.classList.add('active');
+        addModal.classList.add("active");
+    };
+
+    const handleDelete = (id) => {
+        currentDeletingId = id;
+        removeModal.classList.add("is-active");
+    };
+
+    const closeDeleteModal = () => {
+        removeModal.classList.add("is-exiting");
+        setTimeout(() => {
+            removeModal.classList.remove("is-active", "is-exiting");
+            currentDeletingId = null;
+        }, 300);
+    };
+
+    const syncRadioIcons = () => {
+        const radioBoxes = addMxForm.querySelectorAll(".mx-radio-box");
+        radioBoxes.forEach(b => {
+            const bInput = b.querySelector('input[type="radio"]');
+            const bImg = b.querySelector(".radio-icon");
+            if (bInput && bImg) {
+                bImg.src = bInput.checked ? "/assets/icons/radio-on.svg" : "/assets/icons/radio-off.svg";
             }
-            
-            console.log(`MX Matching switched to: ${tabName}`);
         });
-    });
-}
+    };
 
-/**
- * Initializes keyboard shortcuts for search
- */
-function initSearchShortcut() {
-    const searchInput = document.getElementById('mx-search-input');
+    const hideAllDropdowns = () => {
+        document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+    };
+
+    // --- EVENT LISTENERS ---
     
-    if (!searchInput) return;
+    // Centralized Event Delegation for Actions
+    document.addEventListener("click", (e) => {
+        const actionBtn = e.target.closest(".action-btn");
+        const editBtn = e.target.closest(".dropdown-item-edit");
+        const removeBtn = e.target.closest(".dropdown-item-remove");
 
-    document.addEventListener('keydown', (e) => {
-        // Cmd/Ctrl + 1 to focus search
-        if ((e.metaKey || e.ctrlKey) && e.key === '1') {
-            e.preventDefault();
-            searchInput.focus();
+        // Click to toggle on mobile (and desktop fallback)
+        if (actionBtn) {
+            e.stopPropagation();
+            const dropdown = actionBtn.nextElementSibling;
+            const isShown = dropdown.classList.contains("show");
+            hideAllDropdowns();
+            if (!isShown) dropdown.classList.add("show");
+            return;
+        }
+
+        if (editBtn) {
+            e.stopPropagation();
+            hideAllDropdowns();
+            handleEdit(editBtn.dataset.id);
+            return;
+        }
+
+        if (removeBtn) {
+            e.stopPropagation();
+            hideAllDropdowns();
+            handleDelete(removeBtn.dataset.id);
+            return;
+        }
+
+        // Close dropdowns when clicking outside
+        if (!e.target.closest(".action-btn-container")) {
+            hideAllDropdowns();
         }
     });
 
-    searchInput.addEventListener('focus', () => {
-        console.log('Search focused via shortcut');
-    });
-}
+    tabButtons.forEach(btn => {
+        btn.onclick = () => {
+            const type = btn.getAttribute("data-tab");
+            if (type === currentType) return;
 
-/**
- * Initializes table action buttons
- */
-function initActionButtons() {
-    const actionButtons = document.querySelectorAll('.action-btn');
-    
-    actionButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const row = e.target.closest('tr');
-            if (!row) return;
-            
-            const provider = row.cells[0].textContent;
-            console.log(`MX Action clicked for: ${provider}`);
-            
-            // Industrial feedback
-            btn.style.opacity = '0.5';
-            setTimeout(() => {
-                btn.style.opacity = '1';
-            }, 100);
-        });
+            tabButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            currentType = type;
+            currentPage = 1;
+            loadData(currentType, currentPage, currentLimit, currentSearch);
+        };
     });
-}
+
+    if (searchInput) {
+        let debounceTimer;
+        searchInput.oninput = () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentSearch = searchInput.value.trim();
+                currentPage = 1;
+                loadData(currentType, currentPage, currentLimit, currentSearch);
+            }, 500);
+        };
+    }
+
+    if (perPageSelect) {
+        perPageSelect.onchange = () => {
+            currentLimit = parseInt(perPageSelect.value);
+            currentPage = 1;
+            loadData(currentType, currentPage, currentLimit, currentSearch);
+        };
+    }
+
+    // Modal listeners
+    if (addMoreBtn) {
+        addMoreBtn.onclick = () => {
+            currentEditingId = null;
+            addMxForm.reset();
+            if (modalTitle) modalTitle.textContent = "Add More";
+            if (submitMxBtn) submitMxBtn.textContent = "Continue";
+            syncRadioIcons();
+            addModal.classList.add("active");
+        };
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.onclick = () => addModal.classList.remove("active");
+    }
+
+    // Deletion Modal listeners
+    if (closeRemoveBtn) closeRemoveBtn.onclick = closeDeleteModal;
+    if (cancelRemoveBtn) cancelRemoveBtn.onclick = closeDeleteModal;
+
+    if (confirmRemoveBtn) {
+        confirmRemoveBtn.onclick = async () => {
+            if (!currentDeletingId) return;
+
+            const originalHTML = confirmRemoveBtn.innerHTML;
+            confirmRemoveBtn.disabled = true;
+            confirmRemoveBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Removing...`;
+
+            try {
+                const result = await apiFetch(`/mx-matching/${currentDeletingId}`, {
+                    method: "DELETE"
+                });
+
+                if (result?.message === "success" || result?.message === "Success") {
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.success({
+                            title: 'Removed',
+                            message: 'MX pattern deleted successfully.',
+                            position: 'topRight'
+                        });
+                    }
+                    closeDeleteModal();
+                    loadData(currentType, currentPage, currentLimit, currentSearch);
+                } else {
+                    throw new Error(result?.description || "Failed to delete record.");
+                }
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({
+                        title: 'Error',
+                        message: error.message,
+                        position: 'topRight'
+                    });
+                }
+            } finally {
+                confirmRemoveBtn.disabled = false;
+                confirmRemoveBtn.innerHTML = originalHTML;
+            }
+        };
+    }
+
+    if (addMxForm) {
+        // Handle custom radio button clicks
+        const radioBoxes = addMxForm.querySelectorAll(".mx-radio-box");
+        radioBoxes.forEach(box => {
+            box.onclick = () => {
+                const input = box.querySelector('input[type="radio"]');
+                if (input) {
+                    input.checked = true;
+                    syncRadioIcons();
+                }
+            };
+        });
+
+        addMxForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const originalBtnHTML = submitMxBtn.innerHTML;
+            
+            const provider = getEl("email-provider")?.value;
+            const mx_record = getEl("domain-name")?.value;
+            const service_type = document.querySelector('input[name="service-type"]:checked')?.value;
+            const grade = getEl("mx-grade")?.value || "standard";
+
+            submitMxBtn.disabled = true;
+            submitMxBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> ${currentEditingId ? 'Updating...' : 'Adding...'}`;
+
+            try {
+                const method = currentEditingId ? "PATCH" : "POST";
+                const endpoint = currentEditingId ? `/mx-matching/${currentEditingId}` : "/mx-matching";
+
+                const result = await apiFetch(endpoint, {
+                    method: method,
+                    body: JSON.stringify({ 
+                        provider, 
+                        mx_record, 
+                        service_type, 
+                        grade
+                    })
+                });
+
+                if (result?.message === "success" || result?.message === "Success") {
+                    addModal.classList.remove("active");
+                    addMxForm.reset();
+                    
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.success({
+                            title: 'Success',
+                            message: `MX record ${currentEditingId ? 'updated' : 'added'} successfully.`,
+                            position: 'topRight'
+                        });
+                    }
+                    
+                    loadData(currentType, currentEditingId ? currentPage : 1, currentLimit, currentSearch);
+                } else {
+                    const desc = result?.description || `Failed to ${currentEditingId ? 'update' : 'add'} record.`;
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.error({
+                            title: 'Error',
+                            message: desc,
+                            position: 'topRight'
+                        });
+                    }
+                }
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({
+                        title: 'Network Error',
+                        message: error.message,
+                        position: 'topRight'
+                    });
+                }
+            } finally {
+                submitMxBtn.disabled = false;
+                submitMxBtn.innerHTML = originalBtnHTML;
+            }
+        };
+    }
+
+    // Modal background clicks
+    window.addEventListener("click", (e) => {
+        if (e.target === addModal) addModal.classList.remove("active");
+        if (e.target === removeModal) closeDeleteModal();
+    });
+
+    // --- INITIAL LOAD ---
+    loadData(currentType, currentPage, currentLimit, currentSearch);
+});

@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; display: block; margin: 0 auto !important;"></span>`;
 
         try {
-            const url = `https://api.stopreg.com/api/v1/request/status/update?id=${requestId}`;
+            const url = `http://localhost:8080/api/v1/request/status/update?id=${requestId}`;
             const response = await fetch(url, {
                 method: "PATCH",
                 headers: {
@@ -119,8 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (window.handleAuthError && await window.handleAuthError(response)) {
                 return;
             }
 
@@ -143,7 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error(err);
-            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Network error occurred", position: "topRight" });
+            if (window.handleAuthError && await window.handleAuthError(err)) {
+                return;
+            }
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Network error, occurred", position: "topRight" });
             btn.innerHTML = originalContent;
             btn.disabled = false;
         }
@@ -333,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const url = `https://api.stopreg.com/api/v1/request/status/update?id=${currentRequestId}`;
+            const url = `http://localhost:8080/api/v1/request/status/update?id=${currentRequestId}`;
             
             const response = await fetch(url, {
                 method: "PATCH",
@@ -364,8 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
             } else {
-                 if (response.status === 401) {
-                     window.handleAuthError(401);
+                 if (window.handleAuthError && await window.handleAuthError(response)) {
                      return;
                  }
                  if (typeof iziToast !== 'undefined') {
@@ -378,9 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (err) {
             console.error(err);
+             if (window.handleAuthError && await window.handleAuthError(err)) {
+                return;
+            }
              if (typeof iziToast !== 'undefined') {
                 iziToast.error({
-                    message: "Network error occurred",
+                    message: "Network error, occurred",
                     position: "topRight"
                 });
             }

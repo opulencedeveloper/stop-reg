@@ -46,7 +46,7 @@ body {
   padding: 0;
   padding-top: 100px;
   /* Compensate for fixed header */
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   scroll-behavior: smooth;
   overflow-x: hidden;
   /* removed !important, removed html selector */
@@ -68,7 +68,7 @@ body {
 
 .hero-header {
   font-size: 56px;
-  font-family: "PlusJakartaSans-ExtraBold";
+  font-family: "Inter_18pt-Bold";
   line-height: 66.8px;
 }
 
@@ -77,10 +77,10 @@ body {
 }
 
 .hero-title {
-  font-family: "PlusJakartaSans-Regular";
-  font-size: 20px;
+  font-family: "Inter_28pt-Regular";
+  font-size: 16px;
   color: var(--color-three);
-  line-height: 37px;
+  line-height: 24px;
 }
 
 .hero-btn-wrapper {
@@ -98,7 +98,7 @@ body {
   border: none;
   font-size: 16px;
   padding-right: 32px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -399,7 +399,7 @@ body {
 /* WordPress Plugin Styles */
 .tools-header {
   font-size: 40px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   color: var(--color-four);
   text-align: center;
   line-height: 64px;
@@ -429,7 +429,20 @@ body {
   align-items: center;
   justify-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 24px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+a.wd-pr-lb-cont-inner-item {
+  cursor: pointer;
+}
+
+a.wd-pr-lb-cont-inner-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
+  border-color: var(--secondary-color);
+  background-color: #fcfcfc;
 }
 
 .wd-item-icon-container {
@@ -455,7 +468,7 @@ body {
 
 .wd-pr-lb-sub {
   font-size: 16px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: black;
 }
 
@@ -463,7 +476,7 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
@@ -580,14 +593,14 @@ body {
 
 .efea-header-title {
   line-height: 60px;
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 40px;
 }
 
 .efea-header-desc {
   color: #595959;
   font-size: 16px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
 }
 
 .efea-wrapper-sct-two-inner-one>.efea-btn-link {
@@ -600,7 +613,7 @@ body {
   border-radius: 8px;
   border: none;
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   display: flex;
   align-items: center;
   justify-content: center;
@@ -643,7 +656,7 @@ body {
 .bdeiw-wrapper-tle {
   color: var(--color-eleven);
   font-size: 20px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   text-align: center;
   margin-bottom: 66px;
 }
@@ -710,7 +723,7 @@ body {
 .bdeiw-btn {
   background-color: var(--secondary-color);
   color: var(--color-one);
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   height: 54px;
   border-radius: 8px;
   padding-left: 32px;
@@ -736,7 +749,7 @@ body {
 
 .wci-wrapper-tle {
   font-size: 20px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: var(--color-twelve);
   margin-bottom: 40px;
   text-align: center;
@@ -775,7 +788,7 @@ body {
 
 .wci-wrapper-grd-item-hd {
   font-size: 20px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   color: var(--primary-color);
 }
 
@@ -785,10 +798,6 @@ body {
   line-height: 24px;
 }
 
-.fasi-wrapper-main {
-  /* padding-left: var(--desktop-padding);
-  padding-right: var(--desktop-padding); */
-}
 
 .fasi-wrapper {
   max-width: 1280px;
@@ -819,7 +828,7 @@ body {
   font-size: 16px;
   color: var(--primary-color);
   line-height: 22.4px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
 }
 
 .fasi-sect-two {
@@ -888,7 +897,7 @@ body {
   border: none;
   color: #858585;
   font-size: 14px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-weight: 600;
   font-style: normal;
   cursor: pointer;
@@ -926,7 +935,7 @@ body {
   z-index: 10;
   opacity: 0.7;
   color: #ffffff;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 14px;
   font-weight: 600;
   pointer-events: auto;
@@ -951,7 +960,7 @@ body {
 }
 
 .code-copy-btn span {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 14px;
   font-weight: 600;
   color: #ffffff;
@@ -1057,7 +1066,7 @@ body {
   right: -120px;
   color: var(--secondary-color);
   font-size: 12px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   text-transform: uppercase;
   transform: translateY(-50%);
 }
@@ -1081,7 +1090,7 @@ body {
   color: var(--color-twenty-three);
   background-color: transparent;
   border: none;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
 }
 
 .land-pricing-sect-mth.active-btn,
@@ -1106,7 +1115,7 @@ body {
   /* Pull closer to input */
   margin-bottom: 12px;
   /* Push next content down */
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   /* slightly bolder */
   animation: inputErrorFadeIn 0.3s ease-in-out forwards;
 }
@@ -1299,7 +1308,7 @@ body {
 }
 
 .pr-do-si {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 23px;
 }
 
@@ -1311,7 +1320,7 @@ body {
 
 .land-pricing-container-item-btn,
 .land-pricing-container-item-btn-recomm {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   width: 100%;
   height: 54px;
   font-size: 16px;
@@ -1431,7 +1440,7 @@ body {
 }
 
 .docs-header-sect-one-tle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 20px;
   color: var(--color-three);
   font-weight: 400;
@@ -1513,7 +1522,7 @@ main,
   width: 100%;
   font-size: 20px;
   color: #252525;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1628,7 +1637,7 @@ main,
 }
 
 .documen-content-item h3 {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 24px;
   color: #252525;
   margin-top: 24px;
@@ -1637,7 +1646,7 @@ main,
 
 .documen-content-item>h2 {
   font-size: 32px;
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   color: #252525;
   line-height: 44.8px;
   margin-top: 0;
@@ -1646,7 +1655,7 @@ main,
 
 .documen-content-item>p {
   font-size: 20px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: #252525;
   line-height: 32px;
   /* Increased for 20px font */
@@ -1668,7 +1677,7 @@ main,
 
 .documen-content-item li {
   font-size: 20px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: #252525;
   line-height: 32px;
 }
@@ -1691,7 +1700,7 @@ main,
 .docume-content-nav button.active-docume-list-item {
   background-color: var(--color-twenty-five) !important;
   color: var(--secondary-color) !important;
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
 }
 
 /* Animation 3: Zoom In Reveal (Safe, premium, no overflow) */
@@ -1744,7 +1753,7 @@ main,
 .cr-auth-tle {
   text-align: center;
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   color: var(--color-three);
   margin-bottom: 42px;
 }
@@ -1806,7 +1815,7 @@ main,
 
 .form-item>label {
   font-size: 16px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: var(--custom-five);
 }
 
@@ -1816,7 +1825,7 @@ main,
   width: 100%;
   font-size: 16px;
   border-radius: 8px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   border: 0.3px solid rgba(115, 115, 115, 0.3);
   box-sizing: border-box;
   padding-left: 17px;
@@ -1839,7 +1848,7 @@ main,
 
 .form-item-inner>label {
   font-size: 16px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   color: var(--primary-color);
 }
 
@@ -1878,7 +1887,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   height: 46px;
   border-radius: 8px;
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   color: var(--color-six);
   margin-bottom: 40px;
   display: flex;
@@ -1912,7 +1921,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 16px;
   text-align: center;
   line-height: 22.4px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   color: var(--color-thirteen);
   margin-bottom: 20px;
 }
@@ -2006,7 +2015,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 .pricing-badge {
   background-color: #1452CA;
   color: #FFFFFF;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 14px;
   padding: 8px 0;
   position: absolute;
@@ -2021,7 +2030,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .pricing-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 24px;
   color: #101828;
   margin-bottom: 12px;
@@ -2038,7 +2047,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 20px;
   color: #0B2110;
   font-weight: normal;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
 }
 
 .pricing-details {
@@ -2048,7 +2057,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .pricing-details p {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #475467;
   line-height: 1.5;
@@ -2067,7 +2076,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 16px;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #475467;
   text-align: left;
@@ -2088,7 +2097,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   width: 100%;
   padding: 16px 16px;
   border-radius: 8px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 16px;
   text-decoration: none;
   transition: all 0.2s;
@@ -2535,7 +2544,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
   .hero-sect-two-inner-two-badge-two-inner-one>div:first-child>p:first-child {
     font-size: 32px;
-    font-family: "PlusJakartaSans-SemiBold";
+    font-family: "Inter_28pt-SemiBold";
   }
 
   .tools-header {
@@ -2956,7 +2965,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
     width: 100%;
     font-size: 16px;
     border-radius: 8px;
-    font-family: 'PlusJakartaSans-Regular';
+    font-family: 'Inter_28pt-Regular';
     border: 0.3px solid rgba(115, 115, 115, .3);
     box-sizing: border-box;
     padding-left: 9px;
@@ -2977,7 +2986,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   position: relative;
   z-index: 1;
   overflow: hidden;
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
 }
 
 .validation-card-header {
@@ -3109,14 +3118,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .hiw-header-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 40px;
   color: #252525;
   margin-bottom: 12px;
 }
 
 .hiw-header-subtitle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #595959;
   ;
@@ -3227,7 +3236,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .hiw-step-title {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 20px;
   color: var(--color-four);
   margin-bottom: 0;
@@ -3235,7 +3244,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .hiw-step-desc {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #717171;
   line-height: 1.8;
@@ -3311,14 +3320,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .wsc-header-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 40px;
   color: #252525;
   margin-bottom: 12px;
 }
 
 .wsc-header-subtitle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #717171;
 }
@@ -3358,14 +3367,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .wsc-card-title {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 20px;
   color: #101828;
   margin-bottom: 0;
 }
 
 .wsc-card-desc {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #475467;
   line-height: 1.6;
@@ -3450,7 +3459,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .why-header-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 40px;
   color: #252525;
   margin-bottom: 14px;
@@ -3479,14 +3488,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .why-stopreg-grid-tle {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 20px;
   color: #252525;
   margin-bottom: 8px;
 }
 
 .why-stopreg-grid-stle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-weight: 400;
   font-size: 15px;
   color: #737373;
@@ -3494,7 +3503,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .why-header-subtitle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #717171;
 }
@@ -3546,14 +3555,14 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .why-item-title {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 20px;
   color: #252525;
   margin-bottom: 8px;
 }
 
 .why-item-desc {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #737373;
   line-height: 1.6;
@@ -3591,12 +3600,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .why-stopreg-grid-tle {
-    font-family: "PlusJakartaSans-Regular";
+    font-family: "Inter_28pt-Regular";
     font-size: 16px;
   }
 
   .why-stopreg-grid-stle {
-    font-family: "PlusJakartaSans-Regular";
+    font-family: "Inter_28pt-Regular";
     font-size: 14px;
     line-height: 20px;
   }
@@ -3623,7 +3632,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .fasi-sect-one-hd {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 56px;
   color: #101828;
   margin-bottom: 40px;
@@ -3699,13 +3708,13 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .fasi-api-title {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   font-size: 20px;
   color: #252525;
 }
 
 .fasi-api-desc {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #404040;
   line-height: 1.6;
@@ -3744,7 +3753,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .gdpr-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 48px;
   margin-bottom: 12px;
   background: linear-gradient(180deg, #252525 0%, #000000 100%);
@@ -3755,7 +3764,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 .gdpr-subtitle {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #475467;
   line-height: 1.6;
@@ -4684,8 +4693,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
   /* --- Animation Overflow Fix (Mobile) --- */
   html,
   body {
-    overflow-x: hidden !important;
-    /* Global safe-guard */
+    overflow-x: visible !important;
+    /* Global safe-guard - changed to visible to allow position: sticky to work */
   }
 
   /* Reset Pricing Cards Horizontal Start */

@@ -6,14 +6,67 @@ window.clearUserSession = function() {
   // Add any other session-related items here in the future
 };
 
-window.handleAuthError = function(error, source = "API") {
+window.handleAuthError = async function(error, source = "API") {
   console.error(`${source} Error:`, error);
-  // Check if it's a 401 Unauthorized or specific "token" error
-  if (error === 401 || (error && error.status === 401) || (error && error.message && error.message.includes("401"))) {
+  
+  // Determine status code
+  let status = typeof error === 'number' ? error : (error && error.status);
+  
+  // If no direct status, try to extract from message (legacy support)
+  if (!status && error && error.message) {
+    if (error.message.includes("401")) status = 401;
+    if (error.message.includes("403")) status = 403;
+  }
+
+  // 401 Unauthorized or Expired
+  if (status === 401) {
     window.clearUserSession();
     window.location.href = "/sign-in.html";
     return true;
   }
+  
+  // 403 Forbidden (Only eject if explicitly suspended)
+  if (status === 403) {
+    // If it's a Response object, we can inspect the body surgically
+    if (error instanceof Response) {
+      try {
+        const data = await error.clone().json();
+        if (data && (data.message === "user_suspended" || (data.description && data.description.toLowerCase().includes("suspended")))) {
+          const message = data.description || "Your account has been suspended. Please contact support.";
+          
+          // Show toast before redirecting
+          if (typeof iziToast !== 'undefined') {
+            iziToast.error({
+              title: 'Account Suspended',
+              message: message,
+              position: 'topRight',
+              timeout: 3000,
+              onClosing: function() {
+                window.clearUserSession();
+                window.location.href = "/sign-in.html?error=suspended";
+              }
+            });
+            // Fallback redirect in case onClosing doesn't fire or takes too long
+            setTimeout(() => {
+              window.clearUserSession();
+              window.location.href = "/sign-in.html?error=suspended";
+            }, 3500);
+          } else {
+            // No toast library, just eject
+            window.clearUserSession();
+            window.location.href = "/sign-in.html?error=suspended";
+          }
+          return true;
+        }
+      } catch (e) {
+        console.warn("Failed to parse 403 response body for suspension check:", e);
+      }
+    }
+    
+    // For other 403s (RBAC/Access Denied), we return false to let the component handle it
+    return false;
+  }
+  
   return false;
 };
 
@@ -159,10 +212,28 @@ window.addEventListener("load", function () {
     if (document.querySelector('.entrance-overlay')) {
         window.addEventListener('entrance-complete', () => {
             initScrollAnimations("all");
+            checkForSuspensionError();
         });
     } else {
         // Fallback: If no overlay, animate everything immediately
         initScrollAnimations("all");
+        checkForSuspensionError();
+    }
+
+    function checkForSuspensionError() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('error') === 'suspended' && typeof iziToast !== 'undefined') {
+        iziToast.error({
+          title: "Account Suspended",
+          message: "Your account has been suspended. Please contact support for more information.",
+          position: "topRight",
+          timeout: 10000,
+          close: true,
+          drag: false
+        });
+        // Clean up URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
     }
   });
 
@@ -251,15 +322,142 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Dynamic Public Auth Navigation
+// Dynamic Public Auth Navigation & Global Dashboard Guard
 document.addEventListener("DOMContentLoaded", function () {
-  const token = localStorage.getItem("authToken");
-
-  // Only run on public pages (not dashboard)
+  const TOKEN_KEY = "authToken";
+  const token = localStorage.getItem(TOKEN_KEY);
   const isDashboardPage = window.location.pathname.includes('/dashboard/');
-  
+
+  // 1. Global Dashboard Guard: Strictly enforce user sessions
+  if (isDashboardPage && !token) {
+    console.warn("No authentication session found. Redirecting to login...");
+    window.location.href = "/sign-in.html";
+    return;
+  }
+
+  // 2. Global Logout Functionality (Injection & Delegation)
+  const injectLogoutOverlay = () => {
+    let overlay = document.getElementById('logout-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'logout-overlay';
+      overlay.className = 'overlay';
+      overlay.innerHTML = `
+        <div id="logout-container" class="logout-container overlay-animate">
+          <div class="logout-icon">
+            <img src="/assets/icons/logout.svg" alt="Logout" />
+          </div>
+          <p class="logout-tle">Log Out?</p>
+          <p class="logout-subtle">Are you sure you want to proceed?</p>
+          <div class="logout-actions">
+            <button id="logout-confirm-btn" class="y-log-out">Log Out</button>
+            <button id="logout-cancel-btn" class="n-log-out">Cancel</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+    }
+
+    // Bind overlay actions
+    // Support both standardized IDs and legacy dashboard IDs/classes
+    const confirmBtn = document.getElementById('logout-confirm-btn') || overlay.querySelector('.y-log-out');
+    const cancelBtn = document.getElementById('logout-cancel-btn') || document.getElementById('n-log-out');
+
+    const closeOverlay = () => {
+      const modalContainer = overlay.querySelector('.logout-container');
+      if (modalContainer) {
+        modalContainer.classList.add('fadeOut');
+        // Wait for animation (0.3s) before hiding
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          modalContainer.classList.remove('fadeOut');
+          document.body.classList.remove("hidden-overflow");
+        }, 300);
+      } else {
+        overlay.style.display = 'none';
+        document.body.classList.remove("hidden-overflow");
+      }
+    };
+
+    if (confirmBtn) {
+      confirmBtn.onclick = (e) => {
+        e.preventDefault();
+        window.clearUserSession();
+        // Optional: transition out before redirecting for premium feel
+        const modalContainer = overlay.querySelector('.logout-container');
+        if (modalContainer) {
+          modalContainer.classList.add('fadeOut');
+          setTimeout(() => {
+            window.location.href = "/sign-in.html";
+          }, 300);
+        } else {
+          window.location.href = "/sign-in.html";
+        }
+      };
+    }
+    
+    if (cancelBtn) {
+      cancelBtn.onclick = (e) => {
+        if (e) e.preventDefault();
+        closeOverlay();
+      };
+    }
+  };
+
+  // 3. Standardized Mobile Navigation Toggle
+  const setupMobileMenu = () => {
+    const navIcon = document.querySelector(".nav-icon2");
+    const navMenu = document.querySelector(".nav-menu");
+    const closeBtn = document.querySelector(".nav-close-btn");
+
+    if (navIcon && navMenu) {
+      navIcon.addEventListener("click", () => {
+        navIcon.classList.toggle("open");
+        navMenu.classList.toggle("active");
+      });
+    }
+
+    if (closeBtn && navIcon && navMenu) {
+      closeBtn.addEventListener("click", () => {
+        navIcon.classList.remove("open");
+        navMenu.classList.remove("active");
+      });
+    }
+    
+    // Auto-close menu on overlay clicks if needed (optional based on UX)
+  };
+
+  if (isDashboardPage) {
+    injectLogoutOverlay();
+    setupMobileMenu();
+  }
+
+  // Event delegation for logout buttons (handles header, mobile nav, and dynamic links)
+  document.addEventListener('click', (e) => {
+    // Check for both legacy IDs/classes and the new standardized class
+    const logoutBtn = e.target.closest('#logout-button') || 
+                      e.target.closest('#mobile-logout-button') || 
+                      e.target.closest('.nav-logout-btn') ||
+                      e.target.closest('.dash-logout') ||
+                      e.target.closest('.dash-mobile-logout-btn');
+
+    if (logoutBtn) {
+      const overlay = document.getElementById('logout-overlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        document.body.classList.add("hidden-overflow");
+        
+        // Ensure any mobile menus are closed
+        const navMenu = document.querySelector(".nav-menu");
+        const navIcons = document.querySelector(".nav-icon2");
+        if (navMenu) navMenu.classList.remove("active");
+        if (navIcons) navIcons.classList.remove("open");
+      }
+    }
+  });
+
+  // 3. Public Auth Navigation (Update login buttons to "Dashboard" if logged in)
   if (token && !isDashboardPage) {
-    // 1. Update Desktop/Main Nav (.auth-wrapper)
     const authWrappers = document.querySelectorAll('.auth-wrapper');
     authWrappers.forEach(wrapper => {
       wrapper.innerHTML = `
@@ -269,7 +467,6 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     });
 
-    // 2. Update Mobile Nav (.mobile-nav-btns)
     const mobileNavBtns = document.querySelectorAll('.mobile-nav-btns');
     mobileNavBtns.forEach(wrapper => {
       wrapper.innerHTML = `

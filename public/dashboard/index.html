@@ -135,19 +135,6 @@
     </div>
     <!-- Mobile Navigation End -->
 
-    <div id="logout-overlay" class="overlay">
-      <!-- Logout Dialog Start -->
-      <div id="logout-container" class="logout-container overlay-animate">
-        <div class="logout-icon">
-          <img src="/assets/icons/logout.svg" />
-        </div>
-        <p class="logout-tle">Log Out?</p>
-        <p class="logout-subtle">Are you sure you want to proceed?</p>
-
-        <a href="/" class="y-log-out">Yes, Log Out</a>
-        <button id="n-log-out" class="n-log-out">No, Don't Log Out</button>
-      </div>
-    </div>
 
     <!-- Premium Error Modal Start -->
     <div id="premium-error-backdrop" class="error-backdrop">
@@ -449,7 +436,7 @@
                 <div class="input-group">
                   <label>Email Verification API Endpoint</label>
                   <div class="copy-input-field grey-bg">
-                    <span class="truncated-text" id="email-endpoint-text">https://api.stopreg.com/v1/email/check</span>
+                    <span class="truncated-text" id="email-endpoint-text">http://localhost:8080/v1/email/check</span>
                     <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
                   </div>
                 </div>
@@ -457,7 +444,7 @@
                 <div class="input-group">
                   <label>Domain Verification API Endpoint</label>
                   <div class="copy-input-field grey-bg">
-                    <span class="truncated-text" id="domain-endpoint-text">https://api.stopreg.com/v1/domain/check</span>
+                    <span class="truncated-text" id="domain-endpoint-text">http://localhost:8080/v1/domain/check</span>
                     <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
                   </div>
                 </div>

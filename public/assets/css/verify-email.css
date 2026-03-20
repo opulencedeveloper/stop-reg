@@ -149,7 +149,7 @@ fieldset {
 }
 
 .dash-inner-inner-section {
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
   width: 100%;
   height: 604px;
   /* margin-top: 40px;
@@ -195,7 +195,7 @@ fieldset {
 }
 
 .content-discription p {
-  font-family: "PlusJakartaSans-Regular";
+  font-family: "Inter_28pt-Regular";
 }
 
 
@@ -313,7 +313,7 @@ tr.bulks-table-inner td {
   padding-top: 16px;
   font-weight: 600;
   font-size: 16px;
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
 }
 
 .status-cont {
@@ -452,7 +452,7 @@ tr.bulk-table-inner td {
   padding-top: 16px;
   padding-bottom: 16px;
 
-  font-family: "PlusJakartaSans-SemiBold";
+  font-family: "Inter_28pt-SemiBold";
 }
 
 .inner-top {
@@ -672,7 +672,7 @@ tr.bulk-table-inner td {
 }
 
 .disposal-result-main-title {
-  font-family: "PlusJakartaSans-Bold";
+  font-family: "Inter_18pt-Bold";
   font-size: 20px;
   color: #252525;
   margin: 0;

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem("authToken");
             if (!token) return;
 
-            const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+            const response = await fetch("http://localhost:8080/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,8 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (window.handleAuthError && await window.handleAuthError(response)) {
                 return;
             }
 
@@ -94,6 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error("Error fetching user info:", error);
+            if (window.handleAuthError && await window.handleAuthError(error)) {
+                return;
+            }
             const errorHtml = `<span style="color: #DC2626; font-size: 13px;">Error loading data</span>`;
             if(planHighlightEl) planHighlightEl.innerHTML = errorHtml;
             if(planUsageEl) planUsageEl.innerHTML = errorHtml;
@@ -131,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Construct Query
             // Note: Endpoint /api/v1/user/info/requests is verified from user prompt
-            const url = `https://api.stopreg.com/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
+            const url = `http://localhost:8080/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -141,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            if (response.status === 401) {
-                window.handleAuthError(401);
+            if (window.handleAuthError && await window.handleAuthError(response)) {
                 return;
             }
 
@@ -169,6 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("Network Error:", error);
+            if (window.handleAuthError && await window.handleAuthError(error)) {
+                return;
+            }
             renderErrorState(() => fetchApiRequests(page, pageSize));
         } finally {
             isLoading = false;
@@ -351,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken"); 
-                const response = await fetch(`https://api.stopreg.com/api/v1/api-token/delete?id=${requestToDeleteId}`, {
+                const response = await fetch(`http://localhost:8080/api/v1/api-token/delete?id=${requestToDeleteId}`, {
                     method: 'DELETE',
                     headers: {
                        "Authorization": `Bearer ${token}`
@@ -360,8 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const data = await response.json();
 
-                if (response.status === 401) {
-                    window.handleAuthError(401);
+                if (window.handleAuthError && await window.handleAuthError(response)) {
                     return;
                 }
 
@@ -387,6 +390,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error("Delete failed:", error);
+                if (window.handleAuthError && await window.handleAuthError(error)) {
+                    return;
+                }
                 
                 let msg = error.message || "Failed to delete token";
                 if (msg === 'Failed to fetch' || msg.toLowerCase().includes('network')) {

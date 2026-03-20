@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/auth/login",
+        "http://localhost:8080/api/v1/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -255,10 +255,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (overLay) overLay.style.display = "none";
         form.reset();
       } else {
-        showError(data.description || data.message || "Login failed!");
+        const errorMsg = data.message === "user_suspended" 
+            ? "Your account has been suspended. Please contact support." 
+            : (data.description || data.message || "Login failed!");
+        showError(errorMsg);
       }
     } catch (err) {
-      showError("Network error — please try again later.");
+      showError("Network error,  please try again later.");
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
       console.error(err);

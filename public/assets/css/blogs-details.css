@@ -236,8 +236,7 @@
 
 /* Main Content Flow Components */
 .blog-cta-card {
-    background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.85)),
-        url('../images/landing/blog/blog-bg.png');
+    background: url('../images/landing/blog/blog-bg-2.png');
     background-size: cover;
     background-position: center;
     padding: 16px;

@@ -1,11 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const token = localStorage.getItem("authToken");
-  
-    if (!token) {
-        window.clearUserSession();
-        window.location.href = "/sign-in.html";
-        return;
-    }
+      const token = localStorage.getItem("authToken");
   
     // Global spinner removed to prevent page load blocking
     // if (typeof window.showSpinner === "function") {
@@ -51,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (expiryDateEl) expiryDateEl.innerHTML = spinnerDateHTML;
 
         try {
-            const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+            const response = await fetch("http://localhost:8080/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -109,13 +103,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     }
                 }
             } else {
-                if (response.status === 401) {
-                    window.handleAuthError(401);
+                if (await window.handleAuthError(response)) {
+                    return null;
                 }
                 throw new Error("Failed to load user info");
             }
         } catch (error) {
-            console.error("Network error fetching plan details:", error);
+            console.error("Network error, fetching plan details:", error);
             
             const retryBtn = `<button class="plan-retry-btn" type="button" style="background:none; border:none; color:#1452CA; text-decoration:underline; cursor:pointer; font-family:inherit; font-size:14px; padding:0;">Retry</button>`;
             const errorMsg = `<span style="color: #666; font-size: 14px;">Failed to load. ${retryBtn}</span>`;

@@ -467,7 +467,7 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre
-                    class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/email</code></pre>
+                    class="code-block"><code><span class="keyword">POST</span> http://localhost:8080/api/v1/verify/email</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -479,7 +479,7 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre
-                    class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/domain</code></pre>
+                    class="code-block"><code><span class="keyword">POST</span> http://localhost:8080/api/v1/verify/domain</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -500,7 +500,7 @@
               <h3>Request Example</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre class="code-block"><code><span class="keyword">POST</span> https://api.stopreg.com/api/v1/verify/email
+                  <pre class="code-block"><code><span class="keyword">POST</span> http://localhost:8080/api/v1/verify/email
 
 <span class="keyword">Headers:</span>
   <span class="variable">x-api-token</span>: <span class="string">YOUR_API_TOKEN</span>
@@ -637,7 +637,7 @@
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
 <span class="keyword">const</span> <span class="variable">email</span> = <span class="string">'test@disposable.com'</span>;
 
-<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email'</span>, {
+<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">'http://localhost:8080/api/v1/verify/email'</span>, {
     <span class="variable">method</span>: <span class="string">'POST'</span>,
     <span class="variable">headers</span>: {
       <span class="string">'x-api-token'</span>: <span class="variable">apiToken</span>,
@@ -667,7 +667,7 @@
 <span class="variable">api_token</span> = <span class="string">'YOUR_API_TOKEN'</span>
 <span class="variable">email</span> = <span class="string">'test@disposable.com'</span>
 
-<span class="variable">url</span> = <span class="string">'https://api.stopreg.com/api/v1/verify/email'</span>
+<span class="variable">url</span> = <span class="string">'http://localhost:8080/api/v1/verify/email'</span>
 
 <span class="variable">response</span> = requests.<span class="function">post</span>(
     <span class="variable">url</span>,
@@ -691,7 +691,7 @@
 <span class="variable">$apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
 <span class="variable">$email</span> = <span class="string">'test@disposable.com'</span>;
 
-<span class="variable">$url</span> = <span class="string">"https://api.stopreg.com/api/v1/verify/email"</span>;
+<span class="variable">$url</span> = <span class="string">"http://localhost:8080/api/v1/verify/email"</span>;
 
 <span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="variable">$url</span>);
 
@@ -722,7 +722,7 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">curl</span> <span class="keyword">-X</span> <span class="keyword">POST</span> \
-  <span class="string">"https://api.stopreg.com/api/v1/verify/email"</span> \
+  <span class="string">"http://localhost:8080/api/v1/verify/email"</span> \
   <span class="keyword">-H</span> <span class="string">"x-api-token: YOUR_API_TOKEN"</span> \
   <span class="keyword">-H</span> <span class="string">"Content-Type: application/json"</span> \
   <span class="keyword">-d</span> <span class="string">'{"email": "test@disposable.com"}'</span></code></pre>
@@ -1009,7 +1009,7 @@
             <div class="foot-col">
               <h4 class="foot-hd">Resources</h4>
               <div class="foot-links">
-                <a href="/#about" class="foot-link">About</a>
+                <a href="/about.html" class="foot-link">About</a>
                <a href="/blogs.html" class="foot-link">Blog</a>
  <a href="/documentation.html" class="foot-link">Guides</a>
                 <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>

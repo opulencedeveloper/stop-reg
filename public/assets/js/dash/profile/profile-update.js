@@ -26,16 +26,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     errorModal.style.display = "none";
   }
 
-  // Helper: check auth token
-  function requireAuth() {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      window.clearUserSession();
-      window.location.href = "/sign-in.html";
-      return null;
-    }
-    return token;
-  }
 
   // --- CUSTOM VALIDATION HELPERS ---
   function showInputError(input, message) {
@@ -108,8 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     hideError();
     clearAllErrors(form);
 
-    const token = requireAuth();
-    if (!token) return;
+    const token = localStorage.getItem("authToken");
 
     const firstNameInput = firstNameInputEl?.value.trim();
     const lastNameInput = lastNameInputEl?.value.trim();
@@ -149,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/user/update/fullname",
+        "http://localhost:8080/api/v1/user/update/fullname",
         {
           method: "PATCH",
           headers: {
@@ -169,8 +158,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      if (response.status === 401) {
-        window.handleAuthError(401);
+      if (await window.handleAuthError(response)) {
         return;
       }
 
@@ -213,10 +201,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } catch (err) {
       console.error(err);
+      if (window.handleAuthError && await window.handleAuthError(err)) {
+        return;
+      }
       if (typeof iziToast !== 'undefined') {
         iziToast.error({
           title: 'Network Error',
-          message: "Network error — please try again later.",
+          message: "Network error,  please try again later.",
           position: "topRight",
           timeout: 5000,
           drag: false,
@@ -224,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           zindex: 100000000,
         });
       } else {
-        showError("Network error — please try again later.");
+        showError("Network error,  please try again later.");
       }
     } finally {
       submitBtn.disabled = false;
@@ -235,12 +226,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ------------------------
   // Fetch and display user info
   // ------------------------
-  const token = requireAuth();
-  if (!token) return;
+  const token = localStorage.getItem("authToken");
 
   try {
     const response = await fetch(
-      "https://api.stopreg.com/api/v1/user/info",
+      "http://localhost:8080/api/v1/user/info",
       {
         method: "GET",
         headers: {
@@ -265,8 +255,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (emailEl) emailEl.textContent = user.email || "No email";
     } else {
       console.error("Error fetching user info:", data);
-      if (response.status === 401) {
-        window.handleAuthError(401);
+      if (await window.handleAuthError(response)) {
+        return;
       } else {
         const errorMessage = data.description || data.message || "Failed to fetch user information.";
         if (typeof iziToast !== 'undefined') {
@@ -283,11 +273,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
   } catch (error) {
-    console.error("Network error fetching user info:", error);
+    console.error("Network error, fetching user info:", error);
+    if (window.handleAuthError && await window.handleAuthError(error)) {
+        return;
+    }
     if (typeof iziToast !== 'undefined') {
       iziToast.error({
         title: 'Network Error',
-        message: "Network error — please try again later.",
+        message: "Network error,  please try again later.",
         position: "topRight",
         timeout: 5000,
         drag: false,

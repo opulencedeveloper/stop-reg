@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Access - StopReg</title>
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+
+    <!-- Stylesheets -->
+    <link href="/assets/css/fonts.css" rel="stylesheet" />
+    <link href="/assets/css/variables.css" rel="stylesheet" />
+    <link href="/assets/css/landing/header.css" rel="stylesheet" />
+    <link href="/assets/css/admin/login.css" rel="stylesheet" />
+    <link href="/assets/css/styles.css" rel="stylesheet" />
+    <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+</head>
+
+<body>
+    <script src="/assets/js/entrance-overlay.js"></script>
+
+    <!-- Loading Spinner Start -->
+    <div id="spinner-body" class="spinner-body">
+        <div class="stopreg-spinner"></div>
+    </div>
+    <!-- Loading Spinner End -->
+
+    <main id="content">
+        <header class="main-head-cont">
+            <div class="main-head-wrapper box animation6">
+                <a href="/" class="land-logo" aria-label="StopReg Home">
+                    <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+                </a>
+            </div>
+        </header>
+
+        <div class="auth-page-wrapper">
+            <!-- Left Section (Desktop Only) -->
+            <div class="auth-left-section">
+                <div class="auth-left-logo">
+                    <a href="/">
+                        <img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg" />
+                    </a>
+                </div>
+
+                <div class="auth-left-content">
+                    <h1 class="auth-left-header">
+                        Administrative Console. Secure Access Only.
+                    </h1>
+                    <h2 class="auth-left-tle">Authorized Personnel Only. Please sign in to access the administrative
+                        console.</h2>
+                </div>
+            </div>
+
+            <!-- Right Section (Form) -->
+            <div class="auth-right-section">
+                <div class="auth-form-container">
+                    <h2 class="auth-title">Administrative Login</h2>
+                    <p class="auth-subtitle">Please enter your secure credentials to proceed.</p>
+
+                    <form id="adminSignIn-form" novalidate>
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="admin-email">Admin Email</label>
+                            <input type="email" id="admin-email" class="form-input" placeholder="admin@stopreg.com"
+                                required />
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <div class="signin-password-group">
+                                <label for="admin-password">Secure Password</label>
+                            </div>
+
+                            <div class="password-input-wrapper">
+                                <input type="password" id="admin-password" class="form-input" placeholder="••••••••••••"
+                                    required />
+                                <button type="button" class="toggle-password" data-target="admin-password">
+                                    <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn cr-btn">Authenticate Access</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" defer></script>
+    <script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/admin/login.js" defer></script>
+</body>
+
+</html>

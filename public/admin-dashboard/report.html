@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Reports - StopReg</title>
+  <meta name="description" content="StopReg Admin Reports." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-report.css" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon opacity-70" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon opacity-70" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon opacity-70" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon opacity-70" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon opacity-70" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn" id="mobile-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn" id="logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">Reports</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <!-- Reports Grid -->
+        <div class="report-stats-grid" id="report-stats-container">
+          <div class="chart-loading-state" id="stats-loading-state" style="display: none;">
+            <div class="chart-spinner"></div>
+            <span class="chart-loading-text">Loading statistics...</span>
+          </div>
+          <!-- Card 1 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-1">
+              <span class="trend-up" id="report-trend-value-1"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">Total Request</p>
+                  <p class="tooltiptextsubtle">Total number of API requests received.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value color-blue" id="report-total-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">Total Request</span>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-2">
+              <span class="trend-up" id="report-trend-value-2"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">Successful Request</p>
+                  <p class="tooltiptextsubtle">Number of requests that passed validation.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value color-green" id="report-success-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">Total Successful Request</span>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-3">
+              <span class="trend-up" id="report-trend-value-3"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">Blocked Request</p>
+                  <p class="tooltiptextsubtle">Number of requests that were blocked.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value color-red" id="report-blocked-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">Total Blocked Request</span>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-4">
+              <span class="trend-up" id="report-trend-value-4"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">24h Total Request</p>
+                  <p class="tooltiptextsubtle">Total requests received in the last 24 hours.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value" id="report-24h-total-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">24 hrs total request</span>
+            </div>
+          </div>
+          <!-- Card 5 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-5">
+              <span class="trend-up" id="report-trend-value-5"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">24h Successful</p>
+                  <p class="tooltiptextsubtle">Allowed requests in the last 24 hours.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value" id="report-24h-success-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">24 hrs successful request</span>
+            </div>
+          </div>
+          <!-- Card 6 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-6">
+              <span class="trend-up" id="report-trend-value-6"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">24h Blocked</p>
+                  <p class="tooltiptextsubtle">Blocked requests in the last 24 hours.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value" id="report-24h-blocked-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">24 hrs block request</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="admin-chart-section" id="admin-chart-container">
+          <div class="admin-chart-header">
+            <div class="chart-title-group">
+              <h3>Usage stats</h3>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">Usage Stats</p>
+                  <p class="tooltiptextsubtle">Breakdown of identifying sources for incoming registration requests over the last 12 months.</p>
+                </span>
+              </div>
+            </div>
+            <div class="admin-chart-legend">
+              <div class="legend-item"><span class="dot dot-blue"></span>Public Provider</div>
+              <div class="legend-item"><span class="dot dot-red"></span>Disposable Domains</div>
+              <div class="legend-item"><span class="dot dot-grey"></span>Email forwarding/alias</div>
+              <div class="legend-item"><span class="dot dot-teal"></span>Unresolved</div>
+            </div>
+          </div>
+          <div class="graph-container">
+            <div class="chart-container" id="usage-chart-container">
+              <div class="chart-loading-state" id="usage-chart-loading">
+                <div class="chart-spinner"></div>
+                <span class="chart-loading-text">Loading data...</span>
+              </div>
+              <canvas id="usageStatsChart" style="display: none;"></canvas>
+              <div id="chart-tooltip" class="custom-tooltip">
+                <strong>0</strong>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Standard Spinner -->
+  <div id="spinner-body">
+    <div class="stopreg-spinner"></div>
+  </div>
+
+  <!-- Premium Error Backdrop -->
+  <div id="premium-error-backdrop" class="overlay">
+    <div class="fetch-error-state premium-error-state overlay-animate"
+      style="background: white; padding: 40px; border-radius: 12px; max-width: 400px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+      <div class="error-icon-wrapper"
+        style="width: 64px; height: 64px; background: #FEF2F2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2">
+          <path d="M12 8V12M12 16H12.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+        </svg>
+      </div>
+      <h3 style="font-family: 'Inter_18pt-Bold', sans-serif; font-size: 24px; color: #111827; margin-bottom: 12px;">Data
+        Load Failed</h3>
+      <p id="error-message"
+        style="font-family: 'Inter_28pt-Regular', sans-serif; font-size: 16px; color: #6B7280; margin-bottom: 32px; line-height: 1.5;">
+        We encountered an error while fetching your reports. Please try again.</p>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button id="error-retry-btn" class="y-log-out" style="margin-bottom: 0; width: 100%;">Try Again</button>
+        <button id="error-close-btn" class="n-log-out" style="width: 100%;">Go Back</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/admin/report.js" defer></script>
+</body>
+
+</html>

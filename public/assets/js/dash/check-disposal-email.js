@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             // Using relative path as per plan
             const response = await fetch(
-        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email-domain",
+        "http://localhost:8080/api/v1/email-domains/check-disposable-email-domain",
                 {
                     method: "POST",
                     headers: {
@@ -242,8 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
             } else {
-                if (response.status === 401) {
-                    window.handleAuthError(401);
+                if (window.handleAuthError && await window.handleAuthError(response)) {
                     return;
                 }
                 const errorMessage = data.description || data.message || "Verification failed!";
@@ -258,6 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (err) {
             console.error("Network error:", err);
+            if (window.handleAuthError && await window.handleAuthError(err)) {
+                return;
+            }
             if (typeof iziToast !== 'undefined') {
                 iziToast.error({
                     title: 'Network Error',

@@ -85,7 +85,6 @@
   font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  transition: opacity 0.2s ease;
 }
 
 .nav-logout-btn:hover {

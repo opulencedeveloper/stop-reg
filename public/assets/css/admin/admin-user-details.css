@@ -1,0 +1,639 @@
+/* Admin User Detail View Styles */
+
+:root {
+    --detail-bg: #FFFFFF;
+    --detail-border: #EDEDED;
+    --danger-red: #CC0000;
+    --success-green: #049286;
+    --accent-blue: #1452CA;
+    --text-primary: #131313;
+    --text-secondary: #737373;
+    --banner-bg: #FFF5F5;
+    --card-bg: #FFFFFF;
+}
+
+/* User Detail View Transitions */
+.user-detail-view {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user-detail-view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Back Button */
+.back-navigation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 14px;
+    color: var(--accent-blue);
+}
+
+.back-navigation img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Suspension Banner */
+.suspension-banner {
+    border: 1px solid #EDEDED;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.banner-suspended {
+    background: #FFF1F0;
+    border-color: #FFA39E;
+}
+
+.banner-suspended .banner-content {
+    color: #CF1322;
+}
+
+.banner-active {
+    background: #F6FFED;
+    border-color: #B7EB8F;
+}
+
+.banner-active .banner-content {
+    color: #389E0D;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--danger-red);
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+}
+
+.banner-content img {
+    width: 24px;
+    height: 24px;
+}
+
+.activate-btn {
+    background: var(--accent-blue);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 40px;
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 16x;
+    cursor: pointer;
+}
+
+.activate-btn:hover {
+    background: #1146AC;
+}
+
+.btn-danger {
+    background: #F5222D !important;
+}
+
+.btn-danger:hover {
+    background: #CF1322 !important;
+}
+
+/* User Profile Card */
+.user-profile-card {
+    background: var(--card-bg);
+    border: 1px solid var(--detail-border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-info-stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.profile-main-info h3 {
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 16px;
+    color: #252525;
+    margin-bottom: 7px;
+}
+
+.profile-main-info p {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 0px;
+}
+
+.profile-stats-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.stat-box {
+    background: #F8F8F8;
+    border-radius: 8px;
+    padding: 7px 12px;
+    display: flex;
+    width: max-content;
+    gap: 8px;
+    align-items: center;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.stat-box strong {
+    font-family: 'Inter_28pt-Bold', sans-serif;
+}
+
+.profile-joined-date {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: #737373;
+    white-space: nowrap;
+}
+
+/* Sub Users Section */
+.sub-users-section {
+    background: var(--card-bg);
+    border: 1px solid var(--detail-border);
+    border-radius: 12px;
+}
+
+.sub-users-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--detail-border);
+    display: flex;
+    border-radius: 12px 12px 0 0;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.sub-users-header h4 {
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 14px;
+    color: #252525;
+    margin-bottom: 4px;
+}
+
+.sub-users-header p {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 16px;
+    color: #252525;
+    margin-bottom: 0;
+}
+
+.sub-users-controls {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    max-width: 456px;
+    min-width: 300px;
+    justify-content: flex-end;
+}
+
+@media screen and (max-width: 600px) {
+    .sub-users-controls {
+        min-width: 100%;
+        max-width: none;
+        justify-content: space-between;
+    }
+}
+
+.sub-users-search {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.sub-users-search input {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
+    border: 1px solid var(--detail-border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-hint {
+    position: absolute;
+    right: 12px;
+    background: #F8F8F8;
+    border: 1px solid var(--detail-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.filter-btn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--detail-border);
+    border-radius: 8px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Sub-users Table specific overrides */
+.sub-users-table-wrapper {
+    overflow-x: auto;
+    overflow-y: visible; /* Focus on vertical overflow stability */
+    border-radius: 0 0 12px 12px;
+}
+
+.sub-users-table-wrapper .action-cell {
+    text-align: right;
+}
+
+/* Action Dropdown Styles (Industrial Standard) */
+.action-btn-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: #FFFFFF;
+    border: 1px solid var(--detail-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    padding: 8px 0;
+    min-width: 180px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(-10px);
+    transform-origin: top right;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+/* Hover Bridge */
+.action-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: transparent;
+}
+
+.action-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+/* Smart Drop-up Logic */
+.admin-table tr:nth-last-child(-n+2) .action-dropdown {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 8px;
+    transform-origin: bottom right;
+    transform: scale(0.95) translateY(10px);
+}
+
+.admin-table tr:nth-last-child(-n+2) .action-dropdown::before {
+    top: auto;
+    bottom: -12px;
+}
+
+.admin-table tr:nth-last-child(-n+2) .action-dropdown.active {
+    transform: scale(1) translateY(0);
+}
+
+/* Desktop Hover Logic */
+@media (min-width: 1025px) {
+    .action-btn-container:hover .action-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1) translateY(0);
+        pointer-events: auto;
+    }
+}
+
+.dropdown-item-remove {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--danger-red);
+    font-family: 'Inter_28pt-Medium', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: 100%;
+     
+}
+
+.dropdown-item-remove:hover {
+    background: #FFF5F5;
+}
+
+.dropdown-item-remove img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 768px) {
+    .suspension-banner {
+        gap: 8px;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    .banner-content {
+        gap: 4px;
+        font-size: 14px;
+    }
+
+    .banner-content img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .profile-main-info h3 {
+        margin-bottom: 5px;
+    }
+
+    .profile-main-info p {
+        font-size: 12px;
+    }
+
+    .sub-users-header p {
+        font-size: 14px;
+    }
+
+    .activate-btn {
+        padding: 12px 14.5px;
+    }
+
+    .profile-info-stats-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .user-profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px 12px;
+        margin-bottom: 10px;
+    }
+
+    .profile-stats-grid {
+        flex-wrap: wrap;
+    }
+
+    .stat-box {
+        font-size: 14px;
+    }
+
+    .profile-joined-date {
+        font-size: 12px;
+    }
+
+    .sub-users-header {
+    padding: 16px 12px;
+    gap: 8px;
+}
+}
+
+/* Removal Confirmation Modal */
+.remove-user-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: rgba(16, 24, 40, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.remove-user-modal-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: overlayFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.remove-user-modal-overlay.is-exiting {
+    visibility: visible;
+    pointer-events: none;
+    animation: overlayFadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.remove-user-modal-container {
+    width: 100%;
+    max-width: 440px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+    position: relative;
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+    margin: 16px;
+}
+
+.remove-user-modal-overlay.is-active .remove-user-modal-container {
+    animation: modalPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.remove-user-modal-overlay.is-exiting .remove-user-modal-container {
+    animation: modalPopOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.remove-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.remove-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: #FFF5F5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-icon-wrapper img {
+    width: 24px;
+    height: 24px;
+    filter: invert(13%) sepia(85%) saturate(7403%) hue-rotate(359deg) brightness(98%) contrast(116%);
+}
+
+.remove-modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.remove-modal-close:hover {
+    background: #F2F4F7;
+}
+
+.remove-modal-content h3 {
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 20px;
+    color: #101828;
+    margin-bottom: 8px;
+}
+
+.remove-modal-content p {
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #475467;
+    margin-bottom: 32px;
+}
+
+.remove-modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.remove-modal-actions button {
+    flex: 1;
+    height: 44px;
+    border-radius: 8px;
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel {
+    background: #FFFFFF;
+    border: 1px solid #D0D5DD;
+    color: #344054;
+}
+
+.btn-cancel:hover {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+}
+
+.btn-confirm-remove {
+    background: #D92D20;
+    border: 1px solid #D92D20;
+    color: #FFFFFF;
+}
+
+.btn-confirm-remove:hover {
+    background: #B42318;
+    border-color: #B42318;
+}
+
+/* Animations (Reused from dashboard patterns) */
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes overlayFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes modalPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes modalPopOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+        filter: blur(5px);
+    }
+}
