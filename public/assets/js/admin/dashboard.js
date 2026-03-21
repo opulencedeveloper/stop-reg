@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "http://localhost:8080/api/v1/admin";
+    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
 
     // --- DOM ELEMENTS (Dynamic Selection) ---
     const getEl = (id) => document.getElementById(id);
@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTab = "all"; // "all" or "subscribed"
     let currentPage = 1;
     let chartInstance = null;
+    let selectedUserId = null;
+    let currentUserData = null;
+    let subUsersSortBy = "newest";
 
     // --- UI HELPERS ---
     const spinnerSmall = `<div class="stopreg-btn-spinner" style="border-width: 2px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 20px; height: 20px;"></div>`;
@@ -90,12 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- API CORE ---
-    const apiFetch = async (endpoint) => {
+    const apiFetch = async (endpoint, options = {}) => {
         try {
             const response = await fetch(`${BASE_URL}${endpoint}`, {
+                ...options,
                 headers: {
                     "Authorization": `Bearer ${adminToken}`,
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    ...(options.headers || {})
                 }
             });
             const result = await response.json();
@@ -104,6 +109,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 error.status = response.status;
                 throw error;
             }
+            
+            // Attach the backend description invisibly so UI components can use it for Toasts
+            if (result.data !== null && typeof result.data === 'object') {
+                result.data._backendMessage = result.description || "Success";
+            }
+            
             return result.data;
         } catch (error) {
             console.error(`API Error [${endpoint}]:`, error);
@@ -167,22 +178,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const loadUsers = async (page = 1) => {
+    const loadUsers = async (page = 1, isSilent = false) => {
         const target = getEl("admin-table-error-target");
         if (target?.querySelector(".fetch-error-state")) {
             restoreSection("admin-table-error-target", "table");
         }
-        renderSectionLoading("admin-table-error-target", "table");
+        if (!isSilent) renderSectionLoading("admin-table-error-target", "table");
         try {
             const isSubscribed = currentTab === "subscribed";
             const data = await apiFetch(`/users?page=${page}&limit=10&isSubscribed=${isSubscribed}`);
             
-            const loadingEl = getEl("admin-table-loading");
-            if (loadingEl) loadingEl.style.display = "none";
-            const table = target?.querySelector(".admin-table");
-            const pagination = getEl("admin-pagination");
-            if (table) table.style.display = "table";
-            if (pagination) pagination.style.display = "flex";
+            if (!isSilent) {
+                const loadingEl = getEl("admin-table-loading");
+                if (loadingEl) loadingEl.style.display = "none";
+                const table = target?.querySelector(".admin-table");
+                const pagination = getEl("admin-pagination");
+                if (table) table.style.display = "table";
+                if (pagination) pagination.style.display = "flex";
+            }
 
             if (!target?.querySelector("#users-tbody")) {
                 restoreSection("admin-table-error-target", "table");
@@ -202,19 +215,33 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
         tbody.innerHTML = users.length > 0 
             ? users.map(user => `
-                <tr>
+                <tr data-id="${user.id}" class="clickable-row">
                     <td>${user.name}</td>
                     <td>${user.email}</td>
                     <td><span class="badge ${user.plan === 'Free' ? 'badge-free' : 'badge-paid'}">${user.plan}</span></td>
                     <td>${new Date(user.createdAt).toLocaleDateString()}</td>
-                    <td>
-                        <button class="action-btn" data-id="${user.id}">
-                            <img src="/assets/icons/more-vert.svg" alt="More" />
-                        </button>
+                    <td class="action-cell">
+                        <div class="action-btn-container">
+                            <button class="action-btn" data-id="${user.id}">
+                                <img src="/assets/icons/more-vert.svg" alt="More" />
+                            </button>
+                            <div class="action-dropdown" id="dropdown-${user.id}">
+                                ${user.isSuspended 
+                                    ? `<button type="button" class="dropdown-item-action activate-btn" data-id="${user.id}" data-action="activate">
+                                        <img src="/assets/icons/check-circle.svg" alt="" style="filter: brightness(0) saturate(100%) invert(48%) sepia(93%) saturate(366%) hue-rotate(63deg) brightness(94%) contrast(89%);" />
+                                        <span>Activate user</span>
+                                       </button>`
+                                    : `<button type="button" class="dropdown-item-action suspend-btn" data-id="${user.id}" data-action="suspend">
+                                        <img src="/assets/icons/admin/shut-down.svg" alt="" style="filter: brightness(0) saturate(100%) invert(26%) sepia(87%) saturate(2377%) hue-rotate(349deg) brightness(97%) contrast(92%);" />
+                                        <span>Suspend user</span>
+                                       </button>`
+                                }
+                            </div>
+                        </div>
                     </td>
                 </tr>
             `).join("")
-            : `<tr><td colspan="5" style="text-align: center; padding: 40px;">No users found.</td></tr>`;
+            : `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #8C8C8C;">No users found.</td></tr>`;
     };
 
     const renderPagination = (meta) => {
@@ -385,7 +412,143 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    // --- USER DETAIL VIEW LOGIC ---
+    const loadUserDetails = async (id) => {
+        selectedUserId = id;
+        const detailSpinner = getEl("user-detail-spinner");
+        const detailContent = getEl("user-detail-content");
+        const dashboardContainer = getEl("dashboard-container");
+        const userDetailView = getEl("user-detail-view");
+
+        // Toggle Views
+        if (dashboardContainer) dashboardContainer.style.display = "none";
+        if (userDetailView) userDetailView.style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        
+        // Reset loader
+        if (detailSpinner) detailSpinner.style.display = "flex";
+        if (detailContent) detailContent.style.display = "none";
+        
+        // Reset banners
+        const suspensionBanner = getEl("suspension-banner");
+        const activeBanner = getEl("active-banner");
+        if (suspensionBanner) suspensionBanner.style.display = "none";
+        if (activeBanner) activeBanner.style.display = "none";
+
+        try {
+            const data = await apiFetch(`/users/${id}`);
+            currentUserData = data;
+            populateUserDetails(data);
+            if (detailSpinner) detailSpinner.style.display = "none";
+            if (detailContent) detailContent.style.display = "block";
+        } catch (error) {
+            if (typeof iziToast !== 'undefined') {
+                iziToast.error({ title: "Error", message: "Failed to load user details", position: "topRight" });
+            }
+            backToUsers();
+        }
+    };
+
+    const populateUserDetails = (data) => {
+        const setTxt = (id, val) => { const el = getEl(id); if (el) el.textContent = val; };
+        
+        setTxt("detail-user-name", data.name);
+        setTxt("detail-user-email", data.email);
+        setTxt("detail-api-created", data.stats?.apiCreated || "0");
+        setTxt("detail-api-requests", data.stats?.apiRequestCount || "0");
+        setTxt("detail-joined-date", new Date(data.joinedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ".");
+
+        const suspensionBanner = getEl("suspension-banner");
+        const activeBanner = getEl("active-banner");
+        if (data.isSuspended) {
+            if (suspensionBanner) suspensionBanner.style.display = "flex";
+            if (activeBanner) activeBanner.style.display = "none";
+        } else {
+            if (suspensionBanner) suspensionBanner.style.display = "none";
+            if (activeBanner) activeBanner.style.display = "flex";
+        }
+
+        renderSubUsers();
+    };
+
+    const renderSubUsers = () => {
+        const subUsersTbody = getEl("sub-users-tbody");
+        if (!subUsersTbody) return;
+        
+        if (!currentUserData || !currentUserData.subUsers) return;
+        
+        const countText = getEl("detail-sub-users-count");
+        if (countText) countText.textContent = currentUserData.subUsers.length;
+
+        let sortedSubUsers = [...currentUserData.subUsers];
+        switch (subUsersSortBy) {
+            case "oldest": sortedSubUsers.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); break;
+            case "name-asc": sortedSubUsers.sort((a, b) => a.name.localeCompare(b.name)); break;
+            case "name-desc": sortedSubUsers.sort((a, b) => b.name.localeCompare(a.name)); break;
+            case "newest":
+            default: sortedSubUsers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); break;
+        }
+
+        subUsersTbody.innerHTML = sortedSubUsers.length > 0 
+            ? sortedSubUsers.map(sub => `
+                <tr>
+                    <td>${sub.name}</td>
+                    <td>${sub.email}</td>
+                    <td>Registered</td>
+                    <td></td> <!-- Dashboard read-only mode, no remove sub-user action needed directly here -->
+                </tr>
+            `).join("")
+            : `<tr><td colspan="4" style="text-align: center; padding: 20px;">No sub-users found.</td></tr>`;
+    };
+
+    const backToUsers = () => {
+        const dashboardContainer = getEl("dashboard-container");
+        const userDetailView = getEl("user-detail-view");
+        
+        if (userDetailView) userDetailView.style.display = "none";
+        if (dashboardContainer) dashboardContainer.style.display = "block";
+        selectedUserId = null;
+    };
+
     // --- EVENTS ---
+
+    document.addEventListener("click", (e) => {
+        // Handle Back button
+        const backBtn = e.target.closest("#back-to-users");
+        if (backBtn) {
+            backToUsers();
+            return;
+        }
+    });
+
+    const toggleSuspension = async (userId, action, actionItem, mainActionBtn) => {
+        // Find and close the dropdown first
+        const dropdown = mainActionBtn.nextElementSibling;
+        if (dropdown) dropdown.classList.remove("show");
+
+        // Swap the main action button icon for a spinner
+        const originalHTML = mainActionBtn.innerHTML;
+        mainActionBtn.disabled = true;
+        mainActionBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-width: 2px !important; border-top-color: currentColor !important; width: 16px; height: 16px;"></span>`;
+
+        try {
+            const result = await apiFetch(`/users/${userId}/suspend`, { method: "PATCH" });
+            if (typeof iziToast !== 'undefined') {
+                iziToast.success({ 
+                    title: "Success", 
+                    message: result._backendMessage || "User status updated successfully", 
+                    position: "topRight" 
+                });
+            }
+            loadUsers(currentPage, true);
+        } catch (error) {
+            if (typeof iziToast !== 'undefined') {
+                iziToast.error({ title: "Error", message: error.message, position: "topRight" });
+            }
+            mainActionBtn.disabled = false;
+            mainActionBtn.innerHTML = originalHTML;
+        }
+    };
 
     const initDropdowns = () => {
         const dropdown = getEl("analytics-month-dropdown");
@@ -416,12 +579,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("click", (e) => {
         const tabBtn = e.target.closest(".tab-btn");
-        if (tabBtn) {
-            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        const actionBtn = e.target.closest(".action-btn");
+        const dropdownItemAction = e.target.closest(".dropdown-item-action");
+
+        // Process Dropdown Items (Suspend/Activate)
+        if (dropdownItemAction) {
+            e.stopPropagation();
+            const mainActionBtn = dropdownItemAction.closest(".action-cell").querySelector(".action-btn");
+            toggleSuspension(dropdownItemAction.dataset.id, dropdownItemAction.dataset.action, dropdownItemAction, mainActionBtn);
+            return;
+        }
+
+        // Process Action Dropdown Toggle
+        if (actionBtn) {
+            e.stopPropagation();
+            const dropdown = actionBtn.nextElementSibling;
+            // Close other open action dropdowns across the table
+            document.querySelectorAll(".action-dropdown.show").forEach(d => {
+                if (d !== dropdown) d.classList.remove("show");
+            });
+            if (dropdown) dropdown.classList.toggle("show");
+            return;
+        }
+
+        // Close all action dropdowns when clicking anywhere else
+        if (!e.target.closest(".action-btn-container")) {
+            document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+        }
+
+        // Process Tab Switches
+        if (tabBtn && !e.target.closest('.user-detail-view')) {
+            document.querySelectorAll(".admin-table-tabs .tab-btn").forEach(b => b.classList.remove("active"));
             tabBtn.classList.add("active");
             currentTab = tabBtn.dataset.target;
             currentPage = 1;
             loadUsers(1);
+            return;
+        }
+        
+        // Process row clicks
+        const row = e.target.closest(".clickable-row");
+        if (row && !e.target.closest('.action-btn-container')) {
+            loadUserDetails(row.dataset.id);
         }
     });
 

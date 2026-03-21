@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "http://localhost:8080/api/v1/admin";
+    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
 
     // --- DOM ELEMENTS ---
     const getEl = (id) => document.getElementById(id);
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${r.provider}</td>
                 <td>
                   <span title="${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}">
-                    ${Array.isArray(r.mx_record) ? r.mx_record.length : (r.mx_record ? 1 : 0)} records
+                    ${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}
                   </span>
                 </td>
                 <td style="text-transform: capitalize;">${r.service_type}</td>

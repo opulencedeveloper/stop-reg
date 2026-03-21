@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; display: block; margin: 0 auto !important;"></span>`;
 
         try {
-            const url = `http://localhost:8080/api/v1/request/status/update?id=${requestId}`;
+            const url = `https://api.stopreg.com/api/v1/request/status/update?id=${requestId}`;
             const response = await fetch(url, {
                 method: "PATCH",
                 headers: {
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const url = `http://localhost:8080/api/v1/request/status/update?id=${currentRequestId}`;
+            const url = `https://api.stopreg.com/api/v1/request/status/update?id=${currentRequestId}`;
             
             const response = await fetch(url, {
                 method: "PATCH",

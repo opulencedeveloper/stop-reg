@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const baseUrl = "http://localhost:8080/api/v1/manage/domain";
+            const baseUrl = "https://api.stopreg.com/api/v1/manage/domain";
             const url = isUpdate ? `${baseUrl}/update?domainId=${currentEditId}` : `${baseUrl}/add`;
             const method = isUpdate ? "PATCH" : "POST";
 

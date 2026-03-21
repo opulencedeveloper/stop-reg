@@ -20,10 +20,12 @@
   <!-- Stylesheets -->
   <link href="/assets/css/fonts.css" rel="stylesheet" />
   <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
   <link href="/assets/css/styles.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-user-details.css" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <script src="/assets/js/admin/admin-main.js" defer></script>
@@ -183,6 +185,7 @@
         </header>
 
         <main class="admin-content">
+          <div id="dashboard-container">
           <!-- Stats Row -->
           <div class="admin-stats-row" id="admin-stats-container">
             <div class="chart-loading-state" id="admin-stats-loading" style="display: none;">
@@ -311,6 +314,218 @@
               <div class="toggle-status">Status: <span class="text-blue">Active</span></div>
             </div>
           </div> -->
+        </div> <!-- End Dashboard Wrapper -->
+
+        <!-- User Detail View (Initially Hidden) -->
+        <div class="user-detail-view" id="user-detail-view">
+          <div class="back-navigation" id="back-to-users">
+            <img src="/assets/icons/arrow-back.svg" alt="" />
+            <span>Back to Users</span>
+          </div>
+
+          <!-- Detail Loading Spinner -->
+          <div id="user-detail-spinner" class="chart-loading-state" style="display: none; padding: 100px 0;">
+            <div class="chart-spinner"></div>
+            <span class="chart-loading-text">Loading user details...</span>
+          </div>
+
+          <div id="user-detail-content">
+            <!-- Suspension Banner -->
+            <div class="suspension-banner banner-suspended" id="suspension-banner" style="display: none;">
+              <div class="banner-content">
+                <img src="/assets/icons/stop.svg" alt=""
+                  style="filter: invert(13%) sepia(85%) saturate(7403%) hue-rotate(359deg) brightness(98%) contrast(116%);" />
+                <span>This user is currently suspended</span>
+              </div>
+              <button class="activate-btn" id="activate-user-btn">Activate</button>
+            </div>
+            <div class="suspension-banner banner-active" id="active-banner" style="display: none;">
+              <div class="banner-content">
+                <img src="/assets/icons/check-circle.svg" alt=""
+                  style="filter: brightness(0) saturate(100%) invert(48%) sepia(93%) saturate(366%) hue-rotate(63deg) brightness(94%) contrast(89%);" />
+                <span>This user is active and has full access</span>
+              </div>
+              <button class="activate-btn btn-danger" id="suspend-user-btn">Suspend</button>
+            </div>
+
+            <!-- User Profile Card -->
+            <div class="user-profile-card">
+              <div class="profile-info-stats-wrapper">
+                <div class="profile-main-info">
+                  <h3 id="detail-user-name">Jeroen Xavi</h3>
+                  <p id="detail-user-email">parkkelly@gutierrez.net</p>
+                </div>
+                <div class="profile-stats-grid">
+                  <div class="stat-box">
+                    <span>API Created:</span>
+                    <strong id="detail-api-created">40</strong>
+                  </div>
+                  <div class="stat-box">
+                    <span>API Request Count:</span>
+                    <strong id="detail-api-requests">100</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="profile-joined-date">
+                Joined: <span id="detail-joined-date">12 January 2026.</span>
+              </div>
+            </div>
+
+            <!-- Sub Users Section -->
+            <div class="sub-users-section">
+              <div class="sub-users-header">
+                <div>
+                  <h4>Sub Users</h4>
+                  <p>You have a total of <span id="detail-sub-users-count">5</span> sub users</p>
+                </div>
+                <div class="sub-users-controls">
+                  <div class="sub-users-search">
+                    <input type="text" placeholder="Search" />
+                    <span class="search-hint">&#8984; 1</span>
+                  </div>
+                  <div class="sort-dropdown-container">
+                    <button class="sort-btn" id="sub-users-sort-btn">
+                      <div class="sort-icon-wrapper">
+                        <img src="/assets/icons/sort.svg" alt="" onerror="this.style.display='none'" />
+                      </div>
+                      <span>Sort by</span>
+                      <div class="dropdown-icon-wrapper">
+                        <img src="/assets/icons/drop-down-gray.svg" alt="" onerror="this.style.display='none'" />
+                      </div>
+                    </button>
+                    <div class="sort-dropdown-menu" id="sub-users-sort-menu">
+                      <button class="sort-item active" data-sort="newest">Newest First</button>
+                      <button class="sort-item" data-sort="oldest">Oldest First</button>
+                      <div class="dropdown-divider"></div>
+                      <button class="sort-item" data-sort="name-asc">Name A-Z</button>
+                      <button class="sort-item" data-sort="name-desc">Name Z-A</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="sub-users-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th style="text-align: right;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sub-users-tbody">
+                    <tr>
+                      <td>Jeroen Xavi</td>
+                      <td>parkkelly@gutierrez.net</td>
+                      <td>Registered</td>
+                      <td class="action-cell">
+                        <div class="action-btn-container">
+                          <button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button>
+                          <div class="action-dropdown">
+                            <button type="button" class="dropdown-item-remove">
+                              <img src="/assets/icons/delete.svg" alt="" />
+                              <span>Remove this seat</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Hudson Lucas</td>
+                      <td>molinashane@grant.com</td>
+                      <td>Registered</td>
+                      <td class="action-cell">
+                        <div class="action-btn-container">
+                          <button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button>
+                          <div class="action-dropdown">
+                            <button type="button" class="dropdown-item-remove">
+                              <img src="/assets/icons/delete.svg" alt="" />
+                              <span>Remove this seat</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Bibek Rhea</td>
+                      <td>samanthawolfe@smith.com</td>
+                      <td>Registered</td>
+                      <td class="action-cell">
+                        <div class="action-btn-container">
+                          <button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button>
+                          <div class="action-dropdown">
+                            <button type="button" class="dropdown-item-remove">
+                              <img src="/assets/icons/delete.svg" alt="" />
+                              <span>Remove this seat</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Felicia Zoila</td>
+                      <td>michael86@gmail.com</td>
+                      <td>Registered</td>
+                      <td class="action-cell">
+                        <div class="action-btn-container">
+                          <button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button>
+                          <div class="action-dropdown">
+                            <button type="button" class="dropdown-item-remove">
+                              <img src="/assets/icons/delete.svg" alt="" />
+                              <span>Remove this seat</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Chidinma Yomi</td>
+                      <td>julie43@ruiz.com</td>
+                      <td>Registered</td>
+                      <td class="action-cell">
+                        <div class="action-btn-container">
+                          <button class="action-btn"><img src="/assets/icons/more-vert.svg" alt="More" /></button>
+                          <div class="action-dropdown">
+                            <button type="button" class="dropdown-item-remove">
+                              <img src="/assets/icons/delete.svg" alt="" />
+                              <span>Remove this seat</span>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+  <div class="remove-user-modal-overlay" id="remove-user-modal-overlay">
+    <div class="remove-user-modal-container">
+      <div class="remove-modal-header">
+        <div class="remove-icon-wrapper">
+          <img src="/assets/icons/delete.svg" alt="" />
+        </div>
+        <button class="remove-modal-close" id="close-remove-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#667085" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="remove-modal-content">
+        <h3>Remove User?</h3>
+        <p>Are you sure you want to remove <strong id="remove-target-name">Jeroen Xavi</strong>? This action cannot be
+          undone and will permanently delete all associated data.</p>
+      </div>
+      <div class="remove-modal-actions">
+        <button class="btn-cancel" id="cancel-remove-btn">Cancel</button>
+        <button class="btn-confirm-remove" id="confirm-remove-btn">Yes, Remove</button>
+      </div>
+    </div>
+  </div>
         </main>
       </div>
     </div>
@@ -318,6 +533,7 @@
 
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" defer></script>
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/admin/dashboard.js" defer></script>
 </body>

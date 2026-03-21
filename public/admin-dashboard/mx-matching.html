@@ -159,13 +159,13 @@
               <h2>MX matching</h2>
               <button class="add-more-btn" id="admin-add-more-btn">Add more</button>
             </div>
-            
+
             <div class="mx-header-bottom">
               <div class="mx-tabs">
                 <button class="tab-btn active" data-tab="disposable">Disposable</button>
                 <button class="tab-btn" data-tab="relay">Relay</button>
               </div>
-              
+
               <div class="mx-search-wrapper">
                 <div class="mx-search-box">
                   <img src="/assets/icons/search.svg" alt="" />
@@ -173,7 +173,7 @@
                   <span class="mx-search-shortcut">&#8984; 1</span>
                 </div>
               </div>
-            </div> 
+            </div>
           </div>
 
           <!-- Loading Spinner -->
@@ -254,22 +254,23 @@
           <img src="/assets/icons/close.svg" alt="Close" />
         </button>
       </div>
-      
+
       <form class="mx-modal-form" id="add-mx-form">
         <input type="hidden" id="mx-record-id" value="">
         <div class="form-group">
           <label for="email-provider">Email Provider</label>
           <input type="text" id="email-provider" placeholder="Please type here" required>
         </div>
-        
+
         <div class="form-group">
           <label for="domain-name">MX Record (Comma separated)</label>
           <input type="text" id="domain-name" placeholder="mx1.example.com, mx2.example.com" required>
         </div>
-        
+
         <div class="form-group">
           <label for="mx-grade">Grade</label>
-          <select id="mx-grade" style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
+          <select id="mx-grade"
+            style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
             <option value="standard">Standard</option>
             <option value="professional">Professional</option>
             <option value="basic">Basic</option>
@@ -292,7 +293,7 @@
             </label>
           </div>
         </div>
-        
+
         <button type="submit" class="mx-submit-btn" id="submit-mx-btn">Continue</button>
       </form>
     </div>

@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         // Fetch last 30 days requests with limit=0 (no limit)
-        const response = await fetch(`http://localhost:8080/api/v1/user/info/requests?last30Days=true&limit=0`, {
+        const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Downloading...`;
 
     try {
-        const response = await fetch("http://localhost:8080/api/v1/email-domains/bulk-verification-csv", {
+        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification-csv", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Verifying...`;
       try {
-        const response = await fetch("http://localhost:8080/api/v1/email-domains/bulk-verification", {
+        const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

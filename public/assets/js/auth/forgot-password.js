@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/auth/forgot-password`, {
+                const response = await fetch(`https://api.stopreg.com/api/v1/auth/forgot-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/auth/verify-reset-otp`, {
+                const response = await fetch(`https://api.stopreg.com/api/v1/auth/verify-reset-otp`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: userEmail, otp: otpValue })
@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 resendBtn.disabled = true;
                 
                 try {
-                    const response = await fetch(`http://localhost:8080/api/v1/auth/forgot-password`, {
+                    const response = await fetch(`https://api.stopreg.com/api/v1/auth/forgot-password`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: userEmail })
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.disabled = true;
 
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/auth/reset-password`, {
+                const response = await fetch(`https://api.stopreg.com/api/v1/auth/reset-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 

@@ -7,7 +7,7 @@
  * - Handles Form Validation (Custom) and Submission
  */
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = 'https://api.stopreg.com/api/v1';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // -------------------------------------------------------------------------

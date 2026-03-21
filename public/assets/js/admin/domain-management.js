@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "http://localhost:8080/api/v1/admin";
+    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
 
 
     // --- DOM ELEMENTS ---
@@ -25,6 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPage = 1;
     let currentLimit = parseInt(perPageSelect?.value) || 10;
     let currentSearch = "";
+    
+    let domainData = [];
+    let currentEditingId = null;
+    let currentDeletingId = null;
+
+    const removeModal = getEl("remove-domain-modal");
+    const closeRemoveModalBtn = getEl("close-remove-modal");
+    const cancelRemoveBtn = getEl("cancel-remove-btn");
+    const confirmRemoveBtn = getEl("confirm-remove-btn");
 
     // Preserve original HTML for restoration after error
     const originalHTML = mgmtContainer ? mgmtContainer.innerHTML : "";
@@ -134,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderTable(type, domains) {
+        domainData = domains || [];
         const tbody = getEl(`${type}-tbody`);
         if (!tbody) {
             console.warn(`Tbody for ${type} not found.`);
@@ -141,23 +151,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!domains || domains.length === 0) {
-            const colspan = type === "username" ? 1 : 3;
+            const colspan = type === "username" ? 2 : 3;
             tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align: center; padding: 40px; color: #737373;">No ${type} records found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = domains.map(d => {
             if (type === "username") {
-                return `<tr><td class="username-col">${d.value}</td></tr>`;
+                return `
+                    <tr>
+                        <td class="username-col">${d.value}</td>
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown" id="dropdown-${d.id}">
+                                    <button class="dropdown-item edit-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/edit-outline.svg" alt="" /> Edit
+                                    </button>
+                                    <button class="dropdown-item delete-btn text-danger" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" /> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             } else {
                 return `
                     <tr>
                         <td>${d.provider || "Unknown"}</td>
                         <td>${d.value}</td>
-                        <td class="text-right">
-                            <button class="action-btn" onclick="handleMgmtAction('${d.id}')">
-                                <img src="/assets/icons/more-vert.svg" alt="More" />
-                            </button>
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown" id="dropdown-${d.id}">
+                                    <button class="dropdown-item edit-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/edit-outline.svg" alt="" /> Edit
+                                    </button>
+                                    <button class="dropdown-item delete-btn text-danger" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" /> Delete
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -249,18 +288,127 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    // Event Delegation for Table Actions
+    if (mgmtContainer) {
+        mgmtContainer.addEventListener('click', (e) => {
+            // Dropdown Toggle
+            const toggleBtn = e.target.closest('.action-btn');
+            if (toggleBtn) {
+                e.stopPropagation();
+                const id = toggleBtn.getAttribute('data-id');
+                document.querySelectorAll('.action-dropdown').forEach(d => {
+                    if (d.id !== `dropdown-${id}`) d.classList.remove('active');
+                });
+                const dropdown = getEl(`dropdown-${id}`);
+                if (dropdown) dropdown.classList.toggle('active');
+                return;
+            }
+
+            // Edit Action
+            const editBtn = e.target.closest('.edit-btn');
+            if (editBtn) {
+                const id = editBtn.getAttribute('data-id');
+                const item = domainData.find(d => d.id === id);
+                if (!item) return;
+
+                currentEditingId = id;
+                const modalTitle = getEl("domain-modal-title");
+                if (modalTitle) modalTitle.textContent = "Edit Domain";
+
+                getEl("domain-record-id").value = id;
+                getEl("domain-type").value = currentType;
+                
+                if (currentType === "username") {
+                    getEl("email-provider").value = "System"; // Abstracted for user
+                    getEl("domain-name").value = item.value;
+                } else {
+                    getEl("email-provider").value = item.provider || "";
+                    getEl("domain-name").value = item.value || "";
+                }
+
+                addModal.classList.add("active");
+                return;
+            }
+
+            // Delete Action
+            const deleteBtn = e.target.closest('.delete-btn');
+            if (deleteBtn) {
+                currentDeletingId = deleteBtn.getAttribute('data-id');
+                if (removeModal) removeModal.classList.add("active");
+                return;
+            }
+        });
+    }
+
+    // Close Dropdowns Global Listener
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.action-dropdown').forEach(d => d.classList.remove('active'));
+    });
+
     // Modal
     if (addMoreBtn) {
-        addMoreBtn.onclick = () => addModal.classList.add("active");
+        addMoreBtn.onclick = () => {
+            currentEditingId = null;
+            const modalTitle = getEl("domain-modal-title");
+            if (modalTitle) modalTitle.textContent = "Add More";
+            addDomainForm.reset();
+            getEl("domain-record-id").value = "";
+            getEl("domain-type").value = currentType;
+            if (currentType === "username") getEl("email-provider").value = "System";
+            addModal.classList.add("active");
+        };
     }
 
     if (closeModalBtn) {
         closeModalBtn.onclick = () => addModal.classList.remove("active");
     }
 
+    const hideRemoveModal = () => {
+        if (removeModal) removeModal.classList.remove("active");
+        currentDeletingId = null;
+    };
+    if (closeRemoveModalBtn) closeRemoveModalBtn.onclick = hideRemoveModal;
+    if (cancelRemoveBtn) cancelRemoveBtn.onclick = hideRemoveModal;
+
     window.onclick = (e) => {
         if (e.target === addModal) addModal.classList.remove("active");
+        if (e.target === removeModal) hideRemoveModal();
     };
+
+    if (confirmRemoveBtn) {
+        confirmRemoveBtn.onclick = async () => {
+            if (!currentDeletingId) return;
+            const originalText = confirmRemoveBtn.innerHTML;
+            confirmRemoveBtn.disabled = true;
+            confirmRemoveBtn.innerHTML = `<div class="stopreg-btn-spinner" style="width: 20px; height: 20px; border-width: 2px;"></div>`;
+
+            try {
+                const result = await apiFetch(`/domain-management/${currentDeletingId}`, { method: "DELETE" });
+                if (result?.message === "success" || result?.message === "Success") {
+                    hideRemoveModal();
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.success({
+                            title: 'Deleted',
+                            message: result.description || "Record removed successfully.",
+                            position: 'topRight'
+                        });
+                    }
+                    // Silent refresh
+                    loadData(currentType, currentPage, currentLimit, currentSearch);
+                } else {
+                    const desc = result?.description || "Failed to delete record.";
+                    if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Error', message: desc });
+                    else alert(desc);
+                }
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Network Error', message: error.message });
+                else alert(error.message);
+            } finally {
+                confirmRemoveBtn.disabled = false;
+                confirmRemoveBtn.innerHTML = originalText;
+            }
+        };
+    }
 
     if (addDomainForm) {
         addDomainForm.onsubmit = async (e) => {
@@ -268,35 +416,44 @@ document.addEventListener("DOMContentLoaded", () => {
             const submitBtn = addDomainForm.querySelector(".domain-submit-btn");
             const originalBtnText = submitBtn.innerHTML;
             
-            const provider = getEl("email-provider")?.value;
-            const value = getEl("domain-name")?.value;
+            const provider = getEl("email-provider")?.value.trim();
+            const value = getEl("domain-name")?.value.trim();
             const typeValue = getEl("domain-type")?.value || currentType;
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<div class="stopreg-btn-spinner" style="width: 20px; height: 20px; border-width: 2px;"></div>`;
 
             try {
-                const result = await apiFetch("/domain-management", {
-                    method: "POST",
-                    body: JSON.stringify({ type: typeValue, provider, value })
+                let url = "/domain-management";
+                let method = "POST";
+                let body = { type: typeValue, provider, value };
+
+                if (currentEditingId) {
+                    url = `/domain-management/${currentEditingId}`;
+                    method = "PATCH";
+                }
+
+                const result = await apiFetch(url, {
+                    method: method,
+                    body: JSON.stringify(body)
                 });
 
                 if (result?.message === "success" || result?.message === "Success") {
-                    console.log("Success! Closing modal and resetting form...");
                     addModal.classList.remove("active");
                     addDomainForm.reset();
+                    currentEditingId = null;
                     
                     if (typeof iziToast !== 'undefined') {
                         iziToast.success({
                             title: 'Success',
-                            message: 'Domain management record added successfully.',
+                            message: result.description || `Domain management record saved successfully.`,
                             position: 'topRight'
                         });
                     }
                     
-                    loadData(currentType, 1, currentLimit, currentSearch);
+                    loadData(currentType, currentPage, currentLimit, currentSearch);
                 } else {
-                    const desc = result?.description || "Failed to add domain management record.";
+                    const desc = result?.description || "Failed to save domain management record.";
                     if (typeof iziToast !== 'undefined') {
                         iziToast.error({
                             title: 'Error',
@@ -328,8 +485,4 @@ document.addEventListener("DOMContentLoaded", () => {
     loadData(currentType, currentPage, currentLimit, currentSearch);
 });
 
-// Global action handler
-window.handleMgmtAction = function(id) {
-    console.log("Action triggered for ID:", id);
-    alert("Action menu functionality is coming in the next update.");
-};
+

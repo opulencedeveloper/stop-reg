@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "http://localhost:8080/api/v1/admin";
+    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
 
 
     // --- DOM ELEMENTS ---
@@ -102,15 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- DATA LOADING & RENDERING ---
-    async function loadDomains(status = "reported", page = 1) {
-        showLoading();
+    async function loadDomains(status = "reported", page = 1, isSilent = false) {
+        if (!isSilent) showLoading();
         try {
             const result = await apiFetch(`/domains?status=${status}&page=${page}&limit=${currentLimit}`);
             if (!result || result.message === "Error") {
                 throw new Error(result?.description || "Failed to fetch domains.");
             }
 
-            hideLoading();
+            if (!isSilent) hideLoading();
             renderDomainsTable(status, result.data.domains);
             renderPagination(result.data.pagination);
             
@@ -146,9 +146,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td class="status-cell">${getStatusBadge(d.ourStatus)}</td>
                         <td class="status-cell">${getStatusBadge(d.status)}</td>
                         <td>
-                            <button class="action-btn-circle" onclick="handleDomainAction('${d.id}', 'process')">
-                                <img src="/assets/icons/gg_unblock.svg" alt="Process" />
+                            ${(!d.ourStatus || d.ourStatus.toLowerCase() === "none" || d.ourStatus === "-") ? `
+                            <button class="action-btn-circle block-domain-btn" data-id="${d.id}">
+                                <img src="/assets/icons/gg_unblock.svg" alt="Block" />
                             </button>
+                            ` : `
+                            <button class="action-btn-circle" disabled>
+                                <img src="/assets/icons/stop.svg" style="filter: brightness(0) saturate(100%) invert(26%) sepia(87%) saturate(2377%) hue-rotate(349deg) brightness(97%) contrast(92%);" alt="Blocked" />
+                            </button>
+                            `}
                         </td>
                     </tr>
                 `;
@@ -181,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function getStatusBadge(status) {
         switch (status?.toLowerCase()) {
             case "blocked":
-                return `<div class="status-badge blocked"><img src="/assets/icons/block-outline.svg" alt="" /><span>Blocked</span></div>`;
+                return `<div class="status-badge blocked"><img src="/assets/icons/stop.svg" style="filter: brightness(0) saturate(100%) invert(14%) sepia(97%) saturate(5799%) hue-rotate(358deg) brightness(103%) contrast(117%);" alt="" /><span>Blocked</span></div>`;
             case "reported":
                 return `<div class="status-badge reported"><img src="/assets/icons/flag-linear.svg" alt="" /><span>Reported</span></div>`;
             case "allowed":
@@ -257,12 +263,43 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
+    // --- ACTION DELEGATION (Domain Blocking) ---
+    document.addEventListener("click", async (e) => {
+        const blockBtn = e.target.closest(".block-domain-btn");
+        if (blockBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const domainId = blockBtn.getAttribute("data-id");
+            const originalHTML = blockBtn.innerHTML;
+            
+            // UI Spinner Feedback
+            blockBtn.disabled = true;
+            blockBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-width: 2px !important; border-top-color: #1452CA !important; width: 16px; height: 16px; margin: 0 !important; flex-shrink: 0; display: inline-block;"></span>`;
+
+            try {
+                const result = await apiFetch(`/domains/${domainId}/block`, { method: "PATCH" });
+                if (!result || result.message === "Error") throw new Error(result?.description || "Failed to block domain");
+                
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.success({ 
+                        title: "Success", 
+                        message: result.description || "Domain blocked successfully", 
+                        position: "topRight" 
+                    });
+                }
+                
+                // Silently reload to update DOM strictly reflecting the database
+                loadDomains(currentTab, currentPage, true);
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({ title: "Error", message: error.message, position: "topRight" });
+                }
+                blockBtn.disabled = false;
+                blockBtn.innerHTML = originalHTML;
+            }
+        }
+    });
+
     // --- INITIAL LOAD ---
     loadDomains(currentTab, currentPage);
 });
-
-// Global action handler (can be expanded later)
-window.handleDomainAction = function(id, action) {
-    console.log(`Action: ${action} for ID: ${id}`);
-
-};

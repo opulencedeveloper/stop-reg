@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const fetchBlockedDomains = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/v1/manage/domain/fetch", {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/fetch", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 btn.innerHTML = `<span class="btn-spinner"></span> Deleting...`;
 
                 try {
-                    const response = await fetch(`http://localhost:8080/api/v1/manage/domain/delete/?domainId=${domainId}`, {
+                    const response = await fetch(`https://api.stopreg.com/api/v1/manage/domain/delete/?domainId=${domainId}`, {
                         method: "DELETE",
                         headers: {
                             "Content-Type": "application/json",
