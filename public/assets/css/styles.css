@@ -323,15 +323,15 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .box.animation1.visible-ani {
-  animation: animation1 1s forwards;
+  animation: animation1 1s both;
 }
 
 .box.animation2.visible-ani {
-  animation: animation2 1s forwards;
+  animation: animation2 1s both;
 }
 
 .box.animation3.visible-ani {
-  animation: animation3 1s forwards;
+  animation: animation3 1s both;
 }
 
 .box.animation4.visible-ani {
@@ -339,11 +339,11 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .box.animation5.visible-ani {
-  animation: animation5 1s forwards;
+  animation: animation5 1s both;
 }
 
 .box.animation6.visible-ani {
-  animation: animation6 1s forwards;
+  animation: animation6 1s both;
 }
 
 /* Hamburger Menu */
@@ -771,7 +771,7 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .box.premium-reveal.visible-ani {
-  animation: heroRevealMindBlowing 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: heroRevealMindBlowing 1.4s cubic-bezier(0.25, 1, 0.5, 1) both;
   will-change: transform, opacity, filter, box-shadow;
   transform-style: preserve-3d;
 }
