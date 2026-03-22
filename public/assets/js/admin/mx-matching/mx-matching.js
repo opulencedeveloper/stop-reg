@@ -147,7 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (records.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No ${type} MX patterns found.</td></tr>`;
+            const displayType = type === "business_provider" ? "Business Provider" : type.charAt(0).toUpperCase() + type.slice(1);
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No ${displayType} MX patterns found.</td></tr>`;
             return;
         }
 
@@ -159,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}
                   </span>
                 </td>
-                <td style="text-transform: capitalize;">${r.service_type}</td>
+                <td style="text-transform: capitalize;">${r.service_type.replace(/_/g, " ")}</td>
                 <td style="text-transform: capitalize;">${r.grade}</td>
                 <td class="text-right">
                     <div class="action-btn-container">
@@ -246,10 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
         getEl("domain-name").value = Array.isArray(record.mx_record) ? record.mx_record.join(", ") : record.mx_record;
         getEl("mx-grade").value = record.grade;
 
-        const radioToSelect = addMxForm.querySelector(`input[name="service-type"][value="${record.service_type}"]`);
-        if (radioToSelect) {
-            radioToSelect.checked = true;
-            syncRadioIcons();
+        const serviceSelect = getEl("service-type");
+        if (serviceSelect) {
+            serviceSelect.value = record.service_type || "disposable";
         }
 
         addModal.classList.add("active");
@@ -268,16 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
     };
 
-    const syncRadioIcons = () => {
-        const radioBoxes = addMxForm.querySelectorAll(".mx-radio-box");
-        radioBoxes.forEach(b => {
-            const bInput = b.querySelector('input[type="radio"]');
-            const bImg = b.querySelector(".radio-icon");
-            if (bInput && bImg) {
-                bImg.src = bInput.checked ? "/assets/icons/radio-on.svg" : "/assets/icons/radio-off.svg";
-            }
-        });
-    };
 
     const hideAllDropdowns = () => {
         document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
@@ -362,7 +352,6 @@ document.addEventListener("DOMContentLoaded", () => {
             addMxForm.reset();
             if (modalTitle) modalTitle.textContent = "Add More";
             if (submitMxBtn) submitMxBtn.textContent = "Continue";
-            syncRadioIcons();
             addModal.classList.add("active");
         };
     }
@@ -417,17 +406,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (addMxForm) {
-        // Handle custom radio button clicks
-        const radioBoxes = addMxForm.querySelectorAll(".mx-radio-box");
-        radioBoxes.forEach(box => {
-            box.onclick = () => {
-                const input = box.querySelector('input[type="radio"]');
-                if (input) {
-                    input.checked = true;
-                    syncRadioIcons();
-                }
-            };
-        });
 
         addMxForm.onsubmit = async (e) => {
             e.preventDefault();
@@ -435,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const provider = getEl("email-provider")?.value;
             const mx_record = getEl("domain-name")?.value;
-            const service_type = document.querySelector('input[name="service-type"]:checked')?.value;
+            const service_type = getEl("service-type")?.value || "disposable";
             const grade = getEl("mx-grade")?.value || "standard";
 
             submitMxBtn.disabled = true;

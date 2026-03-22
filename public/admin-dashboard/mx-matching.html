@@ -164,6 +164,7 @@
               <div class="mx-tabs">
                 <button class="tab-btn active" data-tab="disposable">Disposable</button>
                 <button class="tab-btn" data-tab="relay">Relay</button>
+                <button class="tab-btn" data-tab="business_provider">Business Provider</button>
               </div>
 
               <div class="mx-search-wrapper">
@@ -224,6 +225,26 @@
                   </table>
                 </div>
               </div>
+
+              <!-- Business Provider Content -->
+              <div class="tab-content" id="business_provider-content">
+                <div class="mx-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Providers</th>
+                        <th>MX Records</th>
+                        <th>Service Type</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="business_provider-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
 
             <!-- Footer Section -->
@@ -279,19 +300,13 @@
         </div>
 
         <div class="form-group">
-          <label>Service Type</label>
-          <div class="mx-radio-group">
-            <label class="mx-radio-box" data-value="disposable">
-              <input type="radio" name="service-type" value="disposable" checked>
-              <img src="/assets/icons/radio-on.svg" alt="" class="radio-icon" />
-              <span class="radio-label">Disposable</span>
-            </label>
-            <label class="mx-radio-box" data-value="relay">
-              <input type="radio" name="service-type" value="relay">
-              <img src="/assets/icons/radio-off.svg" alt="" class="radio-icon" />
-              <span class="radio-label">Relay</span>
-            </label>
-          </div>
+          <label for="service-type">Service Type</label>
+          <select id="service-type"
+            style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 24px;">
+            <option value="disposable">Disposable</option>
+            <option value="relay">Relay</option>
+            <option value="business_provider">Business Provider</option>
+          </select>
         </div>
 
         <button type="submit" class="mx-submit-btn" id="submit-mx-btn">Continue</button>
