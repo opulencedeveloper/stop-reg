@@ -164,7 +164,8 @@
               <div class="mx-tabs">
                 <button class="tab-btn active" data-tab="disposable">Disposable</button>
                 <button class="tab-btn" data-tab="relay">Relay</button>
-                <button class="tab-btn" data-tab="business_provider">Business Provider</button>
+                <button class="tab-btn" data-tab="mailbox">Mailbox</button>
+                <button class="tab-btn" data-tab="hosting">Hosting</button>
               </div>
 
               <div class="mx-search-wrapper">
@@ -226,8 +227,8 @@
                 </div>
               </div>
 
-              <!-- Business Provider Content -->
-              <div class="tab-content" id="business_provider-content">
+              <!-- Mailbox Content -->
+              <div class="tab-content" id="mailbox-content">
                 <div class="mx-table-wrapper">
                   <table class="admin-table">
                     <thead>
@@ -239,7 +240,27 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="business_provider-tbody">
+                    <tbody id="mailbox-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Hosting Content -->
+              <div class="tab-content" id="hosting-content">
+                <div class="mx-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Providers</th>
+                        <th>MX Records</th>
+                        <th>Service Type</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="hosting-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
@@ -305,7 +326,8 @@
             style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 24px;">
             <option value="disposable">Disposable</option>
             <option value="relay">Relay</option>
-            <option value="business_provider">Business Provider</option>
+            <option value="mailbox">Mailbox</option>
+            <option value="hosting">Hosting</option>
           </select>
         </div>
 

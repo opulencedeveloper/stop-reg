@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (records.length === 0) {
-            const displayType = type === "business_provider" ? "Business Provider" : type.charAt(0).toUpperCase() + type.slice(1);
+            const displayType = type.charAt(0).toUpperCase() + type.slice(1);
             tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No ${displayType} MX patterns found.</td></tr>`;
             return;
         }
