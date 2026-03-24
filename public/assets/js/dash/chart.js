@@ -118,28 +118,29 @@ document.addEventListener("DOMContentLoaded", async () => {
              planNameEl.textContent = `${userDetails.planId.name} Account`;
            }
 
-           if (apiRequestLeftEl && userDetails.planId) {
-             const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
-             const durationInDays = userDetails.planId.durationInDays ?? 30;
-             apiRequestLeftEl.innerHTML = "";
-             apiRequestLeftEl.textContent = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
-           }
-           
+            if (apiRequestLeftEl && userDetails.planId) {
+              const free = userDetails.extraApiLimitLeft || 0;
+              const paid = userDetails.apiRequestLeft || 0;
+              const total = free + paid;
+              const breakdown = paid > 0 ? ` (${free.toLocaleString()} Base + ${paid.toLocaleString()} Extra)` : '';
+              const durationInDays = userDetails.planId.durationInDays ?? 30;
+              
+              apiRequestLeftEl.innerHTML = "";
+              apiRequestLeftEl.textContent = `${total.toLocaleString()}${breakdown} API requests in ${durationInDays} days`;
+            }
 
-           // Restoring variable for link container usage
-           const apiToken = userDetails.apiToken;
-           
-           // Update Link Container
-           if (apiToken) {
-              const linkContainer = document.querySelector(".link-container");
-              if (linkContainer) {
-                const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
-                linkContainer.href = newLink;
-                const linkTitle = linkContainer.querySelector(".token-link-title");
-                if (linkTitle) linkTitle.textContent = newLink;
-              }
-           }
-        }
+            // Update Link Container
+            const apiToken = userDetails.apiToken;
+            if (apiToken) {
+               const linkContainer = document.querySelector(".link-container");
+               if (linkContainer) {
+                 const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
+                 linkContainer.href = newLink;
+                 const linkTitle = linkContainer.querySelector(".token-link-title");
+                 if (linkTitle) linkTitle.textContent = newLink;
+               }
+            }
+          }
       } else {
           if (window.handleAuthError && await window.handleAuthError(response)) {
              return;
@@ -181,14 +182,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="input-group">
             <label>Email Verification API Endpoint</label>
             <div class="copy-input-field grey-bg">
-              <span class="truncated-text" id="email-endpoint-text">https://api.stopreg.com/v1/email/check</span>
+              <span class="truncated-text" id="email-endpoint-text">https://api.stopreg.com/api/v1/verify/email</span>
               <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
             </div>
           </div>
           <div class="input-group">
             <label>Domain Verification API Endpoint</label>
             <div class="copy-input-field grey-bg">
-              <span class="truncated-text" id="domain-endpoint-text">https://api.stopreg.com/v1/domain/check</span>
+              <span class="truncated-text" id="domain-endpoint-text">https://api.stopreg.com/api/v1/verify/domain</span>
               <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
             </div>
           </div>`;
@@ -480,10 +481,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           };
 
           const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
+             // Logic: > 0 -> True (Yes/Caution), 0 -> False (No/Red)
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
-             const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+             const className = isTrue ? 'status-bool-unresolved' : 'status-bool-no';
              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 

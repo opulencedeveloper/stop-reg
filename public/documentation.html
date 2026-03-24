@@ -550,7 +550,7 @@
       ]
     },
     <span class="string">"classification"</span>: {
-      <span class="string">"is_disposable"</span>: <span class="keyword">false</span>,
+      <span class="string">"is_disposabale"</span>: <span class="keyword">false</span>,
       <span class="string">"is_relay"</span>: <span class="keyword">false</span>,
       <span class="string">"is_unresolved"</span>: <span class="keyword">false</span>,
       <span class="string">"is_public"</span>: <span class="keyword">true</span>,
@@ -570,38 +570,194 @@
                 </button>
               </div>
               <h3>Response Fields</h3>
-              <ul>
-                <li>
-                  <strong>status:</strong> HTTP status code of the response
-                </li>
-                <li>
-                  <strong>message:</strong> Status text ("success" or "error")
-                </li>
-                <li>
-                  <strong>description:</strong> Human-readable description of the result
-                </li>
-                <li>
-                  <strong>data:</strong> Top-level wrapper containing the entire verification payload
-                </li>
-                <li>
-                  <strong>data.input:</strong> Contains raw input, normalized value, and typo suggestions
-                </li>
-                <li>
-                  <strong>data.domain:</strong> Details about the domain and its identified provider
-                </li>
-                <li>
-                  <strong>data.mail_server:</strong> MX record status, resolved hosts, and detected MX provider
-                  intelligence
-                </li>
-                <li>
-                  <strong>data.classification:</strong> Boolean flags for disposable, relay, public, role-based, alias,
-                  and
-                  unresolved status
-                </li>
-                <li>
-                  <strong>data.policy:</strong> User-specific blocklist and allowlist status
-                </li>
-              </ul>
+              <p>The API response is structured into several nested objects. Below is a detailed technical reference for
+                each field in the payload.</p>
+
+              <h4>Top-Level Fields</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">status</span> <span class="type-badge type-integer">Integer</span>
+                      </td>
+                      <td>200, 400, 401, etc.</td>
+                      <td>The HTTP status code. Indicates the overall success or failure of the request.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">message</span> <span class="type-badge type-string">String</span>
+                      </td>
+                      <td>"success" | "error"</td>
+                      <td>A short string indicating the result state of the API operation.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">description</span> <span class="type-badge type-string">String</span></td>
+                      <td>Text</td>
+                      <td>A human-readable summary of the verification result or the specific reason for an error.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">data</span> <span class="type-badge type-object">Object</span>
+                      </td>
+                      <td>Payload</td>
+                      <td>The container for all verification intelligence. Details are broken down in the sections
+                        below.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4>Input Intelligence (data.input)</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">email | domain</span> <span class="type-badge type-string">String</span></td>
+                      <td>Raw Value</td>
+                      <td>The original input provided in your request. Use this to map the response back to your local
+                        records.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">normalized</span> <span class="type-badge type-string">String</span></td>
+                      <td>Canonical</td>
+                      <td>The standardized version of your input. This value is lowercased, trimmed, and stripped of
+                        sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">suggestion</span> <span class="type-badge type-string">String</span></td>
+                      <td>Correction</td>
+                      <td>If a common typo is detected (e.g., <i>gnail.com</i>), this provides the corrected domain
+                        (<i>gmail.com</i>). Returns <code>null</code> if no correction is needed.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4>Infrastructure Analytics (data.mail_server)</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">mx_found</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Status</td>
+                      <td><code>true</code> if valid Mail Exchange (MX) records were found for the domain. If
+                        <code>false</code>, the email is likely undeliverable.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">mx_records</span> <span class="type-badge type-array">Array</span>
+                      </td>
+                      <td>List</td>
+                      <td>An array of hostnames resolved from the domain's DNS settings.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span></td>
+                      <td>Providers</td>
+                      <td>Deep intelligence about the infrastructure behind the email. Contains:
+                        <ul class="field-desc">
+                          <li><strong>slug:</strong> Identifier (e.g., "google", "microsoft").</li>
+                          <li><strong>service_type:</strong> <code>mailbox</code>, <code>hosting</code>,
+                            <code>relay</code>, or <code>disposable</code>.
+                          </li>
+                          <li><strong>grade:</strong> Professionalism tier (e.g., <code>professional</code>).</li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4>Strategic Classification (data.classification)</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">is_disposable</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>High Risk</td>
+                      <td><strong>Critical Flag.</strong> <code>true</code> if the domain belongs to a temporary,
+                        throwaway, or 10-minute mail provider. High correlation with fraud.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_relay</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Neutral</td>
+                      <td><code>true</code> if the provider is a forwarding service or alias system (e.g., iCloud Hide
+                        My Email). Common among privacy-conscious users.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Low Risk</td>
+                      <td><code>true</code> for common free consumers providers (Gmail, Outlook, Yahoo). Generally safe
+                        for B2C registrations.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_role_based</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Caution</td>
+                      <td><code>true</code> for address intended for groups (e.g., <i>admin@</i>, <i>support@</i>). Not
+                        ideal for personal account signups.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_alias</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Technical</td>
+                      <td><code>true</code> if sub-addressing was detected (e.g., <i>user+tag@gmail.com</i>). Often used
+                        to track source of signups.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h4>Custom Policy Logic (data.policy)</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">blocklisted</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Custom</td>
+                      <td><code>true</code> if the input matches a domain or email explicitly blocked in your StopReg
+                        Dashboard.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">allowlisted</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Custom</td>
+                      <td><code>true</code> if the input matches a trusted domain in your Dashboard, bypassing all
+                        disposable checks.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <h3>Error Responses</h3>
               <p>
                 If an error occurs, the API returns a JSON response with standardized error codes:

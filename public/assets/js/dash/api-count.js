@@ -69,8 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // 2. Update Usage
                     if (planUsageEl) {
-                        const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
-                        planUsageEl.textContent = `${apiRequestLeft} API requests left`;
+                        const free = userDetails.extraApiLimitLeft ?? 0;
+                        const paid = userDetails.apiRequestLeft ?? 0;
+                        const total = free + paid;
+                        const breakdown = paid > 0 ? ` (${free.toLocaleString()} Base + ${paid.toLocaleString()} Extra)` : '';
+                        
+                        planUsageEl.textContent = `${total.toLocaleString()}${breakdown} API requests left`;
                     }
 
                     // 3. Update Expiry

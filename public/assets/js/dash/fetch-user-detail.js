@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Wrap logic in a reusable function for retry support
-  const fetchUserDetails = async () => {
+    const fetchUserDetails = async () => {
+    const token = localStorage.getItem("authToken");
+
     // Target elements
     const profileWrapper = document.querySelector(".profile-wrapper");
     let originalProfileWrapperHTML = "";
@@ -47,7 +49,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-   console.log("Token=====?", token);
       const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
         method: "GET",
         headers: {
@@ -196,14 +197,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   
           // Update all API requests left elements
           if (userDetails.planId) {
-            const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
+            const free = userDetails.extraApiLimitLeft ?? 0;
+            const paid = userDetails.apiRequestLeft ?? 0; 
+            const total = free + paid;
             const durationInDays = userDetails.planId.durationInDays ?? 30;
+
             document.querySelectorAll(".api-request-left, .dash-api-hd-subtl").forEach(el => {
               const span = el.querySelector("span");
-              if (span) {
-                  span.textContent = apiRequestLeft.toLocaleString();
+              let displayText = total.toLocaleString();
+              let fullText = `${total.toLocaleString()} API requests in ${durationInDays} days`;
+
+              if (userDetails.apiRequestLeft > 0) {
+                // High Fidelity Breakdown
+                const breakdown = `(${free.toLocaleString()} Base + ${paid.toLocaleString()} Extra)`;
+                if (span) {
+                  span.textContent = `${total.toLocaleString()} ${breakdown}`;
+                } else {
+                  el.textContent = `${total.toLocaleString()} ${breakdown} API requests in ${durationInDays} days`;
+                }
               } else {
-                  el.textContent = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
+                if (span) {
+                  span.textContent = displayText;
+                } else {
+                  el.textContent = fullText;
+                }
               }
             });
           }

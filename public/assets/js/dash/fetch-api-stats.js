@@ -87,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Helper: Unresolved Icon ---
     function getUnresolvedIcon(val) {
-        // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
+        // Logic: > 0 -> True (Yes/Caution), 0 -> False (No/Red)
         const isTrue = val > 0;
         const text = isTrue ? "Yes" : "No";
-        const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+        const className = isTrue ? 'status-bool-unresolved' : 'status-bool-no';
         return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 

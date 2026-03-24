@@ -1457,6 +1457,11 @@ canvas {
   color: #FF0000;
 }
 
+.status-bool-unresolved {
+  background: #FFFBD6;
+  color: #854D0E;
+}
+
 .action-icon-wrapper {
   width: 20px;
   height: 20px;

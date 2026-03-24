@@ -978,8 +978,8 @@ body {
   line-height: 1.6;
   color: #d4d4d4;
   overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 .code-block * {
@@ -987,7 +987,7 @@ body {
   font-weight: 600;
   font-style: normal;
   font-size: 14px !important;
-  white-space: inherit;
+  white-space: pre;
 }
 
 /* Syntax highlighting colors - matching the image */
@@ -2749,7 +2749,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
     overflow-x: auto;
     width: 100%;
     box-sizing: border-box;
-    word-break: break-word;
+    word-break: normal;
+    white-space: pre;
   }
 
   .code-copy-btn {

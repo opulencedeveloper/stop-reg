@@ -92,9 +92,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         
                     // 3. Update Requests Left
                     if (userDetails.planId) {
-                        const apiRequestLeft = userDetails.apiRequestLeft ?? 0;
+                        const free = userDetails.extraApiLimitLeft ?? 0;
+                        const paid = userDetails.apiRequestLeft ?? 0;
+                        const total = free + paid;
                         const durationInDays = userDetails.planId.durationInDays ?? 30;
-                        const usageText = `${apiRequestLeft.toLocaleString()} API requests in ${durationInDays} days`;
+                        const breakdown = paid > 0 ? ` (${free.toLocaleString()} Base + ${paid.toLocaleString()} Extra)` : '';
+                        
+                        const usageText = `${total.toLocaleString()}${breakdown} API requests in ${durationInDays} days`;
                         
                         document.querySelectorAll(".api-request-left").forEach(el => {
                             el.innerHTML = "";
