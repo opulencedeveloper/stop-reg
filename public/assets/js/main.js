@@ -7,7 +7,11 @@ window.clearUserSession = function() {
 };
 
 window.handleAuthError = async function(error, source = "API") {
-  console.error(`${source} Error:`, error);
+  // Only log if it's an actual error (not a successful Response or 200/201 status)
+  const isSuccess = (error instanceof Response && error.ok) || (typeof error === 'number' && (error === 200 || error === 201));
+  if (!isSuccess) {
+    console.error(`${source} Error:`, error);
+  }
   
   // Determine status code
   let status = typeof error === 'number' ? error : (error && error.status);

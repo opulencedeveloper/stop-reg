@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </tr>
         `;
 
+        const token = localStorage.getItem('authToken');
         try {
             const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true`, {
                 headers: {

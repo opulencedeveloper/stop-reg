@@ -543,14 +543,19 @@
       ],
       <span class="string">"mx_provider"</span>: [
         {
-          <span class="string">"slug"</span>: <span class="string">"google"</span>,
+          <span class="string">"slug"</span>: <span class="string">"zoho corporation"</span>,
           <span class="string">"service_type"</span>: <span class="string">"mailbox"</span>,
           <span class="string">"grade"</span>: <span class="string">"professional"</span>
+        },
+        {
+          <span class="string">"slug"</span>: <span class="string">"namecheap.com"</span>,
+          <span class="string">"service_type"</span>: <span class="string">"hosting"</span>,
+          <span class="string">"grade"</span>: <span class="string">"standard"</span>
         }
       ]
     },
     <span class="string">"classification"</span>: {
-      <span class="string">"is_disposabale"</span>: <span class="keyword">false</span>,
+      <span class="string">"is_disposable"</span>: <span class="keyword">false</span>,
       <span class="string">"is_relay"</span>: <span class="keyword">false</span>,
       <span class="string">"is_unresolved"</span>: <span class="keyword">false</span>,
       <span class="string">"is_public"</span>: <span class="keyword">true</span>,
@@ -672,9 +677,9 @@
                     <tr>
                       <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span></td>
                       <td>Providers</td>
-                      <td>Deep intelligence about the infrastructure behind the email. Contains:
+                      <td><strong>Multi-Provider Intelligence.</strong> A prioritized list of all infrastructure providers detected behind the email (e.g., Zoho + Namecheap). Contains:
                         <ul class="field-desc">
-                          <li><strong>slug:</strong> Identifier (e.g., "google", "microsoft").</li>
+                          <li><strong>slug:</strong> Identifier (e.g., "zoho corporation").</li>
                           <li><strong>service_type:</strong> <code>mailbox</code>, <code>hosting</code>,
                             <code>relay</code>, or <code>disposable</code>.
                           </li>
@@ -708,6 +713,11 @@
                       <td>Neutral</td>
                       <td><code>true</code> if the provider is a forwarding service or alias system (e.g., iCloud Hide
                         My Email). Common among privacy-conscious users.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_unresolved</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td>Caution</td>
+                      <td><strong>Zero-Trust Flag.</strong> <code>true</code> for unknown, non-major domains that proxy through professional mail hosts. High correlation with "Stealth Disposable" providers.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span></td>
