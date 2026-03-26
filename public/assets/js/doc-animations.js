@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
        // 3. Initialize Observer
        const observerOptions = {
          root: null,
-         threshold: 0.1, // Trigger when 10% visible (Immediate Fix)
-         rootMargin: "0px"
+         threshold: 0, 
+         rootMargin: "0px 0px 100px 0px"
        };
      
        const observer = new IntersectionObserver((entries, observer) => {
