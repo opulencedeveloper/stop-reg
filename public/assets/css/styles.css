@@ -1228,6 +1228,10 @@ select:-webkit-autofill:active {
   vertical-align: top;
 }
 
+.docs-table td:nth-child(2) {
+  white-space: nowrap;
+}
+
 .docs-table tr:last-child td {
   border-bottom: none;
 }
@@ -1265,12 +1269,12 @@ select:-webkit-autofill:active {
 .field-desc {
   display: block;
   color: var(--color-twelve);
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 8px;
 }
 
 .field-desc li {
-  font-size: 13px !important;
+  font-size: 16px !important;
   margin-bottom: 4px;
 }
 
@@ -1286,5 +1290,5 @@ select:-webkit-autofill:active {
 
 .field-desc code,
 .docs-table code {
-  font-size: 13px !important;
+  font-size: 16px !important;
 }

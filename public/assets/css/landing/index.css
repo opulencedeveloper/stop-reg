@@ -1625,12 +1625,12 @@ main,
   white-space: pre-wrap;
   /* Optional: wrap long lines if desired, or keep scrolling */
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 16px;
   /* Desktop code font size */
 }
 
 .documen-content-item code {
-  font-size: 18px;
+  font-size: 16px;
   /* Ensure code tag matches pre */
   font-family: inherit;
   /* Or a monospace font */
@@ -1654,11 +1654,11 @@ main,
 }
 
 .documen-content-item>p {
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Inter_28pt-Regular";
   color: #252525;
-  line-height: 32px;
-  /* Increased for 20px font */
+  line-height: 24px;
+  /* Adjusted for 16px font */
   white-space: normal;
   /* Fixed 'wrap' typo to 'normal' */
 }
@@ -1676,10 +1676,10 @@ main,
 }
 
 .documen-content-item li {
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Inter_28pt-Regular";
   color: #252525;
-  line-height: 32px;
+  line-height: 24px;
 }
 
 

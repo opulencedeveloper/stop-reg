@@ -60,11 +60,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!trimmed) return false;
     // Simple regex for basic validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const domainPattern = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+    // More permissive domain pattern (allows trailing dots, subdomains, etc.)
+    const domainPattern = /^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}\.?$/;
     
     if (emailPattern.test(trimmed)) return true;
     
-    const extracted = extractDomain(trimmed);
+    // Check if it's a domain with a leading @ (common user mistake)
+    let domainCandidate = trimmed;
+    if (domainCandidate.startsWith('@')) {
+        domainCandidate = domainCandidate.substring(1);
+    }
+    
+    const extracted = extractDomain(domainCandidate);
     if (extracted && extracted.length > 0 && domainPattern.test(extracted)) return true;
     
     return false;
@@ -278,6 +285,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Prepare payload
     // If input doesn't have '@', assume it's a domain/URL
     if (!inputValue.includes('@')) {
+        // Strip leading @ if user accidentally included it for a domain
+        if (inputValue.startsWith('@')) {
+            inputValue = inputValue.substring(1);
+        }
         inputValue = extractDomain(inputValue);
     }
     
