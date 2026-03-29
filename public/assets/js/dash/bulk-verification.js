@@ -465,6 +465,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (downloadBtn) downloadBtn.addEventListener("click", downloadTableData);
 
+  // Lock Bulk Verification for Premium Users Only
+  document.addEventListener("planLoaded", (e) => {
+    const planName = e.detail;
+    if (planName === "Free") {
+        if (form) {
+            form.innerHTML = `
+               <div style="text-align:center; padding: 40px 20px; background: #f9f9fa; border-radius: 8px; border: 1px solid #e0e0e0; margin-top: 15px;">
+                   <div style="margin-bottom: 16px;">
+                       <img src="/assets/icons/bi_stars.svg" alt="Premium Feature" style="width: 48px; height: 48px; border-radius: 50%; background: #e8eefa; padding: 10px;">
+                   </div>
+                   <h3 style="color: #1A1D1F; font-size: 20px; font-weight: 700; margin-bottom: 12px;">Premium Feature</h3>
+                   <p style="color: #6F767E; font-size: 15px; margin-bottom: 24px;">Bulk Verification is only available on premium plans. Upgrade your account to verify up to 10,000 domains at once.</p>
+                   <a href="/dashboard/payments.html" class="bulk-verify-domain-btn" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; max-width: 200px; margin: 0 auto;">Upgrade Now</a>
+               </div>
+            `;
+        }
+        
+        // Hide history table to emphasize locked state
+        if (document.querySelector(".dash-inner-inner-verification-status")) {
+            document.querySelector(".dash-inner-inner-verification-status").style.display = "none";
+        }
+        
+        // Hide Download Button
+        if (downloadBtn) downloadBtn.classList.add("hidden");
+    }
+  });
+
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();

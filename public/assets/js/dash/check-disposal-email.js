@@ -111,7 +111,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 const results = data?.data;
-                const isDisposable = results?.classification?.is_disposable === true;
+                // Dashboard Verification API returns a flat JSON structure
+                const isDisposable = results?.disposable === true;
 
                 // Show results, hide empty state
                 if (resultsContainer) resultsContainer.style.display = "block";
@@ -131,12 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Update individual result cards
                 if (resultsList) {
-                    const hasMx = results?.mail_server?.mx_found === true;
-                    const isPublic = results?.classification?.is_public === true;
-                    const isRelay = results?.classification?.is_relay === true;
-                    const isRole = results?.classification?.is_role_based === true;
-                    const isAlias = results?.classification?.is_alias === true;
-                    const isUnresolved = results?.classification?.is_unresolved === true;
+                    const hasMx = results?.mx === true;
+                    const isPublic = results?.public === true;
+                    const isRelay = results?.isRelay === true;
+                    const isRole = results?.role === true;
+                    const isAlias = results?.alias === true;
+                    const isUnresolved = results?.unresolved === true;
 
                     resultsList.innerHTML = `
                         <!-- MX Record (True/False) -->

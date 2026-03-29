@@ -88,6 +88,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                             el.innerHTML = "";
                             el.textContent = `${planName} Account`;
                         });
+                        
+                        // Broadcast the plan type globally so other scripts can adapt UI
+                        window.currentUserPlan = planName;
+                        const planEvent = new CustomEvent("planLoaded", { detail: planName });
+                        document.dispatchEvent(planEvent);
                     }
         
                     // 3. Update Requests Left
