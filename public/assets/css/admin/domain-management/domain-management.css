@@ -6,7 +6,7 @@
   border-radius: 8px;
   margin-top: 20px;
   margin-bottom: 40px;
-  overflow: hidden;
+  /* Removed overflow: hidden to allow dropdowns to overflow */
 }
 
 /* Header Section */
@@ -134,7 +134,7 @@
   border: none;
   /* Removed border here as container has it */
   border-radius: 0;
-  overflow: hidden;
+  /* Removed overflow: hidden */
 }
 
 .tab-content {
@@ -146,8 +146,7 @@
 }
 
 .domain-mgmt-table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible; /* Allow vertical overflow for dropdowns on desktop */
   width: 100%;
 }
 
@@ -273,6 +272,11 @@
   .domain-mgmt-tabs {
     overflow-x: auto;
     padding-bottom: 10px;
+  }
+
+  .domain-mgmt-table-wrapper {
+    overflow-x: auto; /* Re-enable horizontal scroll on mobile */
+    -webkit-overflow-scrolling: touch;
   }
 
   .domain-mgmt-search-wrapper {
@@ -487,6 +491,8 @@
   transform: scale(1) translateY(0);
   pointer-events: auto;
 }
+
+/* Redundant local drop-up logic removed. Now handled globally in admin-dashboard.css */
 
 /* Dropdown Items */
 .dropdown-item, 

@@ -204,9 +204,7 @@
 /* Users Table wrapper adjustments */
 .users-table-wrapper {
   background: #FFFFFF;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible; /* Allow dropdowns to overflow on desktop */
 }
 
 .users-table-wrapper .admin-table {
@@ -302,6 +300,11 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+  }
+
+  .users-table-wrapper {
+    overflow-x: auto; /* Re-enable horizontal scroll on mobile */
+    -webkit-overflow-scrolling: touch;
   }
 }
 

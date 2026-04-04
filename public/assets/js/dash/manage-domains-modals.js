@@ -16,6 +16,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentEditId = null;
 
+    let isFreePlan = false;
+    try {
+        const planName = localStorage.getItem("planName");
+        if (planName && planName.trim().toLowerCase() === "free") {
+            isFreePlan = true;
+            document.body.classList.add('free-tier-user');
+        
+            const style = document.createElement('style');
+            style.innerHTML = `
+                body.free-tier-user .btn-block,
+                body.free-tier-user .btn-allow {
+                    opacity: 0.4 !important;
+                    cursor: not-allowed !important;
+                }
+                body.free-tier-user .btn-block img,
+                body.free-tier-user .btn-allow img {
+                    filter: grayscale(1) brightness(0.7);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    } catch (e) {
+        console.warn("Could not parse planName", e);
+    }
+
+    if (isFreePlan) {
+        if (openBlockBtn) openBlockBtn.style.opacity = "0.6";
+        if (openAllowBtn) openAllowBtn.style.opacity = "0.6";
+    }
+
+    function showUpgradeToast() {
+        if (typeof iziToast !== 'undefined') {
+            iziToast.info({
+                title: 'Upgrade Required',
+                message: 'Custom blocklists and allowlists are available on Paid plans. You can still Report domains.',
+                position: 'topRight',
+                timeout: 5000
+            });
+        }
+    }
+
     // --- Core Modal Functions ---
     function openModal(overlay, isEdit = false, data = null) {
         if (!overlay) return;
@@ -78,9 +119,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Trigger Listeners ---
-    openBlockBtn?.addEventListener('click', () => openModal(blockOverlay));
-    openAllowBtn?.addEventListener('click', () => openModal(allowOverlay));
+    openBlockBtn?.addEventListener('click', (e) => {
+        if (isFreePlan) {
+            e.preventDefault();
+            return showUpgradeToast();
+        }
+        openModal(blockOverlay);
+    });
+    
+    openAllowBtn?.addEventListener('click', (e) => {
+        if (isFreePlan) {
+            e.preventDefault();
+            return showUpgradeToast();
+        }
+        openModal(allowOverlay);
+    });
+
     openReportBtn?.addEventListener('click', () => openModal(reportOverlay));
+
+    const ManageDomainStatus = {
+        BLOCKED: 'blocked',
+        ALLOWED: 'allowed',
+        ALLOW: 'allow',
+        REPORTED: 'reported'
+    };
 
     // Event Delegation for Edit Buttons
     document.addEventListener('click', (e) => {
@@ -92,10 +154,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Determine which modal to show
             let targetOverlay = null;
             let normalizedStatus = status.toLowerCase();
-            if (normalizedStatus === 'blocked') targetOverlay = blockOverlay;
-            else if (normalizedStatus === 'allowed' || normalizedStatus === 'allow') targetOverlay = allowOverlay;
-            else if (normalizedStatus === 'reported') targetOverlay = reportOverlay;
+            if (normalizedStatus === ManageDomainStatus.BLOCKED) targetOverlay = blockOverlay;
+            else if (normalizedStatus === ManageDomainStatus.ALLOWED || normalizedStatus === ManageDomainStatus.ALLOW) targetOverlay = allowOverlay;
+            else if (normalizedStatus === ManageDomainStatus.REPORTED) targetOverlay = reportOverlay;
             else targetOverlay = blockOverlay; // Fallback
+
+            if (isFreePlan && (targetOverlay === blockOverlay || targetOverlay === allowOverlay)) {
+                e.preventDefault();
+                return showUpgradeToast();
+            }
 
             openModal(targetOverlay, true, { domain, comment });
         }
@@ -180,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 if (typeof iziToast !== 'undefined') {
-                    iziToast.success({ message: `Domain ${isUpdate ? 'updated' : type} successfully!`, position: "topRight" });
+                    iziToast.success({ message: data.description || `Domain ${isUpdate ? 'updated' : type} successfully!`, position: "topRight" });
                 }
                 closeModal(modalOverlay);
                 
@@ -197,8 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             } else {
                  if (typeof iziToast !== 'undefined') {
-                    iziToast.error({ message: data.description || `Failed to ${isUpdate ? 'update' : type} domain`, position: "topRight" });
+                    iziToast.error({ message: data.description || data.message || `Failed to ${isUpdate ? 'update' : type} domain`, position: "topRight" });
                 }
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         } catch (err) {
             console.error(err);

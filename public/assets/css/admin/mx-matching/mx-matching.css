@@ -6,7 +6,7 @@
   border-radius: 8px;
   margin-top: 20px;
   margin-bottom: 40px;
-  overflow: hidden;
+  /* Removed overflow: hidden to allow dropdowns to overflow */
 }
 
 /* Header Section */
@@ -128,8 +128,7 @@
 
 /* Table Wrapper */
 .mx-table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible; /* Allow vertical overflow for dropdowns on desktop */
 }
 
 .mx-table-wrapper .admin-table {
@@ -305,6 +304,11 @@
 
   .mx-matching-page-container {
     margin-top: 0;
+  }
+
+  .mx-table-wrapper {
+    overflow-x: auto; /* Re-enable horizontal scroll on mobile */
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -562,36 +566,7 @@
   }
 }
 
-/* Smart Drop-up Logic (Industrial Standard) */
-/* Automatically apply drop-up to the last 2 rows in the table */
-.admin-table tr:nth-last-child(-n+2) .action-dropdown {
-  top: auto;
-  bottom: 100%;
-  margin-top: 0;
-  margin-bottom: 8px;
-  transform-origin: bottom right;
-  transform: scale(0.95) translateY(10px);
-}
-
-.admin-table tr:nth-last-child(-n+2) .action-dropdown::before {
-  top: auto;
-  bottom: -12px;
-  height: 12px;
-}
-
-.admin-table tr:nth-last-child(-n+2) .action-dropdown.show {
-  transform: scale(1) translateY(0);
-}
-
-/* Desktop Hover Logic for Smart Drop-up */
-@media (min-width: 1025px) {
-  .admin-table tr:nth-last-child(-n+2) .action-btn-container:hover .action-dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1) translateY(0);
-    pointer-events: auto;
-  }
-}
+/* Redundant local drop-up logic removed. Now handled globally in admin-dashboard.css */
 
 .dropdown-item-edit, 
 .dropdown-item-remove {

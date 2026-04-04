@@ -392,8 +392,7 @@
 
 /* Sub-users Table specific overrides */
 .sub-users-table-wrapper {
-    overflow-x: auto;
-    overflow-y: visible; /* Focus on vertical overflow stability */
+    overflow: visible; /* Focus on vertical overflow stability for dropdowns */
     border-radius: 0 0 12px 12px;
 }
 
@@ -448,26 +447,7 @@
     pointer-events: auto;
 }
 
-/* Smart Drop-up Logic */
-.admin-table tr:nth-last-child(-n+2) .action-dropdown {
-    top: auto;
-    bottom: 100%;
-    margin-top: 0;
-    margin-bottom: 8px;
-    transform-origin: bottom right;
-    transform: scale(0.95) translateY(10px);
-}
-
-.admin-table tr:nth-last-child(-n+2) .action-dropdown::before {
-    top: auto;
-    bottom: -12px;
-}
-
-.admin-table tr:nth-last-child(-n+2) .action-dropdown.active {
-    transform: scale(1) translateY(0);
-}
-
-/* Desktop Hover Logic */
+/* Redundant local drop-up logic removed. Now handled globally in admin-dashboard.css */
 @media (min-width: 1025px) {
     .action-btn-container:hover .action-dropdown {
         opacity: 1;

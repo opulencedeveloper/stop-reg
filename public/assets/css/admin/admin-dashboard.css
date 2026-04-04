@@ -792,11 +792,36 @@ body {
 }
 
 /* Active trigger for JS (Mobile/Click fallback) */
-.action-dropdown.show {
+.action-dropdown.show,
+.action-dropdown.active {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
     pointer-events: auto;
+}
+
+/* --- Global Smart Drop-up Logic (Industrial Standard) --- */
+/* Automatically apply drop-up to the last 2 rows of any .admin-table, 
+   UNLESS they are also the first 2 rows (prevents clipping against header) */
+.admin-table tr:nth-last-child(-n+2):not(:nth-child(-n+2)) .action-dropdown {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 8px;
+    transform-origin: bottom right;
+    transform: scale(0.95) translateY(10px);
+}
+
+/* Ensure active/show states respect the drop-up transform */
+.admin-table tr:nth-last-child(-n+2):not(:nth-child(-n+2)) .action-dropdown.show,
+.admin-table tr:nth-last-child(-n+2):not(:nth-child(-n+2)) .action-dropdown.active {
+    transform: scale(1) translateY(0);
+}
+
+/* Flip the hover bridge position for drop-ups */
+.admin-table tr:nth-last-child(-n+2):not(:nth-child(-n+2)) .action-dropdown::before {
+    top: auto;
+    bottom: -12px;
 }
 
 /* Upward dropdown for last 2 rows to prevent clipping */

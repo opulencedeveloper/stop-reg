@@ -13,6 +13,44 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRequestId = null;
     let currentTargetStatus = null; // 'blocked', 'reported', 'allow'
 
+    let isFreePlan = false;
+    try {
+        const planName = localStorage.getItem("planName");
+        if (planName && planName.trim().toLowerCase() === "free") {
+            isFreePlan = true;
+            // Add class to body to visually hide premium actions across both static and dynamic tables
+            document.body.classList.add('free-tier-user');
+        
+            // Inject CSS to ensure dropdown empty states look okay if needed
+            const style = document.createElement('style');
+            style.innerHTML = `
+                body.free-tier-user .btn-add-allow,
+                body.free-tier-user .btn-add-block {
+                    opacity: 0.4 !important;
+                    cursor: not-allowed !important;
+                }
+                body.free-tier-user .btn-add-allow img,
+                body.free-tier-user .btn-add-block img {
+                    filter: grayscale(1) brightness(0.7);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    } catch (e) {
+        console.warn("Could not parse planName", e);
+    }
+
+    function showUpgradeToast() {
+        if (typeof iziToast !== 'undefined') {
+            iziToast.info({
+                title: 'Upgrade Required',
+                message: 'Custom blocklists and allowlists are available on Paid plans. You can still Report domains.',
+                position: 'topRight',
+                timeout: 5000
+            });
+        }
+    }
+
     // --- Core Modal Functions ---
     function openModal(overlay, domainName = null, comment = null, requestId = null, targetStatus = null) {
         if (!overlay) return;
@@ -125,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 if (typeof iziToast !== 'undefined') {
-                    iziToast.success({ message: "Status updated successfully!", position: "topRight" });
+                    iziToast.success({ message: data.description || "Status updated successfully!", position: "topRight" });
                 }
                 // Refresh table data
                 if (typeof window.fetchRequests === 'function') {
@@ -135,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 if (typeof iziToast !== 'undefined') {
-                    iziToast.error({ message: data.message || "Failed to update status", position: "topRight" });
+                    iziToast.error({ message: data.description || data.message || "Failed to update status", position: "topRight" });
                 }
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
@@ -181,6 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (targetStatus) {
+            if (isFreePlan && (targetStatus === 'allow' || targetStatus === 'blocked')) {
+                return showUpgradeToast();
+            }
             submitStatusUpdate(requestId, targetStatus, btn);
         }
     });
