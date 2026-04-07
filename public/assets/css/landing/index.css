@@ -312,7 +312,7 @@ body {
   padding: 16px;
   overflow-y: auto;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   color: #d4d4d4;
   text-align: left;
@@ -596,6 +596,8 @@ body {
   font-family: "Inter_18pt-Bold";
   font-size: 40px;
 }
+
+
 
 .efea-header-desc {
   color: #595959;
@@ -896,7 +898,7 @@ body {
   background-color: transparent;
   border: none;
   color: #858585;
-  font-size: 14px;
+  font-size: 16px;
   font-family: "Inter_28pt-SemiBold";
   font-weight: 600;
   font-style: normal;
@@ -937,7 +939,7 @@ body {
   opacity: 0.7;
   color: #ffffff;
   font-family: "Inter_28pt-SemiBold";
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   pointer-events: auto;
 }
@@ -962,7 +964,7 @@ body {
 
 .code-copy-btn span {
   font-family: "Inter_28pt-SemiBold";
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #ffffff;
 }
@@ -975,7 +977,7 @@ body {
   font-family: "PlusJakartaSans-SemiBold", "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   color: #d4d4d4;
   overflow-x: auto;
@@ -987,7 +989,7 @@ body {
   font-family: "PlusJakartaSans-SemiBold", "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 14px !important;
+  font-size: 16px !important;
   white-space: pre;
 }
 
@@ -1110,7 +1112,7 @@ body {
 /* Validation Error Styles */
 .custom-input-error {
   color: #d92d20;
-  font-size: 14px;
+  font-size: 16px;
   /* Increased legibility */
   margin-top: 8px;
   /* Pull closer to input */
@@ -1832,6 +1834,8 @@ main,
   padding-left: 17px;
 }
 
+
+
 .cr-auth-auth {
   color: var(--color-two);
   cursor: pointer;
@@ -2017,7 +2021,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   background-color: #1452CA;
   color: #FFFFFF;
   font-family: "Inter_28pt-SemiBold";
-  font-size: 14px;
+  font-size: 16px;
   padding: 8px 0;
   position: absolute;
   top: 0;
@@ -2998,7 +3002,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   padding: 24px 32px 16px 32px;
   background-color: #F9FAFB;
   border-bottom: 1px solid #F2F4F7;
-  font-size: 14px;
+  font-size: 16px;
   color: #667085;
   font-weight: 500;
 }
@@ -3014,7 +3018,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   align-items: center;
   padding: 16px 32px;
   border-bottom: 1px solid #F2F4F7;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .validation-card-row:last-child {
@@ -3228,7 +3232,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   justify-content: center;
   align-items: center;
   font-family: "PlusJakartaSans-ExtraBold";
-  font-size: 14px;
+  font-size: 16px;
   border: 2px solid #ffffff;
 }
 

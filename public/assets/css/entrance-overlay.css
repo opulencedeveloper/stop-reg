@@ -95,7 +95,7 @@
 .entrance-tagline {
     font-family: 'PlusJakartaSans-Regular', sans-serif;
     color: rgba(255, 255, 255, 0.7);
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
     opacity: 0;
     transform: translate3d(0, 15px, 0);
