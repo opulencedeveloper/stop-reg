@@ -844,8 +844,7 @@ body {
 /* Code Snippet Container */
 .code-snippet-container {
   width: 100%;
-  height: auto;
-  min-height: max-content;
+  height: 100%;
   background-color: #1e1e1e;
   border-radius: 16px;
   overflow: hidden;
@@ -875,6 +874,7 @@ body {
   padding: 20px;
   overflow: auto;
   background-color: #1e1e1e;
+  flex: 1;
 }
 
 .code-snippet-tabs {
@@ -905,6 +905,7 @@ body {
   transition: all 0.2s ease;
   border-top: 2px solid transparent;
   position: relative;
+  flex-shrink: 0;
 }
 
 .code-tab:hover {
@@ -2722,8 +2723,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .code-snippet-container {
-    height: auto;
-    min-height: max-content;
+    height: 100%;
     width: 100%;
     max-width: 100%;
   }
@@ -2740,9 +2740,10 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
   .code-snippet-content {
     padding: 16px;
-    overflow-x: hidden;
+    overflow: auto;
     width: 100%;
     box-sizing: border-box;
+    flex: 1;
   }
 
   .code-block {
