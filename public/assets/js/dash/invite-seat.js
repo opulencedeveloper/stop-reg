@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inviteForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         
-        const planName = localStorage.getItem("planName");
+        const planName = await window.getUserPlan();
         if (planName === "Free") {
             if (typeof iziToast !== 'undefined') {
                 iziToast.error({

@@ -6,6 +6,47 @@ window.clearUserSession = function() {
   // Add any other session-related items here in the future
 };
 
+// Global plan cache to prevent redundant fetches on the same page load
+let userPlanPromise = null;
+
+window.getUserPlan = async function() {
+  const token = localStorage.getItem("authToken");
+  if (!token) return null;
+
+  // Return existing promise if one is already in flight or completed
+  if (userPlanPromise) return userPlanPromise;
+
+  userPlanPromise = (async () => {
+    try {
+      const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        const planName = data?.data?.userDetails?.planId?.name;
+        if (planName) {
+           localStorage.setItem("planName", planName); // Sync for compatibility
+           return planName;
+        }
+      }
+      
+      // Fallback to localStorage if API fails but we have a cached value
+      return localStorage.getItem("planName");
+    } catch (error) {
+      console.error("Error fetching user plan:", error);
+      return localStorage.getItem("planName");
+    }
+  })();
+
+  return userPlanPromise;
+};
+
 window.handleAuthError = async function(error, source = "API") {
   // Only log if it's an actual error (not a successful Response or 200/201 status)
   const isSuccess = (error instanceof Response && error.ok) || (typeof error === 'number' && (error === 200 || error === 201));

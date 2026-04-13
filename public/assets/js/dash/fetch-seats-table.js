@@ -1,5 +1,5 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const tableBody = document.getElementById("seats-table-body");
     const paginationControls = document.getElementById("seats-pagination-controls");
     const limitSelect = document.getElementById("seats-per-page-select");
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalItems = 0;
 
     // Plan Check: Disable seats management for Free users
-    const planName = localStorage.getItem("planName");
+    const planName = await window.getUserPlan();
     const isFreePlan = planName === "Free";
     const addSeatBtn = document.getElementById("add-seats-trigger");
 

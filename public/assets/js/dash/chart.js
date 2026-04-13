@@ -98,48 +98,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const userDetails = user.userDetails;
         console.log("userDetails", userDetails);
 
-        if (userDetails) {
-           // Re-select elements to ensure we target live DOM
-           const apiTokenEl = document.getElementById("api-token-text");
-           const expiresDateEl = document.querySelector(".current-plan-date");
-           const planNameEl = document.querySelector(".Current-plan-plan");
-           const apiRequestLeftEl = document.querySelector(".api-request-left");
-           
-
-           // Update Plan Details
-           if (expiresDateEl && userDetails.tokenExpiresAt) {
-             const expiresDate = new Date(userDetails.tokenExpiresAt);
-             expiresDateEl.innerHTML = "";
-             expiresDateEl.textContent = `Expires: ${expiresDate.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}`;
-           }
-
-           if (planNameEl && userDetails.planId?.name) {
-             planNameEl.innerHTML = "";
-             planNameEl.textContent = `${userDetails.planId.name} Account`;
-           }
-
-            if (apiRequestLeftEl && userDetails.planId) {
-              const free = userDetails.extraApiLimitLeft || 0;
-              const paid = userDetails.apiRequestLeft || 0;
-              const total = free + paid;
-              const breakdown = paid > 0 ? ` (${free.toLocaleString()} Base + ${paid.toLocaleString()} Extra)` : '';
-              const durationInDays = userDetails.planId.durationInDays ?? 30;
-              
-              apiRequestLeftEl.innerHTML = "";
-              apiRequestLeftEl.textContent = `${total.toLocaleString()}${breakdown} API requests in ${durationInDays} days`;
-            }
-
-            // Update Link Container
-            const apiToken = userDetails.apiToken;
-            if (apiToken) {
-               const linkContainer = document.querySelector(".link-container");
-               if (linkContainer) {
-                 const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
-                 linkContainer.href = newLink;
-                 const linkTitle = linkContainer.querySelector(".token-link-title");
-                 if (linkTitle) linkTitle.textContent = newLink;
-               }
-            }
+          if (userDetails) {
+             // Redundant UI updates removed to prevent flickering with fetch-plan-details.js
+             // chart.js now focuses solely on usage statistics and charts.
           }
       } else {
           if (window.handleAuthError && await window.handleAuthError(response)) {

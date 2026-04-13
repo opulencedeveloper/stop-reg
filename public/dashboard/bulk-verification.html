@@ -157,19 +157,23 @@
               </a>
             </div>
 
-            <!-- Upgrade Banner -->
-            <div class="upgrade-banner">
-              <div class="banner-content">
-                <div class="banner-icon">
+            <!-- Upgrade Banner (Standardized Plan Card) -->
+            <div class="upgrade-banner plan-status-card">
+              <div class="banner-content plan-status-card-inner">
+                <div class="banner-icon plan-status-icon">
                   <img src="/assets/icons/bi_stars.svg" alt="Pro" />
                 </div>
-                <p class="banner-text">You are currently on the
-                  <span class="Current-plan-plan">free plan</span>
-                  with
-                  <span class="api-request-left">500 requests per month.</span>
-                  Upgrade to unlock
-                  bulk verification
-                </p>
+                <div class="plan-status-info">
+                  <p class="payments-hd-plan-info">
+                    Currently on <span class="Current-plan-plan">free plan</span>
+                  </p>
+                  <p class="plan-usage-text api-request-left">
+                    <span>500 requests per month.</span>
+                  </p>
+                  <p id="bulk-upgrade-msg" class="bulk-upgrade-msg" style="margin-top: 8px; font-size: 14px; color: #1452CA; font-family: 'Inter_28pt-SemiBold';">
+                    Upgrade to unlock bulk verification
+                  </p>
+                </div>
               </div>
               <button id="bulk-domain-download" style="border: none;" class="banner-btn hidden">Download CSV</button>
             </div>

@@ -1,7 +1,7 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const role = localStorage.getItem("role");
-    const planName = localStorage.getItem("planName");
+    const planName = await window.getUserPlan();
     const upgradeBtn = document.getElementById("dash-plan-upgrade-btn");
     const divider = document.getElementById("dash-plan-divider");
     const seatsHeader = document.getElementById("dash-seats-header");

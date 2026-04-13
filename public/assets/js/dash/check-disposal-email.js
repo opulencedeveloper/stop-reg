@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Disposable (True/False) -->
-                        <div class="result-card ${isDisposable ? 'status-true' : 'status-false'}">
+                        <div class="result-card ${isDisposable ? 'status-false' : 'status-true'}">
                             <div class="result-content">
                                 <h3 class="result-head">Disposable</h3>
                                 <p class="result-desc">
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Relay Domain (True/False) -->
-                        <div class="result-card ${isRelay ? 'status-true' : 'status-false'}">
+                        <div class="result-card ${isRelay ? 'status-false' : 'status-true'}">
                             <div class="result-content">
                                 <h3 class="result-head">Relay domain</h3>
                                 <p class="result-desc">
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Role-based (True/False) -->
-                        <div class="result-card ${isRole ? 'status-true' : 'status-false'}">
+                        <div class="result-card ${isRole ? 'status-false' : 'status-true'}">
                             <div class="result-content">
                                 <h3 class="result-head">Role-based</h3>
                                 <p class="result-desc">
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Alias Detection (True/False) -->
-                        <div class="result-card ${isAlias ? 'status-true' : 'status-false'}">
+                        <div class="result-card ${isAlias ? 'status-false' : 'status-true'}">
                             <div class="result-content">
                                 <h3 class="result-head">Alias Detection</h3>
                                 <p class="result-desc">
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Unresolved (True/False) -->
-                        <div class="result-card ${isUnresolved ? 'status-true' : 'status-false'}">
+                        <div class="result-card ${isUnresolved ? 'status-false' : 'status-true'}">
                             <div class="result-content">
                                 <h3 class="result-head">Unresolved</h3>
                                 <p class="result-desc">

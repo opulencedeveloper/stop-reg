@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Action Functions ---
 
-    const openModal = () => {
-        const planName = localStorage.getItem("planName");
+    const openModal = async () => {
+        const planName = await window.getUserPlan();
         if (planName === "Free") {
             if (typeof iziToast !== 'undefined') {
                 iziToast.info({

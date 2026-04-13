@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Modal Overlays
     const blockOverlay = document.getElementById('block-domain-modal-overlay');
     const reportOverlay = document.getElementById('report-domain-modal-overlay');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isFreePlan = false;
     try {
-        const planName = localStorage.getItem("planName");
+        const planName = await window.getUserPlan();
         if (planName && planName.trim().toLowerCase() === "free") {
             isFreePlan = true;
             document.body.classList.add('free-tier-user');

@@ -747,7 +747,21 @@ canvas {
 
 .api-request-left {
   font-size: 16px;
-  font-weight: 800;
+  line-height: 1.5;
+}
+
+.plan-limit-line {
+  font-weight: 800; /* Prominent boldness for the limit */
+  color: #252525;
+  display: block;
+}
+
+.plan-remaining-line {
+  font-weight: 400; /* Reduced boldness for the remaining tokens */
+  color: #737373; /* Subtle grey */
+  font-size: 14px;
+  display: block;
+  margin-top: 4px;
 }
 
 .Current-plan-upgrade-btn {
