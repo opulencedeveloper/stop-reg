@@ -2,27 +2,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Role-Based Access Control (RBAC) - Hide Restricted Links for "Seat" Users
   const userRole = localStorage.getItem("role");
-  if (userRole === "Seat") {
+  
+  if (userRole && userRole.toLowerCase() === "seat") {
     const restrictedPaths = [
-      "/dashboard/profile",
-      "/dashboard/payments.html"
+      "/dashboard/payments.html",
+      "payments.html"
     ];
 
-    // Hide links in Desktop/Mobile Nav & Quick Links
-    restrictedPaths.forEach(path => {
-      // Select all anchor tags containing the restricted path
-      const links = document.querySelectorAll(`a[href*="${path}"]`);
-      links.forEach(link => {
-        if (link) {
-          link.style.display = "none";
-        }
-      });
-    });
+    const hideRestrictedElements = () => {
 
-    // Also explicitly hide the "Upgrade" button in header/dashboard if it exists (extra safety)
-    const upgradeBtns = document.querySelectorAll('.dash-cur-plan, .btn-light-blue, .payments-hd-sect-one, #dash-plan-upgrade-btn');
-    upgradeBtns.forEach(btn => {
-      if (btn) btn.style.display = "none";
+      restrictedPaths.forEach(path => {
+        // Select all anchor tags containing the restricted paths
+        const links = document.querySelectorAll(`a[href*="${path}"]`);
+        links.forEach(link => {
+          if (link && link.style.display !== "none") {
+            link.style.display = "none";
+          }
+        });
+      });
+
+      // Explicitly hide elements with specific classes/IDs that SEAT users shouldn't see
+      const extraSelectors = [
+          '.dash-cur-plan', 
+          '.btn-light-blue', 
+          '.payments-hd-sect-one', 
+          '#dash-plan-upgrade-btn',
+          '.quick-link-card[href*="payments.html"]'
+      ];
+      
+      extraSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => {
+            if (el && el.style.display !== "none") el.style.display = "none";
+        });
+      });
+    };
+
+    // Run immediately
+    hideRestrictedElements();
+
+    // Also run on a small interval or MutationObserver to handle dynamically loaded content
+    const observer = new MutationObserver(() => {
+        hideRestrictedElements();
     });
+    
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Optional: Redirect if they are on a restricted page directly
+    const currentPath = window.location.pathname;
+    const isRestrictedPath = restrictedPaths.some(path => currentPath.includes(path));
+    if (isRestrictedPath) {
+        window.location.href = "/dashboard/index.html";
+    }
   }
 });

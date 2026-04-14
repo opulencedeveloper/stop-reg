@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const planName = userDetails.planId.name;
                         document.querySelectorAll(".Current-plan-plan").forEach(el => {
                             el.innerHTML = "";
-                            el.textContent = `${planName} Account`;
+                            el.textContent = `Plan name: ${planName}`;
                         });
                         
                         // --- UI Hiding Logic for Payments Page ---
@@ -146,7 +146,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     if (userDetails.planId) {
                         const free = userDetails.extraApiLimitLeft ?? 0;
                         const paid = userDetails.apiRequestLeft ?? 0;
-                        const totalRemaining = paid;
+                        const isPaid = userDetails.planId.name.toLowerCase() !== "free";
+                        const totalRemaining = isPaid ? paid : free;
                         const planLimit = userDetails.planId.apiLimit ?? 0;
                         const durationInDays = userDetails.planId.durationInDays ?? 30;
                         

@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", async () => {
              <span class="expire-text current-plan-date"><span class="stopreg-btn-spinner" style="border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important;"></span></span>
           </div>
           <div class="plan-info-box">
-             <p class="plan-name Current-plan-plan"><span class="stopreg-btn-spinner" style="border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important;"></span></p>
+             <p class="plan-name Current-plan-plan">Plan name: <span class="stopreg-btn-spinner" style="border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important;"></span></p>
              <p class="plan-usage api-request-left"><span class="stopreg-btn-spinner" style="border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important;"></span></p>
           </div>
           <button class="btn btn-light-blue">Upgrade</button>
@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", async () => {
              // Logic: > 0 -> True (Yes/Caution), 0 -> False (No/Red)
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
-             const className = isTrue ? 'status-bool-unresolved' : 'status-bool-no';
+             const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 

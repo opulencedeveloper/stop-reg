@@ -118,13 +118,13 @@
 .header-nav-link .nav-icon img {
     width: 100%;
     height: 100%;
-    /* Assuming SVGs can be colored via filter or we swap src for active white icon */
-    /* If using img tags, we need different images for active state or CSS filters */
+    /* Default inactive color: #252525 */
+    filter: brightness(0) saturate(100%) invert(11%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(97%) contrast(89%);
 }
 
-/* Filter for white icon on active state if SVG is black/grey */
+/* Filter for active state: #FDFDFD (basically white) */
 .header-nav-link.active .nav-icon img {
-    filter: brightness(0) invert(1);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(101%) contrast(100%);
 }
 
 
