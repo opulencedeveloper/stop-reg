@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests", {
+       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests?limit=0", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -476,23 +476,16 @@ document.addEventListener("DOMContentLoaded", async () => {
      let blocked = 0;    
      
      requests.forEach(req => {
-        // 1. Successful Request Logic
-        // IF (unresolved > 0 OR isFreeEmailProvider is true)
-        // THEN add requestCount
-        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            successful += (req.requestCount || 0);
-        }
-
-        // 2. Blocked Request Logic
-        // IF (isDiposableDomain is true OR isRelayDomain is true)
-        // THEN add requestCount
-        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            blocked += (req.requestCount || 0);
-        }
+        // Use categorical counts for perfectly accurate card/chart alignment
+        const sVal = (req.publicProvider || 0) + (req.unresolved || 0);
+        const bVal = (req.disposableDomainsCount || 0) + (req.relayDomains || 0);
+        
+        successful += sVal;
+        blocked += bVal;
      });
      
      // 3. Total
-     // Successful Request + Blocked Request
+     // Balanced sum of components
      total = successful + blocked;
      
      // Re-select total elements
@@ -537,18 +530,9 @@ document.addEventListener("DOMContentLoaded", async () => {
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
-         // Calculate values for this request based on same logic
-         let sVal = 0;
-         let bVal = 0;
-
-         if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            sVal = (req.requestCount || 0);
-         }
-
-         if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            bVal = (req.requestCount || 0);
-         }
-         
+         // Use same categorical logic for trends
+         const sVal = (req.publicProvider || 0) + (req.unresolved || 0);
+         const bVal = (req.disposableDomainsCount || 0) + (req.relayDomains || 0);
          const tVal = sVal + bVal;
 
          if (isToday) {
