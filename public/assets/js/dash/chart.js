@@ -476,12 +476,14 @@ document.addEventListener("DOMContentLoaded", async () => {
      let blocked = 0;    
      
      requests.forEach(req => {
-        // Use categorical counts for perfectly accurate card/chart alignment
-        const sVal = (req.publicProvider || 0) + (req.unresolved || 0);
-        const bVal = (req.disposableDomainsCount || 0) + (req.relayDomains || 0);
-        
-        successful += sVal;
-        blocked += bVal;
+        // Reverting to 'Winner-takes-all' logic as per user preference (Card totals match requestCount)
+        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
+            successful += (req.requestCount || 0);
+        }
+
+        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
+            blocked += (req.requestCount || 0);
+        }
      });
      
      // 3. Total
@@ -530,9 +532,17 @@ document.addEventListener("DOMContentLoaded", async () => {
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
-         // Use same categorical logic for trends
-         const sVal = (req.publicProvider || 0) + (req.unresolved || 0);
-         const bVal = (req.disposableDomainsCount || 0) + (req.relayDomains || 0);
+         // Restore requestCount logic for accurately calculated trends
+         let sVal = 0;
+         let bVal = 0;
+
+         if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
+            sVal = (req.requestCount || 0);
+         }
+
+         if (req.isDiposableDomain === true || req.isRelayDomain === true) {
+            bVal = (req.requestCount || 0);
+         }
          const tVal = sVal + bVal;
 
          if (isToday) {
@@ -550,10 +560,19 @@ document.addEventListener("DOMContentLoaded", async () => {
          if (req.month === currentMonth && req.year === currentYear) {
              const dayIdx = req.day - 1;
              if (dayIdx >= 0 && dayIdx < daysInMonth) {
-                 dataPublic[dayIdx] += (req.publicProvider || 0);
-                 dataDisposable[dayIdx] += (req.disposableDomainsCount || 0);
-                 dataRelay[dayIdx] += (req.relayDomains || 0);
-                 dataUnresolved[dayIdx] += (req.unresolved || 0);
+                 // Fix under-counting: Use requestCount volume for each classification dataset
+                 if (req.isFreeEmailProvider === true) {
+                     dataPublic[dayIdx] += (req.requestCount || 0);
+                 }
+                 if (req.isDiposableDomain === true) {
+                     dataDisposable[dayIdx] += (req.requestCount || 0);
+                 }
+                 if (req.isRelayDomain === true) {
+                     dataRelay[dayIdx] += (req.requestCount || 0);
+                 }
+                 if ((req.unresolved || 0) > 0) {
+                     dataUnresolved[dayIdx] += (req.requestCount || 0);
+                 }
              }
          }
      });
