@@ -34,6 +34,7 @@
     <link href="/assets/css/dashboard/mobile-nav.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/index.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/manage-domains.css" rel="stylesheet" />
+    <link href="/assets/css/dashboard/manage-domains-settings-modal.css" rel="stylesheet" />
     <link href="/assets/css/dashboard/add-seats-modal.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
         integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg=="
@@ -166,10 +167,55 @@
 
                         <!-- Blocked List Section -->
                         <section class="manage-domains-section section-card">
+                            <div class="rules-header">
+                                <div class="rule-item">
+                                    <div class="rule-icon-box">
+                                        <img src="/assets/icons/detection-rule.svg" alt="" />
+                                    </div>
+                                    <div class="rule-content">
+                                        <h3 class="rule-title">Detection Rule</h3>
+                                        <p class="rule-desc">Block domain after <span id="ruleThreshold">5</span>
+                                            registrations</p>
+                                    </div>
+                                </div>
+                                <div class="rule-divider"></div>
+                                <div class="rule-item">
+                                    <div class="rule-icon-box">
+                                        <img src="/assets/icons/lookback-window.svg" alt="" />
+                                    </div>
+                                    <div class="rule-content">
+                                        <h3 class="rule-title">Lookback Window</h3>
+                                        <p class="rule-desc">Count Registrations within <span id="windowDays">3</span>
+                                            days</p>
+                                    </div>
+                                </div>
+                                <div class="rule-divider"></div>
+                                <div class="rule-item">
+                                    <div class="rule-icon-box">
+                                        <img src="/assets/icons/action.svg" alt="" />
+                                    </div>
+                                    <div class="rule-content">
+                                        <h3 class="rule-title">Action</h3>
+                                        <p class="rule-desc" id="ruleActionDesc">Block Domain when threshold is reached</p>
+                                    </div>
+                                </div>
+                                <div class="rule-divider"></div>
+                                <div class="rule-item">
+                                    <div class="rule-icon-box">
+                                        <img src="/assets/icons/unblock-policy.svg" alt="" />
+                                    </div>
+                                    <div class="rule-content">
+                                        <p class="rule-desc"><span id="unblockPolicy">Unblock domain after 3 days</span></p>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="section-header">
                                 <h2 class="section-title">Blocked List</h2>
 
                             </div>
+
                             <div class="section-description-wrapper">
                                 <p class="section-description">
                                     Customize your domain blocking preferences by adding specific domains, which will
@@ -178,10 +224,17 @@
                                     interactions.
                                 </p>
 
-                                <button id="open-block-modal" class="btn-manage btn-block">
-                                    <img src="/assets/icons/empty.svg" alt="" />
-                                    Block a Domain
-                                </button>
+                                <div class="manage-btns-group">
+                                    <button id="open-block-modal" class="btn-manage btn-block">
+                                        <img src="/assets/icons/empty.svg" alt="" />
+                                        Block a Domain
+                                    </button>
+                                    <button id="open-settings-modal" class="btn-manage btn-block">
+                                        <img src="/assets/icons/settings-outline.svg" alt=""
+                                            class="btn-icon-settings" />
+                                        Settings
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="req-table-container">
@@ -603,6 +656,112 @@
             </div>
         </div>
     </div>
+
+    <!-- Settings Modal Start -->
+    <div id="settings-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title">
+        <div class="settings-modal-container">
+            <div class="settings-header">
+                <div class="settings-header-text">
+                    <h2 id="settings-modal-title">Settings</h2>
+                    <p>Domain Abuse Shield settings</p>
+                </div>
+                <button id="close-settings-modal" class="settings-close-btn" aria-label="Close modal">
+                    <img src="/assets/icons/close.svg" alt="Close" />
+                </button>
+            </div>
+
+            <form id="settings-form">
+                <div class="settings-form-group">
+                    <label class="settings-label">Detection rule</label>
+                    <div class="detection-rule-row">
+                        <span>Block Domain after</span>
+                        <div class="settings-select-wrapper">
+                            <select class="settings-select" id="rule-threshold">
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                        <span>Registrations</span>
+                    </div>
+                </div>
+
+                <div class="settings-form-group">
+                    <label class="settings-label" for="registrations-window">Count Registrations within</label>
+                    <div class="settings-select-wrapper">
+                        <select class="settings-select" id="registrations-window">
+                            <option value="1 day">1 day</option>
+                            <option value="3 days" selected>3 days</option>
+                            <option value="7 days">7 days</option>
+                            <option value="30 days">30 days</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-form-group">
+                    <label class="settings-label">Action to take when threshold is reached</label>
+                    <div class="radio-options-group">
+                        <div class="radio-option active" data-value="notify">
+                            <div class="radio-indicator">
+                                <img src="/assets/icons/radio-on.svg" alt="" class="radio-on-icon" />
+                                <img src="/assets/icons/radio-off.svg" alt="" class="radio-off-icon"
+                                    style="display: none;" />
+                            </div>
+                            <div class="radio-text-content">
+                                <span class="radio-title">Notify only</span>
+                                <p class="radio-desc">Send an email alert with domain details. No block is created, the
+                                    domain stays allowed for future registrations</p>
+                            </div>
+                        </div>
+                        <div class="radio-option" data-value="block">
+                            <div class="radio-indicator">
+                                <img src="/assets/icons/radio-on.svg" alt="" class="radio-on-icon"
+                                    style="display: none;" />
+                                <img src="/assets/icons/radio-off.svg" alt="" class="radio-off-icon" />
+                            </div>
+                            <div class="radio-text-content">
+                                <span class="radio-title">Block Domain</span>
+                                <p class="radio-desc">Automatically set spam: true in the API response. Any future
+                                    registration from this domain returns blocked status</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="detection-action" id="detection-action" value="notify">
+                </div>
+
+                <div class="settings-form-group">
+                    <label class="settings-label" for="unblock-after">Unblock domain after</label>
+                    <div class="settings-select-wrapper">
+                        <select class="settings-select" id="unblock-after">
+                            <option value="1">24 hours</option>
+                            <option value="3" selected>3 days</option>
+                            <option value="7">7 days</option>
+                            <option value="0">Permanently block</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="important-limitation">
+                    <div class="caution-icon">
+                        <img src="/assets/icons/caution.svg" alt="Important" />
+                    </div>
+                    <div class="caution-text-block">
+                        <span class="caution-title">Important limitation</span>
+                        <p class="caution-desc">This option in the Domain Abuse Shield Settings does not block public
+                            email addresses (e.g., Gmail, Yahoo, Outlook), relay emails, or disposable email providers.
+                            The Domain Abuse Shield will only monitor unresolved domains and act according to your
+                            settings.</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="settings-save-btn">Save Settings</button>
+            </form>
+        </div>
+    </div>
+    <!-- Settings Modal End -->
 
 </body>
 

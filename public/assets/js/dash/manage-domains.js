@@ -146,13 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnAttrs = `data-id="${domainId}" data-domain="${domainName.replace(/"/g, '&quot;')}" data-comment="${domainComment.replace(/"/g, '&quot;')}" data-status="${currentStatus}"`;
 
             if (status === 'blocked') {
+                const isAuto = currentStatus === 'auto_blocked';
                 return `
                     <tr>
                         <td>${domainName || "Unknown"}</td>
                         <td>
                             <div class="status-badge badge-blocked">
                                 <img src="/assets/icons/block-outline.svg" alt="" />
-                                Blocked
+                                ${isAuto ? 'Auto Blocked' : 'Blocked'}
                             </div>
                         </td>
                         <td class="comment-td">${domainComment || "-"}</td>

@@ -3,16 +3,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const blockOverlay = document.getElementById('block-domain-modal-overlay');
     const reportOverlay = document.getElementById('report-domain-modal-overlay');
     const allowOverlay = document.getElementById('allow-domain-modal-overlay');
+    const settingsOverlay = document.getElementById('settings-modal-overlay');
 
     // Forms
     const blockForm = document.getElementById('block-domain-form');
     const reportForm = document.getElementById('report-domain-form');
     const allowForm = document.getElementById('allow-domain-form');
+    const settingsForm = document.getElementById('settings-form');
 
     // Buttons that open modals
     const openBlockBtn = document.getElementById('open-block-modal');
     const openAllowBtn = document.getElementById('open-allow-modal');
     const openReportBtn = document.getElementById('open-report-modal');
+    const openSettingsBtn = document.getElementById('open-settings-modal');
 
     let currentEditId = null;
 
@@ -174,9 +177,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('report-bottom-close')?.addEventListener('click', () => closeModal(reportOverlay));
     document.getElementById('close-allow-modal')?.addEventListener('click', () => closeModal(allowOverlay));
     document.getElementById('allow-bottom-close')?.addEventListener('click', () => closeModal(allowOverlay));
+    document.getElementById('close-settings-modal')?.addEventListener('click', () => closeModal(settingsOverlay));
 
     // --- Overlay Click ---
-    [blockOverlay, reportOverlay, allowOverlay].forEach(overlay => {
+    [blockOverlay, reportOverlay, allowOverlay, settingsOverlay].forEach(overlay => {
         if(overlay) {
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) closeModal(overlay);
@@ -187,7 +191,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Escape Key ---
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            [blockOverlay, reportOverlay, allowOverlay].forEach(closeModal);
+            [blockOverlay, reportOverlay, allowOverlay, settingsOverlay].forEach(closeModal);
         }
     });
 
@@ -285,4 +289,176 @@ document.addEventListener('DOMContentLoaded', async () => {
     blockForm?.addEventListener('submit', (e) => handleDomainFormSubmit(e, blockOverlay, blockForm, 'blocked'));
     allowForm?.addEventListener('submit', (e) => handleDomainFormSubmit(e, allowOverlay, allowForm, 'allowed'));
     reportForm?.addEventListener('submit', (e) => handleDomainFormSubmit(e, reportOverlay, reportForm, 'reported'));
+
+    // --- Settings Modal Logic ---
+    const radioOptions = settingsOverlay?.querySelectorAll('.radio-option');
+    const detectionActionInput = document.getElementById('detection-action');
+
+    async function fetchAbuseSettings() {
+        const token = localStorage.getItem("authToken");
+        if (!token) return;
+
+        try {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/settings", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            const { data } = await response.json();
+            
+            if (data) {
+                // Populate threshold
+                const thresholdSelect = document.getElementById('rule-threshold');
+                if (thresholdSelect) thresholdSelect.value = data.ruleThreshold || 5;
+
+                // Populate window
+                const windowSelect = document.getElementById('registrations-window');
+                if (windowSelect) windowSelect.value = `${data.windowDays || 3} days`;
+
+                // Populate action
+                const action = data.action || 'notify';
+                if (detectionActionInput) detectionActionInput.value = action;
+                
+                radioOptions.forEach(opt => {
+                    const isActive = opt.dataset.value === action;
+                    opt.classList.toggle('active', isActive);
+                    opt.querySelector('.radio-on-icon').style.display = isActive ? 'block' : 'none';
+                    opt.querySelector('.radio-off-icon').style.display = isActive ? 'none' : 'block';
+                });
+
+                // Populate unblock
+                const unblockSelect = document.getElementById('unblock-after');
+                if (unblockSelect) unblockSelect.value = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
+
+                // --- Update Summary Header ---
+                const headerThreshold = document.getElementById('ruleThreshold');
+                const headerWindow = document.getElementById('windowDays');
+                const headerUnblockPolicy = document.getElementById('unblockPolicy');
+                const actionDesc = document.querySelector('.rules-header .rule-item:nth-child(5) .rule-desc');
+
+                if (headerThreshold) headerThreshold.textContent = data.ruleThreshold || 5;
+                if (headerWindow) headerWindow.textContent = data.windowDays || 3;
+                
+                if (headerUnblockPolicy) {
+                    const days = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
+                    if (days === 0) {
+                        headerUnblockPolicy.textContent = "Permanently barred";
+                    } else if (days === 1) {
+                        headerUnblockPolicy.textContent = "Unblock domain after 24 hours";
+                    } else {
+                        headerUnblockPolicy.textContent = `Unblock domain after ${days} days`;
+                    }
+                }
+                
+                if (actionDesc) {
+                    actionDesc.textContent = data.action === 'block' 
+                        ? 'Block Domain when threshold is reached' 
+                        : 'Notify Only when threshold is reached';
+                }
+            }
+        } catch (err) {
+            console.error("Error fetching settings:", err);
+        }
+    }
+
+    // Initialize settings on load
+    fetchAbuseSettings();
+
+    radioOptions?.forEach(option => {
+        option.addEventListener('click', () => {
+            radioOptions.forEach(opt => {
+                opt.classList.remove('active');
+                opt.querySelector('.radio-on-icon').style.display = 'none';
+                opt.querySelector('.radio-off-icon').style.display = 'block';
+            });
+            
+            option.classList.add('active');
+            option.querySelector('.radio-on-icon').style.display = 'block';
+            option.querySelector('.radio-off-icon').style.display = 'none';
+            
+            if (detectionActionInput) {
+                detectionActionInput.value = option.dataset.value;
+            }
+        });
+    });
+
+    openSettingsBtn?.addEventListener('click', () => {
+        fetchAbuseSettings();
+        openModal(settingsOverlay);
+    });
+
+    settingsForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = settingsForm.querySelector("button[type='submit']");
+        const originalText = btn.innerHTML;
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "You are not logged in.", position: "topRight" });
+            return;
+        }
+
+        const ruleThreshold = parseInt(document.getElementById('rule-threshold')?.value);
+        const windowDays = parseInt(document.getElementById('registrations-window')?.value);
+        const unblockAfterDays = parseInt(document.getElementById('unblock-after')?.value);
+        const action = detectionActionInput?.value;
+
+        btn.disabled = true;
+        btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Saving...`;
+        
+        try {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/settings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    ruleThreshold,
+                    windowDays,
+                    action,
+                    unblockAfterDays
+                })
+            });
+
+            if (response.ok) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.success({ message: "Settings saved successfully!", position: "topRight" });
+                }
+
+                // Update summary header immediately without refresh
+                const headerThreshold = document.getElementById('ruleThreshold');
+                const headerWindow = document.getElementById('windowDays');
+                const headerUnblockPolicy = document.getElementById('unblockPolicy');
+                const headerActionDesc = document.getElementById('ruleActionDesc');
+
+                if (headerThreshold) headerThreshold.textContent = ruleThreshold;
+                if (headerWindow) headerWindow.textContent = windowDays;
+                
+                if (headerUnblockPolicy) {
+                    if (unblockAfterDays === 0) {
+                        headerUnblockPolicy.textContent = "Permanently barred";
+                    } else if (unblockAfterDays === 1) {
+                        headerUnblockPolicy.textContent = "Unblock domain after 24 hours";
+                    } else {
+                        headerUnblockPolicy.textContent = `Unblock domain after ${unblockAfterDays} days`;
+                    }
+                }
+
+                if (headerActionDesc) {
+                    headerActionDesc.textContent = action === 'block' 
+                        ? 'Block Domain when threshold is reached' 
+                        : 'Notify Only when threshold is reached';
+                }
+
+                closeModal(settingsOverlay);
+            } else {
+                throw new Error("Failed to save settings");
+            }
+        } catch (err) {
+            console.error(err);
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Failed to save settings", position: "topRight" });
+        } finally {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    });
 });
