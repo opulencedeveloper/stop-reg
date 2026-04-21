@@ -325,8 +325,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 // Populate unblock
-                const unblockSelect = document.getElementById('unblock-after');
-                if (unblockSelect) unblockSelect.value = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
+                // const unblockSelect = document.getElementById('unblock-after');
+                // if (unblockSelect) unblockSelect.value = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
 
                 // --- Update Summary Header ---
                 const headerThreshold = document.getElementById('ruleThreshold');
@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (headerThreshold) headerThreshold.textContent = data.ruleThreshold || 5;
                 if (headerWindow) headerWindow.textContent = data.windowDays || 3;
                 
+                /*
                 if (headerUnblockPolicy) {
                     const days = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
                     if (days === 0) {
@@ -347,6 +348,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         headerUnblockPolicy.textContent = `Unblock domain after ${days} days`;
                     }
                 }
+                */
                 
                 if (actionDesc) {
                     actionDesc.textContent = data.action === 'block' 
@@ -398,7 +400,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const ruleThreshold = parseInt(document.getElementById('rule-threshold')?.value);
         const windowDays = parseInt(document.getElementById('registrations-window')?.value);
-        const unblockAfterDays = parseInt(document.getElementById('unblock-after')?.value);
+        // const unblockAfterDays = parseInt(document.getElementById('unblock-after')?.value);
         const action = detectionActionInput?.value;
 
         btn.disabled = true;
@@ -415,7 +417,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ruleThreshold,
                     windowDays,
                     action,
-                    unblockAfterDays
+                    // unblockAfterDays
                 })
             });
 
@@ -433,6 +435,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (headerThreshold) headerThreshold.textContent = ruleThreshold;
                 if (headerWindow) headerWindow.textContent = windowDays;
                 
+                /*
                 if (headerUnblockPolicy) {
                     if (unblockAfterDays === 0) {
                         headerUnblockPolicy.textContent = "Permanently barred";
@@ -442,6 +445,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         headerUnblockPolicy.textContent = `Unblock domain after ${unblockAfterDays} days`;
                     }
                 }
+                */
 
                 if (headerActionDesc) {
                     headerActionDesc.textContent = action === 'block' 
