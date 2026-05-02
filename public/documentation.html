@@ -386,7 +386,8 @@
               </ol>
               <p>
                 The API endpoint is simple and secure. You'll use a
-                GET request with your API token in the header and the email/domain in the query string. Continue reading the
+                GET request with your API token in the header and the email/domain in the query string. Continue reading
+                the
                 next sections to learn about
                 authentication, endpoints, and code examples.
               </p>
@@ -614,7 +615,8 @@
                       <td>A short string indicating the result state of the API operation.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">description</span> <span class="type-badge type-string">String</span></td>
+                      <td><span class="field-name">description</span> <span class="type-badge type-string">String</span>
+                      </td>
                       <td>Text</td>
                       <td>A human-readable summary of the verification result or the specific reason for an error.</td>
                     </tr>
@@ -646,14 +648,19 @@
                       <td>The root domain extracted from your input.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">domain_age_in_days</span> <span class="type-badge type-integer">Integer</span></td>
+                      <td><span class="field-name">domain_age_in_days</span> <span
+                          class="type-badge type-integer">Integer</span></td>
                       <td>Age</td>
-                      <td><strong>Industrial Trust Metric.</strong> The number of days since the domain was first registered. Newly registered domains (e.g., < 30 days) have a near-perfect correlation with malicious activity.</td>
+                      <td><strong>Trust Metric.</strong> The number of days since the domain was first registered. Newly
+                        registered domains (e.g., < 30 days) have a near-perfect correlation with malicious
+                          activity.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">provider</span> <span class="type-badge type-string">String</span></td>
+                      <td><span class="field-name">provider</span> <span class="type-badge type-string">String</span>
+                      </td>
                       <td>Host</td>
-                      <td>The primary entity providing email infrastructure for this domain (e.g., "Google", "Microsoft").</td>
+                      <td>The primary entity providing email infrastructure for this domain (e.g., "Google",
+                        "Microsoft").</td>
                     </tr>
                   </tbody>
                 </table>
@@ -671,19 +678,22 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">email | domain</span> <span class="type-badge type-string">String</span></td>
+                      <td><span class="field-name">email | domain</span> <span
+                          class="type-badge type-string">String</span></td>
                       <td>Raw Value</td>
                       <td>The original input provided in your request. Use this to map the response back to your local
                         records.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">normalized</span> <span class="type-badge type-string">String</span></td>
+                      <td><span class="field-name">normalized</span> <span class="type-badge type-string">String</span>
+                      </td>
                       <td>Canonical</td>
                       <td>The standardized version of your input. This value is lowercased, trimmed, and stripped of
                         sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">suggestion</span> <span class="type-badge type-string">String</span></td>
+                      <td><span class="field-name">suggestion</span> <span class="type-badge type-string">String</span>
+                      </td>
                       <td>Correction</td>
                       <td>If a common typo is detected (e.g., <i>gnail.com</i>), this provides the corrected domain
                         (<i>gmail.com</i>). Returns <code>null</code> if no correction is needed.</td>
@@ -704,7 +714,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">mx_found</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">mx_found</span> <span class="type-badge type-boolean">Boolean</span>
+                      </td>
                       <td>Status</td>
                       <td><code>true</code> if valid Mail Exchange (MX) records were found for the domain. If
                         <code>false</code>, the email is likely undeliverable.
@@ -717,9 +728,11 @@
                       <td>An array of hostnames resolved from the domain's DNS settings.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span></td>
+                      <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span>
+                      </td>
                       <td>Providers</td>
-                      <td><strong>Multi-Provider Intelligence.</strong> A prioritized list of all infrastructure providers detected behind the email (e.g., Zoho + Namecheap). Contains:
+                      <td><strong>Multi-Provider Intelligence.</strong> A prioritized list of all infrastructure
+                        providers detected behind the email (e.g., Zoho + Namecheap). Contains:
                         <ul class="field-desc">
                           <li><strong>slug:</strong> Identifier (e.g., "zoho corporation").</li>
                           <li><strong>service_type:</strong> <code>mailbox</code>, <code>hosting</code>,
@@ -745,36 +758,43 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">is_disposable</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_disposable</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>High Risk</td>
                       <td><strong>Critical Flag.</strong> <code>true</code> if the domain belongs to a temporary,
                         throwaway, or 10-minute mail provider. High correlation with fraud.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_relay</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_relay</span> <span class="type-badge type-boolean">Boolean</span>
+                      </td>
                       <td>Neutral</td>
                       <td><code>true</code> if the provider is a forwarding service or alias system (e.g., iCloud Hide
                         My Email). Common among privacy-conscious users.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_unresolved</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_unresolved</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>Caution</td>
-                      <td><strong>Zero-Trust Flag.</strong> <code>true</code> for unknown, non-major domains that proxy through professional mail hosts. High correlation with "Stealth Disposable" providers.</td>
+                      <td><strong>Zero-Trust Flag.</strong> <code>true</code> for unknown, non-major domains that proxy
+                        through professional mail hosts. High correlation with "Stealth Disposable" providers.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span>
+                      </td>
                       <td>Low Risk</td>
                       <td><code>true</code> for common free consumers providers (Gmail, Outlook, Yahoo). Generally safe
                         for B2C registrations.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_role_based</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_role_based</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>Caution</td>
                       <td><code>true</code> for address intended for groups (e.g., <i>admin@</i>, <i>support@</i>). Not
                         ideal for personal account signups.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_alias</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_alias</span> <span class="type-badge type-boolean">Boolean</span>
+                      </td>
                       <td>Technical</td>
                       <td><code>true</code> if sub-addressing was detected (e.g., <i>user+tag@gmail.com</i>). Often used
                         to track source of signups.</td>
@@ -795,13 +815,15 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">blocklisted</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">blocklisted</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>Custom</td>
                       <td><code>true</code> if the input matches a domain or email explicitly blocked in your StopReg
                         Dashboard.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">allowlisted</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">allowlisted</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>Custom</td>
                       <td><code>true</code> if the input matches a trusted domain in your Dashboard, bypassing all
                         disposable checks.</td>
@@ -888,14 +910,11 @@
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">import</span> requests
 
-<span class="variable">api_token</span> = <span class="string">'YOUR_API_TOKEN'</span>
-<span class="variable">email</span> = <span class="string">'test@disposable.com'</span>
+url = f'https://api.stopreg.com/api/v1/verify/email/{email}'
 
-<span class="variable">url</span> = <span class="string">'https://api.stopreg.com/api/v1/verify/email?email='</span> + <span class="variable">email</span>
-
-<span class="variable">response</span> = requests.<span class="function">get</span>(
-    <span class="variable">url</span>,
-    <span class="variable">headers</span>={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+response = requests.get(
+    url,
+    headers={'x-api-token': api_token}
 )
 
 <span class="variable">body</span> = <span class="variable">response</span>.<span class="function">json</span>()
@@ -914,10 +933,10 @@
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">&lt;?php</span>
 
-<span class="variable">$apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
-<span class="variable">$email</span> = <span class="string">'test@disposable.com'</span>;
+$apiToken = 'YOUR_API_TOKEN';
+$email = 'test@disposable.com';
 
-<span class="variable">$url</span> = <span class="string">"https://api.stopreg.com/api/v1/verify/email?email="</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>);
+$url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
 <span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="variable">$url</span>);
 
