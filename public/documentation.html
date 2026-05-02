@@ -470,7 +470,7 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre
-                    class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/email?email=test@example.com</code></pre>
+                    class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/email/{email}</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -482,29 +482,29 @@
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre
-                    class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/domain?domain=example.com</code></pre>
+                    class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/domain/{domain}</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
                   <span>Copy</span>
                 </button>
               </div>
-              <h3>Query Parameters</h3>
+              <h3>Path Parameters</h3>
               <ul>
                 <li>
-                  <strong>email</strong> (string, required for /email): The
-                  email address to validate. Pass this in the URL.
+                  <strong>{email}</strong> (string, required for /email): The
+                  email address to validate.
                 </li>
                 <li>
-                  <strong>domain</strong> (string, required for /domain): The
-                  domain name to validate (e.g., example.com). Pass this in the URL.
+                  <strong>{domain}</strong> (string, required for /domain): The
+                  domain name to validate (e.g., example.com).
                 </li>
               </ul>
               <h3>Request Examples</h3>
               <p><strong>Email Verification</strong></p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/email?email=test@example.com
+                  <pre class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/email/test@example.com
 
 <span class="keyword">Headers:</span>
   <span class="variable">x-api-token</span>: <span class="string">YOUR_API_TOKEN</span></code></pre>
@@ -518,7 +518,7 @@
               <p><strong>Domain Verification</strong></p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/domain?domain=example.com
+                  <pre class="code-block"><code><span class="keyword">GET</span> https://api.stopreg.com/api/v1/verify/domain/example.com
 
 <span class="keyword">Headers:</span>
   <span class="variable">x-api-token</span>: <span class="string">YOUR_API_TOKEN</span></code></pre>
@@ -885,7 +885,7 @@
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
 <span class="keyword">const</span> <span class="variable">email</span> = <span class="string">'test@disposable.com'</span>;
 
-<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">`https://api.stopreg.com/api/v1/verify/email?email=${email}`</span>, {
+<span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="function">fetch</span>(<span class="string">`https://api.stopreg.com/api/v1/verify/email/${email}`</span>, {
     <span class="variable">method</span>: <span class="string">'GET'</span>,
     <span class="variable">headers</span>: {
       <span class="string">'x-api-token'</span>: <span class="variable">apiToken</span>,
@@ -964,7 +964,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">curl</span> <span class="keyword">-X</span> <span class="keyword">GET</span> \
-  <span class="string">"https://api.stopreg.com/api/v1/verify/email?email=test@disposable.com"</span> \
+  <span class="string">"https://api.stopreg.com/api/v1/verify/email/test@disposable.com"</span> \
   <span class="keyword">-H</span> <span class="string">"x-api-token: YOUR_API_TOKEN"</span></code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
