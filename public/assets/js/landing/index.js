@@ -758,11 +758,12 @@ const apiToken = 'YOUR_API_TOKEN';
 const email = 'test@example.com';
 
 const response = await fetch(
-  \` https://api.stopreg.com/api/v1/check/\${apiToken}?email=\${email}\`,
+  \`https://api.stopreg.com/api/v1/verify/email/\${email}\`,
   {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'x-api-token': apiToken,
     },
   }
 );
@@ -770,17 +771,19 @@ const response = await fetch(
 const data = await response.json();
 console.log(data);`,
     curl: `curl -X GET \\
-  "https://api.stopreg.com/api/v1/check/YOUR_API_TOKEN?email=test@example.com" \\
-  -H "Content-Type: application/json"`,
+  "https://api.stopreg.com/api/v1/verify/email/test@example.com" \\
+  -H "Content-Type: application/json" \\
+  -H "x-api-token: YOUR_API_TOKEN"`,
     python: `import requests
 
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
 
-url = f' https://api.stopreg.com/api/v1/check/{api_token}?email={email}'
+url = f'https://api.stopreg.com/api/v1/verify/email/{email}'
 
 response = requests.get(url, headers={
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'x-api-token': api_token
 })
 
 data = response.json()
@@ -790,12 +793,13 @@ print(data)`,
 $apiToken = 'YOUR_API_TOKEN';
 $email = 'test@example.com';
 
-$url = "https://api.stopreg.com/api/v1/check/{$apiToken}?email=" . urlencode($email);
+$url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/json'
+    'Content-Type: application/json',
+    'x-api-token: ' . $apiToken
 ]);
 
 $response = curl_exec($ch);
@@ -817,14 +821,11 @@ func main() {
     apiToken := "YOUR_API_TOKEN"
     email := "test@example.com"
     
-    baseURL := "https://api.stopreg.com/api/v1/check/"
-    params := url.Values{}
-    params.Add("email", email)
-    
-    reqURL := baseURL + apiToken + "?" + params.Encode()
+    reqURL := "https://api.stopreg.com/api/v1/verify/email/" + url.PathEscape(email)
     
     req, _ := http.NewRequest("GET", reqURL, nil)
     req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("x-api-token", apiToken)
     
     client := &http.Client{}
     resp, _ := client.Do(req)
@@ -846,13 +847,14 @@ public class ApiCheck {
         String apiToken = "YOUR_API_TOKEN";
         String email = "test@example.com";
         
-        String urlString = "https://api.stopreg.com/api/v1/check/" 
-            + apiToken + "?email=" + URLEncoder.encode(email, "UTF-8");
+        String urlString = "https://api.stopreg.com/api/v1/verify/email/" 
+            + URLEncoder.encode(email, "UTF-8");
         
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("x-api-token", apiToken);
         
         BufferedReader in = new BufferedReader(
             new InputStreamReader(conn.getInputStream())
@@ -878,11 +880,12 @@ class Program
         string apiToken = "YOUR_API_TOKEN";
         string email = "test@example.com";
         
-        string url = $"https://api.stopreg.com/api/v1/check/{apiToken}?email={Uri.EscapeDataString(email)}";
+        string url = $"https://api.stopreg.com/api/v1/verify/email/{Uri.EscapeDataString(email)}";
         
         using (HttpClient client = new HttpClient())
         {
             client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            client.DefaultRequestHeaders.Add("x-api-token", apiToken);
             
             HttpResponseMessage response = await client.GetAsync(url);
             string data = await response.Content.ReadAsStringAsync();

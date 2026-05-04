@@ -113,6 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
+    const calculateDays = (dateString) => {
+        if (!dateString || dateString === "null") return "N/A";
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "N/A";
+        const now = new Date();
+        const diff = now - date;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        return days < 0 ? 0 : days;
+    };
+
     // --- DATA LOADING & RENDERING ---
     async function loadData(type = "username", page = 1, limit = 10, search = "") {
         showLoading();
@@ -151,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!domains || domains.length === 0) {
-            const colspan = type === "username" ? 2 : 3;
+            const colspan = type === "username" ? 3 : 4;
             tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align: center; padding: 40px; color: #737373;">No ${type} records found.</td></tr>`;
             return;
         }
@@ -161,6 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `
                     <tr>
                         <td class="username-col">${d.value}</td>
+                        <td>${calculateDays(d.domain_age)} days</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">
@@ -183,6 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <tr>
                         <td>${d.provider || "Unknown"}</td>
                         <td>${d.value}</td>
+                        <td>${calculateDays(d.domain_age)} days</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">

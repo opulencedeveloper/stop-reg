@@ -311,7 +311,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // Populate window
                 const windowSelect = document.getElementById('registrations-window');
-                if (windowSelect) windowSelect.value = `${data.windowDays || 3} days`;
+                if (windowSelect) {
+                    const days = data.windowDays || 3;
+                    windowSelect.value = days === 1 ? '1 day' : `${days} days`;
+                }
 
                 // Populate action
                 const action = data.action || 'notify';

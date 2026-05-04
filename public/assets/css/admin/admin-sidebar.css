@@ -60,6 +60,8 @@
   height: 24px;
   object-fit: contain;
   transition: filter 0.2s ease;
+  /* Default filter to make icons match #737373 (gray) */
+  filter: brightness(0) saturate(100%) invert(48%) sepia(0%) saturate(301%) hue-rotate(185deg) brightness(91%) contrast(85%);
 }
 
 .admin-nav-link.active .nav-icon {

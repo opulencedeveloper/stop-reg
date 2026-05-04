@@ -47,6 +47,10 @@ body {
   color: #049286 !important;
 }
 
+.text-right {
+  text-align: right !important;
+}
+
 /* Stats Row */
 .admin-stats-row {
   display: flex;
@@ -272,8 +276,12 @@ body {
   background-color: #1452CA;
 }
 
-.admin-table-container {
-  overflow-x: auto;
+.admin-table-container,
+.users-table-wrapper,
+.domain-mgmt-table-wrapper,
+.domains-table-wrapper,
+.mx-table-wrapper {
+  overflow: visible; /* Allow dropdowns to overflow on desktop */
   width: 100%;
 }
 
@@ -487,6 +495,15 @@ body {
 @media screen and (max-width: 768px) {
   .admin-content {
     padding: 16px;
+  }
+
+  .admin-table-container,
+  .users-table-wrapper,
+  .domain-mgmt-table-wrapper,
+  .domains-table-wrapper,
+  .mx-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .admin-stats-row {

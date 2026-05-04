@@ -5,8 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Admin MX Matching - StopReg</title>
-  <meta name="description" content="StopReg Admin MX Matching Management." />
+  <title>Admin Misc - StopReg</title>
+  <meta name="description" content="StopReg Admin Misc Management." />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
@@ -25,9 +25,9 @@
   <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
-  <link href="/assets/css/admin/mx-matching/mx-matching.css" rel="stylesheet" />
+  <link href="/assets/css/admin/misc.css" rel="stylesheet" />
 
-  <script src="/assets/js/admin/mx-matching/mx-matching.js" defer></script>
+  <script src="/assets/js/admin/misc.js" defer></script>
   <script src="/assets/js/admin/admin-main.js" defer></script>
 </head>
 
@@ -67,11 +67,11 @@
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link active">
           <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
           <span>Misc</span>
         </a>
@@ -118,11 +118,11 @@
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>Domain</span>
         </a>
-        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link active">
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
           <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
           <span>MX Matching</span>
         </a>
-        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link active">
           <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
           <span>Misc</span>
         </a>
@@ -147,7 +147,7 @@
             <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
           </a>
         </div>
-        <h1 class="admin-page-title">My Account</h1>
+        <h1 class="admin-page-title">Misc Management</h1>
         <div class="admin-header-right">
           <div class="admin-avatar">
             <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
@@ -160,136 +160,89 @@
 
       <!-- Admin Content -->
       <main class="admin-content">
-        <div class="mx-matching-page-container">
-          <!-- MX Header -->
-          <div class="mx-header">
-            <div class="mx-header-top">
-              <h2>MX matching</h2>
-              <button class="add-more-btn" id="admin-add-more-btn">Add more</button>
+        <div class="misc-page-container">
+          <!-- Misc Header -->
+          <div class="misc-header">
+            <div class="misc-header-top">
+              <h2>Miscellaneous Settings</h2>
             </div>
 
-            <div class="mx-header-bottom">
-              <div class="mx-tabs">
-                <button class="tab-btn active" data-tab="disposable">Disposable</button>
-                <button class="tab-btn" data-tab="relay">Relay</button>
-                <button class="tab-btn" data-tab="mailbox">Mailbox</button>
-                <button class="tab-btn" data-tab="hosting">Hosting</button>
-                <button class="tab-btn" data-tab="email_api">Email API</button>
-              </div>
-
-              <div class="mx-search-wrapper">
-                <div class="mx-search-box">
-                  <img src="/assets/icons/search.svg" alt="" />
-                  <input type="text" placeholder="Search" id="mx-search-input" />
-                  <span class="mx-search-shortcut">&#8984; 1</span>
-                </div>
+            <div class="misc-header-bottom">
+              <div class="misc-tabs">
+                <button class="tab-btn active" data-tab="subdomain">Subdomain Providers</button>
+                <button class="tab-btn" data-tab="rdap">RDAP Mappings</button>
+                <button class="tab-btn" data-tab="rdap-ip">RDAP IPs</button>
               </div>
             </div>
           </div>
 
           <!-- Loading Spinner -->
-          <div class="chart-loading-state" id="admin-mx-loading" style="display: none;">
+          <div class="chart-loading-state" id="admin-misc-loading" style="display: none;">
             <div class="chart-spinner"></div>
             <span class="chart-loading-text">Loading data...</span>
           </div>
 
           <!-- Table Section -->
-          <div id="admin-mx-error-target">
-            <div class="mx-table-container">
-              <!-- Disposable Content -->
-              <div class="tab-content active" id="disposable-content">
-                <div class="mx-table-wrapper">
+          <div id="admin-misc-error-target">
+            <div class="misc-table-container">
+              <!-- Subdomain Content -->
+              <div class="tab-content active" id="subdomain-content">
+                <div class="misc-table-action">
+                    <button class="add-more-btn" id="add-subdomain-btn">Add Provider</button>
+                </div>
+                <div class="misc-table-wrapper">
                   <table class="admin-table">
                     <thead>
                       <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
+                        <th>Provider Domain</th>
+                        <th class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="disposable-tbody">
+                    <tbody id="subdomain-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <!-- Relay Content -->
-              <div class="tab-content" id="relay-content">
-                <div class="mx-table-wrapper">
+              <!-- RDAP Content -->
+              <div class="tab-content" id="rdap-content">
+                <div class="misc-table-action">
+                    <button class="add-more-btn" id="add-rdap-btn">Add RDAP</button>
+                </div>
+                <div class="misc-table-wrapper">
                   <table class="admin-table">
                     <thead>
                       <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
+                        <th>Public Suffix</th>
+                        <th>RDAP URL</th>
+                        <th class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="relay-tbody">
+                    <tbody id="rdap-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
                 </div>
               </div>
 
-              <!-- Mailbox Content -->
-              <div class="tab-content" id="mailbox-content">
-                <div class="mx-table-wrapper">
-                  <table class="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="mailbox-tbody">
-                      <!-- Data injected here -->
-                    </tbody>
-                  </table>
+              <!-- RDAP IP Content -->
+              <div class="tab-content" id="rdap-ip-content">
+                <div class="misc-table-action">
+                    <button class="add-more-btn" id="add-rdap-ip-btn">Add IP</button>
                 </div>
-              </div>
-
-              <!-- Hosting Content -->
-              <div class="tab-content" id="hosting-content">
-                <div class="mx-table-wrapper">
+                <div class="misc-table-wrapper">
                   <table class="admin-table">
                     <thead>
                       <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
+                        <th>Host / IP</th>
+                        <th>Port</th>
+                        <th>Note</th>
+                        <th>Status</th>
+                        <th class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="hosting-tbody">
-                      <!-- Data injected here -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Email API Content -->
-              <div class="tab-content" id="email_api-content">
-                <div class="mx-table-wrapper">
-                  <table class="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="email_api-tbody">
+                    <tbody id="rdap-ip-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
@@ -298,7 +251,7 @@
             </div>
 
             <!-- Footer Section -->
-            <div class="mx-footer" id="mx-pagination">
+            <div class="misc-footer" id="misc-pagination">
               <div class="per-page-selector">
                 <select id="per-page-select">
                   <option value="10">10 per page</option>
@@ -316,82 +269,132 @@
     </div>
   </div>
 
-  <!-- Add More Modal (Now also handles Edit) -->
-  <div class="mx-modal-overlay" id="add-more-modal">
-    <div class="mx-modal-container">
-      <div class="mx-modal-header">
-        <h3 id="modal-title">Add More</h3>
-        <button class="mx-modal-close" id="close-modal-btn">
+  <!-- Add/Edit RDAP Modal -->
+  <div class="misc-modal-overlay" id="rdap-modal">
+    <div class="misc-modal-container">
+      <div class="misc-modal-header">
+        <h3 id="rdap-modal-title">Add RDAP Mapping</h3>
+        <button class="misc-modal-close" id="close-rdap-modal">
           <img src="/assets/icons/close.svg" alt="Close" />
         </button>
       </div>
 
-      <form class="mx-modal-form" id="add-mx-form">
-        <input type="hidden" id="mx-record-id" value="">
+      <form class="misc-modal-form" id="rdap-form">
+        <input type="hidden" id="rdap-id" value="">
         <div class="form-group">
-          <label for="email-provider">Email Provider</label>
-          <input type="text" id="email-provider" placeholder="Please type here" required>
+          <label for="rdap-suffix">Public Suffix</label>
+          <input type="text" id="rdap-suffix" placeholder="e.g. .com, .uk, .eu.org" required>
         </div>
 
         <div class="form-group">
-          <label for="domain-name">MX Record (Comma separated)</label>
-          <input type="text" id="domain-name" placeholder="mx1.example.com, mx2.example.com" required>
+          <label for="rdap-url">RDAP URL</label>
+          <input type="url" id="rdap-url" placeholder="https://rdap.verisign.com/com/v1/domain/" required>
         </div>
 
-        <div class="form-group">
-          <label for="mx-grade">Grade</label>
-          <select id="mx-grade"
-            style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
-            <option value="standard">Standard</option>
-            <option value="professional">Professional</option>
-            <option value="basic">Basic</option>
-            <option value="null">Null</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="service-type">Service Type</label>
-          <select id="service-type"
-            style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 24px;">
-            <option value="disposable">Disposable</option>
-            <option value="relay">Relay</option>
-            <option value="mailbox">Mailbox</option>
-            <option value="hosting">Hosting</option>
-            <option value="email_api">Email API</option>
-          </select>
-        </div>
-
-        <button type="submit" class="mx-submit-btn" id="submit-mx-btn">Continue</button>
+        <button type="submit" class="misc-submit-btn" id="submit-rdap-btn">Save Mapping</button>
       </form>
     </div>
   </div>
 
-  <!-- Removal Confirmation Modal (Industrial Standard) -->
-  <div class="remove-mx-modal-overlay" id="remove-mx-modal">
-    <div class="remove-mx-modal-container">
+  <!-- Add/Edit RDAP IP Modal -->
+  <div class="misc-modal-overlay" id="rdap-ip-modal">
+    <div class="misc-modal-container">
+      <div class="misc-modal-header">
+        <h3 id="rdap-ip-modal-title">Add RDAP IP</h3>
+        <button class="misc-modal-close" id="close-rdap-ip-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+
+      <form class="misc-modal-form" id="rdap-ip-form">
+        <input type="hidden" id="rdap-ip-id" value="">
+        <div class="form-row" style="display: flex; gap: 16px;">
+            <div class="form-group" style="flex: 2;">
+                <label for="rdap-ip-address">Host / IP</label>
+                <input type="text" id="rdap-ip-address" placeholder="e.g. 1.2.3.4" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label for="rdap-ip-port">Port</label>
+                <input type="number" id="rdap-ip-port" placeholder="e.g. 8080" required>
+            </div>
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 16px;">
+            <div class="form-group" style="flex: 1;">
+                <label for="rdap-ip-username">Username (Optional)</label>
+                <input type="text" id="rdap-ip-username" placeholder="user">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label for="rdap-ip-password">Password (Optional)</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="rdap-ip-password" placeholder="pass">
+                    <button type="button" class="toggle-password" data-target="rdap-ip-password">
+                        <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle" />
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rdap-ip-note">Note (Optional)</label>
+          <input type="text" id="rdap-ip-note" placeholder="e.g. AWS Instance 1">
+        </div>
+
+        <div class="form-group checkbox-group">
+            <input type="checkbox" id="rdap-ip-active" checked>
+            <label for="rdap-ip-active">Active (Available for rotation)</label>
+        </div>
+
+        <button type="submit" class="misc-submit-btn" id="submit-rdap-ip-btn">Save IP</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add/Edit Subdomain Modal -->
+  <div class="misc-modal-overlay" id="subdomain-modal">
+    <div class="misc-modal-container">
+      <div class="misc-modal-header">
+        <h3 id="subdomain-modal-title">Edit Subdomain Provider</h3>
+        <button class="misc-modal-close" id="close-subdomain-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+
+      <form class="misc-modal-form" id="subdomain-form">
+        <input type="hidden" id="subdomain-id" value="">
+        <div class="form-group">
+          <label for="subdomain-domain">Provider Domain</label>
+          <input type="text" id="subdomain-domain" placeholder="e.g. us.com" required>
+        </div>
+
+        <button type="submit" class="misc-submit-btn" id="submit-subdomain-btn">Save Provider</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="remove-modal-overlay" id="delete-modal">
+    <div class="remove-modal-container">
       <div class="remove-modal-header">
         <div class="remove-icon-wrapper">
           <img src="/assets/icons/delete.svg" alt="Delete" />
         </div>
-        <button class="remove-modal-close" id="close-remove-modal">
+        <button class="remove-modal-close" id="close-delete-modal">
           <img src="/assets/icons/close.svg" alt="Close" />
         </button>
       </div>
       <div class="remove-modal-content">
-        <h3>Remove this record?</h3>
-        <p id="remove-modal-text">Are you sure you want to remove this MX matching record? This action cannot be
-          undone and may affect email verification for certain providers.</p>
+        <h3>Remove this mapping?</h3>
+        <p id="delete-modal-text">Are you sure you want to remove this TLD RDAP mapping? This may affect domain age detection for these suffixes.</p>
       </div>
       <div class="remove-modal-actions">
-        <button class="btn-cancel" id="cancel-remove-btn">Cancel</button>
-        <button class="btn-confirm-remove" id="confirm-remove-btn">Remove this record</button>
+        <button class="btn-cancel" id="cancel-delete-btn">Cancel</button>
+        <button class="btn-confirm-remove" id="confirm-delete-btn">Remove Mapping</button>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" defer></script>
 </body>
 
 </html>

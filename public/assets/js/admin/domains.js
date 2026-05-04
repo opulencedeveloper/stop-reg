@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tbody.innerHTML = domains.map(d => {
             if (status === "reported") {
+                const isBlocked = d.ourStatus?.toLowerCase() === "blocked";
                 return `
                     <tr>
                         <td>${d.email}</td>
@@ -145,16 +146,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td><div class="comment-text">${d.comment || "-"}</div></td>
                         <td class="status-cell">${getStatusBadge(d.ourStatus)}</td>
                         <td class="status-cell">${getStatusBadge(d.status)}</td>
-                        <td>
-                            ${(!d.ourStatus || d.ourStatus.toLowerCase() === "none" || d.ourStatus === "-") ? `
-                            <button class="action-btn-circle block-domain-btn" data-id="${d.id}">
-                                <img src="/assets/icons/gg_unblock.svg" alt="Block" />
-                            </button>
-                            ` : `
-                            <button class="action-btn-circle" disabled>
-                                <img src="/assets/icons/stop.svg" style="filter: brightness(0) saturate(100%) invert(26%) sepia(87%) saturate(2377%) hue-rotate(349deg) brightness(97%) contrast(92%);" alt="Blocked" />
-                            </button>
-                            `}
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown" id="dropdown-${d.id}">
+                                    <button class="dropdown-item-action block-domain-btn" data-id="${d.id}" ${isBlocked ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                                        <img src="/assets/icons/gg_unblock.svg" alt="" />
+                                        <span>${isBlocked ? 'Already Blocked' : 'Block Domain'}</span>
+                                    </button>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item-action dropdown-item-remove delete-domain-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" style="filter: invert(27%) sepia(91%) saturate(2352%) hue-rotate(349deg) brightness(92%) contrast(100%);" />
+                                        <span style="color: #D92D20;">Remove Report</span>
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -165,10 +173,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td>${d.domain}</td>
                         <td><div class="comment-text">${d.comment || "-"}</div></td>
                         <td class="status-cell">${getStatusBadge(d.status)}</td>
-                        <td>
-                            <button class="action-btn-circle" onclick="handleDomainAction('${d.id}', 'unblock')">
-                                <img src="/assets/icons/stop.svg" alt="Unblock" />
-                            </button>
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown">
+                                    <button class="dropdown-item-action delete-domain-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" style="filter: invert(27%) sepia(91%) saturate(2352%) hue-rotate(349deg) brightness(92%) contrast(100%);" />
+                                        <span style="color: #D92D20;">Remove Record</span>
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -263,32 +279,62 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
-    // --- ACTION DELEGATION (Domain Blocking) ---
+    // --- ACTION HANDLERS ---
+    
+    let currentDeletingId = null;
+    const removeModal = getEl("remove-domain-modal");
+    const confirmRemoveBtn = getEl("confirm-remove-btn");
+    const cancelRemoveBtn = getEl("cancel-remove-btn");
+    const closeRemoveBtn = getEl("close-remove-modal");
+
+    const closeDeleteModal = () => {
+        if (!removeModal) return;
+        removeModal.classList.add("is-exiting");
+        setTimeout(() => {
+            removeModal.classList.remove("is-active", "is-exiting");
+            currentDeletingId = null;
+        }, 300);
+    };
+
+    const hideAllDropdowns = () => {
+        document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+    };
+
+    // Centralized Event Delegation
     document.addEventListener("click", async (e) => {
+        const actionBtn = e.target.closest(".action-btn");
         const blockBtn = e.target.closest(".block-domain-btn");
+        const deleteBtn = e.target.closest(".delete-domain-btn");
+
+        // Toggle Dropdown
+        if (actionBtn) {
+            e.stopPropagation();
+            const dropdown = actionBtn.nextElementSibling;
+            const isShown = dropdown.classList.contains("show");
+            hideAllDropdowns();
+            if (!isShown) dropdown.classList.add("show");
+            return;
+        }
+
+        // Handle Block Action
         if (blockBtn) {
             e.preventDefault();
             e.stopPropagation();
+            hideAllDropdowns();
             const domainId = blockBtn.getAttribute("data-id");
-            const originalHTML = blockBtn.innerHTML;
             
             // UI Spinner Feedback
             blockBtn.disabled = true;
-            blockBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-width: 2px !important; border-top-color: #1452CA !important; width: 16px; height: 16px; margin: 0 !important; flex-shrink: 0; display: inline-block;"></span>`;
+            const originalHTML = blockBtn.innerHTML;
+            blockBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-top-color: #1452CA !important;"></span> Processing...`;
 
             try {
                 const result = await apiFetch(`/domains/${domainId}/block`, { method: "PATCH" });
                 if (!result || result.message === "Error") throw new Error(result?.description || "Failed to block domain");
                 
                 if (typeof iziToast !== 'undefined') {
-                    iziToast.success({ 
-                        title: "Success", 
-                        message: result.description || "Domain blocked successfully", 
-                        position: "topRight" 
-                    });
+                    iziToast.success({ title: "Success", message: result.description || "Domain blocked successfully", position: "topRight" });
                 }
-                
-                // Silently reload to update DOM strictly reflecting the database
                 loadDomains(currentTab, currentPage, true);
             } catch (error) {
                 if (typeof iziToast !== 'undefined') {
@@ -297,8 +343,59 @@ document.addEventListener("DOMContentLoaded", () => {
                 blockBtn.disabled = false;
                 blockBtn.innerHTML = originalHTML;
             }
+            return;
+        }
+
+        // Handle Delete Trigger
+        if (deleteBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            hideAllDropdowns();
+            currentDeletingId = deleteBtn.getAttribute("data-id");
+            if (removeModal) removeModal.classList.add("is-active");
+            return;
+        }
+
+        // Close dropdowns when clicking outside
+        if (!e.target.closest(".action-btn-container")) {
+            hideAllDropdowns();
         }
     });
+
+    // Modal listeners
+    if (closeRemoveBtn) closeRemoveBtn.onclick = closeDeleteModal;
+    if (cancelRemoveBtn) cancelRemoveBtn.onclick = closeDeleteModal;
+    if (confirmRemoveBtn) {
+        confirmRemoveBtn.onclick = async () => {
+            if (!currentDeletingId) return;
+
+            const originalHTML = confirmRemoveBtn.innerHTML;
+            confirmRemoveBtn.disabled = true;
+            confirmRemoveBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Removing...`;
+
+            try {
+                const result = await apiFetch(`/domains/${currentDeletingId}`, { method: "DELETE" });
+                if (!result || result.message === "Error") throw new Error(result?.description || "Failed to delete report.");
+                
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.success({ title: "Success", message: "Domain report removed successfully", position: "topRight" });
+                }
+                closeDeleteModal();
+                loadDomains(currentTab, currentPage);
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({ title: "Error", message: error.message, position: "topRight" });
+                }
+                confirmRemoveBtn.disabled = false;
+                confirmRemoveBtn.innerHTML = originalHTML;
+            }
+        };
+    }
+
+    // Modal background clicks
+    window.onclick = (e) => {
+        if (e.target === removeModal) closeDeleteModal();
+    };
 
     // --- INITIAL LOAD ---
     loadDomains(currentTab, currentPage);

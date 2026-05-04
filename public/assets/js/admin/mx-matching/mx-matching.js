@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (records.length === 0) {
-            const displayType = type.charAt(0).toUpperCase() + type.slice(1);
+            const displayType = type.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No ${displayType} MX patterns found.</td></tr>`;
             return;
         }

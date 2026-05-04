@@ -677,7 +677,8 @@
                         <span>Block Domain after</span>
                         <div class="settings-select-wrapper">
                             <select class="settings-select" id="rule-threshold">
-                                <option value="5" selected>5</option>
+                                <option value="" disabled selected hidden>Select threshold</option>
+                                <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -691,8 +692,9 @@
                     <label class="settings-label" for="registrations-window">Count Registrations within</label>
                     <div class="settings-select-wrapper">
                         <select class="settings-select" id="registrations-window">
+                            <option value="" disabled selected hidden>Select window</option>
                             <option value="1 day">1 day</option>
-                            <option value="3 days" selected>3 days</option>
+                            <option value="3 days">3 days</option>
                             <option value="7 days">7 days</option>
                             <option value="30 days">30 days</option>
                         </select>

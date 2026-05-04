@@ -129,6 +129,42 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 6. Render Functions
+    function getStatusBadgeHtml(status) {
+        if (!status || status === '-') return '-';
+        
+        const lowerStatus = status.toLowerCase();
+        let badgeClass = '';
+        let icon = '';
+        let label = '';
+
+        if (lowerStatus === 'blocked' || lowerStatus === 'auto_blocked') {
+            badgeClass = 'badge-blocked';
+            icon = 'block-outline.svg';
+            label = lowerStatus === 'auto_blocked' ? 'Auto Blocked' : 'Blocked';
+        } else if (lowerStatus === 'allowed') {
+            badgeClass = 'badge-allow';
+            icon = 'approve-outline.svg';
+            label = 'Allow';
+        } else if (lowerStatus === 'notified') {
+            badgeClass = 'badge-notified';
+            icon = 'caution.svg';
+            label = 'Notified';
+        } else if (lowerStatus === 'reported') {
+            badgeClass = 'badge-reported';
+            icon = 'flag-linear.svg';
+            label = 'Reported';
+        } else {
+            return status;
+        }
+
+        return `
+            <div class="status-badge ${badgeClass}">
+                <img src="/assets/icons/${icon}" alt="" />
+                ${label}
+            </div>
+        `;
+    }
+
     function renderTableByStatus(status, items) {
         const config = configs[status];
         if (!config.tbody) return;
@@ -151,10 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <tr>
                         <td>${domainName || "Unknown"}</td>
                         <td>
-                            <div class="status-badge badge-blocked">
-                                <img src="/assets/icons/block-outline.svg" alt="" />
-                                ${isAuto ? 'Auto Blocked' : 'Blocked'}
-                            </div>
+                            ${getStatusBadgeHtml(currentStatus)}
                         </td>
                         <td class="comment-td">${domainComment || "-"}</td>
                         <td class="table-right">
@@ -170,14 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     </tr>
                 `;
             } else if (status === 'allowed') {
+                const isNotified = currentStatus === 'notified';
                  return `
                     <tr>
                         <td>${domainName || "Unknown"}</td>
                         <td>
-                            <div class="status-badge badge-allow">
-                                <img src="/assets/icons/approve-outline.svg" alt="" />
-                                Allow
-                            </div>
+                            ${getStatusBadgeHtml(currentStatus)}
                         </td>
                         <td class="comment-td">${domainComment || "-"}</td>
                         <td class="table-right">
@@ -196,12 +227,9 @@ document.addEventListener('DOMContentLoaded', () => {
                  return `
                     <tr>
                         <td>${domainName || "Unknown"}</td>
-                        <td>${item.ourStatus || "-"}</td>
+                        <td>${getStatusBadgeHtml(item.ourStatus)}</td>
                         <td>
-                            <div class="status-badge badge-reported">
-                                <img src="/assets/icons/flag-linear.svg" alt="" />
-                                Reported
-                            </div>
+                            ${getStatusBadgeHtml('reported')}
                         </td>
                         <td class="comment-td">${domainComment || "-"}</td>
                         <td class="table-right">
