@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const paginationContainer = getEl("misc-pagination");
     const tabButtons = document.querySelectorAll(".tab-btn");
     const perPageSelect = getEl("per-page-select");
+    const searchInput = getEl("misc-search-input");
     
     // RDAP Mapping Elements
     const addRdapBtn = getEl("add-rdap-btn");
@@ -57,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTab = MiscTab.SUBDOMAIN; // Default tab
     let currentPage = 1;
     let currentLimit = parseInt(perPageSelect?.value) || 10;
+    let currentSearch = "";
     let currentEditingId = null;
     let currentDeletingId = null;
     let deleteType = null; // One of MiscTab values
@@ -132,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- DATA LOADING & RENDERING ---
-    async function loadData(page = 1, limit = 10) {
+    async function loadData(page = 1, limit = 10, search = "") {
         showLoading();
         let baseUrl, endpoint;
 
@@ -152,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const result = await apiFetch(baseUrl, `${endpoint}?page=${page}&limit=${limit}`);
+            const result = await apiFetch(baseUrl, `${endpoint}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch data.");
 
             loadedRecords = result.data.records;
@@ -164,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
             renderPaginationUI(result.data.pagination);
             hideLoading();
         } catch (error) {
-            renderSectionError(error.message, () => loadData(page, limit));
+            renderSectionError(error.message, () => loadData(page, limit, search));
         }
     }
 
@@ -306,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (targetPage !== page) {
                     currentPage = targetPage;
-                    loadData(currentPage, currentLimit);
+                    loadData(currentPage, currentLimit, currentSearch);
                 }
             };
         });
@@ -433,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result?.message === "success") {
                 iziToast.success({ title: 'Success', message: `RDAP mapping ${currentEditingId ? 'updated' : 'added'}.`, position: 'topRight' });
                 closeModals();
-                loadData(currentPage, currentLimit);
+                loadData(currentPage, currentLimit, currentSearch);
             } else {
                 throw new Error(result?.description || "Failed to save RDAP mapping.");
             }
@@ -464,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result?.message === "success") {
                 iziToast.success({ title: 'Success', message: `Subdomain provider ${currentEditingId ? 'updated' : 'added'}.`, position: 'topRight' });
                 closeModals();
-                loadData(currentPage, currentLimit);
+                loadData(currentPage, currentLimit, currentSearch);
             } else {
                 throw new Error(result?.description || "Failed to save provider.");
             }
@@ -500,7 +502,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result?.message === "success") {
                 iziToast.success({ title: 'Success', message: `RDAP IP ${currentEditingId ? 'updated' : 'added'}.`, position: 'topRight' });
                 closeModals();
-                loadData(currentPage, currentLimit);
+                loadData(currentPage, currentLimit, currentSearch);
             } else {
                 throw new Error(result?.description || "Failed to save RDAP IP.");
             }
@@ -535,7 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (result?.message === "success") {
                 iziToast.success({ title: 'Removed', message: 'Item deleted successfully.', position: 'topRight' });
                 closeModals();
-                loadData(currentPage, currentLimit);
+                loadData(currentPage, currentLimit, currentSearch);
             } else {
                 throw new Error(result?.description || "Failed to delete item.");
             }
@@ -557,19 +559,33 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.add("active");
             currentTab = tab;
             currentPage = 1;
+            currentSearch = "";
+            if (searchInput) searchInput.value = "";
             
             // Update URL hash for persistence
             window.location.hash = tab;
 
-            loadData(currentPage, currentLimit);
+            loadData(currentPage, currentLimit, currentSearch);
         };
     });
+
+    if (searchInput) {
+        let debounceTimer;
+        searchInput.oninput = () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentSearch = searchInput.value.trim();
+                currentPage = 1;
+                loadData(currentPage, currentLimit, currentSearch);
+            }, 500);
+        };
+    }
 
     if (perPageSelect) {
         perPageSelect.onchange = () => {
             currentLimit = parseInt(perPageSelect.value);
             currentPage = 1;
-            loadData(currentPage, currentLimit);
+            loadData(currentPage, currentLimit, currentSearch);
         };
     }
 
@@ -594,7 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    loadData(currentPage, currentLimit); 
+    loadData(currentPage, currentLimit, currentSearch); 
 
     // --- PASSWORD TOGGLE LOGIC ---
     document.querySelectorAll(".toggle-password").forEach(btn => {

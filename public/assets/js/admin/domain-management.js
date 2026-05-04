@@ -113,14 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
-    const calculateDays = (dateString) => {
+    const formatDomainAge = (dateString) => {
         if (!dateString || dateString === "null") return "N/A";
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return "N/A";
         const now = new Date();
         const diff = now - date;
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        return days < 0 ? 0 : days;
+        const finalDays = days < 0 ? 0 : days;
+        return `${finalDays} days`;
     };
 
     // --- DATA LOADING & RENDERING ---
@@ -171,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `
                     <tr>
                         <td class="username-col">${d.value}</td>
-                        <td>${calculateDays(d.domain_age)} days</td>
+                        <td>${formatDomainAge(d.domain_age)}</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">
@@ -194,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <tr>
                         <td>${d.provider || "Unknown"}</td>
                         <td>${d.value}</td>
-                        <td>${calculateDays(d.domain_age)} days</td>
+                        <td>${formatDomainAge(d.domain_age)}</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">
