@@ -424,133 +424,8 @@
       </p>
 
       <div class="accordion">
-        <div class="accordion-item box animation5">
-          <button class="accordion-button" aria-expanded="false" aria-controls="faq-1">
-            1. What is a disposable email blocker?
-            <span class="accordion-icon" aria-hidden="true"><img src="/assets/icons/drop-down.svg" alt="" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              A disposable email blocker is a tool that automatically detects
-              and blocks temporary, fake, or throwaway email addresses from
-              signing up on your website. This helps you maintain a clean user
-              database, reduce spam, and protect your platform from abuse.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation5">
-          <button class="accordion-button">
-            2. Why should I block disposable email addresses?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              Disposable emails are commonly used for fraud, spam, duplicate
-              account creation, free-trial abuse, and bot signups. Blocking
-              them helps you:
-            </p>
-            <ul>
-              <li>Improve lead quality</li>
-              <li>Reduce fraud and abuse</li>
-              <li>Protect your free trials</li>
-              <li>Increase conversion accuracy</li>
-              <li>Improve email deliverability</li>
-            </ul>
-          </div>
-        </div>
-        <div class="accordion-item box animation4">
-          <button class="accordion-button">
-            3. Does your API support real-time checking?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              Yes. The API validates emails instantly (typically within
-              milliseconds), allowing you to block disposable emails during
-              signup, checkout, or form submission.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation2">
-          <button class="accordion-button">
-            4. Can I whitelist specific email providers?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              Yes. You can whitelist domains you trust to ensure legitimate
-              users are never blocked by mistake.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation3">
-          <button class="accordion-button">
-            5. Do you store email addresses checked through the API?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              No. We do not store full email addresses. For privacy and
-              compliance, we only check the domain part and discard all data
-              immediately.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation5">
-          <button class="accordion-button">
-            6. Do you block corporate emails?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              No. Only temporary and fake domains. Corporate, ISP, and custom
-              domain emails are always allowed unless they appear in known
-              disposable lists.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation4">
-          <button class="accordion-button">
-            7. Do you offer volume-based or unlimited plans?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>Yes. We offer flexible plans, including:</p>
-            <ul>
-              <li>Monthly subscription</li>
-              <li>Unlimited requests for enterprise users</li>
-            </ul>
-          </div>
-        </div>
-        <div class="accordion-item box animation2">
-          <button class="accordion-button">
-            8. Do you offer a free trial?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>
-              Yes. Feel free to test the free trial and see how many fake
-              signups you prevent within minutes.
-            </p>
-          </div>
-        </div>
-        <div class="accordion-item box animation3">
-          <button class="accordion-button">
-            9. Can this improve my email deliverability?
-            <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-          </button>
-          <div class="accordion-content">
-            <p>Yes. By blocking temporary and fake emails:</p>
-            <ul>
-              <li>Your bounce rate drops</li>
-              <li>Your sender reputation improves</li>
-              <li>You stay compliant with email service providers</li>
-            </ul>
-            <p>This helps your real messages reach real inboxes.</p>
-          </div>
-        </div>
+        <!-- Dynamically populated by faq-renderer.js -->
       </div>
-      <!-- Fags End -->
     </section>
 
     <!-- Footer start -->
@@ -609,6 +484,9 @@
     </footer>
     <!-- Footer End -->
   </main>
+  <!-- FAQ Logic -->
+  <script src="/assets/js/faq-data.js" defer></script>
+  <script src="/assets/js/faq-renderer.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/landing/index.js" defer></script>
   <script src="/assets/js/landing/header.js" defer></script>

@@ -1,5 +1,4 @@
 window.onload = function () {
-  const accordionButtons = document.querySelectorAll(".accordion-button");
   // Yearly pricing removed - commented out
   const monthlyBtn = document.querySelector(".land-pricing-sect-mth");
   // const yearlyBtn = document.querySelector(".land-pricing-sect-yr");
@@ -13,33 +12,7 @@ window.onload = function () {
   var navIcons = document.querySelector('.nav-icon2');
   const navMenu = document.querySelector(".nav-menu");
 
-  if (accordionButtons) {
-    accordionButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const content = this.nextElementSibling;
-
-        if (content.style.maxHeight) {
-          content.style.maxHeight = null;
-
-          this.classList.remove("active");
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-
-          this.classList.add("active");
-        }
-
-        accordionButtons.forEach((otherButton) => {
-          if (otherButton !== this) {
-            const otherContent = otherButton.nextElementSibling;
-
-            otherContent.style.maxHeight = null;
-
-            otherButton.classList.remove("active");
-          }
-        });
-      });
-    });
-  }
+  // Accordion logic removed - now handled by faq-renderer.js
 
   // Yearly pricing toggle removed - commented out
   // if (monthlyBtn) {

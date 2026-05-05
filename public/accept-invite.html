@@ -362,50 +362,9 @@
         </div>
 
         <div class="accordion">
-          <div class="accordion-item privacy-anim-item privacy-anim-delay-200">
-            <button class="accordion-button" aria-expanded="false" aria-controls="faq-1">
-              1. What are disposable email addresses?
-              <span class="accordion-icon" aria-hidden="true"><img src="/assets/icons/drop-down.svg" alt="" /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 1.</p>
-            </div>
-          </div>
-          <div class="accordion-item box animation5">
-            <button class="accordion-button">
-              2. Why block disposable email?
-              <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-            </button>
-          </div>
-          <div class="accordion-item box animation4">
-            <button class="accordion-button">
-              3. Why do people use disposable email?
-              <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 3.</p>
-            </div>
-          </div>
-          <div class="accordion-item box animation2">
-            <button class="accordion-button">
-              4. How does Stopreg block temporary email?
-              <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 4.</p>
-            </div>
-          </div>
-          <div class="accordion-item box animation3">
-            <button class="accordion-button">
-              5. Where do I report a domain to be blocked?
-              <span class="accordion-icon"><img src="/assets/icons/drop-down.svg" /></span>
-            </button>
-            <div class="accordion-content">
-              <p>Content for section 5.</p>
-            </div>
-          </div>
+          <!-- Dynamically populated by faq-renderer.js -->
         </div>
-        <!-- Fags End -->
+
       </section>
     </main>
 
@@ -439,8 +398,8 @@
               <h4 class="foot-hd">Resources</h4>
               <div class="foot-links">
                 <a href="/about.html" class="foot-link">About</a>
-               <a href="/blogs.html" class="foot-link">Blog</a>
- <a href="/documentation.html" class="foot-link">Guides</a>
+                <a href="/blogs.html" class="foot-link">Blog</a>
+                <a href="/documentation.html" class="foot-link">Guides</a>
                 <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
               </div>
             </div>
@@ -465,6 +424,9 @@
     </footer>
     <!-- Footer End -->
   </main>
+  <!-- FAQ Logic -->
+  <script src="/assets/js/faq-data.js" defer></script>
+  <script src="/assets/js/faq-renderer.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/landing/index.js" defer></script>
   <script src="/assets/js/landing/header.js" defer></script>
