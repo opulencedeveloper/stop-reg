@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="rule-content">
                                         <h3 class="rule-title">Lookback Window</h3>
-                                        <p class="rule-desc">Count Registrations within <span id="windowDays">3</span>
+                                        <p class="rule-desc">Count API request(s) within <span id="windowDays">3</span>
                                             days</p>
                                     </div>
                                 </div>
@@ -196,7 +196,8 @@
                                     </div>
                                     <div class="rule-content">
                                         <h3 class="rule-title">Action</h3>
-                                        <p class="rule-desc" id="ruleActionDesc">Block Domain when threshold is reached</p>
+                                        <p class="rule-desc" id="ruleActionDesc">Block Domain when threshold is reached
+                                        </p>
                                     </div>
                                 </div>
                                 <!-- <div class="rule-divider"></div>
@@ -675,29 +676,38 @@
                     <label class="settings-label">Detection rule</label>
                     <div class="detection-rule-row">
                         <span>Block Domain after</span>
-                        <div class="settings-select-wrapper">
-                            <select class="settings-select" id="rule-threshold">
-                                <option value="" disabled selected hidden>Select threshold</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                            </select>
+                        <div class="settings-select-wrapper" data-custom-select="rule-threshold">
+                            <div class="custom-select-trigger">
+                                <span class="current-value">Select threshold</span>
+                            </div>
+                            <div class="custom-options-container">
+                                <div class="custom-option" data-value="2">2</div>
+                                <div class="custom-option" data-value="3">3</div>
+                                <div class="custom-option" data-value="4">4</div>
+                                <div class="custom-option" data-value="5">5</div>
+                                <div class="custom-option" data-value="10">10</div>
+                                <div class="custom-option" data-value="20">20</div>
+                                <div class="custom-option" data-value="50">50</div>
+                            </div>
+                            <input type="hidden" id="rule-threshold" value="5">
                         </div>
-                        <span>Registrations</span>
+                        <span>API request</span>
                     </div>
                 </div>
 
                 <div class="settings-form-group">
                     <label class="settings-label" for="registrations-window">Count Registrations within</label>
-                    <div class="settings-select-wrapper">
-                        <select class="settings-select" id="registrations-window">
-                            <option value="" disabled selected hidden>Select window</option>
-                            <option value="1 day">1 day</option>
-                            <option value="3 days">3 days</option>
-                            <option value="7 days">7 days</option>
-                            <option value="30 days">30 days</option>
-                        </select>
+                    <div class="settings-select-wrapper" data-custom-select="registrations-window">
+                        <div class="custom-select-trigger">
+                            <span class="current-value">Select window</span>
+                        </div>
+                        <div class="custom-options-container">
+                            <div class="custom-option" data-value="1 day">1 day</div>
+                            <div class="custom-option" data-value="3 days">3 days</div>
+                            <div class="custom-option" data-value="7 days">7 days</div>
+                            <div class="custom-option" data-value="30 days">30 days</div>
+                        </div>
+                        <input type="hidden" id="registrations-window" value="3 days">
                     </div>
                 </div>
 
@@ -726,7 +736,7 @@
                             </div>
                             <div class="radio-text-content">
                                 <span class="radio-title">Block Domain</span>
-                                <p class="radio-desc">Automatically set spam: true in the API response. Any future
+                                <p class="radio-desc">Automatically set blocklist: true in the API response. Any future
                                     registration from this domain returns blocked status</p>
                             </div>
                         </div>

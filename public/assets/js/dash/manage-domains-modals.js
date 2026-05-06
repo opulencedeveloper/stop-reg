@@ -28,14 +28,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         
             const style = document.createElement('style');
             style.innerHTML = `
-                body.free-tier-user .btn-block,
-                body.free-tier-user .btn-allow {
+                body.free-tier-user .btn-block:not(#open-settings-modal),
+                body.free-tier-user .btn-allow:not(#open-settings-modal) {
                     opacity: 0.4 !important;
                     cursor: not-allowed !important;
                 }
-                body.free-tier-user .btn-block img,
-                body.free-tier-user .btn-allow img {
-                    filter: grayscale(1) brightness(0.7);
+                body.free-tier-user .btn-block:not(#open-settings-modal) img,
+                body.free-tier-user .btn-allow:not(#open-settings-modal) img {
+                    /* Removed grayscale to keep icon color consistent with labels */
+                    opacity: 0.8;
                 }
             `;
             document.head.appendChild(style);
@@ -306,14 +307,39 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             if (data) {
                 // Populate threshold
-                const thresholdSelect = document.getElementById('rule-threshold');
-                if (thresholdSelect) thresholdSelect.value = data.ruleThreshold || 5;
+                const thresholdValue = data.ruleThreshold || 5;
+                const thresholdWrapper = document.querySelector('[data-custom-select="rule-threshold"]');
+                if (thresholdWrapper) {
+                    const hiddenInput = thresholdWrapper.querySelector('input[type="hidden"]');
+                    const triggerSpan = thresholdWrapper.querySelector('.current-value');
+                    const options = thresholdWrapper.querySelectorAll('.custom-option');
+                    
+                    if (hiddenInput) hiddenInput.value = thresholdValue;
+                    if (triggerSpan) triggerSpan.textContent = thresholdValue;
+                    
+                    options.forEach(opt => {
+                        const isSelected = opt.dataset.value == thresholdValue;
+                        opt.classList.toggle('is-selected', isSelected);
+                    });
+                }
 
                 // Populate window
-                const windowSelect = document.getElementById('registrations-window');
-                if (windowSelect) {
-                    const days = data.windowDays || 3;
-                    windowSelect.value = days === 1 ? '1 day' : `${days} days`;
+                const windowDays = data.windowDays || 3;
+                const windowValue = windowDays === 1 ? '1 day' : `${windowDays} days`;
+                const windowWrapper = document.querySelector('[data-custom-select="registrations-window"]');
+                
+                if (windowWrapper) {
+                    const hiddenInput = windowWrapper.querySelector('input[type="hidden"]');
+                    const triggerSpan = windowWrapper.querySelector('.current-value');
+                    const options = windowWrapper.querySelectorAll('.custom-option');
+                    
+                    if (hiddenInput) hiddenInput.value = windowValue;
+                    if (triggerSpan) triggerSpan.textContent = windowValue;
+                    
+                    options.forEach(opt => {
+                        const isSelected = opt.dataset.value == windowValue;
+                        opt.classList.toggle('is-selected', isSelected);
+                    });
                 }
 
                 // Populate action
@@ -468,4 +494,64 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = false;
         }
     });
+
+    // --- Custom Select Component Logic ---
+    function initCustomSelects() {
+        const wrappers = document.querySelectorAll('.settings-select-wrapper[data-custom-select]');
+        
+        wrappers.forEach(wrapper => {
+            const trigger = wrapper.querySelector('.custom-select-trigger');
+            const container = wrapper.querySelector('.custom-options-container');
+            const options = wrapper.querySelectorAll('.custom-option');
+            const hiddenInput = wrapper.querySelector('input[type="hidden"]');
+            const triggerText = wrapper.querySelector('.current-value');
+
+            // Toggle dropdown
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Close other open dropdowns
+                document.querySelectorAll('.custom-select-trigger.is-open').forEach(openTrigger => {
+                    if (openTrigger !== trigger) {
+                        openTrigger.classList.remove('is-open');
+                        openTrigger.nextElementSibling.classList.remove('is-open');
+                    }
+                });
+
+                trigger.classList.toggle('is-open');
+                container.classList.toggle('is-open');
+            });
+
+            // Handle option selection
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const value = option.dataset.value;
+                    const text = option.textContent;
+
+                    // Update UI
+                    triggerText.textContent = text;
+                    hiddenInput.value = value;
+                    
+                    options.forEach(opt => opt.classList.remove('is-selected'));
+                    option.classList.add('is-selected');
+
+                    // Close dropdown
+                    trigger.classList.remove('is-open');
+                    container.classList.remove('is-open');
+                });
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-select-trigger.is-open').forEach(trigger => {
+                trigger.classList.remove('is-open');
+                trigger.nextElementSibling.classList.remove('is-open');
+            });
+        });
+    }
+
+    // Initialize custom selects
+    initCustomSelects();
 });

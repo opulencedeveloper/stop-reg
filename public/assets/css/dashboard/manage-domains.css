@@ -98,7 +98,7 @@
 }
 
 .btn-manage.btn-block img {
-    filter: invert(19%) sepia(98%) saturate(3029%) hue-rotate(212deg) brightness(91%) contrast(92%);
+    filter: invert(24%) sepia(90%) saturate(3195%) hue-rotate(212deg) brightness(91%) contrast(97%);
 }
 
 .btn-manage.btn-allow {
@@ -108,7 +108,7 @@
 }
 
 .btn-manage.btn-allow img {
-    filter: invert(19%) sepia(98%) saturate(3029%) hue-rotate(212deg) brightness(91%) contrast(92%);
+    filter: invert(24%) sepia(90%) saturate(3195%) hue-rotate(212deg) brightness(91%) contrast(97%);
 }
 
 .btn-manage.btn-report {

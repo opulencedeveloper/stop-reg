@@ -911,7 +911,9 @@
   <span class="comment">// View the full intelligence payload</span>
   <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">response</span>);
 
-  <span class="keyword">if</span> (<span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">const</span> <span class="variable">isBlocked</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>.<span class="variable">blocklisted</span> === <span class="keyword">true</span>;
+
+  <span class="keyword">if</span> (<span class="variable">isBlocked</span>) {
     <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'This email is blocked.'</span>);
   }
 } <span class="keyword">catch</span> (<span class="variable">error</span>) {
@@ -937,7 +939,9 @@
   <span class="comment">// View the full intelligence payload</span>
   <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">response</span>);
 
-  <span class="keyword">if</span> (<span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">const</span> <span class="variable">isBlocked</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>.<span class="variable">blocklisted</span> === <span class="keyword">true</span>;
+
+  <span class="keyword">if</span> (<span class="variable">isBlocked</span>) {
     <span class="variable">console</span>.<span class="log">log</span>(<span class="string">'This domain is blocked.'</span>);
   }
 } <span class="keyword">catch</span> (<span class="variable">error</span>) {
@@ -976,8 +980,10 @@
     <span class="comment">// Dump the result to see full intelligence data</span>
     <span class="function">dd</span>(<span class="variable">$result</span>);
 
-    <span class="keyword">if</span> (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>]) {
-        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'email'</span> => <span class="string">'Disposable emails are not allowed.'</span>]);
+    <span class="variable">$isBlocked</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>] || (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>][<span class="string">'blocklisted'</span>] ?? <span class="keyword">false</span>) === <span class="keyword">true</span>;
+
+    <span class="keyword">if</span> (<span class="variable">$isBlocked</span>) {
+        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'email'</span> => <span class="string">'This email is not allowed.'</span>]);
     }
 } <span class="keyword">catch</span> (StopRegException <span class="variable">$e</span>) {
     <span class="comment">// Handle error</span>
@@ -1000,8 +1006,10 @@
     <span class="comment">// Dump the result to see full intelligence data</span>
     <span class="function">dd</span>(<span class="variable">$result</span>);
 
-    <span class="keyword">if</span> (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>]) {
-        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'domain'</span> => <span class="string">'Disposable domains are not allowed.'</span>]);
+    <span class="variable">$isBlocked</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>] || (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>][<span class="string">'blocklisted'</span>] ?? <span class="keyword">false</span>) === <span class="keyword">true</span>;
+
+    <span class="keyword">if</span> (<span class="variable">$isBlocked</span>) {
+        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'domain'</span> => <span class="string">'This domain is not allowed.'</span>]);
     }
 } <span class="keyword">catch</span> (StopRegException <span class="variable">$e</span>) {
     <span class="comment">// Handle error</span>
@@ -1037,8 +1045,10 @@
 <span class="keyword">const</span> <span class="variable">body</span> = <span class="keyword">await</span> <span class="variable">response</span>.<span class="function">json</span>();
 <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">body</span>);
 
-<span class="keyword">if</span> (<span class="variable">body</span>.data?.classification?.is_disposable) {
-  <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Domain is blocked'</span>);
+<span class="keyword">const</span> <span class="variable">isBlocked</span> = <span class="variable">body</span>.<span class="variable">data</span>?.<span class="variable">classification</span>?.<span class="variable">is_disposable</span> || <span class="variable">body</span>.<span class="variable">data</span>?.<span class="variable">policy</span>?.<span class="variable">blocklisted</span> === <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (<span class="variable">isBlocked</span>) {
+  <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Access is blocked'</span>);
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
@@ -1061,8 +1071,11 @@ response = requests.get(
 <span class="variable">body</span> = <span class="variable">response</span>.<span class="function">json</span>()
 <span class="function">print</span>(<span class="variable">body</span>)
 
-<span class="keyword">if</span> <span class="variable">body</span>.get(<span class="string">'data'</span>, {}).get(<span class="string">'classification'</span>, {}).get(<span class="string">'is_disposable'</span>):
-    <span class="function">print</span>(<span class="string">'Domain is blocked'</span>)</code></pre>
+<span class="variable">is_blocked</span> = <span class="variable">body</span>.<span class="function">get</span>(<span class="string">'data'</span>, {}).<span class="function">get</span>(<span class="string">'classification'</span>, {}).<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> \
+             <span class="variable">body</span>.<span class="function">get</span>(<span class="string">'data'</span>, {}).<span class="function">get</span>(<span class="string">'policy'</span>, {}).<span class="function">get</span>(<span class="string">'blocklisted'</span>) <span class="keyword">is</span> <span class="keyword">True</span>
+
+<span class="keyword">if</span> <span class="variable">is_blocked</span>:
+    <span class="function">print</span>(<span class="string">'Access is blocked'</span>)</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
                   <img src="/assets/icons/white-copy.svg" alt="Copy" />
@@ -1091,8 +1104,11 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
 <span class="function">curl_close</span>(<span class="variable">$ch</span>);
 
-<span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>]) && <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>]) {
-    <span class="keyword">echo</span> <span class="string">'Domain is blocked'</span>;
+<span class="variable">$isDisposable</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>;
+<span class="variable">$isBlocklisted</span> = (<span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>][<span class="string">'blocklisted'</span>] ?? <span class="keyword">false</span>) === <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (<span class="variable">$isDisposable</span> || <span class="variable">$isBlocklisted</span>) {
+    <span class="keyword">echo</span> <span class="string">'Access is blocked'</span>;
 }
 <span class="keyword">?&gt;</span></code></pre>
                 </div>

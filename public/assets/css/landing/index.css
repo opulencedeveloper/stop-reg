@@ -3739,7 +3739,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   padding-bottom: 80px;
   padding-left: var(--desktop-padding);
   padding-right: var(--desktop-padding);
-
+  min-height: 400px; /* Ensure observer always has height to work with */
 }
 
 .gdpr-wrapper {
@@ -3763,11 +3763,11 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-family: "Inter_18pt-Bold";
   font-size: 48px;
   margin-bottom: 12px;
+  color: #252525; /* Fallback color for browsers with clip issues */
   background: linear-gradient(180deg, #252525 0%, #000000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
 }
 
 .gdpr-subtitle {

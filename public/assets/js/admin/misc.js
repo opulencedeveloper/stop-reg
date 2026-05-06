@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 endpoint = "/rdap-ip/";
                 break;
             case MiscTab.REPORTED:
-                endpoint = "/domains?status=reported";
+                endpoint = "/submitted-domains";
                 break;
         }
 
@@ -159,14 +159,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch data.");
 
             const data = result.data;
-            loadedRecords = data.records || data.domains || [];
+            loadedRecords = data.records || data.domains || data.data || [];
             
             if (currentTab === MiscTab.SUBDOMAIN) renderSubdomainTable();
             else if (currentTab === MiscTab.RDAP) renderRdapTable();
             else if (currentTab === MiscTab.RDAP_IP) renderRdapIpTable();
             else if (currentTab === MiscTab.REPORTED) renderReportedTable();
             
-            const paginationData = result.data.pagination;
+            const paginationData = result.data.pagination || {
+                currentPage: result.data.page || 1,
+                totalPages: result.data.totalPages || 1,
+                totalItems: result.data.total || 0
+            };
             renderPaginationUI(paginationData);
             hideLoading();
         } catch (error) {
@@ -274,21 +278,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No submitted domains found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #737373;">No submitted domains found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = loadedRecords.map(r => `
             <tr>
-                <td style="font-size: 13px;">${r.email}</td>
-                <td>${r.domain}</td>
-                <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #6B7280; font-size: 13px;">
-                    ${r.comment || '-'}
-                </td>
+                <td style="font-family: monospace; font-weight: 500;">${r.domain}</td>
                 <td>
-                    <span class="status-badge ${r.ourStatus === 'blocked' ? 'inactive' : 'active'}" style="${r.ourStatus === 'blocked' ? 'background: #FEF2F2; color: #DC2626;' : ''}">
-                        ${r.ourStatus === 'blocked' ? 'Blocked' : 'Pending'}
+                    <span class="status-badge active" style="background: #F0F9FF; color: #0369A1; font-weight: 600;">
+                        ${r.counter} submissions
                     </span>
+                </td>
+                <td style="color: #6B7280; font-size: 13px; text-align: right;">
+                    ${new Date(r.lastSubmittedAt).toLocaleDateString()}
                 </td>
             </tr>
         `).join("");
@@ -579,7 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else if (deleteType === MiscTab.RDAP_IP) {
                 endpoint = `/rdap-ip/${currentDeletingId}`;
             } else if (deleteType === MiscTab.REPORTED) {
-                endpoint = `/domains/${currentDeletingId}`;
+                endpoint = `/submitted-domains/${currentDeletingId}`;
             }
 
             const result = await apiFetch(BASE_ADMIN_URL, endpoint, { method: "DELETE" });

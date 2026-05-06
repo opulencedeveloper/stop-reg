@@ -982,7 +982,7 @@ class Program
           sectionObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% of section visible starts the flow
+    }, { threshold: 0.2 }); // 50% of section visible starts the flow
 
     sectionObserver.observe(hiwSection);
   }
@@ -1008,7 +1008,7 @@ class Program
               heroObserver.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.5 }); // Trigger when 50% is visible
+        }, { threshold: 0.2 }); // Trigger when 50% is visible
     
         heroObserver.observe(heroWrapper);
       }
@@ -1042,7 +1042,7 @@ class Program
             wscObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
 
     wscObserver.observe(wscSection);
   }
@@ -1077,7 +1077,7 @@ class Program
             whyObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
 
     whyObserver.observe(whySection);
   }
@@ -1112,7 +1112,7 @@ class Program
             gdprObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% threshold as requested
+    }, { threshold: 0.2 }); // Reduced threshold for better reliability across browsers
 
     gdprObserver.observe(gdprSection);
   }
@@ -1143,7 +1143,7 @@ class Program
             apiObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% threshold
+    }, { threshold: 0.2 }); // 50% threshold
 
     apiObserver.observe(apiSection);
   }
@@ -1163,7 +1163,7 @@ class Program
                     headerObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
         headerObserver.observe(pricingHeader);
     }
 
@@ -1176,7 +1176,7 @@ class Program
                     cardObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
 
         pricingCards.forEach((card) => {
             cardObserver.observe(card);
@@ -1206,7 +1206,7 @@ class Program
             toolsObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% threshold
+    }, { threshold: 0.2 }); // 50% threshold
 
     toolsObserver.observe(toolsSection);
   }
@@ -1243,7 +1243,7 @@ class Program
             efeaObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% threshold
+    }, { threshold: 0.2 }); // 50% threshold
 
     efeaObserver.observe(efeaSection);
   }
@@ -1268,7 +1268,7 @@ class Program
             faqSectionObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% for text
+    }, { threshold: 0.2 }); // 50% for text
 
     faqSectionObserver.observe(faqSection);
 
@@ -1317,7 +1317,7 @@ class Program
             footerObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 }); // 50% threshold
+    }, { threshold: 0.2 }); // 50% threshold
 
     footerObserver.observe(footerSection);
   }
