@@ -172,6 +172,7 @@
                 <button class="tab-btn active" data-tab="subdomain">Subdomain Providers</button>
                 <button class="tab-btn" data-tab="rdap">RDAP Mappings</button>
                 <button class="tab-btn" data-tab="rdap-ip">RDAP IPs</button>
+                <button class="tab-btn" data-tab="reported">Submitted Domains</button>
               </div>
 
               <div class="misc-search-container">
@@ -250,6 +251,28 @@
                       </tr>
                     </thead>
                     <tbody id="rdap-ip-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Submitted Domains Content -->
+              <div class="tab-content" id="reported-content">
+                <div class="misc-table-action" style="visibility: hidden;">
+                    <button class="add-more-btn">Placeholder</button>
+                </div>
+                <div class="misc-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>User</th>
+                        <th>Domain</th>
+                        <th>Comment</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reported-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>

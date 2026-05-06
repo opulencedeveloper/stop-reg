@@ -5,14 +5,14 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const MISC_BASE_URL = "https://api.stopreg.com/api/v1/admin/misc";
-    const RDAP_IP_BASE_URL = "https://api.stopreg.com/api/v1/admin/rdap-ip";
+    const BASE_ADMIN_URL = "https://api.stopreg.com/api/v1/admin";
 
     // --- ENUMS ---
     const MiscTab = Object.freeze({
         SUBDOMAIN: "subdomain",
         RDAP: "rdap",
-        RDAP_IP: "rdap-ip"
+        RDAP_IP: "rdap-ip",
+        REPORTED: "reported"
     });
 
     // --- DOM ELEMENTS ---
@@ -140,30 +140,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         switch (currentTab) {
             case MiscTab.SUBDOMAIN:
-                baseUrl = MISC_BASE_URL;
-                endpoint = "/subdomain-providers";
+                endpoint = "/misc/subdomain-providers";
                 break;
             case MiscTab.RDAP:
-                baseUrl = MISC_BASE_URL;
-                endpoint = "/tld-rdap";
+                endpoint = "/misc/tld-rdap";
                 break;
             case MiscTab.RDAP_IP:
-                baseUrl = RDAP_IP_BASE_URL;
-                endpoint = "/";
+                endpoint = "/rdap-ip/";
+                break;
+            case MiscTab.REPORTED:
+                endpoint = "/domains?status=reported";
                 break;
         }
 
         try {
-            const result = await apiFetch(baseUrl, `${endpoint}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`);
+            const separator = endpoint.includes("?") ? "&" : "?";
+            const result = await apiFetch(BASE_ADMIN_URL, `${endpoint}${separator}page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch data.");
 
-            loadedRecords = result.data.records;
+            const data = result.data;
+            loadedRecords = data.records || data.domains || [];
             
             if (currentTab === MiscTab.SUBDOMAIN) renderSubdomainTable();
             else if (currentTab === MiscTab.RDAP) renderRdapTable();
             else if (currentTab === MiscTab.RDAP_IP) renderRdapIpTable();
+            else if (currentTab === MiscTab.REPORTED) renderReportedTable();
             
-            renderPaginationUI(result.data.pagination);
+            const paginationData = result.data.pagination;
+            renderPaginationUI(paginationData);
             hideLoading();
         } catch (error) {
             renderSectionError(error.message, () => loadData(page, limit, search));
@@ -263,6 +267,50 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.querySelectorAll(".delete-btn").forEach(btn => {
             btn.onclick = () => openDeleteModal(btn.dataset.id, MiscTab.RDAP_IP);
         });
+    }
+
+    function renderReportedTable() {
+        const tbody = getEl("reported-tbody");
+        if (!tbody) return;
+
+        if (loadedRecords.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No submitted domains found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = loadedRecords.map(r => `
+            <tr>
+                <td style="font-size: 13px;">${r.email}</td>
+                <td>${r.domain}</td>
+                <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #6B7280; font-size: 13px;">
+                    ${r.comment || '-'}
+                </td>
+                <td>
+                    <span class="status-badge ${r.ourStatus === 'blocked' ? 'inactive' : 'active'}" style="${r.ourStatus === 'blocked' ? 'background: #FEF2F2; color: #DC2626;' : ''}">
+                        ${r.ourStatus === 'blocked' ? 'Blocked' : 'Pending'}
+                    </span>
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    async function handleBlockReportedDomain(id) {
+        if (!confirm("Are you sure you want to block this reported domain? This will add it to the global blacklist.")) return;
+        
+        try {
+            const result = await apiFetch("https://api.stopreg.com/api/v1/admin", `/domains/${id}/block`, {
+                method: "PATCH"
+            });
+
+            if (result?.message === "success") {
+                iziToast.success({ title: 'Blocked', message: 'Domain has been blacklisted.', position: 'topRight' });
+                loadData(currentPage, currentLimit, currentSearch);
+            } else {
+                throw new Error(result?.description || "Failed to block domain.");
+            }
+        } catch (error) {
+            iziToast.error({ title: 'Error', message: error.message, position: 'topRight' });
+        }
     }
 
     function renderPaginationUI(pagination) {
@@ -396,6 +444,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (type === MiscTab.RDAP_IP) {
             text = "Are you sure you want to remove this RDAP IP address? It will no longer be used for RDAP request rotation.";
             btnText = "Remove IP";
+        } else if (type === MiscTab.REPORTED) {
+            text = "Are you sure you want to remove this domain report? This will delete the submission from history.";
+            btnText = "Delete Report";
         }
 
         if (deleteModalText) deleteModalText.textContent = text;
@@ -424,10 +475,9 @@ document.addEventListener("DOMContentLoaded", () => {
         submitRdapBtn.innerHTML = `Saving...`;
 
         try {
-            const method = currentEditingId ? "PATCH" : "POST";
-            const endpoint = currentEditingId ? `/tld-rdap/${currentEditingId}` : "/tld-rdap";
+            const endpoint = currentEditingId ? `/misc/tld-rdap/${currentEditingId}` : "/misc/tld-rdap";
             
-            const result = await apiFetch(MISC_BASE_URL, endpoint, {
+            const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
                 method,
                 body: JSON.stringify({ domain_suffix: suffix, rdap_url: url })
             });
@@ -456,9 +506,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const method = currentEditingId ? "PATCH" : "POST";
-            const endpoint = currentEditingId ? `/subdomain-providers/${currentEditingId}` : "/subdomain-providers";
+            const endpoint = currentEditingId ? `/misc/subdomain-providers/${currentEditingId}` : "/misc/subdomain-providers";
 
-            const result = await apiFetch(MISC_BASE_URL, endpoint, {
+            const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
                 method,
                 body: JSON.stringify({ domain })
             });
@@ -492,9 +542,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const method = currentEditingId ? "PATCH" : "POST";
-            const endpoint = currentEditingId ? `/${currentEditingId}` : "/";
+            const endpoint = currentEditingId ? `/rdap-ip/${currentDeletingId || currentEditingId}` : "/rdap-ip/";
 
-            const result = await apiFetch(RDAP_IP_BASE_URL, endpoint, {
+            const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
                 method,
                 body: JSON.stringify({ host, port, username, password, note, isActive })
             });
@@ -521,19 +571,18 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmDeleteBtn.innerHTML = "Removing...";
 
         try {
-            let baseUrl, endpoint;
+            let endpoint;
             if (deleteType === MiscTab.RDAP) {
-                baseUrl = MISC_BASE_URL;
-                endpoint = `/tld-rdap/${currentDeletingId}`;
+                endpoint = `/misc/tld-rdap/${currentDeletingId}`;
             } else if (deleteType === MiscTab.SUBDOMAIN) {
-                baseUrl = MISC_BASE_URL;
-                endpoint = `/subdomain-providers/${currentDeletingId}`;
+                endpoint = `/misc/subdomain-providers/${currentDeletingId}`;
             } else if (deleteType === MiscTab.RDAP_IP) {
-                baseUrl = RDAP_IP_BASE_URL;
-                endpoint = `/${currentDeletingId}`;
+                endpoint = `/rdap-ip/${currentDeletingId}`;
+            } else if (deleteType === MiscTab.REPORTED) {
+                endpoint = `/domains/${currentDeletingId}`;
             }
 
-            const result = await apiFetch(baseUrl, endpoint, { method: "DELETE" });
+            const result = await apiFetch(BASE_ADMIN_URL, endpoint, { method: "DELETE" });
             if (result?.message === "success") {
                 iziToast.success({ title: 'Removed', message: 'Item deleted successfully.', position: 'topRight' });
                 closeModals();
