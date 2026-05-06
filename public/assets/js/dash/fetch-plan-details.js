@@ -116,11 +116,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                         
                         // --- UI Hiding Logic for Payments Page ---
                         
-                        // A. Hide the pricing card that matches the user's current plan
+                        // A. Show the current plan card in a disabled/highlighted state
                         document.querySelectorAll(".pricing-card").forEach(card => {
                             const titleEl = card.querySelector(".pricing-title");
                             if (titleEl && titleEl.textContent.trim().toLowerCase() === planName.toLowerCase()) {
-                                card.style.display = "none";
+                                card.classList.add("is-current-plan");
+                                const btn = card.querySelector(".pricing-btn");
+                                if (btn) {
+                                    btn.textContent = "Current Plan";
+                                    btn.classList.add("disabled");
+                                    btn.style.pointerEvents = "none";
+                                    btn.style.opacity = "0.7";
+                                    btn.style.background = "#e5e7eb";
+                                    btn.style.color = "#6b7280";
+                                    btn.style.border = "1px solid #d1d5db";
+                                }
                             }
                         });
 
