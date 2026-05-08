@@ -382,9 +382,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.delete-action-btn');
         if (btn) {
+            // Plan Check for Delete
+            try {
+                const planName = await window.getUserPlan();
+                if (planName && planName.trim().toLowerCase() === "free") {
+                    if (typeof window.showUpgradeToast === 'function') {
+                        window.showUpgradeToast();
+                    } else if (typeof iziToast !== 'undefined') {
+                        iziToast.info({
+                            title: 'Upgrade Required',
+                            message: 'Domain management features are available on Paid plans.',
+                            position: 'topRight'
+                        });
+                    }
+                    return;
+                }
+            } catch (err) {
+                console.warn("Plan check failed for delete", err);
+            }
+
             const id = btn.dataset.id;
             if (id) openDeleteModal(id, btn);
         }

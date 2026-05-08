@@ -28,14 +28,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         
             const style = document.createElement('style');
             style.innerHTML = `
-                body.free-tier-user .btn-block:not(#open-settings-modal),
-                body.free-tier-user .btn-allow:not(#open-settings-modal) {
+                body.free-tier-user .btn-block,
+                body.free-tier-user .btn-allow,
+                body.free-tier-user .btn-report {
                     opacity: 0.4 !important;
                     cursor: not-allowed !important;
                 }
-                body.free-tier-user .btn-block:not(#open-settings-modal) img,
-                body.free-tier-user .btn-allow:not(#open-settings-modal) img {
-                    /* Removed grayscale to keep icon color consistent with labels */
+                body.free-tier-user .btn-block img,
+                body.free-tier-user .btn-allow img,
+                body.free-tier-user .btn-report img {
                     opacity: 0.8;
                 }
             `;
@@ -46,20 +47,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (isFreePlan) {
-        if (openBlockBtn) openBlockBtn.style.opacity = "0.6";
-        if (openAllowBtn) openAllowBtn.style.opacity = "0.6";
+        [openBlockBtn, openAllowBtn, openReportBtn, openSettingsBtn].forEach(btn => {
+            if (btn) btn.style.opacity = "0.6";
+        });
     }
 
     function showUpgradeToast() {
         if (typeof iziToast !== 'undefined') {
             iziToast.info({
                 title: 'Upgrade Required',
-                message: 'Custom blocklists and allowlists are available on Paid plans. You can still Report domains.',
+                message: 'Domain management features (Blocking, Allowing, Reporting, and Settings) are available on Paid plans.',
                 position: 'topRight',
                 timeout: 5000
             });
         }
     }
+    window.showUpgradeToast = showUpgradeToast;
 
     // --- Core Modal Functions ---
     function openModal(overlay, isEdit = false, data = null) {
@@ -139,7 +142,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         openModal(allowOverlay);
     });
 
-    openReportBtn?.addEventListener('click', () => openModal(reportOverlay));
+    openReportBtn?.addEventListener('click', (e) => {
+        if (isFreePlan) {
+            e.preventDefault();
+            return showUpgradeToast();
+        }
+        openModal(reportOverlay);
+    });
 
     const ManageDomainStatus = {
         BLOCKED: 'blocked',
@@ -163,7 +172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             else if (normalizedStatus === ManageDomainStatus.REPORTED) targetOverlay = reportOverlay;
             else targetOverlay = blockOverlay; // Fallback
 
-            if (isFreePlan && (targetOverlay === blockOverlay || targetOverlay === allowOverlay)) {
+            if (isFreePlan) {
                 e.preventDefault();
                 return showUpgradeToast();
             }
@@ -204,6 +213,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const originalText = btn.innerHTML;
         const token = localStorage.getItem("authToken");
         
+        // Plan Check for Submit
+        try {
+            const planName = await window.getUserPlan();
+            if (planName && planName.trim().toLowerCase() === "free") {
+                if (typeof showUpgradeToast === 'function') showUpgradeToast();
+                return;
+            }
+        } catch (err) {
+            console.warn("Plan check failed on submit", err);
+        }
+
         if (!token) {
             if (typeof iziToast !== 'undefined') iziToast.error({ message: "You are not logged in.", position: "topRight" });
             return;
@@ -411,7 +431,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    openSettingsBtn?.addEventListener('click', () => {
+    openSettingsBtn?.addEventListener('click', (e) => {
+        if (isFreePlan) {
+            e.preventDefault();
+            return showUpgradeToast();
+        }
         fetchAbuseSettings();
         openModal(settingsOverlay);
     });
@@ -421,6 +445,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const btn = settingsForm.querySelector("button[type='submit']");
         const originalText = btn.innerHTML;
         const token = localStorage.getItem("authToken");
+
+        // Plan Check for Settings Submit
+        try {
+            const planName = await window.getUserPlan();
+            if (planName && planName.trim().toLowerCase() === "free") {
+                if (typeof showUpgradeToast === 'function') showUpgradeToast();
+                return;
+            }
+        } catch (err) {
+            console.warn("Plan check failed on settings submit", err);
+        }
 
         if (!token) {
             if (typeof iziToast !== 'undefined') iziToast.error({ message: "You are not logged in.", position: "topRight" });
