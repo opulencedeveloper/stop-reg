@@ -327,25 +327,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             if (data) {
                 // Populate threshold
-                const thresholdValue = data.ruleThreshold || 5;
+                const thresholdValue = data.ruleThreshold;
                 const thresholdWrapper = document.querySelector('[data-custom-select="rule-threshold"]');
                 if (thresholdWrapper) {
                     const hiddenInput = thresholdWrapper.querySelector('input[type="hidden"]');
                     const triggerSpan = thresholdWrapper.querySelector('.current-value');
                     const options = thresholdWrapper.querySelectorAll('.custom-option');
                     
-                    if (hiddenInput) hiddenInput.value = thresholdValue;
-                    if (triggerSpan) triggerSpan.textContent = thresholdValue;
+                    if (hiddenInput) hiddenInput.value = thresholdValue || 5;
+                    if (triggerSpan) triggerSpan.textContent = thresholdValue || 'Select threshold';
                     
                     options.forEach(opt => {
-                        const isSelected = opt.dataset.value == thresholdValue;
-                        opt.classList.toggle('is-selected', isSelected);
+                        const isSelected = thresholdValue && opt.dataset.value == thresholdValue;
+                        opt.classList.toggle('is-selected', !!isSelected);
                     });
                 }
 
                 // Populate window
-                const windowDays = data.windowDays || 3;
-                const windowValue = windowDays === 1 ? '1 day' : `${windowDays} days`;
+                const windowDays = data.windowDays;
+                const windowValue = windowDays ? (windowDays === 1 ? '1 day' : `${windowDays} days`) : '';
                 const windowWrapper = document.querySelector('[data-custom-select="registrations-window"]');
                 
                 if (windowWrapper) {
@@ -353,22 +353,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const triggerSpan = windowWrapper.querySelector('.current-value');
                     const options = windowWrapper.querySelectorAll('.custom-option');
                     
-                    if (hiddenInput) hiddenInput.value = windowValue;
-                    if (triggerSpan) triggerSpan.textContent = windowValue;
+                    if (hiddenInput) hiddenInput.value = windowValue || '3 days';
+                    if (triggerSpan) triggerSpan.textContent = windowValue || 'Select window';
                     
                     options.forEach(opt => {
-                        const isSelected = opt.dataset.value == windowValue;
-                        opt.classList.toggle('is-selected', isSelected);
+                        const isSelected = windowValue && opt.dataset.value == windowValue;
+                        opt.classList.toggle('is-selected', !!isSelected);
                     });
                 }
 
                 // Populate action
-                const action = data.action || 'notify';
-                if (detectionActionInput) detectionActionInput.value = action;
+                const action = data.action;
+                if (detectionActionInput) detectionActionInput.value = action || 'notify';
                 
                 radioOptions.forEach(opt => {
-                    const isActive = opt.dataset.value === action;
-                    opt.classList.toggle('active', isActive);
+                    const isActive = action && opt.dataset.value === action;
+                    opt.classList.toggle('active', !!isActive);
                     opt.querySelector('.radio-on-icon').style.display = isActive ? 'block' : 'none';
                     opt.querySelector('.radio-off-icon').style.display = isActive ? 'none' : 'block';
                 });
@@ -378,31 +378,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // if (unblockSelect) unblockSelect.value = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
 
                 // --- Update Summary Header ---
-                const headerThreshold = document.getElementById('ruleThreshold');
-                const headerWindow = document.getElementById('windowDays');
-                const headerUnblockPolicy = document.getElementById('unblockPolicy');
-                const actionDesc = document.querySelector('.rules-header .rule-item:nth-child(5) .rule-desc');
-
-                if (headerThreshold) headerThreshold.textContent = data.ruleThreshold || 5;
-                if (headerWindow) headerWindow.textContent = data.windowDays || 3;
-                
-                /*
-                if (headerUnblockPolicy) {
-                    const days = data.unblockAfterDays !== undefined ? data.unblockAfterDays : 3;
-                    if (days === 0) {
-                        headerUnblockPolicy.textContent = "Permanently barred";
-                    } else if (days === 1) {
-                        headerUnblockPolicy.textContent = "Unblock domain after 24 hours";
-                    } else {
-                        headerUnblockPolicy.textContent = `Unblock domain after ${days} days`;
-                    }
-                }
-                */
+                if (headerThreshold) headerThreshold.textContent = data.ruleThreshold || 'Nil';
+                if (headerWindow) headerWindow.textContent = data.windowDays ? (data.windowDays === 1 ? '1' : data.windowDays) : 'Nil';
                 
                 if (actionDesc) {
-                    actionDesc.textContent = data.action === 'block' 
-                        ? 'Block Domain when threshold is reached' 
-                        : 'Notify Only when threshold is reached';
+                    if (!data.action) {
+                        actionDesc.textContent = 'Nil';
+                    } else {
+                        actionDesc.textContent = data.action === 'block' 
+                            ? 'Block Domain when threshold is reached' 
+                            : 'Notify Only when threshold is reached';
+                    }
                 }
             }
         } catch (err) {
