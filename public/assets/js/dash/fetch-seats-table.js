@@ -161,8 +161,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Attach listeners for actions (just console log for now or placeholder)
         document.querySelectorAll(".delete-seat-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                // To be implemented: Delete confirmation
-                console.log("Delete clicked for ID:", btn.dataset.id);
             });
         });
     }

@@ -135,8 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(result?.description || "Failed to fetch management data.");
             }
 
-            console.log(`[DomainManagement] Loaded ${type} data:`, result.data);
-
             hideLoading();
             renderTable(type, result.data.domains);
             renderPaginationUI(result.data.pagination);

@@ -35,7 +35,6 @@ function initTabs() {
         }
       });
 
-      console.log(`Switched to tab: ${targetTab}`);
     });
   });
 }
@@ -78,10 +77,6 @@ function initPagination() {
       
       const pageNum = btn.innerText;
       if (!isNaN(pageNum)) {
-        console.log(`Navigating to page ${pageNum}`);
-        // Here you would typically trigger an API call or filter the table
-        
-        // Visual indicator change for demo
         paginationBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       }
@@ -150,9 +145,6 @@ function initAddMoreModal() {
     const provider = document.getElementById('email-provider').value;
     const domain = document.getElementById('domain-name').value;
 
-    console.log('Submitting new domain:', { provider, domain });
-
-    // Simulate success
     const submitBtn = form.querySelector('.domain-submit-btn');
     const originalText = submitBtn.innerText;
     

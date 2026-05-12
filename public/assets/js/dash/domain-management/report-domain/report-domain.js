@@ -63,8 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ Construct payload
     const payload = { domain, comment, status: "active", type: "reported" };
-    console.log("📦 Payload to send:", payload);
-
+   
     // Simulate API call
     submitBtn.disabled = true;
     submitBtn.textContent = "Reporting...";
@@ -82,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
       const data = await response.json();
-      console.log("Response:", data);
 
       if (response.ok) {
         if (typeof iziToast !== 'undefined') {

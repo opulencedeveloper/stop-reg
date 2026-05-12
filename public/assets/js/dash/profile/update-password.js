@@ -75,11 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await response.json();
-      console.log("Response:", data);
-
-      // 🔥 FIX: Handle OTP request BEFORE success/error blocks
-    
-
       if (response.ok) {
         if (typeof iziToast !== 'undefined') {
           iziToast.success({

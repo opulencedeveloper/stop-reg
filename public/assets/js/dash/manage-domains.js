@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const url = `https://api.stopreg.com/api/v1/manage/domain/fetch?${params.toString()}`;
-            console.log(`Fetching ${status} domains:`, url);
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log(`Response for ${status}:`, result);
                 const docs = result?.data?.data || [];
                 const total = result?.data?.total || 0;
                 

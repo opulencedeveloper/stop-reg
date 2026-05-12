@@ -76,8 +76,7 @@ async function handleRegenerate(btn) {
         );
 
         const data = await response.json();
-        console.log("Regenerate Response:", data);
-
+    
         if (response.ok) {
             isSuccess = true;
             if (typeof iziToast !== 'undefined') {
@@ -94,7 +93,6 @@ async function handleRegenerate(btn) {
             if (window.fetchApiRequests && typeof window.fetchApiRequests === 'function') {
                 // Wait a small moment to ensure the toast is seen/backend is ready?
                 // Usually instant is fine.
-                console.log("Refreshing API list...");
                 window.fetchApiRequests(1, 10); // Refresh first page
             } else {
                 // Otherwise redirect

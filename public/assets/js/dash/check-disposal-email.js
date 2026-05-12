@@ -107,8 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             const data = await response.json();
-            // console.log("Verification Response:", data);
-
+           
             if (response.ok) {
                 const results = data?.data;
                 // Dashboard Verification API returns a flat JSON structure

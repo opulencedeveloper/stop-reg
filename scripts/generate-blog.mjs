@@ -11,16 +11,12 @@ const blogDir = path.join(publicDir, 'blog');
 const templatePath = path.join(publicDir, 'blog.html');
 const dataPath = path.join(publicDir, 'assets/js/blogs-data.js');
 
-console.log('--- StopReg Blog Generator ---');
-
 // 1. Ensure blog directory exists
 if (!fs.existsSync(blogDir)) {
-    console.log(`Creating directory: ${blogDir}`);
     fs.mkdirSync(blogDir, { recursive: true });
 }
 
 // 2. Read Blog Data
-console.log(`Reading data from: ${dataPath}`);
 const dataContent = fs.readFileSync(dataPath, 'utf8');
 
 // Industrial Standard: Execute in a mock window context
@@ -37,11 +33,9 @@ try {
 }
 
 // 3. Read Template
-console.log(`Reading template from: ${templatePath}`);
 const template = fs.readFileSync(templatePath, 'utf8');
 
 // 4. Generate Files
-console.log(`Generating posts...`);
 for (const [slug, post] of Object.entries(BLOG_POSTS)) {
     let content = template;
     const prettyUrl = `https://stopreg.com/blog/${slug}.html`;
@@ -68,7 +62,5 @@ for (const [slug, post] of Object.entries(BLOG_POSTS)) {
 
     const outputPath = path.join(blogDir, `${slug}.html`);
     fs.writeFileSync(outputPath, content);
-    console.log(`  ✓ Generated: ${slug}.html`);
 }
 
-console.log('--- Generation Complete! ---');

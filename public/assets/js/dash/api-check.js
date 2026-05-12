@@ -64,8 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await response.json();
-      console.log("Response:", data);
-
+    
       resultContainer.style.display = "flex";
 
       // Check if the response indicates an error (even if status is 200)

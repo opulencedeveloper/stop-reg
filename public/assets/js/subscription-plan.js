@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const plan3 = document.getElementById("pricing-plans3");
   const plan4 = document.getElementById("pricing-plans4");
 
-  console.log("✅ DOM loaded, rendering plans...");
-
   // If none of the pricing containers exist (e.g. on contact.html),
   // safely exit without doing anything.
   if (!plan1 && !plan2 && !plan3 && !plan4) {
@@ -71,8 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
 
-    console.log("Plans array:", plans);
-
+  
     if (!plans.length) {
       throw new Error("No plans found");
     }
@@ -94,11 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const plan2Data = regularPlans[1] || null; // Developer
     const plan3Data = recommendedPlan || null; // Business (Recommended)
     const plan4Data = regularPlans[2] || null; // If there's a 4th plan
-
-    console.log("Plan 1 (Starter):", plan1Data);
-    console.log("Plan 2 (Developer):", plan2Data);
-    console.log("Plan 3 (Recommended):", plan3Data);
-    console.log("Plan 4:", plan4Data);
 
     // Format API limit with commas
     const formatNumber = (num) => num ? num.toLocaleString() : 'N/A';
@@ -193,8 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </button>
       `;
     }
-
-    console.log("✅ Plans rendered successfully");
 
     // Add click handlers to all pricing buttons to open signup modal
     const pricingButtons = document.querySelectorAll('.land-pricing-container-item-btn, .land-pricing-container-item-btn-recomm');

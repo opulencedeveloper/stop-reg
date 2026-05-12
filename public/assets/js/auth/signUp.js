@@ -312,7 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
   
         const data = await response.json();
-        console.log("Response:", data);
         
         if (response.ok) {
           if (typeof iziToast !== 'undefined') {

@@ -30,7 +30,6 @@ function initTabs() {
                 targetContent.classList.add('active');
             }
             
-            console.log(`Switched to: ${targetId}`);
         });
     });
 }
@@ -45,8 +44,7 @@ function initActionButtons() {
         btn.addEventListener('click', (e) => {
             const row = e.target.closest('tr');
             const email = row.cells[0].textContent;
-            console.log(`Action clicked for: ${email}`);
-            
+       
             // Add industrial feedback effect
             btn.style.transform = 'scale(0.95)';
             setTimeout(() => {

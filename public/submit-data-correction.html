@@ -267,8 +267,8 @@
               <h4 class="foot-hd">Resources</h4>
               <div class="foot-links">
                 <a href="/about.html" class="foot-link">About</a>
-               <a href="/blogs.html" class="foot-link">Blog</a>
- <a href="/documentation.html" class="foot-link">Guides</a>
+                <a href="/blogs.html" class="foot-link">Blog</a>
+                <a href="/documentation.html" class="foot-link">Guides</a>
                 <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
               </div>
             </div>
@@ -366,7 +366,7 @@
           else if (msg.data == 'refreshcss') refreshCSS();
         };
         if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-          console.log('Live reload enabled.');
+
           sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
         }
       })();

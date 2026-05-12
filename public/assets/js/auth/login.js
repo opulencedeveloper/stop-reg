@@ -217,8 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       const data = await response.json();
-      console.log("Response:", data);
-
+     
       // 🔥 FIX: Handle OTP request BEFORE success/error blocks
       if (data.message === "verify_email") {
         // Redirect to Sign Up page with email for OTP verification

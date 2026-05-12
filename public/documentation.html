@@ -900,8 +900,7 @@
               <p><strong>Email Verification:</strong></p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> { <span class="variable">StopReg</span> } <span class="keyword">from</span> <span class="string">'stopreg'</span>;
+                  <pre class="code-block"><code><span class="keyword">import</span> { <span class="variable">StopReg</span> } <span class="keyword">from</span> <span class="string">'stopreg'</span>;
 
 <span class="keyword">const</span> <span class="variable">client</span> = <span class="keyword">new</span> <span class="function">StopReg</span>({ <span class="variable">apiToken</span>: <span class="string">'YOUR_API_TOKEN'</span> });
 
@@ -1385,7 +1384,6 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
           else if (msg.data == 'refreshcss') refreshCSS();
         };
         if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-          console.log('Live reload enabled.');
           sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
         }
       })();

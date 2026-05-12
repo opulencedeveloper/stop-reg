@@ -18,20 +18,5 @@ document.addEventListener("DOMContentLoaded", function() {
         if (overLay) overLay.style.display = "none";
     });
 
-    
-        // navIcons.addEventListener('click', function() {
-        //     console.log("clocked")
-        //     this.classList.toggle('open');
-        //     navMenu.classList.toggle("active");
-        // });
 
 });
-
-
-// const hamburger = document.querySelector(".hamburger");
-
-// hamburger.addEventListener("click", () => {
-//     console.log("clicked")
-//     hamburger.classList.toggle("active");
-//     // navMenu.classList.toggle("active");
-//   });

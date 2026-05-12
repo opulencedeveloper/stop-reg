@@ -58,8 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   
       const data = await response.json();
-      console.log("User Info Response: ==>>>>", data);
-  
+    
       if (response.ok) {
         const user = data?.data || data;
         
@@ -123,8 +122,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
           }
         }
-  
-        console.log("token element", tokenElement);
   
         const userNameEl = document.getElementById("user-name");
         const userEmailEl = document.getElementById("user-email");

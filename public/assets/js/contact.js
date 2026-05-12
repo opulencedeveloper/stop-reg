@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM Content Loaded - Contact form script starting");
-  
+
   // Wait a bit to ensure all elements are ready
   setTimeout(() => {
     const form = document.getElementById("contact-form") || document.querySelector(".form-wrapper form");
@@ -20,20 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector('#contact-form textarea[name="message"]') ||
       document.getElementById("message");
 
-    console.log("Elements found:", { 
-      form: !!form, 
-      submitBtn: !!submitBtn, 
-      nameInput: !!nameInput, 
-      emailInput: !!emailInput, 
-      messageInput: !!messageInput 
-    });
-
     if (!form || !submitBtn || !nameInput || !emailInput || !messageInput) {
       console.error("Contact form elements not found:", { form, submitBtn, nameInput, emailInput, messageInput });
       return;
     }
-
-    console.log("Contact form initialized successfully");
 
     const API_URL = "https://api.stopreg.com/api/v1/contact/us";
 
@@ -159,14 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         e.stopPropagation();
       }
-      console.log("Submit handler called!");
-      
       if (!validateForm()) {
-        console.log("Form validation failed");
         return;
       }
-      
-      console.log("Form validation passed, proceeding with submission");
 
       const formData = {
         name: nameInput.value.trim(),
@@ -184,9 +168,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.innerHTML = `<span class="btn-spinner"></span> Sending...`;
 
       try {
-        console.log("Sending request to:", API_URL);
-        console.log("Form data:", formData);
-        
         const response = await fetch(API_URL, {
           method: "POST",
           headers: {
@@ -194,8 +175,6 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           body: JSON.stringify(formData),
         });
-
-        console.log("Response received:", response.status, response.statusText);
 
         const data = await response.json().catch(() => ({}));
 
@@ -234,9 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", function(e) {
       e.preventDefault();
       e.stopPropagation();
-      console.log("Form submit event triggered");
       handleSubmit(e);
     });
-    console.log("Form submit listener attached");
   }, 100); // Small delay to ensure DOM is ready
 });

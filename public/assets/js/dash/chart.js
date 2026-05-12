@@ -96,7 +96,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const data = await response.json();
         const user = data?.data || data;
         const userDetails = user.userDetails;
-        console.log("userDetails", userDetails);
 
           if (userDetails) {
              // Redundant UI updates removed to prevent flickering with fetch-plan-details.js
@@ -213,10 +212,8 @@ document.addEventListener("DOMContentLoaded", async () => {
            const result = await response.json();
            // Structure: { message, description, data: { request: [...] } }
            requests = result?.data?.docs || [];
-           console.log("result?.data?", result?.data?.docs)
-           
+          
        } else {
-            console.error("Error fetching requests:", await response.text());
             if (window.handleAuthError && await window.handleAuthError(response)) {
                 return;
             }
@@ -1147,7 +1144,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const result = await response.json();
                 const tokenData = result?.data;
                 const apiToken = tokenData?.token;
-                console.log("apiToken", apiToken);
 
                 if (apiToken) {
                     apiTokenEl.textContent = apiToken;

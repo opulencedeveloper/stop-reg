@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Admin login portal initializing...");
-    const form = document.getElementById("adminSignIn-form");
+   const form = document.getElementById("adminSignIn-form");
     
     if (!form) {
         console.error("Critical Error: Admin login form not found in DOM.");
@@ -186,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FORM SUBMISSION ---
     form.addEventListener("submit", async (e) => {
-        console.log("Admin form submission initiated.");
         e.preventDefault();
         
         // Immediately clear existing errors without transition 

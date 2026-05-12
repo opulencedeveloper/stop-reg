@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const urlToken = params.get("token");
 
     if (urlEmail && urlToken) {
-      console.log("🚀 Auto-verifying from URL...");
       
       // Security: Clear params immediately
       const newUrl = window.location.pathname;
@@ -144,9 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       if (isOverlayActive) {
-          console.log("⏳ Waiting for Entrance Overlay...");
           window.addEventListener("entrance-complete", () => {
-              console.log("✅ Overlay complete. Starting verification flow...");
               startVerification();
           }, { once: true });
       } else {
@@ -155,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } else if (urlEmail) {
         // Case: Redirected from login (Verify Email) or Sign Up
-        console.log("🚀 Manual verification prompt from URL...");
         
         // Save email context
         localStorage.setItem("otp_email", urlEmail);
