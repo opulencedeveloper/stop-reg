@@ -239,11 +239,8 @@ window.addEventListener("load", function () {
       
         let selector = ".box";
         if (scope === "header") {
-            // Immediate: Only the main navigation header
             selector = ".main-head-wrapper.box";
         } else if (scope === "body") {
-            // Delayed: Everything ELSE (Hero sections, etc.)
-            // We use :not() to exclude the main header if we can, or just query all and filter
             selector = ".box:not(.main-head-wrapper)";
         }
 
@@ -253,15 +250,56 @@ window.addEventListener("load", function () {
         });
     }
 
+    function initFooterAnimations() {
+      const footerSection = document.querySelector(".land-foot");
+      if (footerSection) {
+        const footerBrand = footerSection.querySelector(".foot-col-brand");
+        const footerCols = footerSection.querySelectorAll(".foot-links-group .foot-col");
+        const footerBottom = footerSection.querySelector(".land-foot-wrapp-sct-two");
+
+        const footerObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (footerBrand) footerBrand.classList.add("footer-animate-in");
+              footerCols.forEach((col, index) => {
+                setTimeout(() => {
+                  col.classList.add("footer-animate-in");
+                }, 150 + (index * 150));
+              });
+              if (footerBottom) {
+                setTimeout(() => {
+                  footerBottom.classList.add("footer-animate-in");
+                }, 600);
+              }
+              footerObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+
+        footerObserver.observe(footerSection);
+        
+        // Safety: If footer is already in view or observer fails to fire
+        setTimeout(() => {
+           if (footerBrand && !footerBrand.classList.contains('footer-animate-in')) {
+              footerBrand.classList.add("footer-animate-in");
+              footerCols.forEach(col => col.classList.add("footer-animate-in"));
+              if (footerBottom) footerBottom.classList.add("footer-animate-in");
+           }
+        }, 2000);
+      }
+    }
+
     // Unified Gating: Animate everything only AFTER overlay lifts
     if (document.querySelector('.entrance-overlay')) {
         window.addEventListener('entrance-complete', () => {
             initScrollAnimations("all");
+            initFooterAnimations();
             checkForSuspensionError();
         });
     } else {
         // Fallback: If no overlay, animate everything immediately
         initScrollAnimations("all");
+        initFooterAnimations();
         checkForSuspensionError();
     }
 

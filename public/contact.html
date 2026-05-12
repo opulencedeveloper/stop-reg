@@ -32,7 +32,9 @@
   <meta name="theme-color" content="#1452CA" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
+  <link rel="stylesheet" href="/assets/css/contact.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
   
   <!-- Preload Critical Fonts -->
   <link rel="preload" href="/assets/fonts/PlusJakartaSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
@@ -54,8 +56,7 @@
       "url": "https://stopreg.com/contact.html"
     }
   </script>
-  <link rel="stylesheet" href="/assets/css/contact.css" />
-  <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -225,12 +226,16 @@
             </p>
             <div class="contacts-contact-desktop">
               <div class="contact-contacts">
-                <img src="/assets/images/contactUs/email.svg" alt="" />
-                <p>admin@stopreg.com</p>
+                <img src="/assets/icons/developer-mode-outline.svg" alt="Support" />
+                <p>Expert Technical Support</p>
               </div>
               <div class="contact-contacts">
-                <img src="/assets/images/contactUs/mobile-chat.svg" alt="" />
-                <p>+234-8123456789</p>
+                <img src="/assets/icons/bi_stars.svg" alt="Enterprise" />
+                <p>Enterprise Scale Solutions</p>
+              </div>
+              <div class="contact-contacts">
+                <img src="/assets/icons/user-check-validate.svg" alt="Audit" />
+                <p>Fraud Prevention Audit</p>
               </div>
             </div>
           </div>
@@ -239,28 +244,33 @@
               <fieldset>
                 <div class="form-group">
                   <label for="name">Name</label>
-                  <input type="text" id="name" name="name" required />
+                  <input type="text" id="name" name="name" placeholder="Enter your full name" required />
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" id="email" name="email" required />
+                  <input type="email" id="email" name="email" placeholder="e.g., alex@company.com" required />
                 </div>
                 <div class="form-group">
                   <label for="message">Message</label>
-                  <textarea id="message" name="message" rows="6" required></textarea>
+                  <textarea id="message" name="message" rows="6" placeholder="How can we help you?" required></textarea>
                 </div>
+                <div id="turnstile-widget" data-sitekey="0x4AAAAAACEca11RLVJeokxF" style="margin-bottom: 20px;"></div>
                 <button class="cnt-btn" id="cnt-btn">Submit</button>
               </fieldset>
             </form>
           </div>
           <div class="contacts-contact-mobile">
             <div class="contact-contacts">
-              <img src="/assets/images/contactUs/email.svg" alt="" />
-              <p>admin@stopreg.com</p>
+              <img src="/assets/icons/developer-mode-outline.svg" alt="Support" />
+              <p>Expert Technical Support</p>
             </div>
             <div class="contact-contacts">
-              <img src="/assets/images/contactUs/mobile-chat.svg" alt="" />
-              <p>+234-8123456789</p>
+              <img src="/assets/icons/bi_stars.svg" alt="Enterprise" />
+              <p>Enterprise Solutions</p>
+            </div>
+            <div class="contact-contacts">
+              <img src="/assets/icons/user-check-validate.svg" alt="Audit" />
+              <p>Fraud Prevention Audit</p>
             </div>
           </div>
         </div>
@@ -324,12 +334,8 @@
     <!-- Footer End -->
   </main>
   <script src="/assets/js/main.js" defer></script>
-  <script src="/assets/js/landing/index.js" defer></script>
+  <script src="/assets/js/contact.js" defer></script>
   <script src="/assets/js/landing/header.js" defer></script>
-  <script src="/assets/js/auth/signUp.js" defer></script>
-  <script src="/assets/js/auth/login.js" defer></script>
-  <script src="/assets/js/subscription-plan.js" defer></script>
-  <script src="/assets/js/auth/otp.js" defer></script>
 </body>
 
 </html>

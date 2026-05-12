@@ -5,9 +5,8 @@
 
 .main-wrapper {
   width: 100%;
-  height: 664px;
+  height: 880px; /* Increased slightly for larger subtitle list */
   position: relative;
-  /* Offset for fixed header */
 }
 
 .contact-wrapper {
@@ -167,6 +166,26 @@ label {
   height: 64px;
 }
 
+.contact-contacts {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-contacts img {
+  width: 32px; /* Larger icons for subtitle feel */
+  height: 32px;
+  filter: invert(24%) sepia(91%) saturate(2352%) hue-rotate(211deg) brightness(91%) contrast(92%);
+  /* Matches brand blue #1452CA */
+}
+
+.contact-contacts p {
+  font-size: 20px;
+  font-family: "Inter_28pt-SemiBold";
+  color: #252525;
+  margin: 0;
+}
+
 .contacts-contact-mobile {
   display: none;
 }
@@ -174,7 +193,8 @@ label {
 .contacts-contact-desktop {
   display: flex;
   flex-direction: column;
-  gap: 29px;
+  gap: 24px; /* More spacing between list items */
+  margin-top: 32px;
 }
 
 @media only screen and (max-width: 750px) {
@@ -191,7 +211,23 @@ label {
   }
 
   .contacts-contact-mobile {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .contacts-contact-mobile .contact-contacts img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contacts-contact-mobile .contact-contacts p {
+    font-size: 16px;
+  }
+
+  .contacts-contact-desktop {
+    display: none;
   }
 
   .contact-contents-wrapper {
@@ -199,7 +235,7 @@ label {
   }
 
   .main-wrapper {
-    height: 720px;
+    height: 1000px; /* Adjusted for 3 authority points + mobile Turnstile */
     /* Mobile header offset */
   }
 
