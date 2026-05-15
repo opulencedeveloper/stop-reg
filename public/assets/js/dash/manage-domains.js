@@ -54,6 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const config = configs[status];
         if (!config || !config.tbody) return;
 
+        // Plan Check for Blocked and Allow lists
+        if (status === 'blocked' || status === 'allowed') {
+            try {
+                const planName = await window.getUserPlan();
+                if (planName && planName.trim().toLowerCase() === "free") {
+                    renderPremiumRestriction(config.tbody, status === 'blocked' ? 'Block list' : 'Allow list');
+                    if (config.pagination) config.pagination.style.display = 'none';
+                    return;
+                }
+            } catch (err) {
+                console.warn("Plan check failed for fetch", err);
+            }
+        }
+
         // Set Loading State
         config.tbody.innerHTML = `
             <tr>
@@ -235,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <button class="action-icon-btn edit-action-btn" title="Edit" ${btnAttrs}>
                                     <img src="/assets/icons/edit-outline.svg" alt="Edit" class="icon-edit" />
                                 </button>
-                                <button class="action-icon-btn delete-action-btn" title="Delete" data-id="${domainId}">
+                                <button class="action-icon-btn delete-action-btn" title="Delete" ${btnAttrs}>
                                     <img src="/assets/icons/delete.svg" alt="Delete" class="icon-delete" />
                                 </button>
                             </div>
@@ -253,6 +267,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="empty-state-content">
                         <h3 class="empty-state-title">${title}</h3>
                         <p class="empty-state-desc">${desc}</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    function renderPremiumRestriction(tbody, featureName) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty-state-cell">
+                    <div class="empty-state-content premium-restriction">
+                        <img src="/assets/icons/lock-blue.svg" alt="Premium" />
+                        <p class="empty-state-title">Premium Feature</p>
+                        <p class="empty-state-subtitle">${featureName} is available on paid plans. <br>Please upgrade to <strong>Launch</strong> or higher to manage your domain lists.</p>
+                        <a href="/dashboard/payments.html" class="btn btn-primary btn-upgrade">Upgrade Now</a>
                     </div>
                 </td>
             </tr>
@@ -383,23 +412,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.delete-action-btn');
         if (btn) {
-            // Plan Check for Delete
-            try {
-                const planName = await window.getUserPlan();
-                if (planName && planName.trim().toLowerCase() === "free") {
-                    if (typeof window.showUpgradeToast === 'function') {
-                        window.showUpgradeToast();
-                    } else if (typeof iziToast !== 'undefined') {
-                        iziToast.info({
-                            title: 'Upgrade Required',
-                            message: 'Domain management features are available on Paid plans.',
-                            position: 'topRight'
-                        });
+            // Plan Check for Delete (Reporting is FREE to manage)
+            const status = btn.dataset.status || "";
+            if (status.toLowerCase() !== 'reported') {
+                try {
+                    const planName = await window.getUserPlan();
+                    if (planName && planName.trim().toLowerCase() === "free") {
+                        if (typeof window.showUpgradeToast === 'function') {
+                            window.showUpgradeToast();
+                        } else if (typeof iziToast !== 'undefined') {
+                            iziToast.info({
+                                title: 'Upgrade Required',
+                                message: 'Domain management features are available on Paid plans.',
+                                position: 'topRight'
+                            });
+                        }
+                        return;
                     }
-                    return;
+                } catch (err) {
+                    console.warn("Plan check failed for delete", err);
                 }
-            } catch (err) {
-                console.warn("Plan check failed for delete", err);
             }
 
             const id = btn.dataset.id;

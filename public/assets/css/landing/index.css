@@ -2293,7 +2293,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
     white-space: nowrap;
     position: -webkit-sticky !important;
     position: sticky !important;
-    top: 70px !important;
+    top: 58px !important;
     /* Adjust based on mobile header height */
     z-index: 9999 !important;
     /* Higher than content */
@@ -4815,38 +4815,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
   .land-foot-wrapp {
     padding-left: 16px !important;
     padding-right: 16px !important;
-  }
-
-  /* Reset outer footer padding to prevent double spacing */
-  .land-foot {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .land-foot-wrapp-sct-one {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .foot-desc {
-    font-size: 12px !important;
-  }
-
-  .foot-hd,
-  .foot-link {
-    font-size: 12px !important;
-  }
-
-  .foot-links-group {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 20px !important;
-  }
-
-  /* Make columns take up roughly half width */
-  .foot-links-group .foot-col {
-    width: 45% !important;
-    margin-bottom: 20px !important;
   }
 }
 

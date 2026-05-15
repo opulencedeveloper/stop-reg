@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="/assets/icons/approve-outline.svg" alt="Allow" />
                     <span>Allowed</span>
                 </div>`;
-        } else if (s === 'blocked' || s === 'block') {
+        } else if (s === 'blocked' || s === 'block' || s === 'auto_blocked') {
             return `
                 <div class="status-badge status-blocked">
                     <img src="/assets/icons/block-outline.svg" alt="Blocked" />

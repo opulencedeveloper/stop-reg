@@ -363,6 +363,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Map Status Badge
           switch (status.toLowerCase()) {
               case "blocked":
+              case "auto_blocked":
                   badgeClass = "status-blocked";
                   badgeIcon = "block-outline.svg";
                   badgeText = "Blocked";

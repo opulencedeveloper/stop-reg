@@ -1,3 +1,17 @@
+html {
+    scroll-behavior: smooth;
+}
+
+[id] {
+    scroll-margin-top: 150px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 /* Standardized Loading Spinner */
 .spinner-body {
   position: fixed;
@@ -480,6 +494,7 @@ body.hidden-overflow .auth-page-wrapper {
   bottom: 0px;
   top: 0px;
   left: -100%;
+  box-sizing: border-box;
   gap: 0;
   height: 100vh;
   background-color: var(--color-six);

@@ -315,26 +315,55 @@
 
 
     .main-head-wrapper {
+        padding-top: 10px;
+        padding-bottom: 10px;
         padding-left: var(--mobile-padding);
         padding-right: var(--mobile-padding);
     }
 
     body {
-        padding-top: 80px;
-        /* Smaller header on mobile */
+        padding-top: 0px;
+        /* Sticky header handles its own space */
     }
 
     .foot-logo {
         width: 48px;
     }
 
+    .land-foot {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .land-foot-wrapp {
-        padding-top: 40px;
-        padding-bottom: 20px;
+        padding: 40px 16px 20px;
+        /* Balanced padding for mobile */
     }
 
     .land-foot-wrapp-sct-one {
         margin-bottom: 40px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .foot-desc {
+        font-size: 12px;
+    }
+
+    .foot-hd,
+    .foot-link {
+        font-size: 12px;
+    }
+
+    .foot-links-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .foot-links-group .foot-col {
+        width: 45%;
+        margin-bottom: 20px;
     }
 
     .land-logo {

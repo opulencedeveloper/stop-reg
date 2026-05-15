@@ -484,6 +484,50 @@
     text-align: center;
 }
 
+/* Premium Restriction State */
+.premium-restriction {
+    padding: 32px;
+    text-align: center;
+}
+
+.premium-restriction img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+}
+
+.premium-restriction .empty-state-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.premium-restriction .empty-state-subtitle {
+    font-family: 'Inter_28pt-Regular';
+    font-size: 16px;
+    color: #667085;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.btn-upgrade {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 32px;
+    background: #1452CA;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-family: 'Inter_28pt-SemiBold';
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.btn-upgrade:hover {
+    background: #0F42A6;
+}
+
 @media (max-width: 768px) {
     .empty-state-cell {
         height: 420px;

@@ -29,14 +29,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const style = document.createElement('style');
             style.innerHTML = `
                 body.free-tier-user .btn-block,
-                body.free-tier-user .btn-allow,
-                body.free-tier-user .btn-report {
+                body.free-tier-user .btn-allow {
                     opacity: 0.4 !important;
                     cursor: not-allowed !important;
                 }
                 body.free-tier-user .btn-block img,
-                body.free-tier-user .btn-allow img,
-                body.free-tier-user .btn-report img {
+                body.free-tier-user .btn-allow img {
                     opacity: 0.8;
                 }
             `;
@@ -47,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (isFreePlan) {
-        [openBlockBtn, openAllowBtn, openReportBtn, openSettingsBtn].forEach(btn => {
+        [openBlockBtn, openAllowBtn, openSettingsBtn].forEach(btn => {
             if (btn) btn.style.opacity = "0.6";
         });
     }
@@ -143,10 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     openReportBtn?.addEventListener('click', (e) => {
-        if (isFreePlan) {
-            e.preventDefault();
-            return showUpgradeToast();
-        }
+        // Reporting is free for everyone
         openModal(reportOverlay);
     });
 
@@ -172,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             else if (normalizedStatus === ManageDomainStatus.REPORTED) targetOverlay = reportOverlay;
             else targetOverlay = blockOverlay; // Fallback
 
-            if (isFreePlan) {
+            if (isFreePlan && normalizedStatus !== ManageDomainStatus.REPORTED) {
                 e.preventDefault();
                 return showUpgradeToast();
             }
@@ -213,15 +208,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const originalText = btn.innerHTML;
         const token = localStorage.getItem("authToken");
         
-        // Plan Check for Submit
-        try {
-            const planName = await window.getUserPlan();
-            if (planName && planName.trim().toLowerCase() === "free") {
-                if (typeof showUpgradeToast === 'function') showUpgradeToast();
-                return;
+        // Plan Check for Submit (Reporting is FREE)
+        if (type !== 'reported') {
+            try {
+                const planName = await window.getUserPlan();
+                if (planName && planName.trim().toLowerCase() === "free") {
+                    if (typeof showUpgradeToast === 'function') showUpgradeToast();
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    return;
+                }
+            } catch (err) {
+                console.warn("Plan check failed on submit", err);
             }
-        } catch (err) {
-            console.warn("Plan check failed on submit", err);
         }
 
         if (!token) {

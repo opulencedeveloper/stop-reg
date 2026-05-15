@@ -869,12 +869,12 @@
             <article id="docume-item-sdks" class="documen-content-item doc-animate-init">
               <h2>Official Libraries</h2>
               <p>
-                We provide official SDKs for popular programming languages and frameworks to make integration
-                faster and more robust. Using our SDKs is the recommended way to integrate StopReg into your
-                application.
+                We provide official SDKs for popular programming languages and frameworks. 
+                For a detailed comparison and quick-start guide for all available libraries, visit our 
+                <a href="/libraries.html" style="color: #1452ca; font-weight: bold;">Official Libraries Hub</a>.
               </p>
 
-              <h3>Node.js SDK (NPM)</h3>
+              <h3 id="sdk-nodejs">Node.js SDK (NPM)</h3>
               <p>
                 Our Node.js SDK is designed for high-performance and zero-dependency security. It includes full
                 TypeScript support and robust error handling.
@@ -944,7 +944,7 @@
                 </button>
               </div>
 
-              <h3>Laravel SDK (Composer)</h3>
+              <h3 id="sdk-laravel">Laravel SDK (Composer)</h3>
               <p>
                 The official Laravel package integrates seamlessly with the Laravel Service Container and provides a
                 clean Facade for instant verification.
@@ -1018,7 +1018,7 @@
                 programming languages. Replace
                 <code>YOUR_API_TOKEN</code> with your actual API token.
               </p>
-              <h3>JavaScript (Node.js)</h3>
+              <h3 id="example-js">JavaScript (Node.js)</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">apiToken</span> = <span class="string">'YOUR_API_TOKEN'</span>;
@@ -1046,7 +1046,7 @@
                   <span>Copy</span>
                 </button>
               </div>
-              <h3>Python</h3>
+              <h3 id="example-python">Python</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">import</span> requests
@@ -1072,7 +1072,7 @@ response = requests.get(
                   <span>Copy</span>
                 </button>
               </div>
-              <h3>PHP</h3>
+              <h3 id="example-php">PHP</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">&lt;?php</span>
@@ -1107,7 +1107,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                   <span>Copy</span>
                 </button>
               </div>
-              <h3>cURL</h3>
+              <h3 id="example-curl">cURL</h3>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
                   <pre class="code-block"><code><span class="keyword">curl</span> <span class="keyword">-X</span> <span class="keyword">GET</span> \
@@ -1264,6 +1264,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 <a href="#" class="foot-link">Status</a>
                 <a href="/contact.html" class="foot-link">Contact Us</a>
                 <a href="/documentation.html" class="foot-link">API Documentation</a>
+                <a href="/libraries.html" class="foot-link">Official Libraries</a>
                 <a href="/submit-data-correction.html" class="foot-link">Submit a data correction</a>
               </div>
             </div>
