@@ -21,18 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
         blocked: {
             tbody: document.querySelector('.manage-domains-section:nth-of-type(1) .req-table tbody'),
             pagination: document.querySelector('.manage-domains-section:nth-of-type(1) .pagination-container'),
+            colspan: 4,
             emptyTitle: "No domains have been blocked yet",
             emptyDesc: "Block a domain to view results here."
         },
         allowed: {
             tbody: document.querySelector('.manage-domains-section:nth-of-type(2) .req-table tbody'),
             pagination: document.querySelector('.manage-domains-section:nth-of-type(2) .pagination-container'),
+            colspan: 4,
             emptyTitle: "No domains have been allowed yet",
             emptyDesc: "Allow a domain to view results here."
         },
         reported: {
             tbody: document.querySelector('.manage-domains-section:nth-of-type(3) .req-table tbody'),
             pagination: document.querySelector('.manage-domains-section:nth-of-type(3) .pagination-container'),
+            colspan: 5,
             emptyTitle: "No domains have been reported yet",
             emptyDesc: "Report a domain to view results here."
         }
@@ -54,6 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const config = configs[status];
         if (!config || !config.tbody) return;
 
+        // Set Loading State immediately so spinner shows during plan check too
+        config.tbody.innerHTML = `
+            <tr>
+                <td colspan="${config.colspan}">
+                    <div class="chart-loading-state">
+                        <div class="chart-spinner"></div>
+                        <span class="chart-loading-text">Loading...</span>
+                    </div>
+                </td>
+            </tr>
+        `;
+
         // Plan Check for Blocked and Allow lists
         if (status === 'blocked' || status === 'allowed') {
             try {
@@ -67,18 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn("Plan check failed for fetch", err);
             }
         }
-
-        // Set Loading State
-        config.tbody.innerHTML = `
-            <tr>
-                <td colspan="5" style="height: 200px; text-align: center; vertical-align: middle;">
-                     <div class="chart-loading-state">
-                        <div class="chart-spinner" style="animation: spin 0.3s linear infinite;"></div>
-                        <span class="chart-loading-text">Loading...</span>
-                    </div>
-                </td>
-            </tr>
-        `;
 
         try {
             const params = new URLSearchParams({
@@ -289,20 +292,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderErrorByStatus(status, retryFn) {
-        const tbody = configs[status]?.tbody;
-        if (!tbody) return;
-        
-        tbody.innerHTML = `
-             <tr>
-                <td colspan="5" style="height: 200px; padding: 0;">
-                    <div class="fetch-error-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 16px;">
-                        <h3 class="error-title" style="font-size: 16px;">Failed to load data</h3>
+        const config = configs[status];
+        if (!config?.tbody) return;
+
+        config.tbody.innerHTML = `
+            <tr>
+                <td colspan="${config.colspan}">
+                    <div class="fetch-error-state">
+                        <div class="error-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <h3 class="error-title">Failed to load data</h3>
+                        <p class="error-desc">Something went wrong. Please try again.</p>
                         <button class="retry-btn">Try Again</button>
                     </div>
                 </td>
             </tr>
         `;
-        const btn = tbody.querySelector('.retry-btn');
+        const btn = config.tbody.querySelector('.retry-btn');
         if (btn) btn.onclick = retryFn;
     }
 

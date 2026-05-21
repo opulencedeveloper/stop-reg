@@ -1,46 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Main Pages -->
-  <url>
-    <loc>https://stopreg.com/</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/blogs.html</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/documentation.html</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Blog Posts (Industrial Pretty URLs) -->
-  <url>
-    <loc>https://stopreg.com/blog/how-disposable-emails-hurt-marketing</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/blog/how-to-stop-fake-signups-saas</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/blog/privacy-relay-vs-disposable-emails</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/blog/complete-guide-disposable-email-detection</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://stopreg.com/blog/why-disposable-emails-increase-bounce-rates</loc>
-    <lastmod>2024-03-18</lastmod>
-    <priority>0.8</priority>
-  </url>
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+<url>
+<loc>https://stopreg.com/</loc>
+<lastmod>2026-05-21T10:56:35+00:00</lastmod>
+<priority>1.00</priority>
+</url>
+<url>
+<loc>https://stopreg.com/documentation.html</loc>
+<lastmod>2026-05-21T10:56:54+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/contact.html</loc>
+<lastmod>2026-05-21T10:56:54+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/libraries.html</loc>
+<lastmod>2026-05-21T10:56:54+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/submit-data-correction.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/about.html</loc>
+<lastmod>2026-05-21T10:56:54+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blogs.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/check-disposable-email.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/privacy-policy.html</loc>
+<lastmod>2026-05-21T10:56:54+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/terms.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.80</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blog/how-disposable-emails-hurt-marketing.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blog/how-to-stop-fake-signups-saas.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blog/privacy-relay-vs-disposable-emails.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blog/complete-guide-disposable-email-detection.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.64</priority>
+</url>
+<url>
+<loc>https://stopreg.com/blog/why-disposable-emails-increase-bounce-rates.html</loc>
+<lastmod>2026-05-21T10:56:55+00:00</lastmod>
+<priority>0.64</priority>
+</url>
 </urlset>

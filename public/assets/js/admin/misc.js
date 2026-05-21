@@ -167,9 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (currentTab === MiscTab.REPORTED) renderReportedTable();
             
             const paginationData = result.data.pagination || {
-                currentPage: result.data.page || 1,
-                totalPages: result.data.totalPages || 1,
-                totalItems: result.data.total || 0
+                page: result.data.page || 1,
+                pages: result.data.totalPages || 1,
+                total: result.data.total || 0
             };
             renderPaginationUI(paginationData);
             hideLoading();
