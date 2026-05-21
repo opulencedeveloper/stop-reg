@@ -124,6 +124,13 @@
 .blog-article-content {
     font-family: 'Inter_28pt-Regular';
     color: #252525;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.blog-article-content a {
+    overflow-wrap: break-word;
+    word-break: break-all;
 }
 
 .blog-article-content h2 {

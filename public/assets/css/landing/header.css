@@ -167,6 +167,34 @@
     color: #fff;
 }
 
+.foot-api-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background-color: #dcfce7;
+    color: #16a34a;
+    border-radius: 9999px;
+    border: 1px solid #bbf7d0;
+    font-size: 14px;
+    font-family: 'Inter_28pt-Regular';
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.foot-api-status:hover {
+    background-color: #bbf7d0;
+    color: #15803d;
+}
+
+.foot-api-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #16a34a;
+    flex-shrink: 0;
+}
+
 .land-foot-wrapp-sct-two {
     border-top: 1px solid #737373;
     padding-top: 16px;

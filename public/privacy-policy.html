@@ -298,6 +298,7 @@
       <section class="privacy-hero animation3">
         <h1>Privacy Policy</h1>
         <p>Last Updated: 16 December, 2025.</p>
+        <p>The Privacy Statement that follows describes the collection, use and disclosure of information practices pertaining to StopReg.com (the "Site"), which is owned and operated by NETBOOSTERS LAB (collectively "StopReg", "we", "us" or "our"). By accessing, using or registering on the Site, you accept and agree to this Privacy Statement. StopReg provides services related to email verification and signup fraud prevention services.</p>
       </section>
       <section class="privecy-contents">
         <div class="privacy-section animation4">
@@ -328,21 +329,23 @@
             <br>
             <p>
               <strong>Full Email API:</strong> Performs disposable email detection, role-based checks, public provider
-              identification, syntax validation, and MX record verification.<br>
-              <strong>Domain-Only API:</strong> Performs disposable email detection, domain syntax validation, and MX
-              record verification without processing the full email.
+              identification, domain syntax validation, MX record verification, alias and relay domain identification.<br>
+              <strong>Domain-Only API:</strong> Performs disposable email detection, domain syntax validation,
+              MX record verification and relay domain identification without processing the full email.
             </p>
             <br>
-            <p><strong>Important:</strong> All email addresses are deleted immediately after validation. No data is
-              stored long-term.</p>
+            <p><strong>Important:</strong> The username portion of the email address is deleted immediately after validation.</p>
           </div>
         </div>
 
         <div class="privacy-section">
           <h1>Data Retention</h1>
           <div class="contents">
-            <p><strong>Email addresses:</strong> Deleted Immediately after processing<br>
-              <strong>Domains:</strong> Deleted Immediately after processing<br>
+            <p><strong>Email API</strong><br>
+              <strong>Email addresses:</strong> The username portion of the email address is deleted immediately after validation while the domain name of the email address is stored for analytical purpose<br>
+              <br>
+              <strong>Domain API</strong><br>
+              <strong>Domains:</strong> The domain name is stored for analytical purposes.<br>
               <strong>Account information:</strong> Retained only as necessary for billing, support, and account
               management
             </p>
@@ -358,8 +361,7 @@
             <p>Stopreg.com complies with GDPR by:<br>
               Minimizing data collection: Only what is necessary for validation<br>
               Providing a domain-only API: For clients who prefer not to transmit full email addresses<br>
-              Deleting data immediately after use: Ensuring no personal data is retained unnecessarily<br>
-              Processing data securely: Using encryption, secure API access, and strict access controls</p>
+Processing data securely: Using encryption, secure API access, and strict access controls</p>
           </div>
         </div>
 
@@ -453,7 +455,7 @@
             <div class="foot-col">
               <h4 class="foot-hd">Support</h4>
               <div class="foot-links">
-                <a href="#" class="foot-link">Status</a>
+                <a href="/#live-demo" class="foot-api-status"><span class="foot-api-status-dot"></span>API Status: Operational</a>
                 <a href="/contact.html" class="foot-link">Contact Us</a>
                 <a href="/documentation.html" class="foot-link">API Documentation</a>
                 <a href="/submit-data-correction.html" class="foot-link">Submit a data correction</a>

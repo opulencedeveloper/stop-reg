@@ -393,8 +393,8 @@ const BLOG_POSTS = {
             🔗 <strong>Disposable Email Domain Lists on GitHub</strong><br>
             • https://github.com/tompec/disposable-email-domains/ — A massive communitymanaged list of disposable domains<br>
             • https://github.com/ivolo/disposable-email-domains — Updated with thousands of temporary and throwaway domains<br>
-            • https://github.com/harvardopensource/disposable_email_blacklist — Longer list useful for blocking<br>
-            • https://github.com/jFilterDisposableEmail/jfilter_disposable_email — JavaScriptfriendly list for frontend/blocklist use<br>
+            • https://github.com/7c/fakefilter — 7c Fakefilter<br>
+            • https://github.com/wesbos/burner-email-providers  — Wes Bos' burner email list<br>
             These lists can be used to cross-reference incoming emails against known disposable domains.<br>
             <strong>Limitations of Public Blocklists</strong><br>
             • New disposable providers appear continuously<br>
