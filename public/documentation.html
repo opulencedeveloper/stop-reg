@@ -555,7 +555,9 @@
     <span class="string">"mail_server"</span>: {
       <span class="string">"mx_found"</span>: <span class="keyword">true</span>,
       <span class="string">"mx_records"</span>: [
-        <span class="string">"aspmx.l.google.com"</span>
+        { <span class="string">"hostname"</span>: <span class="string">"aspmx.l.google.com"</span>, <span class="string">"priority"</span>: <span class="number">1</span> },
+        { <span class="string">"hostname"</span>: <span class="string">"alt1.aspmx.l.google.com"</span>, <span class="string">"priority"</span>: <span class="number">5</span> },
+        { <span class="string">"hostname"</span>: <span class="string">"alt2.aspmx.l.google.com"</span>, <span class="string">"priority"</span>: <span class="number">10</span> }
       ],
       <span class="string">"mx_provider"</span>: [
         {
@@ -724,7 +726,12 @@
                       <td><span class="field-name">mx_records</span> <span class="type-badge type-array">Array</span>
                       </td>
                       <td>List</td>
-                      <td>An array of hostnames resolved from the domain's DNS settings.</td>
+                      <td>An ordered array of MX records resolved from the domain's DNS settings, sorted by priority (lowest number = highest precedence). Each entry contains:
+                        <ul class="field-desc">
+                          <li><strong>hostname:</strong> The mail exchange hostname (e.g., <code>"aspmx.l.google.com"</code>).</li>
+                          <li><strong>priority:</strong> The DNS priority value — lower numbers receive mail first.</li>
+                        </ul>
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span>
