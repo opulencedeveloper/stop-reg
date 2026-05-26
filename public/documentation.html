@@ -11,6 +11,10 @@
   <meta name="description"
     content="Complete developer guide for StopReg API. Learn how to block disposable emails with code examples in Python, JavaScript, and PHP." />
   <meta name="robots" content="index, follow" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://salesiq.zohopublic.com" />
+  <link rel="dns-prefetch" href="https://salesiq.zohopublic.com" />
   <link rel="canonical" href="https://stopreg.com/documentation.html" />
 
   <!-- Open Graph -->
@@ -45,6 +49,7 @@
   <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
   <link href="/assets/css/landing/header.css" rel="stylesheet" />
   <link href="/assets/css/landing/index.css" rel="stylesheet" />
+  <style>.val-lang-panel{display:none}.val-lang-panel.active{display:block}</style>
 
   <!-- Schema: TechArticle + Breadcrumbs -->
   <script type="application/ld+json">
@@ -109,12 +114,15 @@
 </head>
 
 <body>
-  <script src="/assets/js/entrance-overlay.js"></script>
+  <!-- <script src="/assets/js/entrance-overlay.js"></script> -->
 
   <!-- Loading Spinner Start -->
-  <div id="spinner-body" class="spinner-body">
+<!--
+<div id="spinner-body" class="spinner-body">
     <div class="stopreg-spinner"></div>
   </div>
+-->
+
   <!-- Loading Spinner End -->
   <!-- Loading Spinner End -->
 
@@ -331,6 +339,9 @@
             </button>
             <button policy-data-target="docume-item5" class="docsScrollButton">
               Best Practices
+            </button>
+            <button policy-data-target="docume-item-validation" class="docsScrollButton">
+              Validation Configurations
             </button>
           </div>
           <div class="docs-content-list">
@@ -1226,6 +1237,563 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                   Check if the domain is actually disposable before blocking
                 </li>
               </ul>
+            </article>
+            <article id="docume-item-validation" class="documen-content-item doc-animate-init">
+              <h2>Recommended Validation Configurations</h2>
+              <p>
+                Below are common StopReg validation configurations that can be used depending on your registration requirements.
+                Each configuration uses fields from the <code>data.classification</code> and <code>data.mail_server</code> objects in the API response.
+              </p>
+
+              <h3>1. Block Disposable Email Domains Only</h3>
+              <p>Recommended if you want to block temporary and disposable email providers while allowing most legitimate users.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block disposable domains</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+
+<span class="comment">// Allow relay emails           ✓</span>
+<span class="comment">// Allow unresolved domains      ✓</span>
+<span class="comment">// Allow public email providers  ✓</span>
+<span class="comment">// Allow role-based emails       ✓</span>
+<span class="comment">// Allow alias emails            ✓</span></code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block disposable domains</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
+
+<span class="comment"># Allow relay emails           ✓</span>
+<span class="comment"># Allow unresolved domains      ✓</span>
+<span class="comment"># Allow public email providers  ✓</span>
+<span class="comment"># Allow role-based emails       ✓</span>
+<span class="comment"># Allow alias emails            ✓</span></code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block disposable domains</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+
+<span class="comment">// Allow relay emails           ✓</span>
+<span class="comment">// Allow unresolved domains      ✓</span>
+<span class="comment">// Allow public email providers  ✓</span>
+<span class="comment">// Allow role-based emails       ✓</span>
+<span class="comment">// Allow alias emails            ✓</span></code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>2. Allow Public &amp; Custom Domains</h3>
+              <p>Recommended if you want to allow Gmail, Yahoo, Outlook, and custom business domains while blocking risky email types.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Allow public email providers and custom domains</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Allow public email providers and custom domains</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Allow public email providers and custom domains</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+              <p><strong>Alternative configuration:</strong></p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block role and alias emails together</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'This email type is not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Block role and alias emails together</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'This email type is not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="comment">// Assumes $body already fetched from API</span>
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Block role and alias emails together</span>
+<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'This email type is not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>3. Allow Business Domains Only</h3>
+              <p>Recommended for B2B platforms that only accept company or business email addresses.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Allow only business/custom domains</span>
+<span class="comment">// Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use your company email address.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Allow only business/custom domains</span>
+<span class="comment"># Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use your company email address.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Allow only business/custom domains</span>
+<span class="comment">// Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use your company email address.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+              <p><strong>Alternative configuration:</strong></p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Allow only business domains</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span> || <span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use a business email address.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Allow only business domains</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use a business email address.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="comment">// Assumes $body already fetched from API</span>
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Allow only business domains</span>
+<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use a business email address.'</span>);
+}
+<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>4. Allow Public Email Providers Only</h3>
+              <p>Recommended if you only want to allow Gmail, Yahoo, Outlook, and other free public email providers.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="comment">// Block business/custom domains</span>
+<span class="keyword">if</span> (!<span class="variable">classification</span>.<span class="variable">is_public</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="comment"># Block business/custom domains</span>
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
+<span class="comment">// Block business/custom domains</span>
+<span class="keyword">if</span> (!(<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+              <p><strong>Alternative configuration:</strong></p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Allow public email providers</span>
+<span class="keyword">if</span> (!<span class="variable">classification</span>.<span class="variable">is_public</span> || <span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Only public email providers are accepted.'</span>);
+}
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
+<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
+
+<span class="comment"># Allow public email providers</span>
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Only public email providers are accepted.'</span>)
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
+<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="comment">// Assumes $body already fetched from API</span>
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
+
+<span class="comment">// Allow public email providers</span>
+<span class="keyword">if</span> (!(<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Only public email providers are accepted.'</span>);
+}
+<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
+}
+<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>Allowing Trusted Domains</h3>
+              <p>
+                To allow specific domain names regardless of their classification, add them to the <strong>Allow List</strong> from the
+                <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
+              </p>
+              <p>
+                Domains added to the allow list will bypass validation restrictions and Domain Abuse Shield checks entirely. This is useful for internal tools, partner organisations, or known corporate domains that may be flagged by classification rules.
+              </p>
+              <p><strong>Example trusted domains:</strong></p>
+              <div class="code-snippet-container">
+                <div class="code-snippet-content">
+                  <pre class="code-block"><code>example.com
+company.org
+business.net</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+              </div>
+
+              <h3>Domain Abuse Shield</h3>
+              <p>
+                To prevent abuse from unresolved or suspicious custom domains, configure <strong>Domain Abuse Shield</strong> from the
+                <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
+              </p>
+              <ul>
+                <li>The Abuse Shield system works based on your selected validation configuration and detection rules.</li>
+                <li>The system monitors unresolved custom domains and automatically performs the configured action — <strong>block</strong> or <strong>notify</strong> — once the detection threshold is reached.</li>
+                <li>Domains added to the allow list are excluded from Abuse Shield monitoring.</li>
+              </ul>
+
               <h3>Support</h3>
               <p>
                 If you need additional help or have questions, contact our
@@ -1323,12 +1891,32 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
   <script src="/assets/js/auth/otp.js" defer></script>
   <script src="/assets/js/doc-animations.js" defer></script>
   <script>
+    // Tab switching for multi-language validation config snippets
+    document.querySelectorAll('[data-lang-group]').forEach(function(group) {
+      var tabs = group.querySelectorAll('.code-tab');
+      var panels = group.querySelectorAll('.val-lang-panel');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var lang = this.getAttribute('data-lang');
+          tabs.forEach(function(t) { t.classList.remove('active'); });
+          this.classList.add('active');
+          panels.forEach(function(p) {
+            p.classList.toggle('active', p.getAttribute('data-lang') === lang);
+          });
+        });
+      });
+    });
+  </script>
+  <script>
     // Handle copy buttons in code snippets
     document.querySelectorAll('.code-copy-btn').forEach(button => {
       button.addEventListener('click', function () {
         const container = this.closest('.code-snippet-container');
-        const codeElement = container.querySelector('code');
-        const textToCopy = codeElement.textContent;
+        const activePanel = container.querySelector('.val-lang-panel.active');
+        const codeElement = activePanel
+          ? activePanel.querySelector('code')
+          : container.querySelector('code');
+        const textToCopy = codeElement ? codeElement.textContent : '';
 
         navigator.clipboard.writeText(textToCopy).then(() => {
           const originalImg = this.querySelector('img');

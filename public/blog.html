@@ -11,7 +11,9 @@
     <meta name="description"
         content="Read the latest insights on email deliverability, preventing fake signups, and protecting your SaaS from disposable emails." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://stopreg.com/blog" />
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="canonical" href="https://stopreg.com/blog" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
@@ -48,7 +50,7 @@
     <link href="/assets/css/landing/header.css" rel="stylesheet" />
     <link href="/assets/css/landing/index.css" rel="stylesheet" />
     <link href="/assets/css/blogs-details.css" rel="stylesheet" />
-    <script src="/assets/js/blogs-data.js"></script>
+    <script src="/assets/js/blogs-data.js" defer></script>
 
     <!-- Schema: Dynamic Injection Point -->
     <script type="application/ld+json" id="blog-schema"></script>
@@ -57,12 +59,15 @@
 </head>
 
 <body>
-    <script src="/assets/js/entrance-overlay.js"></script>
+    <!-- <script src="/assets/js/entrance-overlay.js"></script> -->
 
     <!-- Loading Spinner Start -->
-    <div id="spinner-body" class="spinner-body">
+<!--
+<div id="spinner-body" class="spinner-body">
         <div class="stopreg-spinner"></div>
     </div>
+-->
+
     <!-- Loading Spinner End -->
 
     <main id="content">

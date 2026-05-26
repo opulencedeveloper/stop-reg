@@ -181,12 +181,12 @@ window.hideSpinner = function() {
 const content = document.getElementById("content");
 const spinner = document.getElementById("spinner-body");
 
-if (content) {
-  content.style.display = "none";
-}
-if (spinner) {
-document.body.classList.add('hidden-overflow');
-}
+// if (content) {
+//   content.style.display = "none";
+// }
+// if (spinner) {
+//   document.body.classList.add('hidden-overflow');
+// }
 
 window.addEventListener("load", function () {
     // For landing pages, hide spinner immediately

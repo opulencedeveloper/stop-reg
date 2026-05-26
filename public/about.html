@@ -11,6 +11,12 @@
   <meta name="description"
     content="Learn more about StopReg, the advanced email intelligence platform designed to block disposable and fake registrations in real-time." />
   <meta name="robots" content="index, follow" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://salesiq.zohopublic.com" />
+  <link rel="dns-prefetch" href="https://salesiq.zohopublic.com" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
   <link rel="canonical" href="https://stopreg.com#" />
 
   <!-- Open Graph -->
@@ -49,7 +55,7 @@
   <link href="/assets/css/about.css" rel="stylesheet" />
 
   <!-- Lottie Player -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
 
   <!-- Schema: TechArticle + Breadcrumbs -->
   <script type="application/ld+json">
@@ -115,12 +121,15 @@
 </head>
 
 <body>
-  <script src="/assets/js/entrance-overlay.js"></script>
+  <!-- <script src="/assets/js/entrance-overlay.js"></script> -->
 
   <!-- Loading Spinner Start -->
-  <div id="spinner-body" class="spinner-body">
+<!--
+<div id="spinner-body" class="spinner-body">
     <div class="stopreg-spinner"></div>
   </div>
+-->
+
   <!-- Loading Spinner End -->
   <!-- Loading Spinner End -->
 

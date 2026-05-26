@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let storedResponseData = [];
   let currentPage = 1;
   let rowsPerPage = 6;
+  let totalPages = 1;
+  let totalDocs = 0;
 
 
   function renderEmptyState() {
@@ -162,57 +164,46 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderTablePage() {
     if (!disposableResult) return;
     disposableResult.innerHTML = "";
-    
-    // Hide pagination controls as we are showing all data for 30 days
-    const paginationContainer = document.querySelector('.table-pagination');
-    if(paginationContainer) paginationContainer.style.display = 'none';
 
-    // Show download button if we have data
-    if (downloadBtn && storedResponseData.length > 0) {
-        downloadBtn.classList.remove("hidden");
-    } else if (downloadBtn) {
-        downloadBtn.classList.add("hidden");
+    if (storedResponseData.length === 0) {
+      renderEmptyState();
+      return;
     }
 
-    // No pagination slicing - show all data
-    const displayedData = storedResponseData;
+    const paginationContainer = document.querySelector('.table-pagination');
+    if (paginationContainer) paginationContainer.style.display = totalPages > 1 ? '' : 'none';
 
-    // Helper for formatting values
+    if (downloadBtn) downloadBtn.classList.remove("hidden");
+
+    const startIndex = (currentPage - 1) * rowsPerPage;
+
     const formatValue = (val) => {
         if (val === true) return `<div class="status-badge status-bool-yes"><span>Yes</span></div>`;
         if (val === false) return '-';
         return val || '-';
     };
 
-    displayedData.forEach((item, index) => {
+    storedResponseData.forEach((item, index) => {
         const tr = document.createElement("tr");
-
         const domain = item.domain || '-';
-        
-        // Map API fields
         const isDisposable = formatValue(item.isDiposableDomain);
         const isRelay = formatValue(item.isRelayDomain);
-        
-        // Conversion for Public (0=False, 1=True)
         const publicVal = item.publicProvider === 1;
         const isPublic = formatValue(publicVal);
-        
         const isRole = formatValue(item.isRoleDomain);
         const isAlias = formatValue(item.isAliasDomain);
         const isProvider = item.provider || '-';
         const isBlocklisted = formatValue(item.isBlocklisted);
         const isMx = formatValue(item.hasMxRecords);
         const date = item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : '-';
-        
-        // Unresolved: 0=False(No/Green), 1=True(Yes/Red)
         const unresolvedVal = (item.unresolved || 0);
-        const isUnresolvedBool = unresolvedVal > 0; // True if > 0 (1)
-        const isUnresolved = isUnresolvedBool 
-            ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>` 
+        const isUnresolvedBool = unresolvedVal > 0;
+        const isUnresolved = isUnresolvedBool
+            ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>`
             : '-';
 
         tr.innerHTML = `
-          <td>${index + 1}</td>
+          <td>${startIndex + index + 1}</td>
           <td>${domain}</td>
           <td>${isProvider}</td>
           <td>${isUnresolved}</td>
@@ -226,54 +217,51 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${date}</td>
         `;
         disposableResult.appendChild(tr);
-
     });
-    
-    // No need to call renderPaginationControls()
+
+    renderPaginationControls();
   }
 
   // Fetch Requests on Load
-  const fetchRequests = async () => {
-    // Show Spinner
+  const fetchRequests = async (page = 1) => {
+    currentPage = page;
+
     if (disposableResult) {
         disposableResult.innerHTML = `
             <tr>
-                <td colspan="11" style="text-align: center; padding: 40px;">
+                <td colspan="12" style="text-align: center; padding: 40px;">
                     <div class="stopreg-spinner" style="border-top-color: #1452CA; border-right-color: #1452CA; margin: 0 auto;"></div>
                 </td>
             </tr>
         `;
     }
+    const paginationContainer = document.querySelector('.table-pagination');
+    if (paginationContainer) paginationContainer.style.display = 'none';
 
     try {
-        // Fetch last 30 days requests with limit=0 (no limit)
-        const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&limit=0`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        const response = await fetch(
+            `https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&page=${page}&limit=${rowsPerPage}`,
+            { headers: { 'Authorization': `Bearer ${token}` } }
+        );
         const result = await response.json();
-        
-        if (await window.handleAuthError(response)) {
-             return;
-        }
 
-        if(result.message === "success" && result.data && result.data.docs) {
-             storedResponseData = result.data.docs;
-             renderTablePage();
+        if (await window.handleAuthError(response)) return;
+
+        if (result.message === "success" && result.data && result.data.docs) {
+            storedResponseData = result.data.docs;
+            totalPages = result.data.meta.totalPages || 1;
+            totalDocs = result.data.meta.totalDocs || 0;
+            renderTablePage();
         } else {
-             // Fallback to error or empty state if weird response
-             throw new Error(result.message || "Failed to load requests");
+            throw new Error(result.message || "Failed to load requests");
         }
     } catch (error) {
         console.error("Error fetching requests:", error);
-        if (window.handleAuthError && await window.handleAuthError(error)) {
-            return;
-        }
+        if (window.handleAuthError && await window.handleAuthError(error)) return;
         if (disposableResult) {
             disposableResult.innerHTML = `
                 <tr>
-                    <td colspan="11" style="text-align: center; color: var(--error-color); padding: 20px;">
+                    <td colspan="12" style="text-align: center; color: var(--error-color); padding: 20px;">
                         Failed to load data. <button onclick="window.retryBulkFetch()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
                     </td>
                 </tr>
@@ -281,57 +269,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
   };
-  
+
   // Expose for retry button
-  window.retryBulkFetch = fetchRequests;
-  
-  fetchRequests();
+  window.retryBulkFetch = () => fetchRequests(currentPage);
+
+  fetchRequests(1);
 
   function renderPaginationControls() {
-      const totalPages = Math.ceil(storedResponseData.length / rowsPerPage);
-      const paginationContainer = document.querySelector('.table-pagination');
-      
-      if (totalPages <= 1) {
-          // Hide pagination if only one page or no data (optional, or just disable buttons)
-          // For now, let's just update the controls to show page 1 of 1
-      }
-
-      const prevBtn = document.querySelector('.prev-btn');
-      const nextBtn = document.querySelector('.next-btn');
-      const pageNumbersContainer = document.querySelector('.pagination-controls'); // Note: this contains prev/next buttons too in existing HTML structure, need to be careful.
-      
-      // Let's identify the specific container for numbers or recreate the middle part
-      // The current HTML structure is: 
-      // <div class="pagination-controls"> <button prev> <button 1> ... <button next> </div>
-      // We will clear the middle buttons and re-inject them.
-      
-      // Select existing prev/next buttons
-      if(prevBtn) prevBtn.disabled = currentPage === 1;
-      if(nextBtn) nextBtn.disabled = currentPage === totalPages || totalPages === 0;
-
-      // Clean up old page numbers (remove all children between prev and next)
       const controlsDiv = document.querySelector('.pagination-controls');
-      if(!controlsDiv) return;
-      
-      // Keep references to prev and next
+      if (!controlsDiv) return;
+
       const prev = controlsDiv.querySelector('.prev-btn');
       const next = controlsDiv.querySelector('.next-btn');
-      
-      controlsDiv.innerHTML = '';
-      if(prev) controlsDiv.appendChild(prev);
 
-      // Generate page numbers
-      // Simple logic: 1 ... current-1 current current+1 ... last
-      // Or just simple all pages if count is low
-      
+      if (prev) prev.disabled = currentPage === 1;
+      if (next) next.disabled = currentPage === totalPages || totalPages === 0;
+
+      controlsDiv.innerHTML = '';
+      if (prev) controlsDiv.appendChild(prev);
+
       const addPageBtn = (pageNum) => {
           const btn = document.createElement('button');
           btn.className = `page-number ${pageNum === currentPage ? 'active' : ''}`;
           btn.textContent = pageNum;
-          btn.addEventListener('click', () => {
-              currentPage = pageNum;
-              renderTablePage();
-          });
+          btn.addEventListener('click', () => fetchRequests(pageNum));
           controlsDiv.appendChild(btn);
       };
 
@@ -347,50 +308,41 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
           addPageBtn(1);
           if (currentPage > 3) addDots();
-          
-          let start = Math.max(2, currentPage - 1);
-          let end = Math.min(totalPages - 1, currentPage + 1);
-          
+
+          const start = Math.max(2, currentPage - 1);
+          const end = Math.min(totalPages - 1, currentPage + 1);
           for (let i = start; i <= end; i++) addPageBtn(i);
-          
+
           if (currentPage < totalPages - 2) addDots();
           addPageBtn(totalPages);
       }
 
-      if(next) controlsDiv.appendChild(next);
+      if (next) controlsDiv.appendChild(next);
   }
 
   // Setup Pagination Event Listeners (Once)
   const paginationSelect = document.querySelector('.pagination-select');
-  if(paginationSelect) {
+  if (paginationSelect) {
       paginationSelect.addEventListener('change', (e) => {
-          const val = parseInt(e.target.value); // "6 per page" -> 6
-          if(!isNaN(val)) {
+          const val = parseInt(e.target.value);
+          if (!isNaN(val)) {
               rowsPerPage = val;
-              currentPage = 1;
-              renderTablePage();
+              fetchRequests(1);
           }
       });
   }
 
   const prevBtn = document.querySelector('.prev-btn');
-  if(prevBtn) {
+  if (prevBtn) {
       prevBtn.addEventListener('click', () => {
-          if(currentPage > 1) {
-              currentPage--;
-              renderTablePage();
-          }
+          if (currentPage > 1) fetchRequests(currentPage - 1);
       });
   }
 
   const nextBtn = document.querySelector('.next-btn');
-  if(nextBtn) {
+  if (nextBtn) {
       nextBtn.addEventListener('click', () => {
-          const totalPages = Math.ceil(storedResponseData.length / rowsPerPage);
-          if(currentPage < totalPages) {
-              currentPage++;
-              renderTablePage();
-          }
+          if (currentPage < totalPages) fetchRequests(currentPage + 1);
       });
   }
 
