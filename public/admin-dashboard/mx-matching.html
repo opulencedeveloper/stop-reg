@@ -172,9 +172,7 @@
               <div class="mx-tabs">
                 <button class="tab-btn active" data-tab="disposable">Disposable</button>
                 <button class="tab-btn" data-tab="relay">Relay</button>
-                <button class="tab-btn" data-tab="mailbox">Mailbox</button>
-                <button class="tab-btn" data-tab="hosting">Hosting</button>
-                <button class="tab-btn" data-tab="email_api">Email API</button>
+                <button class="tab-btn" data-tab="others">Others</button>
               </div>
 
               <div class="mx-search-wrapper">
@@ -236,8 +234,8 @@
                 </div>
               </div>
 
-              <!-- Mailbox Content -->
-              <div class="tab-content" id="mailbox-content">
+              <!-- Others Content (mailbox, hosting, email_api, email_routing, and any future types) -->
+              <div class="tab-content" id="others-content">
                 <div class="mx-table-wrapper">
                   <table class="admin-table">
                     <thead>
@@ -249,47 +247,7 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody id="mailbox-tbody">
-                      <!-- Data injected here -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Hosting Content -->
-              <div class="tab-content" id="hosting-content">
-                <div class="mx-table-wrapper">
-                  <table class="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="hosting-tbody">
-                      <!-- Data injected here -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Email API Content -->
-              <div class="tab-content" id="email_api-content">
-                <div class="mx-table-wrapper">
-                  <table class="admin-table">
-                    <thead>
-                      <tr>
-                        <th>Providers</th>
-                        <th>MX Records</th>
-                        <th>Service Type</th>
-                        <th>Grade</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id="email_api-tbody">
+                    <tbody id="others-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
@@ -358,6 +316,8 @@
             <option value="mailbox">Mailbox</option>
             <option value="hosting">Hosting</option>
             <option value="email_api">Email API</option>
+            <option value="email_routing">Email Routing</option>
+            <option value="secure_email_gateway">Secure Email Gateway</option>
           </select>
         </div>
 

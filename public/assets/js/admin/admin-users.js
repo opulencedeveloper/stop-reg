@@ -329,6 +329,9 @@ document.addEventListener("DOMContentLoaded", () => {
         detailApiRequests.textContent = data.stats.apiRequestCount;
         detailJoinedDate.textContent = new Date(data.joinedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ".";
 
+        const planBadge = getEl("detail-plan-badge");
+        if (planBadge) planBadge.textContent = data.plan || "—";
+
         // Banners
         if (data.isSuspended) {
             suspensionBanner.style.display = "flex";
@@ -546,6 +549,112 @@ document.addEventListener("DOMContentLoaded", () => {
     removeCancelBtn.onclick = closeRemoveModal;
     removeCloseBtn.onclick = closeRemoveModal;
     removeModal.onclick = (e) => { if (e.target === removeModal) closeRemoveModal(); };
+
+    // -------------------------------------------------------------------------
+    // Assign Plan Feature
+    // -------------------------------------------------------------------------
+    const assignPlanModal    = getEl("assign-plan-modal-overlay");
+    const assignPlanSelect   = getEl("assign-plan-select");
+    const assignPlanMeta     = getEl("assign-plan-meta");
+    const assignPlanTargetName = getEl("assign-plan-target-name");
+    const assignPlanConfirmBtn = getEl("confirm-assign-plan-btn");
+    const assignPlanCancelBtn  = getEl("cancel-assign-plan-btn");
+    const assignPlanCloseBtn   = getEl("close-assign-plan-modal");
+    const assignPlanBtn        = getEl("assign-plan-btn");
+
+    // Cache plans after first load; plans rarely change during an admin session.
+    let cachedPlans = null;
+
+    const loadPlans = async () => {
+        if (cachedPlans) return cachedPlans;
+        try {
+            cachedPlans = await apiFetch("/plans");
+            return cachedPlans;
+        } catch {
+            cachedPlans = null;
+            return null;
+        }
+    };
+
+    const openAssignPlanModal = async () => {
+        if (!selectedUserId || !currentUserData) return;
+
+        assignPlanTargetName.textContent = currentUserData.name || "this user";
+        assignPlanSelect.innerHTML = '<option value="" disabled selected>Loading plans…</option>';
+        assignPlanMeta.textContent = "";
+        assignPlanModal.classList.add("is-active");
+
+        const plans = await loadPlans();
+        if (!plans || plans.length === 0) {
+            assignPlanSelect.innerHTML = '<option value="" disabled selected>Failed to load plans</option>';
+            return;
+        }
+
+        assignPlanSelect.innerHTML = plans.map(p =>
+            `<option value="${p._id}" data-duration="${p.durationInDays}" data-limit="${p.apiLimit ?? 0}" data-price="${p.monthlyPrice}">
+                ${p.name} — ${p.durationInDays}d / ${p.apiLimit ?? 'Unlimited'} API calls
+            </option>`
+        ).join("");
+
+        // Pre-select current plan if it matches
+        const currentPlan = currentUserData.plan;
+        const match = plans.find(p => p.name === currentPlan);
+        if (match) assignPlanSelect.value = match._id;
+
+        updateAssignPlanMeta();
+    };
+
+    const updateAssignPlanMeta = () => {
+        const selected = assignPlanSelect.options[assignPlanSelect.selectedIndex];
+        if (!selected || !selected.value) { assignPlanMeta.textContent = ""; return; }
+        const duration = selected.dataset.duration;
+        const limit    = selected.dataset.limit;
+        const price    = selected.dataset.price;
+        const expiry   = new Date();
+        expiry.setDate(expiry.getDate() + parseInt(duration, 10));
+        assignPlanMeta.textContent =
+            `Expires: ${expiry.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` +
+            ` · API calls: ${parseInt(limit, 10) === 0 ? 'Unlimited' : Number(limit).toLocaleString()}` +
+            ` · $${price}/mo`;
+    };
+
+    const closeAssignPlanModal = () => {
+        assignPlanModal.classList.remove("is-active");
+        assignPlanMeta.textContent = "";
+    };
+
+    const handleAssignPlan = async () => {
+        const planId = assignPlanSelect.value;
+        if (!planId || !selectedUserId) return;
+
+        const originalHTML = assignPlanConfirmBtn.innerHTML;
+        assignPlanConfirmBtn.disabled = true;
+        assignPlanConfirmBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Assigning…`;
+
+        try {
+            await apiFetch(`/users/${selectedUserId}/subscription`, {
+                method: "PATCH",
+                body: JSON.stringify({ planId }),
+            });
+
+            iziToast.success({ title: "Plan Assigned", message: "Subscription updated successfully.", position: "topRight" });
+            closeAssignPlanModal();
+            cachedPlans = null; // invalidate so plan meta stays fresh on next open
+            await loadUserDetails(selectedUserId);
+        } catch (err) {
+            iziToast.error({ title: "Error", message: err?.message || "Failed to assign plan.", position: "topRight" });
+        } finally {
+            assignPlanConfirmBtn.disabled = false;
+            assignPlanConfirmBtn.innerHTML = originalHTML;
+        }
+    };
+
+    if (assignPlanBtn)         assignPlanBtn.onclick         = openAssignPlanModal;
+    if (assignPlanConfirmBtn)  assignPlanConfirmBtn.onclick  = handleAssignPlan;
+    if (assignPlanCancelBtn)   assignPlanCancelBtn.onclick   = closeAssignPlanModal;
+    if (assignPlanCloseBtn)    assignPlanCloseBtn.onclick    = closeAssignPlanModal;
+    if (assignPlanSelect)      assignPlanSelect.onchange     = updateAssignPlanMeta;
+    if (assignPlanModal)       assignPlanModal.onclick       = (e) => { if (e.target === assignPlanModal) closeAssignPlanModal(); };
 
     // Initial Load
     loadUsers();

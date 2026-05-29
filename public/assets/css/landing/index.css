@@ -365,6 +365,197 @@ body {
   font-family: "Inter_28pt-Regular";
 }
 
+/* =============================================================
+   HERO DEMO CARD — 3-D PREMIUM ANIMATION SYSTEM
+   ============================================================= */
+
+/* Houdini-registered properties: allow animation of tilt vars
+   and the conic-gradient sweep angle.                          */
+@property --demo-tilt-x {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --demo-tilt-y {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --demo-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* --- Entry: dramatic 3-D flip with elastic spring overshoot --- */
+@keyframes heroCardEntry {
+  0% {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(28deg) rotateY(-5deg) translateY(60px) scale(0.86);
+    filter: blur(8px) brightness(0.65);
+    box-shadow: 0 0 0 rgba(20, 82, 202, 0);
+  }
+  45% {
+    opacity: 1;
+    filter: blur(0) brightness(1.02);
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(-10px) scale(1.025);
+    box-shadow:
+      0 40px 80px rgba(20, 82, 202, 0.22),
+      0  8px 24px rgba(0, 0, 0, 0.08);
+  }
+  68% {
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(5px) scale(0.992);
+  }
+  85% {
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(-2px) scale(1.003);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(0) scale(1);
+    box-shadow: 20px 20px 40px 0px rgba(37, 37, 37, 0.078);
+  }
+}
+
+/* --- Ambient: levitation — tilt vars compose naturally ------- */
+@keyframes heroCardFloat {
+  0%, 100% {
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(0px);
+    box-shadow:
+      20px 20px 40px 0px rgba(37, 37, 37, 0.078),
+      0   16px 50px      rgba(20, 82, 202, 0.06);
+  }
+  50% {
+    transform: perspective(1200px)
+      rotateX(var(--demo-tilt-x)) rotateY(var(--demo-tilt-y))
+      translateY(-9px);
+    box-shadow:
+      24px 28px 54px 0px rgba(37, 37, 37, 0.10),
+      0   32px 80px      rgba(20, 82, 202, 0.13);
+  }
+}
+
+/* --- Border: bright comet arc sweeping the card rim ---------- */
+@keyframes heroDemoBorderSpin {
+  to { --demo-border-angle: 360deg; }
+}
+
+/* Combined trigger (IntersectionObserver adds .visible-ani)    */
+.box.hero-demo-card.visible-ani {
+  animation:
+    heroCardEntry      1.4s cubic-bezier(0.25, 1, 0.5, 1) both,
+    heroCardFloat      5.5s ease-in-out 1.4s infinite,
+    heroDemoBorderSpin 5s   linear      0s   infinite;
+  will-change: transform, opacity, filter, box-shadow;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Freeze levitation while the cursor is over the card so it
+   stays still for interaction — border sweep keeps running.   */
+.box.hero-demo-card.visible-ani:hover {
+  animation-play-state: paused, paused, running;
+}
+
+/* Gradient border (padding-box white fill + border-box comet) */
+.hero-sect-two.hero-demo-card {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    conic-gradient(
+      from var(--demo-border-angle),
+      rgba(20,  82, 202, 0.0) 0deg,
+      rgba(20,  82, 202, 0.0) 255deg,
+      rgba(0,  163, 255, 0.9) 290deg,
+      rgba(20,  82, 202, 1.0) 322deg,
+      rgba(123, 47, 190, 0.8) 340deg,
+      rgba(20,  82, 202, 0.0) 360deg
+    ) border-box;
+  border: 2px solid transparent;
+  background-color: transparent;
+}
+
+/* --- Terminal: ambient glow on idle state -------------------- */
+.terminal-body {
+  position: relative;
+}
+
+.terminal-body.placeholder-mode {
+  background: radial-gradient(
+    ellipse at 50% 65%,
+    rgba(20, 82, 202, 0.07) 0%,
+    transparent 68%
+  );
+}
+
+/* Scanning beam that sweeps the idle terminal top → bottom */
+.terminal-body.placeholder-mode::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: linear-gradient(
+    to bottom,
+    transparent             0%,
+    rgba(20, 82, 202, 0.05) 30%,
+    rgba(20, 82, 202, 0.12) 50%,
+    rgba(20, 82, 202, 0.05) 70%,
+    transparent             100%
+  );
+  transform: translateY(-72px);
+  animation: terminalScanBeam 3.8s cubic-bezier(0.4, 0, 0.55, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes terminalScanBeam {
+  0%   { transform: translateY(-72px); opacity: 0; }
+  8%   { opacity: 1; }
+  88%  { opacity: 0.8; }
+  100% { transform: translateY(340px); opacity: 0; }
+}
+
+/* Blinking cursor on the placeholder headline */
+.api-live-demo-result-default-tle::after {
+  content: '|';
+  display: inline-block;
+  font-weight: 300;
+  color: #1452CA;
+  animation: demoCursorBlink 1.1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes demoCursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Accessibility: respect the user's reduced-motion setting */
+@media (prefers-reduced-motion: reduce) {
+  .box.hero-demo-card.visible-ani {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    box-shadow: 20px 20px 40px 0px rgba(37, 37, 37, 0.078);
+  }
+  .terminal-body.placeholder-mode::after,
+  .api-live-demo-result-default-tle::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 .hero-review-one {
   width: 100%;
 }

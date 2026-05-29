@@ -580,6 +580,55 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer.style.display = 'block';
   }
 
+  // -------------------------------------------------------------------------
+  // 6. Hero Demo Card — 3-D Mouse-Tilt
+  //    Sets CSS custom properties --demo-tilt-x / --demo-tilt-y which are
+  //    composed directly inside the heroCardFloat keyframes so the ambient
+  //    levitation and the tilt never conflict.
+  // -------------------------------------------------------------------------
+  if (isLandingPage) {
+    const demoCard = document.getElementById('live-demo');
+    if (demoCard) {
+      const MAX_TILT = 7; // degrees
+      let rafId = null;
+
+      const setTilt = (rx, ry) => {
+        demoCard.style.setProperty('--demo-tilt-x', rx + 'deg');
+        demoCard.style.setProperty('--demo-tilt-y', ry + 'deg');
+      };
+
+      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+      demoCard.addEventListener('mouseenter', () => {
+        // Fast response while the pointer is inside
+        demoCard.style.setProperty(
+          'transition',
+          '--demo-tilt-x 0.08s ease-out, --demo-tilt-y 0.08s ease-out'
+        );
+      });
+
+      demoCard.addEventListener('mousemove', (e) => {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          const r  = demoCard.getBoundingClientRect();
+          const rx = clamp(((e.clientY - r.top)  / r.height - 0.5) *  MAX_TILT * 2, -MAX_TILT, MAX_TILT);
+          const ry = clamp(((e.clientX - r.left) / r.width  - 0.5) * -MAX_TILT * 2, -MAX_TILT, MAX_TILT);
+          setTilt(rx, ry);
+        });
+      });
+
+      demoCard.addEventListener('mouseleave', () => {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        // Spring back with a soft ease
+        demoCard.style.setProperty(
+          'transition',
+          '--demo-tilt-x 0.7s cubic-bezier(0.23, 1, 0.32, 1), --demo-tilt-y 0.7s cubic-bezier(0.23, 1, 0.32, 1)'
+        );
+        setTilt(0, 0);
+        setTimeout(() => demoCard.style.removeProperty('transition'), 700);
+      });
+    }
+  }
 
 });
 

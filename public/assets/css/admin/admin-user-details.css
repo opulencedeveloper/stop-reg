@@ -690,6 +690,119 @@
     border-color: #B42318;
 }
 
+/* Primary (blue) confirm variant — used by non-destructive confirmations */
+.btn-confirm-primary {
+    background: var(--secondary-color, #1452CA);
+    border: 1px solid var(--secondary-color, #1452CA);
+    color: #FFFFFF;
+}
+
+.btn-confirm-primary:hover {
+    background: #0E3FA8;
+    border-color: #0E3FA8;
+}
+
+/* Profile card footer: joined date + Assign Plan button */
+.profile-card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+/* Assign Plan trigger on the profile card */
+.assign-plan-btn {
+    height: 36px;
+    padding: 0 16px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 8px;
+    color: var(--secondary-color, #1452CA);
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.assign-plan-btn:hover {
+    background: #DBEAFE;
+    border-color: #93C5FD;
+}
+
+/* Plan label shown below user name in the profile card */
+.detail-plan-name {
+    margin-top: 4px;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 13px;
+    color: #6B7280;
+}
+
+.detail-plan-name strong {
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    color: #374151;
+}
+
+/* Assign Plan modal: slightly wider container */
+.assign-plan-modal-container {
+    max-width: 460px;
+}
+
+/* Assign Plan modal: blue icon wrapper */
+.assign-plan-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: #EFF6FF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Assign Plan field wrapper: top spacing + label */
+.assign-plan-field {
+    margin-top: 20px;
+}
+
+.assign-plan-label {
+    display: block;
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-size: 13px;
+    color: #344054;
+    margin-bottom: 6px;
+}
+
+/* Plan picker select inside the modal */
+.assign-plan-select {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #D0D5DD;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 14px;
+    color: #344054;
+    background: #FFFFFF;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: auto;
+}
+
+.assign-plan-select:focus {
+    border-color: var(--secondary-color, #1452CA);
+    box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+/* Helper text below the dropdown */
+.assign-plan-meta {
+    margin-top: 8px;
+    font-family: 'Inter_28pt-Regular', sans-serif;
+    font-size: 12px;
+    color: #6B7280;
+    min-height: 16px;
+}
+
 /* Animations (Reused from dashboard patterns) */
 @keyframes overlayFadeIn {
     from {

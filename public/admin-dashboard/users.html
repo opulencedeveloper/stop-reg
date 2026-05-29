@@ -268,6 +268,9 @@
                 <div class="profile-main-info">
                   <h3 id="detail-user-name">Jeroen Xavi</h3>
                   <p id="detail-user-email">parkkelly@gutierrez.net</p>
+                  <p class="detail-plan-name">
+                    Plan: <strong id="detail-plan-badge">—</strong>
+                  </p>
                 </div>
                 <div class="profile-stats-grid">
                   <div class="stat-box">
@@ -280,8 +283,13 @@
                   </div>
                 </div>
               </div>
-              <div class="profile-joined-date">
-                Joined: <span id="detail-joined-date">12 January 2026.</span>
+              <div class="profile-card-footer">
+                <div class="profile-joined-date">
+                  Joined: <span id="detail-joined-date">12 January 2026.</span>
+                </div>
+                <button class="assign-plan-btn" id="assign-plan-btn">
+                  Assign Plan
+                </button>
               </div>
             </div>
 
@@ -417,6 +425,42 @@
     </div>
     </main>
   </div>
+  </div>
+
+  <!-- Assign Plan Modal -->
+  <div class="remove-user-modal-overlay" id="assign-plan-modal-overlay">
+    <div class="remove-user-modal-container assign-plan-modal-container">
+      <div class="remove-modal-header">
+        <div class="assign-plan-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="#1452CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <button class="remove-modal-close" id="close-assign-plan-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="remove-modal-content">
+        <h3>Assign Subscription Plan</h3>
+        <p>Manually assign a plan to <strong id="assign-plan-target-name">this user</strong>. This overrides their current subscription immediately.</p>
+        <div class="assign-plan-field">
+          <label class="assign-plan-label" for="assign-plan-select">Select Plan</label>
+          <select id="assign-plan-select" class="assign-plan-select">
+            <option value="" disabled selected>Loading plans...</option>
+          </select>
+          <p id="assign-plan-meta" class="assign-plan-meta"></p>
+        </div>
+      </div>
+      <div class="remove-modal-actions">
+        <button class="btn-cancel" id="cancel-assign-plan-btn">Cancel</button>
+        <button class="btn-confirm-primary" id="confirm-assign-plan-btn">
+          Assign Plan
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Confirmation Modal -->
