@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     closeDeleteModal();
                 } else {
-                    throw new Error(data.message || "Failed to delete");
+                    throw new Error(data.description || "Failed to delete");
                 }
             } catch (error) {
                 console.error("Delete failed:", error);
