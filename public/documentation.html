@@ -1257,11 +1257,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
   <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
 }
 
-<span class="comment">// Allow relay emails           ✓</span>
-<span class="comment">// Allow unresolved domains      ✓</span>
-<span class="comment">// Allow public email providers  ✓</span>
-<span class="comment">// Allow role-based emails       ✓</span>
-<span class="comment">// Allow alias emails            ✓</span></code></pre>
+</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
                   <pre class="code-block"><code><span class="keyword">import</span> requests
@@ -1749,6 +1745,261 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }
 <span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>5. Block Relay Emails</h3>
+              <p>Use this check to reject email addresses routed through relay or privacy-forwarding services such as Apple Hide My Email, SimpleLogin, or AnonAddy.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block relay emails</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block relay emails</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block relay emails</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>6. Block Unresolved Domains</h3>
+              <p>Use this check to reject email addresses from domains that cannot be verified — unknown registrations, expired domains, or domains with no DNS records.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block unresolved domains</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_unresolved</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block unresolved domains</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_unresolved'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block unresolved domains</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_unresolved'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>7. Block Public Email Providers</h3>
+              <p>Use this check to reject free public email providers such as Gmail, Yahoo, and Outlook. Useful for B2B sign-up forms that require a company email address.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block public email providers</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use your company email address.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block public email providers</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use your company email address.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block public email providers</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use your company email address.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>8. Block Role-Based Emails</h3>
+              <p>Use this check to reject role-based addresses such as <code>admin@</code>, <code>support@</code>, <code>info@</code>, and <code>noreply@</code> that are shared across teams and not tied to an individual user.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block role-based emails</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block role-based emails</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block role-based emails</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>);
+}</code></pre>
+                </div>
+                <button class="code-copy-btn" aria-label="Copy code">
+                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                  <span>Copy</span>
+                </button>
+                <div class="code-snippet-tabs">
+                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="php">PHP</button>
+                </div>
+              </div>
+
+              <h3>9. Block Alias Emails</h3>
+              <p>Use this check to reject email aliases — addresses containing a <code>+</code> suffix (e.g. <code>user+tag@gmail.com</code>) that could be used to bypass uniqueness checks or track your signup form.</p>
+              <div class="code-snippet-container" data-lang-group>
+                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
+                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
+<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
+
+<span class="comment">// Block alias emails</span>
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>);
+}</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="python">
+                  <pre class="code-block"><code><span class="keyword">import</span> requests
+
+<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
+    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
+    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
+)
+<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
+
+<span class="comment"># Block alias emails</span>
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>)</code></pre>
+                </div>
+                <div class="code-snippet-content val-lang-panel" data-lang="php">
+                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
+<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
+<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
+<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
+<span class="function">curl_close</span>(<span class="variable">$ch</span>);
+
+<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
+
+<span class="comment">// Block alias emails</span>
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>);
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
