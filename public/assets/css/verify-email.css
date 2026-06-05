@@ -790,3 +790,8 @@ tr.bulk-table-inner td {
 .full-width-card {
   grid-column: 1 / -1;
 }
+
+/* Results overlay hidden state */
+.results-overlay-hidden {
+  display: none;
+}

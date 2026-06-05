@@ -107,11 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             const data = await response.json();
-           
+
             if (response.ok) {
                 const results = data?.data;
-                // Dashboard Verification API returns a flat JSON structure
+                // Dashboard API returns a flat JSON structure
                 const isDisposable = results?.disposable === true;
+                const hasMx = results?.mx === true;
+                const isPublic = results?.public === true;
+                const isRelay = results?.isRelay === true;
+                const isRole = results?.role === true;
+                const isAlias = results?.alias === true;
+                const isUnresolved = results?.unresolved === true;
 
                 // Show results, hide empty state
                 if (resultsContainer) resultsContainer.style.display = "block";
@@ -121,22 +127,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (resultTitle) {
                    const isEmail = input.includes('@');
                    const typeLabel = isEmail ? "email" : "domain";
-                   // backend returns isDisposable for the domain/email
-                   const statusText = isDisposable 
-                        ? `is a verified disposable ${typeLabel}` 
+                   const statusText = isDisposable
+                        ? `is a verified disposable ${typeLabel}`
                         : `is NOT a verified disposable ${typeLabel}`;
-                   
+
                    resultTitle.innerHTML = `The input provided <b>${input}</b> ${statusText}`;
                 }
 
                 // Update individual result cards
                 if (resultsList) {
-                    const hasMx = results?.mx === true;
-                    const isPublic = results?.public === true;
-                    const isRelay = results?.isRelay === true;
-                    const isRole = results?.role === true;
-                    const isAlias = results?.alias === true;
-                    const isUnresolved = results?.unresolved === true;
 
                     resultsList.innerHTML = `
                         <!-- MX Record (True/False) -->

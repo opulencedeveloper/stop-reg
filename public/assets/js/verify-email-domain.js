@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
     resultContainer = form.querySelector(".api-live-demo-result-cont");
     turnstileContainerSelector = ".api-live-demo-cloudflaire-cont";
   } else {
-    isCheckPage = window.location.pathname.includes('check-disposable-email.html');
+    isCheckPage = window.location.pathname.includes('check-disposable-email');
     form = verifyPageForm;
     input = form.querySelector("#email");
     submitBtn = form.querySelector(".bulk-verify-domain-btn");
-    resultContainer = isCheckPage 
+    resultContainer = isCheckPage
         ? document.getElementById("verify-email-result-section")
         : document.getElementById("verify-email-result-container");
     turnstileContainerSelector = "#captcha-container"; // or look for #turnstile-widget directly
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await response.json().catch(() => ({}));
-      
+
       if (!response.ok) {
         // Handle specific network or API errors
         const errorMsg = data?.description || data?.message || "Verification failed. Please try again.";
@@ -325,9 +325,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const responseData = data?.data;
-      
+
       const isDisposable = responseData?.classification?.is_disposable === true;
-      
+
       renderResults(inputValue, isDisposable, responseData, data);
       showToast("Check successful", "success");
 
@@ -338,7 +338,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     } catch (err) {
-      console.error("API Error:", err);
       // Enhanced error message for network issues
       const msg = err.message === "Failed to fetch" 
         ? "Network error. Please check your connection."
@@ -364,7 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------------
   
   function renderResults(inputVal, isDisposable, details, fullResponse = null) {
-    if (!resultContainer) return;
+    if (!resultContainer) {
+      return;
+    }
 
     if (isLandingPage) {
         const terminalBody = resultContainer.querySelector(".terminal-body");
@@ -390,8 +391,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const listContainer = resultContainer.querySelector(".disposal-results-list");
 
         const typeLabel = inputVal.includes('@') ? "email" : "domain";
-        const headerVerificationText = isDisposable 
-            ? `is a verified disposable ${typeLabel}` 
+        const headerVerificationText = isDisposable
+            ? `is a verified disposable ${typeLabel}`
             : `is NOT a verified disposable ${typeLabel}`;
 
         if (resultTitle) {
