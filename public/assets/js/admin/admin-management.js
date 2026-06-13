@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const getEl = (id) => document.getElementById(id);
 
   // Admin check
-  const invitationSection = getEl("invitation-section");
-  const insufficientPermissions = getEl("insufficient-permissions");
+  const adminManagementContent = getEl("admin-management-content");
+  const insufficientPermissionsView = getEl("insufficient-permissions-view");
 
   // Invitation form
   const sendInvitationForm = getEl("send-invitation-form");
@@ -47,19 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const showFeedback = (message, type = "success") => {
     clearFeedback();
-    invitationFeedback.classList.add(`feedback-${type}`);
-    invitationFeedback.innerHTML = `
-      <div class="feedback-content">
-        <svg class="feedback-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          ${
-            type === "success"
-              ? '<path d="M10 15.586L6.707 12.293L5.293 13.707L10 18.414L18.707 9.707L17.293 8.293L10 15.586Z" fill="currentColor"/>'
-              : '<path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" fill="currentColor"/>'
-          }
-        </svg>
-        <span>${message}</span>
-      </div>
-    `;
+    invitationFeedback.classList.add(type);
+    invitationFeedback.textContent = message;
   };
 
   // --- PERMISSION CHECK ---
@@ -94,13 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
       currentAdminIsSuperAdmin = admin.isSuperAdmin;
 
       if (currentAdminIsSuperAdmin) {
-        invitationSection.style.display = "block";
-        insufficientPermissions.style.display = "none";
+        adminManagementContent.style.display = "block";
+        insufficientPermissionsView.style.display = "none";
         loadAuditLogs();
       } else {
-        invitationSection.style.display = "none";
-        insufficientPermissions.style.display = "block";
-        auditLogsTableWrapper.style.display = "none";
+        adminManagementContent.style.display = "none";
+        insufficientPermissionsView.style.display = "block";
       }
     } catch (error) {
       console.error("Permission check error:", error);
@@ -204,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderAuditLogs(logs);
       renderAuditLogsPagination(pagination);
 
-      auditLogsTableWrapper.style.display = "table";
+      auditLogsTableWrapper.style.display = "block";
       if (pagination.pages > 1) {
         auditLogsPagination.style.display = "flex";
       }
@@ -231,11 +219,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const detailsLabel = formatDetailsLabel(log);
 
       row.innerHTML = `
-        <td class="audit-cell-datetime">${createdAt}</td>
-        <td class="audit-cell-admin">${adminName}</td>
-        <td class="audit-cell-action"><span class="action-badge action-${log.action}">${actionLabel}</span></td>
-        <td class="audit-cell-resource">${resourceLabel}</td>
-        <td class="audit-cell-details">${detailsLabel}</td>
+        <td>${createdAt}</td>
+        <td>${adminName}</td>
+        <td><span class="audit-action-badge ${log.action.replace(/_/g, '-')}">${actionLabel}</span></td>
+        <td>${resourceLabel}</td>
+        <td>${detailsLabel}</td>
       `;
 
       auditLogsTbody.appendChild(row);

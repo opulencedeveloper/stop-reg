@@ -73,11 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateRequirement = (id, isValid) => {
       const el = getEl(id);
       if (isValid) {
-        el.classList.add("requirement-met");
-        el.classList.remove("requirement-unmet");
+        el.classList.add("met");
       } else {
-        el.classList.remove("requirement-met");
-        el.classList.add("requirement-unmet");
+        el.classList.remove("met");
       }
     };
 

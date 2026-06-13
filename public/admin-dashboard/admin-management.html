@@ -150,135 +150,135 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="admin-main">
+    <div class="admin-main">
       <!-- Admin Header -->
       <header class="admin-header">
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 6H21M3 12H21M3 18H21" stroke="#131313" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-        </button>
-        <div class="admin-header-title">
-          <h1>Admin Management</h1>
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
         </div>
-        <div class="admin-header-actions">
-          <div class="admin-header-user">
-            <div class="admin-user-info">
-              <p class="admin-user-name" id="admin-header-name">Loading...</p>
-              <p class="admin-user-role" id="admin-header-role">Admin</p>
-            </div>
-            <img src="/assets/icons/profile-circle.svg" alt="Profile" />
+        <h1 class="admin-page-title">Admin Management</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
           </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
         </div>
       </header>
 
-      <!-- Page Content -->
-      <div class="admin-content">
-        <!-- Invitation Section -->
-        <section class="admin-management-section" id="invitation-section" style="display: none;">
-          <div class="section-header">
-            <h2>Send Admin Invitation</h2>
-            <p class="section-description">Invite new team members to become administrators</p>
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <!-- Insufficient Permissions View -->
+        <div class="admin-management-page-container" id="insufficient-permissions-view" style="display: none;">
+          <div class="permission-error-container">
+            <div class="permission-error">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#CC0000" />
+              </svg>
+              <h2>Insufficient Permissions</h2>
+              <p>Only Super Admins can access this page.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Management Content -->
+        <div class="admin-management-page-container" id="admin-management-content">
+          <!-- Invitations Section -->
+          <div class="admin-management-section">
+            <div class="section-header">
+              <h2>Invite New Admin</h2>
+              <p class="section-description">Send invitation emails to new administrators</p>
+            </div>
+
+            <div class="invitation-form-wrapper">
+              <form id="send-invitation-form" class="invitation-form">
+                <div class="form-group">
+                  <label for="invitee-email">Email Address</label>
+                  <input
+                    type="email"
+                    id="invitee-email"
+                    name="email"
+                    placeholder="admin@example.com"
+                    required
+                  />
+                  <span class="form-hint">The invitation will be sent to this email address</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="admin-role">Admin Role</label>
+                  <select id="admin-role" name="role" required>
+                    <option value="">Select a role...</option>
+                    <option value="admin">Admin (Limited Privileges)</option>
+                    <option value="super_admin">Super Admin (Full Access)</option>
+                  </select>
+                  <span class="form-hint">
+                    <strong>Admin:</strong> View data, manage users (cannot delete) |
+                    <strong>Super Admin:</strong> Full access including deletions
+                  </span>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn-primary" id="send-invitation-btn">
+                    Send Invitation
+                  </button>
+                </div>
+              </form>
+
+              <div class="invitation-feedback" id="invitation-feedback"></div>
+            </div>
           </div>
 
-          <div class="invitation-form-wrapper">
-            <form id="send-invitation-form" class="invitation-form">
-              <div class="form-group">
-                <label for="invitee-email">Email Address</label>
-                <input
-                  type="email"
-                  id="invitee-email"
-                  name="email"
-                  placeholder="admin@example.com"
-                  required
-                />
-                <span class="form-hint">The invitation will be sent to this email</span>
+          <!-- Audit Logs Section -->
+          <div class="admin-management-section">
+            <div class="section-header">
+              <h2>Admin Audit Logs</h2>
+              <p class="section-description">Track all administrator actions and invitations</p>
+            </div>
+
+            <div class="audit-logs-wrapper">
+              <!-- Loading State -->
+              <div class="audit-logs-loading" id="audit-logs-spinner" style="display: none;">
+                <div class="chart-loading-state">
+                  <div class="chart-spinner"></div>
+                  <span class="chart-loading-text">Loading audit logs...</span>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="admin-role">Admin Role</label>
-                <select id="admin-role" name="role" required>
-                  <option value="">-- Select Role --</option>
-                  <option value="admin">Admin (Limited Privileges)</option>
-                  <option value="super_admin">Super Admin (Full Access)</option>
-                </select>
-                <span class="form-hint">
-                  <strong>Admin:</strong> Can view data and manage users (cannot delete) |
-                  <strong>Super Admin:</strong> Full access including deletions
-                </span>
+              <!-- Audit Logs Table -->
+              <div class="audit-logs-table-wrapper" id="audit-logs-table-wrapper" style="display: none;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Date & Time</th>
+                      <th>Admin</th>
+                      <th>Action</th>
+                      <th>Resource</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody id="audit-logs-tbody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
               </div>
 
-              <div class="form-actions">
-                <button type="submit" class="btn-primary">
-                  <span>Send Invitation</span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 1V15M8 1L1 8M8 1L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                </button>
+              <!-- Pagination -->
+              <div class="admin-pagination" id="audit-logs-pagination" style="display: none;">
+                <!-- Pagination buttons will be added here -->
               </div>
-            </form>
 
-            <div class="invitation-feedback" id="invitation-feedback"></div>
-          </div>
-        </section>
-
-        <!-- Audit Logs Section -->
-        <section class="admin-management-section">
-          <div class="section-header">
-            <h2>Admin Audit Logs</h2>
-            <p class="section-description">Track all administrator actions and invitations</p>
-          </div>
-
-          <div class="audit-logs-wrapper">
-            <div class="audit-logs-spinner" id="audit-logs-spinner" style="display: none;">
-              <div class="spinner"></div>
-              <p>Loading audit logs...</p>
-            </div>
-
-            <div class="audit-logs-table-wrapper" id="audit-logs-table-wrapper" style="display: none;">
-              <table class="audit-logs-table">
-                <thead>
-                  <tr>
-                    <th>Date & Time</th>
-                    <th>Admin</th>
-                    <th>Action</th>
-                    <th>Resource</th>
-                    <th>Details</th>
-                  </tr>
-                </thead>
-                <tbody id="audit-logs-tbody">
-                  <!-- Populated by JS -->
-                </tbody>
-              </table>
-            </div>
-
-            <div class="audit-logs-pagination" id="audit-logs-pagination" style="display: none;">
-              <!-- Pagination buttons will be added here -->
-            </div>
-
-            <div class="audit-logs-empty" id="audit-logs-empty" style="display: none;">
-              <p>No audit logs found</p>
+              <!-- Empty State -->
+              <div class="empty-state" id="audit-logs-empty" style="display: none;">
+                <p>No audit logs found</p>
+              </div>
             </div>
           </div>
-        </section>
-
-        <!-- Insufficient Permissions -->
-        <section class="admin-management-section" id="insufficient-permissions" style="display: none;">
-          <div class="permission-error">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
-                fill="#FF6B6B" />
-            </svg>
-            <h3>Insufficient Permissions</h3>
-            <p>Only Super Admins can manage admin invitations and view audit logs.</p>
-          </div>
-        </section>
-      </div>
-    </main>
+        </div>
+      </main>
+    </div>
   </div>
 
   <!-- Toast Notifications -->
