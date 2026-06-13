@@ -57,6 +57,39 @@ document.addEventListener("DOMContentLoaded", () => {
     acceptInvitationForm.style.display = "none";
   };
 
+  // --- INPUT ERROR HANDLING ---
+
+  const showInputError = (input, message) => {
+    if (!input) return;
+
+    input.classList.add("input-error");
+
+    let errorElement = input.parentElement.querySelector(".input-error-message");
+    if (!errorElement) {
+      errorElement = document.createElement("span");
+      errorElement.className = "input-error-message";
+      input.parentElement.appendChild(errorElement);
+    }
+    errorElement.textContent = message;
+  };
+
+  const clearInputError = (input) => {
+    if (!input) return;
+
+    input.classList.remove("input-error");
+    const errorElement = input.parentElement.querySelector(".input-error-message");
+    if (errorElement) {
+      errorElement.remove();
+    }
+  };
+
+  const clearAllErrors = () => {
+    const inputs = [invitationTokenInput, firstNameInput, lastNameInput, passwordInput, confirmPasswordInput];
+    inputs.forEach(input => {
+      if (input) clearInputError(input);
+    });
+  };
+
   // --- PASSWORD VALIDATION ---
 
   const validatePassword = (password) => {
@@ -162,6 +195,78 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // --- FORM VALIDATION ---
+  // Matches backend validator in /src/admin/validator.ts: validateAcceptAdminInvitation
+
+  const validateInvitationForm = () => {
+    clearAllErrors();
+    let hasError = false;
+    let firstInvalidInput = null;
+
+    const token = invitationTokenInput.value.trim();
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    // Validate Token (backend: required, trimmed, not empty)
+    if (!token) {
+      showInputError(invitationTokenInput, "Invitation code is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = invitationTokenInput;
+    }
+
+    // Validate First Name (backend: required, trimmed, not empty)
+    if (!firstName) {
+      showInputError(firstNameInput, "First name is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = firstNameInput;
+    }
+
+    // Validate Last Name (backend: required, trimmed, not empty)
+    if (!lastName) {
+      showInputError(lastNameInput, "Last name is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = lastNameInput;
+    }
+
+    // Validate Password (backend: required, min 8 chars, regex pattern)
+    // PASSWORD_REGEX requires: 1 uppercase, 1 lowercase, 1 number
+    if (!password) {
+      showInputError(passwordInput, "Password is required");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = passwordInput;
+    } else if (password.length < 8) {
+      showInputError(passwordInput, "Password must be at least 8 characters long");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = passwordInput;
+    } else if (!isPasswordValid(password)) {
+      showInputError(
+        passwordInput,
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+      );
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = passwordInput;
+    }
+
+    // Validate Confirm Password (Frontend UX: ensure they match before submission)
+    if (!confirmPassword) {
+      showInputError(confirmPasswordInput, "Please confirm your password");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = confirmPasswordInput;
+    } else if (password !== confirmPassword) {
+      showInputError(confirmPasswordInput, "Passwords do not match");
+      hasError = true;
+      if (!firstInvalidInput) firstInvalidInput = confirmPasswordInput;
+    }
+
+    if (firstInvalidInput) {
+      firstInvalidInput.focus();
+    }
+
+    return !hasError;
+  };
+
   // --- ACCEPT INVITATION ---
 
   const acceptInvitation = async (event) => {
@@ -171,6 +276,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tokenVerified || !invitationToken) {
       showToast("Please verify your invitation code first", "error");
       invitationTokenInput.focus();
+      return;
+    }
+
+    // Validate form before submission
+    if (!validateInvitationForm()) {
       return;
     }
 
