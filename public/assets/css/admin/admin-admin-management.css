@@ -6,7 +6,71 @@
   border-radius: 8px;
   margin-top: 20px;
   margin-bottom: 40px;
+  overflow: hidden;
+}
+
+/* Admin Management Header */
+.admin-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 8px;
+  border-bottom: 1px solid #EDEDED;
+  background-color: #FAFAFA;
+}
+
+.admin-management-header-info h2 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  margin-bottom: 0;
+  color: #252525;
+}
+
+.admin-management-tabs {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #737373;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.tab-btn:hover {
+  color: #131313;
+}
+
+.tab-btn.active {
+  color: #1452CA;
+  border-bottom-color: #1452CA;
+}
+
+/* Tab Content */
+.tab-content {
+  display: none;
   padding: 24px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.admin-management-section {
+  background-color: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
 }
 
 /* Permission Error Container */
@@ -400,6 +464,74 @@
     padding: 6px 10px;
     font-size: 13px;
   }
+}
+
+/* --- Invitations Wrapper --- */
+.invitations-wrapper {
+  width: 100%;
+}
+
+.invitations-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.invitations-table-wrapper {
+  overflow-x: auto;
+}
+
+/* Status badges for invitations */
+.invitation-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: #FFF5E6;
+  color: #FF9500;
+}
+
+.status-accepted {
+  background-color: #E6FFFA;
+  color: #039286;
+}
+
+.status-expired {
+  background-color: #FFE8E8;
+  color: #CC0000;
+}
+
+.status-revoked {
+  background-color: #FFE8E8;
+  color: #CC0000;
+}
+
+/* Revoke button */
+.btn-revoke {
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #CC0000;
+  border: 1px solid #FFB3B3;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-revoke:hover:not(:disabled) {
+  background-color: #FFE8E8;
+}
+
+.btn-revoke:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @keyframes stopreg-spin {

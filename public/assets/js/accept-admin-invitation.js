@@ -50,6 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return role;
   };
 
+  const hideAllStates = () => {
+    loadingSection.style.display = "none";
+    invalidTokenSection.style.display = "none";
+    successSection.style.display = "none";
+    acceptInvitationForm.style.display = "none";
+  };
+
   // --- PASSWORD VALIDATION ---
 
   const validatePassword = (password) => {
@@ -150,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       verifyInvitation(urlToken);
     } else {
       // Show form and let user enter token
+      hideAllStates();
       acceptInvitationForm.style.display = "block";
     }
   };
@@ -212,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
 
-      acceptInvitationForm.style.display = "none";
+      hideAllStates();
       successSection.style.display = "block";
 
       showToast("Admin account created successfully!", "success");

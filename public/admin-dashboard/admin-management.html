@@ -27,7 +27,6 @@
   <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
   <link href="/assets/css/admin/admin-admin-management.css" rel="stylesheet" />
 
-  <script src="/assets/js/admin/admin-management.js" defer></script>
   <script src="/assets/js/admin/admin-main.js" defer></script>
   <script src="/assets/js/admin/nav-super-admin-check.js" defer></script>
 </head>
@@ -184,95 +183,157 @@
           </div>
         </div>
 
-        <!-- Admin Management Content -->
+        <!-- Admin Management Content with Tabs -->
         <div class="admin-management-page-container" id="admin-management-content">
-          <!-- Invitations Section -->
-          <div class="admin-management-section">
-            <div class="section-header">
-              <h2>Invite New Admin</h2>
-              <p class="section-description">Send invitation emails to new administrators</p>
+          <!-- Admin Management Header -->
+          <div class="admin-management-header">
+            <div class="admin-management-header-info">
+              <h2>Admin Management</h2>
             </div>
-
-            <div class="invitation-form-wrapper">
-              <form id="send-invitation-form" class="invitation-form">
-                <div class="form-group">
-                  <label for="invitee-email">Email Address</label>
-                  <input
-                    type="email"
-                    id="invitee-email"
-                    name="email"
-                    placeholder="admin@example.com"
-                    required
-                  />
-                  <span class="form-hint">The invitation will be sent to this email address</span>
-                </div>
-
-                <div class="form-group">
-                  <label for="admin-role">Admin Role</label>
-                  <select id="admin-role" name="role" required>
-                    <option value="">Select a role...</option>
-                    <option value="admin">Admin (Limited Privileges)</option>
-                    <option value="super_admin">Super Admin (Full Access)</option>
-                  </select>
-                  <span class="form-hint">
-                    <strong>Admin:</strong> View data, manage users (cannot delete) |
-                    <strong>Super Admin:</strong> Full access including deletions
-                  </span>
-                </div>
-
-                <div class="form-actions">
-                  <button type="submit" class="btn-primary" id="send-invitation-btn">
-                    Send Invitation
-                  </button>
-                </div>
-              </form>
-
-              <div class="invitation-feedback" id="invitation-feedback"></div>
+            <div class="admin-management-tabs">
+              <button class="tab-btn active" data-tab="invitations">Invitations</button>
+              <button class="tab-btn" data-tab="audit-logs">Audit Logs</button>
             </div>
           </div>
 
-          <!-- Audit Logs Section -->
-          <div class="admin-management-section">
-            <div class="section-header">
-              <h2>Admin Audit Logs</h2>
-              <p class="section-description">Track all administrator actions and invitations</p>
+          <!-- Invitations Tab -->
+          <div class="tab-content active" id="invitations-content">
+            <div class="admin-management-section">
+              <div class="section-header">
+                <h2>Send New Admin Invitation</h2>
+                <p class="section-description">Invite new team members to join as administrators</p>
+              </div>
+
+              <div class="invitation-form-wrapper">
+                <form id="send-invitation-form" class="invitation-form">
+                  <div class="form-group">
+                    <label for="invitee-email">Email Address</label>
+                    <input
+                      type="email"
+                      id="invitee-email"
+                      name="email"
+                      placeholder="admin@example.com"
+                      required
+                    />
+                    <span class="form-hint">The invitation will be sent to this email address</span>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="admin-role">Admin Role</label>
+                    <select id="admin-role" name="role" required>
+                      <option value="">Select a role...</option>
+                      <option value="admin">Admin (Limited Privileges)</option>
+                      <option value="super_admin">Super Admin (Full Access)</option>
+                    </select>
+                    <span class="form-hint">
+                      <strong>Admin:</strong> View data, manage users (cannot delete) |
+                      <strong>Super Admin:</strong> Full access including deletions
+                    </span>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn-primary" id="send-invitation-btn">
+                      Send Invitation
+                    </button>
+                  </div>
+                </form>
+
+                <div class="invitation-feedback" id="invitation-feedback"></div>
+              </div>
             </div>
 
-            <div class="audit-logs-wrapper">
-              <!-- Loading State -->
-              <div class="audit-logs-loading" id="audit-logs-spinner" style="display: none;">
-                <div class="chart-loading-state">
-                  <div class="chart-spinner"></div>
-                  <span class="chart-loading-text">Loading audit logs...</span>
+            <!-- Admin Invitations List Section -->
+            <div class="admin-management-section">
+              <div class="section-header">
+                <h2>Pending & Past Invitations</h2>
+                <p class="section-description">View all sent admin invitations</p>
+              </div>
+
+              <div class="invitations-wrapper">
+                <!-- Loading State -->
+                <div class="invitations-loading" id="invitations-spinner" style="display: none;">
+                  <div class="chart-loading-state">
+                    <div class="chart-spinner"></div>
+                    <span class="chart-loading-text">Loading invitations...</span>
+                  </div>
+                </div>
+
+                <!-- Invitations Table -->
+                <div class="invitations-table-wrapper" id="invitations-table-wrapper" style="display: none;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Sent By</th>
+                        <th>Expires At</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="invitations-tbody">
+                      <!-- Populated by JS -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="admin-pagination" id="invitations-pagination" style="display: none;">
+                  <!-- Pagination buttons will be added here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="invitations-empty" style="display: none;">
+                  <p>No invitations sent yet</p>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <!-- Audit Logs Table -->
-              <div class="audit-logs-table-wrapper" id="audit-logs-table-wrapper" style="display: none;">
-                <table class="admin-table">
-                  <thead>
-                    <tr>
-                      <th>Date & Time</th>
-                      <th>Admin</th>
-                      <th>Action</th>
-                      <th>Resource</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody id="audit-logs-tbody">
-                    <!-- Populated by JS -->
-                  </tbody>
-                </table>
+          <!-- Audit Logs Tab -->
+          <div class="tab-content" id="audit-logs-content">
+            <div class="admin-management-section">
+              <div class="section-header">
+                <h2>Admin Audit Logs</h2>
+                <p class="section-description">Track all administrator actions and invitations</p>
               </div>
 
-              <!-- Pagination -->
-              <div class="admin-pagination" id="audit-logs-pagination" style="display: none;">
-                <!-- Pagination buttons will be added here -->
-              </div>
+              <div class="audit-logs-wrapper">
+                <!-- Loading State -->
+                <div class="audit-logs-loading" id="audit-logs-spinner" style="display: none;">
+                  <div class="chart-loading-state">
+                    <div class="chart-spinner"></div>
+                    <span class="chart-loading-text">Loading audit logs...</span>
+                  </div>
+                </div>
 
-              <!-- Empty State -->
-              <div class="empty-state" id="audit-logs-empty" style="display: none;">
-                <p>No audit logs found</p>
+                <!-- Audit Logs Table -->
+                <div class="audit-logs-table-wrapper" id="audit-logs-table-wrapper" style="display: none;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Date & Time</th>
+                        <th>Admin</th>
+                        <th>Action</th>
+                        <th>Resource</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody id="audit-logs-tbody">
+                      <!-- Populated by JS -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="admin-pagination" id="audit-logs-pagination" style="display: none;">
+                  <!-- Pagination buttons will be added here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="audit-logs-empty" style="display: none;">
+                  <p>No audit logs found</p>
+                </div>
               </div>
             </div>
           </div>
@@ -281,8 +342,9 @@
     </div>
   </div>
 
-  <!-- Toast Notifications -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/iziToast.min.js"></script>
+  <!-- Toast Notifications & Page Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/iziToast.min.js" defer></script>
+  <script src="/assets/js/admin/admin-management.js" defer></script>
 </body>
 
 </html>

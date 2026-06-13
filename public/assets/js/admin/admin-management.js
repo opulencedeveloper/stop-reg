@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminManagementContent = getEl("admin-management-content");
   const insufficientPermissionsView = getEl("insufficient-permissions-view");
 
+  // Validate critical elements exist
+  if (!adminManagementContent || !insufficientPermissionsView) {
+    console.error("Critical elements not found on page");
+    return;
+  }
+
   // Invitation form
   const sendInvitationForm = getEl("send-invitation-form");
   const inviteeEmail = getEl("invitee-email");
@@ -85,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (currentAdminIsSuperAdmin) {
         adminManagementContent.style.display = "block";
         insufficientPermissionsView.style.display = "none";
-        loadAuditLogs();
+        loadAdminInvitations();
       } else {
         adminManagementContent.style.display = "none";
         insufficientPermissionsView.style.display = "block";
@@ -150,6 +156,135 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = false;
       submitBtn.innerHTML = `<span>Send Invitation</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1V15M8 1L1 8M8 1L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>`;
     }
+  };
+
+  // --- ADMIN INVITATIONS ---
+
+  let invitationsPage = 1;
+  const invitationsPageSize = 20;
+
+  const loadAdminInvitations = async () => {
+    try {
+      getEl("invitations-spinner").style.display = "flex";
+      getEl("invitations-table-wrapper").style.display = "none";
+      getEl("invitations-pagination").style.display = "none";
+      getEl("invitations-empty").style.display = "none";
+
+      const token = getToken();
+      const offset = (invitationsPage - 1) * invitationsPageSize;
+
+      const response = await fetch(
+        `${API_BASE_URL}/invitations?limit=${invitationsPageSize}&offset=${offset}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch invitations");
+      }
+
+      const data = await response.json();
+      const invitations = data.data.invitations || [];
+      const pagination = data.data.pagination || {};
+
+      if (invitations.length === 0) {
+        getEl("invitations-empty").style.display = "block";
+        getEl("invitations-spinner").style.display = "none";
+        return;
+      }
+
+      renderAdminInvitations(invitations);
+      renderAdminInvitationsPagination(pagination);
+
+      getEl("invitations-table-wrapper").style.display = "block";
+      if (pagination.pages > 1) {
+        getEl("invitations-pagination").style.display = "flex";
+      }
+    } catch (error) {
+      console.error("Load invitations error:", error);
+      showToast("Failed to load invitations", "error");
+      getEl("invitations-empty").style.display = "block";
+    } finally {
+      getEl("invitations-spinner").style.display = "none";
+    }
+  };
+
+  const renderAdminInvitations = (invitations) => {
+    const tbody = getEl("invitations-tbody");
+    tbody.innerHTML = "";
+
+    invitations.forEach((inv) => {
+      const row = document.createElement("tr");
+      const invitedByName = inv.invitedBy
+        ? `${inv.invitedBy.name}`
+        : "System";
+      const expiresAt = new Date(inv.tokenExpiresAt).toLocaleString();
+      const statusBadge = getStatusBadge(inv.status);
+
+      row.innerHTML = `
+        <td>${inv.email}</td>
+        <td>${formatRoleName(inv.role)}</td>
+        <td>${statusBadge}</td>
+        <td>${invitedByName}</td>
+        <td>${expiresAt}</td>
+        <td>${getRevokeButton(inv)}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  };
+
+  const getStatusBadge = (status) => {
+    let displayText = status.charAt(0).toUpperCase() + status.slice(1);
+    return `<span class="invitation-status-badge status-${status}">${displayText}</span>`;
+  };
+
+  const getRevokeButton = (inv) => {
+    if (inv.status === "pending") {
+      return `<button class="btn-revoke" onclick="revokeInvitation('${inv._id}')">Revoke</button>`;
+    }
+    return "-";
+  };
+
+  const renderAdminInvitationsPagination = (pagination) => {
+    const container = getEl("invitations-pagination");
+    container.innerHTML = "";
+
+    if (pagination.pages <= 1) return;
+
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "pagination-btn";
+    prevBtn.disabled = invitationsPage === 1;
+    prevBtn.textContent = "← Previous";
+    prevBtn.onclick = () => {
+      if (invitationsPage > 1) {
+        invitationsPage--;
+        loadAdminInvitations();
+      }
+    };
+    container.appendChild(prevBtn);
+
+    const pageInfo = document.createElement("span");
+    pageInfo.className = "pagination-info";
+    pageInfo.textContent = `Page ${invitationsPage} of ${pagination.pages}`;
+    container.appendChild(pageInfo);
+
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "pagination-btn";
+    nextBtn.disabled = invitationsPage >= pagination.pages;
+    nextBtn.textContent = "Next →";
+    nextBtn.onclick = () => {
+      if (invitationsPage < pagination.pages) {
+        invitationsPage++;
+        loadAdminInvitations();
+      }
+    };
+    container.appendChild(nextBtn);
   };
 
   // --- AUDIT LOGS ---
@@ -296,11 +431,43 @@ document.addEventListener("DOMContentLoaded", () => {
     return "-";
   };
 
+  // --- TAB SWITCHING ---
+
+  const handleTabSwitch = () => {
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tabName = btn.getAttribute("data-tab");
+
+        // Remove active class from all buttons and contents
+        tabButtons.forEach((b) => b.classList.remove("active"));
+        tabContents.forEach((content) => content.classList.remove("active"));
+
+        // Add active class to clicked button and corresponding content
+        btn.classList.add("active");
+        const activeContent = document.getElementById(`${tabName}-content`);
+        if (activeContent) {
+          activeContent.classList.add("active");
+
+          // Load data for audit logs tab if switching to it
+          if (tabName === "audit-logs") {
+            loadAuditLogs();
+          }
+        }
+      });
+    });
+  };
+
   // --- EVENT LISTENERS ---
 
-  sendInvitationForm.addEventListener("submit", sendInvitation);
+  if (sendInvitationForm) {
+    sendInvitationForm.addEventListener("submit", sendInvitation);
+  }
 
   // --- INIT ---
 
+  handleTabSwitch();
   checkAdminPermissions();
 });
