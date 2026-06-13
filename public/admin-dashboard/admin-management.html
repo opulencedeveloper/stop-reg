@@ -192,6 +192,7 @@
             </div>
             <div class="admin-management-tabs">
               <button class="tab-btn active" data-tab="invitations">Invitations</button>
+              <button class="tab-btn" data-tab="admins">Admins</button>
               <button class="tab-btn" data-tab="audit-logs">Audit Logs</button>
             </div>
           </div>
@@ -296,6 +297,68 @@
             </div>
           </div>
 
+          <!-- Admins Tab -->
+          <div class="tab-content" id="admins-content">
+            <div class="admin-management-section">
+              <div class="section-header">
+                <h2>Active Admins</h2>
+                <p class="section-description">Manage admin accounts and permissions</p>
+              </div>
+
+              <div class="admins-wrapper">
+                <!-- Loading State -->
+                <div class="admins-loading" id="admins-spinner" style="display: none;">
+                  <div class="chart-loading-state">
+                    <div class="chart-spinner"></div>
+                    <span class="chart-loading-text">Loading admins...</span>
+                  </div>
+                </div>
+
+                <!-- Admins Table -->
+                <div class="admins-table-wrapper" id="admins-table-wrapper" style="display: none;">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admins-tbody">
+                      <!-- Populated by JS -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Action Button Template (for reference - buttons created dynamically in JS) -->
+                <template id="admin-action-buttons-template">
+                  <div class="action-buttons">
+                    <button class="btn-action btn-suspend">Suspend</button>
+                    <button class="btn-action btn-delete">Delete</button>
+                  </div>
+                </template>
+
+                <!-- Pagination -->
+                <div class="admin-pagination" id="admins-pagination" style="display: none;">
+                  <!-- Pagination buttons will be added here -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="admins-empty" style="display: none;">
+                  <div class="empty-state-content">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#D4D8E1"/>
+                    </svg>
+                    <h3>No Admins Found</h3>
+                    <p>No admin accounts currently exist in the system.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Audit Logs Tab -->
           <div class="tab-content" id="audit-logs-content">
             <div class="admin-management-section">
@@ -351,6 +414,58 @@
           </div>
         </div>
       </main>
+    </div>
+  </div>
+
+  <!-- Suspend Admin Confirmation Modal -->
+  <div class="admin-confirmation-modal-overlay" id="suspend-admin-modal-overlay">
+    <div class="admin-confirmation-modal-container">
+      <div class="confirmation-modal-header">
+        <div class="confirmation-icon-wrapper warning">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <button class="confirmation-modal-close" id="close-suspend-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="confirmation-modal-content">
+        <h3>Suspend Admin?</h3>
+        <p>Are you sure you want to suspend <strong id="suspend-target-name"></strong>? They will not be able to access the admin panel until unsuspended.</p>
+      </div>
+      <div class="confirmation-modal-actions">
+        <button class="btn-cancel" id="cancel-suspend-btn">Cancel</button>
+        <button class="btn-confirm-suspend" id="confirm-suspend-btn">Yes, Suspend</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Admin Confirmation Modal -->
+  <div class="admin-confirmation-modal-overlay" id="delete-admin-modal-overlay">
+    <div class="admin-confirmation-modal-container">
+      <div class="confirmation-modal-header">
+        <div class="confirmation-icon-wrapper danger">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="#CC0000"/>
+          </svg>
+        </div>
+        <button class="confirmation-modal-close" id="close-delete-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="confirmation-modal-content">
+        <h3>Delete Admin?</h3>
+        <p>Are you sure you want to delete <strong id="delete-target-name"></strong>? This action cannot be undone and will permanently remove this admin account.</p>
+      </div>
+      <div class="confirmation-modal-actions">
+        <button class="btn-cancel" id="cancel-delete-btn">Cancel</button>
+        <button class="btn-confirm-delete" id="confirm-delete-btn">Yes, Delete</button>
+      </div>
     </div>
   </div>
 

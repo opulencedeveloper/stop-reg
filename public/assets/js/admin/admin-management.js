@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentAdminIsSuperAdmin = false;
   let auditLogsPage = 1;
   const auditLogsPageSize = 20;
+  let adminsPage = 1;
+  const adminsPageSize = 20;
 
   // --- UTILITIES ---
 
@@ -94,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       const admin = data.data;
 
-      currentAdminIsSuperAdmin = admin.isSuperAdmin;
+      currentAdminIsSuperAdmin = admin.role === "super_admin";
 
       if (currentAdminIsSuperAdmin) {
         adminManagementContent.style.display = "block";
@@ -440,6 +442,126 @@ document.addEventListener("DOMContentLoaded", () => {
     return "-";
   };
 
+  // --- ADMINS MANAGEMENT ---
+
+  const loadAdminsList = async () => {
+    try {
+      getEl("admins-spinner").style.display = "flex";
+      getEl("admins-table-wrapper").style.display = "none";
+      getEl("admins-pagination").style.display = "none";
+      getEl("admins-empty").style.display = "none";
+
+      const token = getToken();
+      const offset = (adminsPage - 1) * adminsPageSize;
+
+      const response = await fetch(
+        `${API_BASE_URL}/list?limit=${adminsPageSize}&offset=${offset}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch admins");
+      }
+
+      const data = await response.json();
+      const admins = data.data.admins || [];
+      const pagination = data.data.pagination || {};
+
+      if (admins.length === 0) {
+        getEl("admins-empty").style.display = "block";
+        getEl("admins-spinner").style.display = "none";
+        return;
+      }
+
+      renderAdminsList(admins);
+      renderAdminsPagination(pagination);
+
+      getEl("admins-table-wrapper").style.display = "block";
+      if (pagination.pages > 1) {
+        getEl("admins-pagination").style.display = "flex";
+      }
+    } catch (error) {
+      console.error("Load admins error:", error);
+      showToast("Failed to load admins", "error");
+      getEl("admins-empty").style.display = "block";
+    } finally {
+      getEl("admins-spinner").style.display = "none";
+    }
+  };
+
+  const renderAdminsList = (admins) => {
+    const tbody = getEl("admins-tbody");
+    tbody.innerHTML = "";
+
+    admins.forEach((admin) => {
+      const row = document.createElement("tr");
+      const createdAt = new Date(admin.createdAt).toLocaleString();
+      const statusBadge = admin.isSuspended
+        ? '<span class="status-badge status-suspended">Suspended</span>'
+        : '<span class="status-badge status-active">Active</span>';
+
+      row.innerHTML = `
+        <td>${admin.email}</td>
+        <td>${formatRoleName(admin.role)}</td>
+        <td>${statusBadge}</td>
+        <td>${createdAt}</td>
+        <td>${getAdminActionButtons(admin)}</td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  };
+
+  const getAdminActionButtons = (admin) => {
+    const suspendBtn = `<button class="btn-action btn-suspend" onclick="suspendAdmin('${admin._id}', ${admin.isSuspended})">
+      ${admin.isSuspended ? "Unsuspend" : "Suspend"}
+    </button>`;
+    const deleteBtn = `<button class="btn-action btn-delete" onclick="deleteAdmin('${admin._id}')">Delete</button>`;
+    return `<div class="action-buttons">${suspendBtn} ${deleteBtn}</div>`;
+  };
+
+  const renderAdminsPagination = (pagination) => {
+    const container = getEl("admins-pagination");
+    container.innerHTML = "";
+
+    if (pagination.pages <= 1) return;
+
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "pagination-btn";
+    prevBtn.disabled = adminsPage === 1;
+    prevBtn.textContent = "← Previous";
+    prevBtn.onclick = () => {
+      if (adminsPage > 1) {
+        adminsPage--;
+        loadAdminsList();
+      }
+    };
+    container.appendChild(prevBtn);
+
+    const pageInfo = document.createElement("span");
+    pageInfo.className = "pagination-info";
+    pageInfo.textContent = `Page ${adminsPage} of ${pagination.pages}`;
+    container.appendChild(pageInfo);
+
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "pagination-btn";
+    nextBtn.disabled = adminsPage >= pagination.pages;
+    nextBtn.textContent = "Next →";
+    nextBtn.onclick = () => {
+      if (adminsPage < pagination.pages) {
+        adminsPage++;
+        loadAdminsList();
+      }
+    };
+    container.appendChild(nextBtn);
+  };
+
   // --- TAB SWITCHING ---
 
   const handleTabSwitch = () => {
@@ -460,13 +582,175 @@ document.addEventListener("DOMContentLoaded", () => {
         if (activeContent) {
           activeContent.classList.add("active");
 
-          // Load data for audit logs tab if switching to it
+          // Load data for specific tabs
           if (tabName === "audit-logs") {
             loadAuditLogs();
+          } else if (tabName === "admins") {
+            loadAdminsList();
           }
         }
       });
     });
+  };
+
+  // --- MODAL STATE ---
+  let pendingAdminAction = null;
+
+  // --- MODAL SETUP ---
+  const setupConfirmationModals = () => {
+    // Suspend modal
+    const suspendModal = getEl("suspend-admin-modal-overlay");
+    const closeSuspendBtn = getEl("close-suspend-modal");
+    const cancelSuspendBtn = getEl("cancel-suspend-btn");
+    const confirmSuspendBtn = getEl("confirm-suspend-btn");
+
+    if (closeSuspendBtn) closeSuspendBtn.onclick = () => closeSuspendModal();
+    if (cancelSuspendBtn) cancelSuspendBtn.onclick = () => closeSuspendModal();
+    if (confirmSuspendBtn) {
+      confirmSuspendBtn.onclick = async () => {
+        if (pendingAdminAction) {
+          confirmSuspendBtn.disabled = true;
+          confirmSuspendBtn.textContent = "Suspending...";
+          await executeSuspendAdmin(pendingAdminAction.adminId, pendingAdminAction.isSuspended);
+          confirmSuspendBtn.disabled = false;
+          confirmSuspendBtn.textContent = "Yes, Suspend";
+          closeSuspendModal();
+        }
+      };
+    }
+
+    // Delete modal
+    const deleteModal = getEl("delete-admin-modal-overlay");
+    const closeDeleteBtn = getEl("close-delete-modal");
+    const cancelDeleteBtn = getEl("cancel-delete-btn");
+    const confirmDeleteBtn = getEl("confirm-delete-btn");
+
+    if (closeDeleteBtn) closeDeleteBtn.onclick = () => closeDeleteModal();
+    if (cancelDeleteBtn) cancelDeleteBtn.onclick = () => closeDeleteModal();
+    if (confirmDeleteBtn) {
+      confirmDeleteBtn.onclick = async () => {
+        if (pendingAdminAction) {
+          confirmDeleteBtn.disabled = true;
+          confirmDeleteBtn.textContent = "Deleting...";
+          await executeDeleteAdmin(pendingAdminAction.adminId);
+          confirmDeleteBtn.disabled = false;
+          confirmDeleteBtn.textContent = "Yes, Delete";
+          closeDeleteModal();
+        }
+      };
+    }
+
+    // Close modals on overlay click
+    if (suspendModal) {
+      suspendModal.addEventListener("click", (e) => {
+        if (e.target === suspendModal) closeSuspendModal();
+      });
+    }
+    if (deleteModal) {
+      deleteModal.addEventListener("click", (e) => {
+        if (e.target === deleteModal) closeDeleteModal();
+      });
+    }
+  };
+
+  const openSuspendModal = (adminEmail, adminId, isSuspended) => {
+    pendingAdminAction = { adminId, isSuspended };
+    getEl("suspend-target-name").textContent = adminEmail;
+    const modal = getEl("suspend-admin-modal-overlay");
+    modal.classList.add("is-active");
+  };
+
+  const closeSuspendModal = () => {
+    const modal = getEl("suspend-admin-modal-overlay");
+    modal.classList.add("is-exiting");
+    setTimeout(() => {
+      modal.classList.remove("is-active", "is-exiting");
+      pendingAdminAction = null;
+    }, 300);
+  };
+
+  const openDeleteModal = (adminEmail, adminId) => {
+    pendingAdminAction = { adminId };
+    getEl("delete-target-name").textContent = adminEmail;
+    const modal = getEl("delete-admin-modal-overlay");
+    modal.classList.add("is-active");
+  };
+
+  const closeDeleteModal = () => {
+    const modal = getEl("delete-admin-modal-overlay");
+    modal.classList.add("is-exiting");
+    setTimeout(() => {
+      modal.classList.remove("is-active", "is-exiting");
+      pendingAdminAction = null;
+    }, 300);
+  };
+
+  const executeSuspendAdmin = async (adminId, isSuspended) => {
+    try {
+      const token = getToken();
+      const response = await fetch(`${API_BASE_URL}/admins/${adminId}/suspend`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.description || "Failed to suspend admin");
+      }
+
+      showToast(`Admin ${data.data.isSuspended ? "suspended" : "unsuspended"} successfully`, "success");
+      adminsPage = 1;
+      loadAdminsList();
+    } catch (error) {
+      console.error("Suspend admin error:", error);
+      showToast(error.message || "Failed to suspend admin", "error");
+    }
+  };
+
+  const executeDeleteAdmin = async (adminId) => {
+    try {
+      const token = getToken();
+      const response = await fetch(`${API_BASE_URL}/admins/${adminId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.description || "Failed to delete admin");
+      }
+
+      showToast("Admin deleted successfully", "success");
+      adminsPage = 1;
+      loadAdminsList();
+    } catch (error) {
+      console.error("Delete admin error:", error);
+      showToast(error.message || "Failed to delete admin", "error");
+    }
+  };
+
+  // --- GLOBAL FUNCTIONS FOR ADMIN ACTIONS ---
+
+  window.suspendAdmin = (adminId, isSuspended) => {
+    // Get admin email from the table
+    const row = document.querySelector(`button[onclick*="${adminId}"]`).closest('tr');
+    const adminEmail = row.querySelector('td:first-child').textContent;
+    openSuspendModal(adminEmail, adminId, isSuspended);
+  };
+
+  window.deleteAdmin = (adminId) => {
+    // Get admin email from the table
+    const row = document.querySelector(`button[onclick*="${adminId}"]`).closest('tr');
+    const adminEmail = row.querySelector('td:first-child').textContent;
+    openDeleteModal(adminEmail, adminId);
   };
 
   // --- EVENT LISTENERS ---
@@ -478,5 +762,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- INIT ---
 
   handleTabSwitch();
+  setupConfirmationModals();
   checkAdminPermissions();
 });

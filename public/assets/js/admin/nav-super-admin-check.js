@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
       const admin = data.data;
 
-      if (admin.isSuperAdmin) {
+      if (admin.role === "super_admin") {
         showAdminManagementLink();
       } else {
         hideAdminManagementLink();
@@ -57,6 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileLink) {
       mobileLink.removeAttribute('style');
       mobileLink.style.display = "flex";
+    }
+
+    // Show Assign Plan button for Super Admins
+    const assignPlanBtn = document.getElementById("assign-plan-btn");
+    if (assignPlanBtn) {
+      assignPlanBtn.style.display = "block";
     }
   };
 
