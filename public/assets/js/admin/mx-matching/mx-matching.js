@@ -252,6 +252,11 @@ document.addEventListener("DOMContentLoaded", () => {
             serviceSelect.value = record.service_type || "disposable";
         }
 
+        const classificationSelect = getEl("mx-classification");
+        if (classificationSelect) {
+            classificationSelect.value = record.classification || "unresolved";
+        }
+
         addModal.classList.add("active");
     };
 
@@ -415,6 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const mx_record = getEl("domain-name")?.value;
             const service_type = getEl("service-type")?.value || "disposable";
             const grade = getEl("mx-grade")?.value || "standard";
+            const classification = getEl("mx-classification")?.value || "unresolved";
 
             submitMxBtn.disabled = true;
             submitMxBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> ${currentEditingId ? 'Updating...' : 'Adding...'}`;
@@ -425,11 +431,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const result = await apiFetch(endpoint, {
                     method: method,
-                    body: JSON.stringify({ 
-                        provider, 
-                        mx_record, 
-                        service_type, 
-                        grade
+                    body: JSON.stringify({
+                        provider,
+                        mx_record,
+                        service_type,
+                        grade,
+                        classification
                     })
                 });
 
