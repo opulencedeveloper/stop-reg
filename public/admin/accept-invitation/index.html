@@ -32,9 +32,22 @@
     <!-- Header -->
     <header class="invitation-header">
       <div class="header-content">
-        <a href="/" class="header-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
-        </a>
+        <div class="header-top">
+          <a href="/" class="header-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+          <div class="header-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1C6.48 1 2 5.48 2 11v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8c0-5.52-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8v-8c0-4.41 3.59-8 8-8s8 3.59 8 8v8c0 4.41-3.59 8-8 8z" fill="#1452CA"/>
+              <path d="M12 13c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z" fill="#1452CA"/>
+            </svg>
+            Admin Access
+          </div>
+        </div>
+        <div class="header-hero">
+          <h1>You're Invited to Join Admin</h1>
+          <p>Complete your profile to activate your admin account and access StopReg's administrative tools.</p>
+        </div>
       </div>
     </header>
 
@@ -80,20 +93,33 @@
             <p>Complete your profile to get started</p>
           </div>
 
-          <!-- Invitation Token Input -->
-          <div class="form-group">
-            <label for="invitationToken">Invitation Code *</label>
-            <input
-              type="text"
-              id="invitationToken"
-              name="token"
-              placeholder="Paste your invitation code here"
-              required
-            />
-            <span class="form-hint">Copy the code from your invitation email</span>
+          <!-- Step 1: Verify Token -->
+          <div class="form-section step-content" id="token-verification-section">
+            <div class="section-title">
+              <span class="step-badge">1</span>
+              <div class="section-title-text">
+                <h3>Verify Your Invitation</h3>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="invitationToken">Invitation Code *</label>
+              <input
+                type="text"
+                id="invitationToken"
+                name="token"
+                placeholder="Paste your invitation code here"
+                required
+              />
+              <span class="form-hint">Copy the code from your invitation email</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-large" id="verify-token-btn">
+              Verify Token
+            </button>
           </div>
 
-          <!-- Invitation Info -->
+          <!-- Invitation Info (shown after token verified) -->
           <div class="invitation-info" id="invitation-info" style="display: none;">
             <div class="info-item">
               <span class="info-label">Email:</span>
@@ -105,77 +131,95 @@
             </div>
           </div>
 
-          <!-- First Name -->
-          <div class="form-group">
-            <label for="firstName">First Name *</label>
-            <input type="text" id="firstName" name="firstName" placeholder="John" required />
-          </div>
-
-          <!-- Last Name -->
-          <div class="form-group">
-            <label for="lastName">Last Name *</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Doe" required />
-          </div>
-
-          <!-- Password -->
-          <div class="form-group">
-            <label for="password">Secure Password *</label>
-            <div class="password-input-wrapper">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Create a strong password"
-                required
-              />
-              <button type="button" class="toggle-password" id="toggle-password-btn" data-target="password">
-                <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle Password" />
-              </button>
+          <!-- Step 2: Complete Profile (hidden until token verified) -->
+          <div class="form-section step-content" id="profile-section" style="display: none;">
+            <div class="section-title">
+              <span class="step-badge">2</span>
+              <div class="section-title-text">
+                <h3>Complete Your Profile</h3>
+              </div>
             </div>
-            <span class="form-hint">At least 8 characters, 1 uppercase, 1 lowercase, 1 number</span>
+
+            <!-- First Name -->
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" placeholder="John" required disabled />
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe" required disabled />
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+              <label for="password">Secure Password *</label>
+              <div class="password-input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Create a strong password"
+                  required
+                  disabled
+                />
+                <button type="button" class="toggle-password" id="toggle-password-btn" data-target="password">
+                  <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle Password" />
+                </button>
+              </div>
+              <span class="form-hint">At least 8 characters, 1 uppercase, 1 lowercase, 1 number</span>
+            </div>
+
+            <!-- Password Requirements -->
+            <div class="password-requirements" id="password-requirements">
+              <div class="requirement" id="req-length">
+                <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>At least 8 characters</span>
+              </div>
+              <div class="requirement" id="req-uppercase">
+                <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>One uppercase letter (A-Z)</span>
+              </div>
+              <div class="requirement" id="req-lowercase">
+                <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>One lowercase letter (a-z)</span>
+              </div>
+              <div class="requirement" id="req-number">
+                <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>One number (0-9)</span>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password *</label>
+              <div class="password-input-wrapper">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required disabled />
+                <button type="button" class="toggle-password" data-target="confirmPassword">
+                  <img src="/assets/icons/iconoir_eye-closed.svg" alt="Toggle Password" />
+                </button>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-large" id="submit-btn" disabled>Create Admin Account</button>
+
+            <!-- Terms -->
+            <p class="form-terms">
+              By accepting this invitation, you agree to StopReg's
+              <a href="/terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a> and
+              <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+            </p>
           </div>
-
-          <!-- Password Requirements -->
-          <div class="password-requirements" id="password-requirements">
-            <div class="requirement" id="req-length">
-              <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <span>At least 8 characters</span>
-            </div>
-            <div class="requirement" id="req-uppercase">
-              <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <span>One uppercase letter (A-Z)</span>
-            </div>
-            <div class="requirement" id="req-lowercase">
-              <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <span>One lowercase letter (a-z)</span>
-            </div>
-            <div class="requirement" id="req-number">
-              <svg class="requirement-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-              </svg>
-              <span>One number (0-9)</span>
-            </div>
-          </div>
-
-          <!-- Confirm Password -->
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password *</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required />
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary btn-large">Create Admin Account</button>
-
-          <!-- Terms -->
-          <p class="form-terms">
-            By accepting this invitation, you agree to StopReg's Terms of Service and Privacy Policy.
-          </p>
         </form>
       </div>
     </main>

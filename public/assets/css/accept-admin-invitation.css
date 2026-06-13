@@ -10,27 +10,44 @@ html,
 body {
   height: 100%;
   font-family: 'PlusJakartaSans-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1452CA 0%, #0f3ba8 100%);
+  background-color: #FFFFFF;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .accept-invitation-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1452CA 0%, #0f3ba8 100%);
+  background: none;
 }
 
 /* --- Header --- */
 .invitation-header {
-  padding: 24px 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-image: url('/assets/images/landing/common/privacy-bg.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 60px 20px;
+  border-bottom: none;
+  color: #252525;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
 }
 
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .header-logo {
@@ -42,6 +59,45 @@ body {
 .header-logo img {
   height: 40px;
   width: auto;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20, 82, 202, 0.15);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1452CA;
+  border: 1px solid rgba(20, 82, 202, 0.3);
+}
+
+.header-badge svg {
+  width: 16px;
+  height: 16px;
+  stroke: #1452CA;
+  fill: none;
+}
+
+.header-hero {
+  max-width: 600px;
+}
+
+.header-hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #252525;
+  line-height: 1.2;
+}
+
+.header-hero p {
+  font-size: 16px;
+  color: #667085;
+  margin: 0;
+  line-height: 1.6;
 }
 
 /* --- Main Content --- */
@@ -86,7 +142,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 16px;
-  min-height: 300px;
+  padding: 80px 20px;
+  width: 100%;
 }
 
 .spinner {
@@ -155,6 +212,88 @@ body {
   margin: 0;
 }
 
+/* --- Form Sections --- */
+.form-section {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #F9FAFB;
+  border: 1px solid #ECF2FD;
+  border-radius: 8px;
+}
+
+/* --- Step Animations --- */
+.step-content {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-content.slide-in-right {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.step-content.slide-out-left {
+  animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+.form-section:first-of-type {
+  margin-top: 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.step-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #1452CA 0%, #0f3ba8 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(20, 82, 202, 0.2);
+  line-height: 1;
+}
+
+.section-title-text {
+  flex: 1;
+}
+
+.section-title h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+  margin: 0;
+}
+
 /* --- Form Groups --- */
 .form-group {
   display: flex;
@@ -186,30 +325,56 @@ body {
   box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
 }
 
+.form-group input:disabled {
+  background-color: #F0F0F0;
+  color: #999999;
+  cursor: not-allowed;
+  border-color: #E0E0E0;
+}
+
+.form-group input:disabled::placeholder {
+  color: #CCCCCC;
+}
+
+.form-group input:read-only {
+  background-color: #F9FAFB;
+  color: #404040;
+  cursor: default;
+  border-color: #D4D8E1;
+}
+
+.form-group input:read-only:focus {
+  outline: none;
+  border-color: #D4D8E1;
+  box-shadow: none;
+}
+
 /* Input Error States */
-.form-group input.input-error {
-  border-color: #CC0000;
-  background-color: #FFF5F5;
+.input-error-border {
+  border-color: #DC2626 !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+  transition: all 0.3s ease;
 }
 
-.form-group input.input-error:focus {
-  border-color: #CC0000;
-  box-shadow: 0 0 0 3px rgba(204, 0, 0, 0.1);
-}
-
-.input-error-message {
+.custom-input-error {
+  color: #DC2626;
+  font-family: 'PlusJakartaSans-SemiBold', sans-serif;
+  font-size: 13px;
+  margin-top: 8px;
   display: block;
-  font-size: 12px;
-  color: #CC0000;
-  margin-top: 4px;
-  font-weight: 500;
-  animation: slideInUp 0.2s ease;
+  animation: inputErrorFadeIn 0.3s ease;
 }
 
-@keyframes slideInUp {
+.custom-input-error::before {
+  content: "! ";
+  display: inline;
+  font-weight: bold;
+}
+
+@keyframes inputErrorFadeIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -267,11 +432,11 @@ body {
   background-color: #F5F5F5;
   border: 1px solid #EDEDED;
   border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0 20px 0;
+  padding: 24px;
+  margin: 20px 0 28px 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .info-item {
@@ -279,11 +444,21 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.info-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .info-label {
   font-weight: 600;
   color: #737373;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .info-value {
@@ -388,12 +563,31 @@ body {
   line-height: 1.5;
 }
 
+.form-terms a {
+  color: #1452CA;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.form-terms a:hover {
+  color: #0f3ba8;
+  text-decoration: underline;
+}
+
+.form-terms a:focus {
+  outline: 2px solid rgba(20, 82, 202, 0.2);
+  border-radius: 2px;
+}
+
 /* --- Footer --- */
 .invitation-footer {
   padding: 20px;
   text-align: center;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
+  color: #737373;
+  background: #FAFAFA;
+  border-top: 1px solid #EDEDED;
 }
 
 /* --- Mobile Responsive --- */

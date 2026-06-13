@@ -38,12 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const getToken = () => localStorage.getItem(TOKEN_KEY);
 
   const showToast = (message, type = "success") => {
-    iziToast[type]({
-      title: type.charAt(0).toUpperCase() + type.slice(1),
-      message: message,
-      position: "topRight",
-      timeout: 4000,
-    });
+    if (typeof iziToast !== "undefined") {
+      iziToast[type]({
+        title: type.charAt(0).toUpperCase() + type.slice(1),
+        message: message,
+        position: "topRight",
+        timeout: 4000,
+      });
+    }
+  };
+
+  const formatRoleName = (role) => {
+    if (role === "super_admin") return "Super Admin";
+    if (role === "admin") return "Admin";
+    return role;
   };
 
   const clearFeedback = () => {
@@ -315,8 +323,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const data = response.json();
-      const logs = (await data).data.logs || [];
-      const pagination = (await data).data.pagination || {};
+      const resolvedData = await data;
+      const logs = resolvedData.data.logs || [];
+      const pagination = resolvedData.data.pagination || {};
 
       if (logs.length === 0) {
         auditLogsEmpty.style.display = "block";

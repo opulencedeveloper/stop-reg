@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkSuperAdminStatusAndUpdateNav = async () => {
     try {
       const token = localStorage.getItem(TOKEN_KEY);
+
       if (!token) {
-        // Not logged in, hide admin management link
         hideAdminManagementLink();
         return;
       }
@@ -31,32 +31,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const admin = data.data;
 
       if (admin.isSuperAdmin) {
-        // Super Admin - show the link
         showAdminManagementLink();
       } else {
-        // Regular Admin - hide the link
         hideAdminManagementLink();
       }
     } catch (error) {
-      console.error("[NavSuperAdminCheck] Error checking admin status:", error);
       hideAdminManagementLink();
     }
   };
 
   const showAdminManagementLink = () => {
-    // Show desktop navigation link
-    const desktopLink = document.querySelector(
+    // Show ALL desktop navigation links (in case there are multiple)
+    const allDesktopLinks = document.querySelectorAll(
       'a[href="/admin-dashboard/admin-management.html"]'
     );
-    if (desktopLink) {
-      desktopLink.style.display = "flex";
-    }
+    allDesktopLinks.forEach((link) => {
+      link.removeAttribute('style');
+      link.style.display = "flex";
+    });
 
     // Show mobile navigation link
     const mobileLink = document.querySelector(
       '.admin-mobile-nav a[href="/admin-dashboard/admin-management.html"]'
     );
     if (mobileLink) {
+      mobileLink.removeAttribute('style');
       mobileLink.style.display = "flex";
     }
   };
