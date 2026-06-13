@@ -1,0 +1,408 @@
+/* Accept Admin Invitation Page */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #1452ca 0%, #0f3ba8 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.invitation-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- CARD --- */
+
+.invitation-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.invitation-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.invitation-logo img {
+  max-width: 140px;
+  height: auto;
+}
+
+/* --- HEADER --- */
+
+.invitation-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.invitation-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #131313;
+  margin-bottom: 12px;
+}
+
+.invitation-header p {
+  font-size: 14px;
+  color: #737373;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- SECTIONS --- */
+
+.invitation-section {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading Spinner */
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 300px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #EDEDED;
+  border-top-color: #1452CA;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner p {
+  font-size: 14px;
+  color: #737373;
+}
+
+/* Error & Success Messages */
+
+.error-message,
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.error-message {
+  color: #FF6B6B;
+}
+
+.success-message {
+  color: #00A850;
+}
+
+.error-message h2,
+.success-message h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 8px 0 0 0;
+}
+
+.error-message p,
+.success-message p {
+  font-size: 14px;
+  color: #737373;
+  margin: 0;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* --- INVITATION INFO --- */
+
+.invitation-info {
+  background-color: #F9FAFB;
+  border: 1px solid #ECF2FD;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #737373;
+}
+
+.info-value {
+  color: #131313;
+  font-weight: 500;
+}
+
+.info-role {
+  background-color: #E3F2FD;
+  color: #1452CA;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* --- FORM --- */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #D4D8E1;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #404040;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #1452CA;
+  box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+.form-group input::placeholder {
+  color: #A6A6A6;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #737373;
+  line-height: 1.5;
+}
+
+/* Password Input Wrapper */
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #737373;
+  transition: color 0.2s ease;
+}
+
+.toggle-password-btn:hover {
+  color: #131313;
+}
+
+.toggle-password-btn.active {
+  color: #1452CA;
+}
+
+/* --- PASSWORD REQUIREMENTS --- */
+
+.password-requirements {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 16px 0;
+  padding: 12px;
+  background-color: #F9FAFB;
+  border-radius: 6px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #737373;
+}
+
+.requirement-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: #D4D8E1;
+}
+
+.requirement.requirement-met .requirement-icon {
+  color: #00A850;
+}
+
+.requirement.requirement-unmet .requirement-icon {
+  color: #FF6B6B;
+}
+
+/* --- FORM ACTIONS --- */
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background-color: #1452CA;
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0F3BA8;
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #EDEDED;
+  color: #131313;
+}
+
+.btn-secondary:hover {
+  background-color: #D4D8E1;
+}
+
+/* --- AGREEMENT --- */
+
+.form-agreement {
+  font-size: 12px;
+  color: #737373;
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+/* --- FOOTER --- */
+
+.invitation-footer {
+  text-align: center;
+  padding: 20px;
+}
+
+.invitation-footer p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 480px) {
+  .invitation-card {
+    padding: 24px 20px;
+  }
+
+  .invitation-header h1 {
+    font-size: 22px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .invitation-info {
+    padding: 12px;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

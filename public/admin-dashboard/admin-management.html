@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Management - StopReg</title>
+  <meta name="description" content="StopReg Admin Management and Invitations." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-admin-management.css" rel="stylesheet" />
+
+  <script src="/assets/js/admin/admin-management.js" defer></script>
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/admin-management.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Admin Management</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+          <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
+          <span>Misc</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/admin-management.html" class="admin-nav-link active">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Admin Management</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+          <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
+          <span>Misc</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6H21M3 12H21M3 18H21" stroke="#131313" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="admin-header-title">
+          <h1>Admin Management</h1>
+        </div>
+        <div class="admin-header-actions">
+          <div class="admin-header-user">
+            <div class="admin-user-info">
+              <p class="admin-user-name" id="admin-header-name">Loading...</p>
+              <p class="admin-user-role" id="admin-header-role">Admin</p>
+            </div>
+            <img src="/assets/icons/profile-circle.svg" alt="Profile" />
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="admin-content">
+        <!-- Invitation Section -->
+        <section class="admin-management-section" id="invitation-section" style="display: none;">
+          <div class="section-header">
+            <h2>Send Admin Invitation</h2>
+            <p class="section-description">Invite new team members to become administrators</p>
+          </div>
+
+          <div class="invitation-form-wrapper">
+            <form id="send-invitation-form" class="invitation-form">
+              <div class="form-group">
+                <label for="invitee-email">Email Address</label>
+                <input
+                  type="email"
+                  id="invitee-email"
+                  name="email"
+                  placeholder="admin@example.com"
+                  required
+                />
+                <span class="form-hint">The invitation will be sent to this email</span>
+              </div>
+
+              <div class="form-group">
+                <label for="admin-role">Admin Role</label>
+                <select id="admin-role" name="role" required>
+                  <option value="">-- Select Role --</option>
+                  <option value="admin">Admin (Limited Privileges)</option>
+                  <option value="super_admin">Super Admin (Full Access)</option>
+                </select>
+                <span class="form-hint">
+                  <strong>Admin:</strong> Can view data and manage users (cannot delete) |
+                  <strong>Super Admin:</strong> Full access including deletions
+                </span>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                  <span>Send Invitation</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 1V15M8 1L1 8M8 1L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </form>
+
+            <div class="invitation-feedback" id="invitation-feedback"></div>
+          </div>
+        </section>
+
+        <!-- Audit Logs Section -->
+        <section class="admin-management-section">
+          <div class="section-header">
+            <h2>Admin Audit Logs</h2>
+            <p class="section-description">Track all administrator actions and invitations</p>
+          </div>
+
+          <div class="audit-logs-wrapper">
+            <div class="audit-logs-spinner" id="audit-logs-spinner" style="display: none;">
+              <div class="spinner"></div>
+              <p>Loading audit logs...</p>
+            </div>
+
+            <div class="audit-logs-table-wrapper" id="audit-logs-table-wrapper" style="display: none;">
+              <table class="audit-logs-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Admin</th>
+                    <th>Action</th>
+                    <th>Resource</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-logs-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="audit-logs-pagination" id="audit-logs-pagination" style="display: none;">
+              <!-- Pagination buttons will be added here -->
+            </div>
+
+            <div class="audit-logs-empty" id="audit-logs-empty" style="display: none;">
+              <p>No audit logs found</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Insufficient Permissions -->
+        <section class="admin-management-section" id="insufficient-permissions" style="display: none;">
+          <div class="permission-error">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+                fill="#FF6B6B" />
+            </svg>
+            <h3>Insufficient Permissions</h3>
+            <p>Only Super Admins can manage admin invitations and view audit logs.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notifications -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/iziToast.min.js"></script>
+</body>
+
+</html>
