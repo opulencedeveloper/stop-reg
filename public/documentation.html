@@ -561,7 +561,7 @@
     <span class="string">"domain"</span>: {
       <span class="string">"root"</span>: <span class="string">"example.com"</span>,
       <span class="string">"is_subdomain"</span>: <span class="keyword">false</span>,
-      <span class="string">"provider"</span>: <span class="keyword">null</span>
+      <span class="string">"email_provider"</span>: <span class="keyword">null</span>
     },
     <span class="string">"mail_server"</span>: {
       <span class="string">"mx_found"</span>: <span class="keyword">true</span>,
@@ -669,10 +669,10 @@
                       <td><code>true</code> if the input contained a subdomain prefix (e.g., <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">provider</span> <span class="type-badge type-string">String | null</span>
+                      <td><span class="field-name">email_provider</span> <span class="type-badge type-string">String | null</span>
                       </td>
                       <td>Host</td>
-                      <td>The identified provider for this domain. Only populated for disposable, relay, or free email providers (e.g., <code>"Google"</code>, <code>"Mailinator"</code>). Returns <code>null</code> for domains that do not match any known provider classification.</td>
+                      <td>The identified email provider for this domain if a match is found in either the Email Domains table or MX Matching table. Returns <code>null</code> if no provider match is found or provider is "Unknown" (e.g., <code>"Google"</code>, <code>"Mailinator"</code>, <code>"Zoho"</code>).</td>
                     </tr>
                   </tbody>
                 </table>
