@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         const response = await fetch(
-            `https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&page=${page}&limit=${rowsPerPage}`,
+            `https://api.stopreg.com/api/v1/user/info/requests?last30Days=true&page=${page}&limit=${rowsPerPage}&requestType=bulk`,
             { headers: { 'Authorization': `Bearer ${token}` } }
         );
         const result = await response.json();

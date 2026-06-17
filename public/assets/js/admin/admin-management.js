@@ -234,6 +234,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ? `${inv.invitedBy.name}`
         : "System";
       const expiresAt = new Date(inv.tokenExpiresAt).toLocaleString();
+      const createdAt = new Date(inv.createdAt).toLocaleString();
+      const acceptedAt = inv.acceptedAt ? new Date(inv.acceptedAt).toLocaleString() : "-";
+      const acceptedByName = inv.acceptedByAdminId ? `${inv.acceptedByAdminId.name}` : "-";
+      const revokedAt = inv.revokedAt ? new Date(inv.revokedAt).toLocaleString() : "-";
+      const revokedByName = inv.revokedByAdminId ? `${inv.revokedByAdminId.name}` : "-";
       const statusBadge = getStatusBadge(inv.status);
 
       row.innerHTML = `
@@ -242,6 +247,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${statusBadge}</td>
         <td>${invitedByName}</td>
         <td>${expiresAt}</td>
+        <td style="font-size: 13px;">${createdAt}</td>
+        <td style="font-size: 13px;">${acceptedAt}</td>
+        <td>${acceptedByName}</td>
+        <td style="font-size: 13px;">${revokedAt}</td>
+        <td>${revokedByName}</td>
         <td>${getRevokeButton(inv)}</td>
       `;
 
@@ -361,15 +371,19 @@ document.addEventListener("DOMContentLoaded", () => {
         ? `${log.adminId.firstName} ${log.adminId.lastName}`
         : "System";
       const actionLabel = formatActionLabel(log.action);
-      const resourceLabel = log.resourceType || "-";
+      const resourceTypeLabel = log.resourceType || "-";
       const detailsLabel = formatDetailsLabel(log);
+      const ipAddressLabel = log.ipAddress || "-";
+      const userAgentLabel = log.userAgent ? log.userAgent.substring(0, 50) + "..." : "-";
 
       row.innerHTML = `
-        <td>${createdAt}</td>
+        <td class="td-nowrap" style="font-size: 13px;">${createdAt}</td>
         <td>${adminName}</td>
-        <td><span class="audit-action-badge ${log.action.replace(/_/g, '-')}">${actionLabel}</span></td>
-        <td>${resourceLabel}</td>
+        <td class="td-nowrap"><span class="audit-action-badge ${log.action.replace(/_/g, '-')}">${actionLabel}</span></td>
+        <td class="td-nowrap">${resourceTypeLabel}</td>
         <td>${detailsLabel}</td>
+        <td class="td-nowrap" style="font-family: monospace; font-size: 12px; color: #6B7280;">${ipAddressLabel}</td>
+        <td class="td-nowrap" style="font-size: 12px; color: #6B7280; max-width: 300px; overflow: hidden; text-overflow: ellipsis;" title="${log.userAgent || ''}">${userAgentLabel}</td>
       `;
 
       auditLogsTbody.appendChild(row);
@@ -422,6 +436,8 @@ document.addEventListener("DOMContentLoaded", () => {
       password_changed: "Password Changed",
       admin_created: "Admin Created",
       admin_deleted: "Admin Deleted",
+      admin_suspended: "Admin Suspended",
+      admin_unsuspended: "Admin Unsuspended",
     };
     return labels[action] || action;
   };

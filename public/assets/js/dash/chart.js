@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests?limit=0", {
+       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests?limit=0&requestType=single_email&requestType=single_domain", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -1101,7 +1101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       try {
-          const url = `https://api.stopreg.com/api/v1/user/info/requests?month=${monthIndex}`;
+          const url = `https://api.stopreg.com/api/v1/user/info/requests?month=${monthIndex}&requestType=single_email&requestType=single_domain`;
           const response = await fetch(url, {
                method: "GET",
                headers: {

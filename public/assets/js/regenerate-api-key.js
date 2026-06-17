@@ -103,13 +103,16 @@ async function handleRegenerate(btn) {
             }
 
         } else {
-            console.error("Error regenerating token:", data);
-            const errorMessage = data.description || data.message || "Failed to generate token.";
-             if (typeof iziToast !== 'undefined') {
+            console.error("Error regenerating token:", data, "Status:", response.status);
+            const errorMessage = data?.description || data?.message || data?.error || "Failed to generate token.";
+            console.error("Error message to display:", errorMessage);
+
+            if (typeof iziToast !== 'undefined') {
                 iziToast.error({
                     title: 'Error',
                     message: errorMessage,
-                    position: "topRight"
+                    position: "topRight",
+                    timeout: 5000
                 });
             }
 
@@ -118,13 +121,28 @@ async function handleRegenerate(btn) {
             }
         }
     } catch (error) {
-        console.error("❌ Network error:", error);
-         if (typeof iziToast !== 'undefined') {
+        console.error("❌ Error:", error);
+        const errorMessage = error?.message || "An error occurred";
+
+        let title = 'Error';
+        let displayMessage = errorMessage;
+
+        // Detect network errors
+        if (errorMessage === 'Failed to fetch' || errorMessage.includes('NetworkError')) {
+            title = 'Network Error';
+            displayMessage = 'Please check your internet connection and try again.';
+        }
+
+        if (typeof iziToast !== 'undefined') {
             iziToast.error({
-                title: 'Network Error',
-                message: "Network error,  please try again later.",
-                position: "topRight"
+                title: title,
+                message: displayMessage,
+                position: "topRight",
+                timeout: 5000
             });
+        } else {
+            console.error("iziToast not available, showing alert");
+            alert(displayMessage);
         }
     } finally {
         // Reset if:

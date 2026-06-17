@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         SUBDOMAIN: "subdomain",
         RDAP: "rdap",
         RDAP_IP: "rdap-ip",
-        REPORTED: "reported"
+        REPORTED: "reported",
+        RISKY_DOMAINS: "risky-domains"
     });
 
     // --- DOM ELEMENTS ---
@@ -151,6 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
             case MiscTab.REPORTED:
                 endpoint = "/submitted-domains";
                 break;
+            case MiscTab.RISKY_DOMAINS:
+                endpoint = "/risky-domains";
+                break;
         }
 
         try {
@@ -160,17 +164,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = result.data;
             loadedRecords = data.records || data.domains || data.data || [];
-            
+
             if (currentTab === MiscTab.SUBDOMAIN) renderSubdomainTable();
             else if (currentTab === MiscTab.RDAP) renderRdapTable();
             else if (currentTab === MiscTab.RDAP_IP) renderRdapIpTable();
             else if (currentTab === MiscTab.REPORTED) renderReportedTable();
+            else if (currentTab === MiscTab.RISKY_DOMAINS) renderRiskyDomainsTable();
             
-            const paginationData = result.data.pagination || {
-                page: result.data.page || 1,
-                pages: result.data.totalPages || 1,
-                total: result.data.total || 0
-            };
+            // Handle both pagination formats (old and new)
+            let paginationData;
+            if (result.data.pagination) {
+                paginationData = {
+                    page: result.data.pagination.page || 1,
+                    pages: result.data.pagination.totalPages || result.data.pagination.pages || 1,
+                    total: result.data.pagination.total || 0
+                };
+            } else {
+                paginationData = {
+                    page: result.data.page || 1,
+                    pages: result.data.totalPages || result.data.pages || 1,
+                    total: result.data.total || 0
+                };
+            }
             renderPaginationUI(paginationData);
             hideLoading();
         } catch (error) {
@@ -292,6 +307,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
                 <td style="color: #6B7280; font-size: 13px; text-align: right;">
                     ${new Date(r.lastSubmittedAt).toLocaleDateString()}
+                </td>
+            </tr>
+        `).join("");
+    }
+
+    function renderRiskyDomainsTable() {
+        const tbody = getEl("risky-domains-tbody");
+        if (!tbody) return;
+
+        if (loadedRecords.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px; color: #737373;">No risky domains found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = loadedRecords.map(r => `
+            <tr>
+                <td style="font-family: monospace; font-weight: 500;">${r.domain_name}</td>
+                <td>${r.provider || '-'}</td>
+                <td class="text-center">
+                    <span class="status-badge ${r.disposable ? 'active' : ''}" style="${r.disposable ? 'background: #FEE2E2; color: #DC2626;' : 'background: #F3F4F6; color: #6B7280;'} font-weight: 600;">
+                        ${r.disposable ? 'Yes' : 'No'}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <span class="status-badge ${r.relay ? 'active' : ''}" style="${r.relay ? 'background: #FEF08A; color: #B45309;' : 'background: #F3F4F6; color: #6B7280;'} font-weight: 600;">
+                        ${r.relay ? 'Yes' : 'No'}
+                    </span>
+                </td>
+                <td style="color: #6B7280; font-size: 13px;">${r.domain_age || '-'}</td>
+                <td style="color: #6B7280; font-size: 13px; text-align: right;">
+                    ${new Date(r.date_added).toLocaleDateString()}
                 </td>
             </tr>
         `).join("");

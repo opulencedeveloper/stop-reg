@@ -1148,7 +1148,7 @@ canvas {
   font-size: 16px;
   color: #000;
   position: absolute;
-  right: -80px;
+  right: -85px;
   /* Push it out to the right */
   top: 50%;
   transform: translateY(-50%);

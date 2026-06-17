@@ -308,6 +308,10 @@
   font-size: 13px;
 }
 
+.admin-table th.th-nowrap {
+  white-space: nowrap;
+}
+
 .admin-table tbody tr {
   border-bottom: 1px solid #EDEDED;
   transition: background-color 0.2s ease;
@@ -320,6 +324,10 @@
 .admin-table td {
   padding: 12px;
   color: #404040;
+}
+
+.admin-table td.td-nowrap {
+  white-space: nowrap;
 }
 
 /* Table Data Styling */
@@ -361,6 +369,31 @@
 .audit-action-badge.password-changed {
   background-color: #FFF5E6;
   color: #FF9500;
+}
+
+.audit-action-badge.admin-suspended {
+  background-color: #FEF3C7;
+  color: #F59E0B;
+}
+
+.audit-action-badge.admin-unsuspended {
+  background-color: #E6FFFA;
+  color: #039286;
+}
+
+.audit-action-badge.admin-deleted {
+  background-color: #FFE8E8;
+  color: #CC0000;
+}
+
+.audit-action-badge.invite-expired {
+  background-color: #FFE8E8;
+  color: #CC0000;
+}
+
+.audit-action-badge.role-changed {
+  background-color: #D4E4FF;
+  color: #1452CA;
 }
 
 /* Pagination */

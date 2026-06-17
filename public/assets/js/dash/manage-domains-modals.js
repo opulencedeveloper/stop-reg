@@ -313,6 +313,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Settings Modal Logic ---
     const radioOptions = settingsOverlay?.querySelectorAll('.radio-option');
     const detectionActionInput = document.getElementById('detection-action');
+    const headerThreshold = document.getElementById('ruleThreshold');
+    const headerWindow = document.getElementById('windowDays');
+    const actionDesc = document.getElementById('ruleActionDesc');
 
     async function fetchAbuseSettings() {
         const token = localStorage.getItem("authToken");
@@ -476,11 +479,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 // Update summary header immediately without refresh
-                const headerThreshold = document.getElementById('ruleThreshold');
-                const headerWindow = document.getElementById('windowDays');
-                const headerUnblockPolicy = document.getElementById('unblockPolicy');
-                const headerActionDesc = document.getElementById('ruleActionDesc');
-
                 if (headerThreshold) headerThreshold.textContent = ruleThreshold;
                 if (headerWindow) headerWindow.textContent = windowDays;
                 
