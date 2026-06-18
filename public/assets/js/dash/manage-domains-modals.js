@@ -494,9 +494,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 */
 
-                if (headerActionDesc) {
-                    headerActionDesc.textContent = action === 'block' 
-                        ? 'Block Domain when threshold is reached' 
+                if (actionDesc) {
+                    actionDesc.textContent = action === 'block'
+                        ? 'Block Domain when threshold is reached'
                         : 'Notify Only when threshold is reached';
                 }
 
