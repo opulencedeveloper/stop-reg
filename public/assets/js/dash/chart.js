@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
           <div class="api-actions">
             <button class="btn btn-primary" id="generate-token-btn">Generate API Token</button>
-            <a href="/documentation.html" class="btn btn-outline" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Read the Docs</a>
+            <a href="/documentation.html" target="_blank" class="btn btn-outline" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Read the Docs</a>
           </div>
           <div class="divider"></div>
           <div class="input-group">
