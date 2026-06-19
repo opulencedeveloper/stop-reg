@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Form Submission ---
     inviteForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
+
         const planName = await window.getUserPlan();
         if (planName === "Free") {
             if (typeof iziToast !== 'undefined') {
@@ -94,6 +94,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     position: 'topRight'
                 });
             }
+            return;
+        }
+
+        // Check seat limit for paid plans using already-fetched seat count
+        const limit = getSeatLimit(planName);
+        const usedSeats = window.userSeatCount || 0;
+
+        if (hasReachedSeatLimit(planName, usedSeats)) {
+            const msg = getSeatLimitMessage(planName, limit);
+            if (typeof iziToast !== 'undefined') {
+                iziToast.error({
+                    title: 'Seat Limit Reached',
+                    message: msg,
+                    position: 'topRight'
+                });
+            }
+            showModalError(msg);
             return;
         }
 

@@ -28,6 +28,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Check seat limit for paid plans
+        const limit = getSeatLimit(planName);
+        const usedSeats = window.userSeatCount || 0;
+
+        if (hasReachedSeatLimit(planName, usedSeats)) {
+            const msg = getSeatLimitMessage(planName, limit);
+            if (typeof iziToast !== 'undefined') {
+                iziToast.error({
+                    title: 'Seat Limit Reached',
+                    message: msg,
+                    position: 'topRight'
+                });
+            } else {
+                alert(msg);
+            }
+            return;
+        }
+
         // Prevent background scroll
         document.head.insertAdjacentHTML('beforeend', '<style id="modal-lock">body{overflow:hidden !important;}</style>');
 

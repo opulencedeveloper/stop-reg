@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (response.ok && data.data && Array.isArray(data.data.data)) {
                 totalItems = data.data.total;
+                window.userSeatCount = data.data.total;
                 renderTableRows(data.data.data);
                 renderPagination(data.data.page, data.data.total, data.data.limit);
             } else {

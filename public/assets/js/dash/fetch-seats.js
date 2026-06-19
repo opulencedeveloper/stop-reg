@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         try {
-            // Fetch top 3 recent seats
-            const response = await fetch("https://api.stopreg.com/api/v1/seat/fetch?limit=3&page=1", {
+            // Fetch all seats to get accurate total, then show only top 3
+            const response = await fetch("https://api.stopreg.com/api/v1/seat/fetch?limit=9&page=1", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,7 +69,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             const data = await response.json();
 
             if (response.ok && data.data && Array.isArray(data.data.data)) {
-                renderSeats(data.data.data, data.data.total);
+                window.userSeatCount = data.data.total;
+                renderSeats(data.data.data.slice(0, 3), data.data.total);
             } else {
                 throw new Error(data.message || "Failed to fetch seats");
             }
