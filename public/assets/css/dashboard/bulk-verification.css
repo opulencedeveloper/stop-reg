@@ -263,6 +263,7 @@
   font-size: 16px;
   /* text-transform: uppercase; Removed for Title Case per design */
   border-bottom: 1px solid #EAECF0;
+  white-space: nowrap;
 }
 
 .bulk-results-table td {
@@ -519,4 +520,32 @@
   text-align: center;
   max-width: 300px;
   line-height: 1.5;
+}
+
+/* Empty State Cell - Full Width Centering */
+.bulk-results-table td.empty-state-cell {
+  height: 400px;
+  padding: 0 !important;
+  border-bottom: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.empty-state-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Red theme for Disposable Yes values */
+.status-disposable-yes {
+  background-color: #FEE2E2;
+  color: #DC2626;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 500;
 }

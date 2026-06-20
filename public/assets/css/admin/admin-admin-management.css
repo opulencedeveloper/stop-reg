@@ -305,7 +305,8 @@
   text-align: left;
   font-weight: 600;
   color: #404040;
-  font-size: 13px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .admin-table th.th-nowrap {
@@ -324,6 +325,7 @@
 .admin-table td {
   padding: 12px;
   color: #404040;
+  font-size: 14px;
 }
 
 .admin-table td.td-nowrap {

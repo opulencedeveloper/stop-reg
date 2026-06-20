@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Custom Plans - StopReg</title>
+  <meta name="description" content="StopReg Admin Custom Plans Management." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Additional Meta Tags -->
+  <meta name="theme-color" content="#1452CA" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-sidebar.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-header.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-dashboard.css" rel="stylesheet" />
+  <link href="/assets/css/admin/admin-custom-plans.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css" />
+
+  <script src="/assets/js/admin/admin-main.js" defer></script>
+  <script src="/assets/js/admin/custom-plans.js" defer></script>
+  <script src="/assets/js/admin/nav-super-admin-check.js" defer></script>
+</head>
+
+<body>
+  <!-- Mobile Navigation overlay -->
+  <div class="admin-mobile-nav-overlay" id="mobile-nav-overlay">
+    <div class="admin-mobile-nav">
+      <div class="admin-mobile-nav-header">
+        <a href="/" class="admin-logo">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
+        </a>
+        <button class="mobi-close-btn" id="mobi-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#131313" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/admin-management.html" class="admin-nav-link" style="display: none;">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Admin Management</span>
+        </a>
+        <a href="/admin-dashboard/custom-plans.html" class="admin-nav-link active" style="display: none;">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Custom Plans</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+          <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
+          <span>Misc</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- Desktop Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">
+        <a href="/">
+          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+        </a>
+      </div>
+
+      <nav class="admin-nav-links">
+        <a href="/admin-dashboard/index.html" class="admin-nav-link">
+          <img src="/assets/icons/dashboard-inactive.svg" alt="" class="nav-icon" />
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin-dashboard/report.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/carbon_report.svg" alt="" class="nav-icon" />
+          <span>Report</span>
+        </a>
+        <a href="/admin-dashboard/users.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Users</span>
+        </a>
+        <a href="/admin-dashboard/admin-management.html" class="admin-nav-link" style="display: none;">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Admin Management</span>
+        </a>
+        <a href="/admin-dashboard/custom-plans.html" class="admin-nav-link active" style="display: none;">
+          <img src="/assets/icons/admin/prime_users.svg" alt="" class="nav-icon" />
+          <span>Custom Plans</span>
+        </a>
+        <a href="/admin-dashboard/domains.html" class="admin-nav-link">
+          <img src="/assets/icons/domains-inactive.svg" alt="" class="nav-icon" />
+          <span>Manage Domains</span>
+        </a>
+        <a href="/admin-dashboard/domain-management.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>Domain</span>
+        </a>
+        <a href="/admin-dashboard/mx-matching.html" class="admin-nav-link">
+          <img src="/assets/icons/admin/material-symbols-light_domain.svg" alt="" class="nav-icon" />
+          <span>MX Matching</span>
+        </a>
+        <a href="/admin-dashboard/misc.html" class="admin-nav-link">
+          <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
+          <span>Misc</span>
+        </a>
+        <a href="/admin-dashboard/profile.html" class="admin-nav-link">
+          <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
+          <span>Profile</span>
+        </a>
+      </nav>
+
+      <div class="admin-nav-logout">
+        <button class="nav-logout-btn">
+          <img src="/assets/icons/logout-line.svg" alt="" />
+          <span>Log Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <!-- Admin Header -->
+      <header class="admin-header">
+        <div class="admin-header-mobile">
+          <a href="/" class="mobile-logo">
+            <img src="/assets/logo/stopreg-logo.svg" alt="StopReg" />
+          </a>
+        </div>
+        <h1 class="admin-page-title">Custom Plans</h1>
+        <div class="admin-header-right">
+          <div class="admin-avatar">
+            <img src="/assets/icons/avatar-filled.svg" alt="User Avatar" />
+          </div>
+          <button class="mobile-menu-btn" id="mobi-menu-btn">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Content -->
+      <main class="admin-content">
+        <div class="custom-plans-container">
+          <!-- Plans Header -->
+          <div class="plans-header">
+            <div class="plans-header-info">
+              <h2>Enterprise Custom Plans</h2>
+              <p>Create and manage custom subscription plans for enterprise customers</p>
+            </div>
+            <button id="create-plan-btn" class="btn btn-create-plan">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Create Custom Plan
+            </button>
+          </div>
+
+          <!-- Loading State -->
+          <div id="custom-plans-loading" class="loading-state" style="display: none;">
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <p>Loading plans...</p>
+            </div>
+          </div>
+
+          <!-- Plans Table Container -->
+          <div id="custom-plans-container" class="plans-table-wrapper">
+            <div class="plans-table-scroll">
+              <table class="plans-table">
+                <thead>
+                  <tr>
+                    <th>Plan Name</th>
+                    <th>Customer</th>
+                    <th>Monthly Price</th>
+                    <th>API Limit</th>
+                    <th>Seat Limit</th>
+                    <th>Created By</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="custom-plans-tbody">
+                  <!-- Plans loaded by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div id="custom-plans-empty" class="empty-state" style="display: none;">
+            <div class="empty-state-content">
+              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="30" fill="#F3F4F6" />
+                <path d="M32 22V42M22 32H42" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <h3>No Custom Plans Yet</h3>
+              <p>Create your first custom enterprise plan to get started</p>
+              <button id="empty-create-btn" class="btn btn-create-plan">Create Custom Plan</button>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div id="custom-plans-pagination" class="plans-pagination">
+            <!-- Pagination buttons loaded by JavaScript -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create/Edit Plan Modal -->
+  <div id="plan-modal-overlay" class="modal-overlay" style="display: none; opacity: 0; visibility: hidden; pointer-events: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="plan-modal-title">Create Custom Plan</h2>
+        <button id="close-plan-modal" class="modal-close-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="plan-form" class="plan-form">
+        <!-- Customer Selection - Smart Search Input -->
+        <div class="form-group">
+          <label for="customer-search-input" class="form-label">Customer <span class="required">*</span></label>
+          <div class="customer-search-wrapper">
+            <div class="customer-search-input-container">
+              <svg class="customer-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <input
+                type="text"
+                id="customer-search-input"
+                class="customer-search-input"
+                placeholder="Search by email or name..."
+                autocomplete="off"
+                required
+              />
+              <div class="customer-search-loading" style="display: none;">
+                <div class="spinner-micro"></div>
+              </div>
+            </div>
+            <select id="customer-id-select" style="display: none;"></select>
+            <div id="customer-search-results" class="customer-search-results" style="display: none;"></div>
+          </div>
+          <input type="hidden" id="selected-customer-id" name="customerId" value="" required />
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="form-section">
+          <h3 class="form-section-title">Pricing</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="monthly-price" class="form-label">Monthly Price ($) <span class="required">*</span></label>
+              <input type="number" id="monthly-price" class="form-input" placeholder="0.00" step="0.01" min="0" max="999999" required />
+            </div>
+            <div class="form-group">
+              <label for="duration-select" class="form-label">Billing Cycle <span class="required">*</span></label>
+              <select id="duration-select" class="form-input form-select" required>
+                <option value="Monthly">Monthly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Limits Section -->
+        <div class="form-section">
+          <h3 class="form-section-title">Usage Limits</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="api-limit" class="form-label">API Request Limit <span class="required">*</span></label>
+              <input type="number" id="api-limit" class="form-input" placeholder="1000" min="100" max="100000000" required />
+            </div>
+            <div class="form-group">
+              <label for="seat-limit" class="form-label">Seat Limit <span class="required">*</span></label>
+              <input type="number" id="seat-limit" class="form-input" placeholder="10" min="1" max="10000" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="api-key-limit" class="form-label">API Key Limit <span class="required">*</span></label>
+              <input type="number" id="api-key-limit" class="form-input" placeholder="5" min="1" max="1000" required />
+            </div>
+            <div class="form-group">
+              <label for="requests-per-second" class="form-label">Requests/Second <span class="required">*</span></label>
+              <input type="number" id="requests-per-second" class="form-input" placeholder="10" min="1" max="100000" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="duration-in-days" class="form-label">Duration (Days) <span class="required">*</span></label>
+            <input type="number" id="duration-in-days" class="form-input" placeholder="30" min="1" max="3650" required />
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="button" id="plan-modal-cancel" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Plan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Plan Confirmation Modal -->
+  <div class="admin-confirmation-modal-overlay" id="delete-plan-modal-overlay">
+    <div class="admin-confirmation-modal-container">
+      <div class="confirmation-modal-header">
+        <div class="confirmation-icon-wrapper danger">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="#CC0000"/>
+          </svg>
+        </div>
+        <button class="confirmation-modal-close" id="close-delete-plan-modal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="confirmation-modal-content">
+        <h3>Delete Plan?</h3>
+        <p>Are you sure you want to delete the plan <strong id="delete-plan-name"></strong>? This action cannot be undone. All users assigned to this plan will be reverted to the Free plan.</p>
+      </div>
+      <div class="confirmation-modal-actions">
+        <button class="btn-cancel" id="cancel-delete-plan-btn">Cancel</button>
+        <button class="btn-confirm-delete" id="confirm-delete-plan-btn">Yes, Delete Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+</body>
+
+</html>

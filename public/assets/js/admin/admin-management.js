@@ -247,10 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${statusBadge}</td>
         <td>${invitedByName}</td>
         <td>${expiresAt}</td>
-        <td style="font-size: 13px;">${createdAt}</td>
-        <td style="font-size: 13px;">${acceptedAt}</td>
+        <td>${createdAt}</td>
+        <td>${acceptedAt}</td>
         <td>${acceptedByName}</td>
-        <td style="font-size: 13px;">${revokedAt}</td>
+        <td>${revokedAt}</td>
         <td>${revokedByName}</td>
         <td>${getRevokeButton(inv)}</td>
       `;
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const userAgentLabel = log.userAgent ? log.userAgent.substring(0, 50) + "..." : "-";
 
       row.innerHTML = `
-        <td class="td-nowrap" style="font-size: 13px;">${createdAt}</td>
+        <td class="td-nowrap">${createdAt}</td>
         <td>${adminName}</td>
         <td class="td-nowrap"><span class="audit-action-badge ${log.action.replace(/_/g, '-')}">${actionLabel}</span></td>
         <td class="td-nowrap">${resourceTypeLabel}</td>

@@ -134,8 +134,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                             }
                         });
 
-                        // B. Hide the upgrade subtitle if the user is on a paid plan
-                        const isPaidPlan = planName.toLowerCase() !== "free";
+                        // B. Hide the upgrade subtitle if the user is on a paid plan or custom plan
+                        const isCustomPlan = userDetails.planId?.type === "custom" || planName.toLowerCase().startsWith("stopreg_");
+                        const isPaidPlan = isCustomPlan || planName.toLowerCase() !== "free";
                         if (isPaidPlan && bannerTextEl) {
                             bannerTextEl.style.display = "none";
                         }
@@ -156,7 +157,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                     if (userDetails.planId) {
                         const free = userDetails.extraApiLimitLeft ?? 0;
                         const paid = userDetails.apiRequestLeft ?? 0;
-                        const isPaid = userDetails.planId.name.toLowerCase() !== "free";
+                        const isCustomPlan = userDetails.planId.type === "custom";
+                        const isPaid = isCustomPlan || userDetails.planId.name.toLowerCase() !== "free";
                         const totalRemaining = isPaid ? paid : free;
                         const planLimit = userDetails.planId.apiLimit ?? 0;
                         const durationInDays = userDetails.planId.durationInDays ?? 30;

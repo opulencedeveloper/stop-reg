@@ -10,7 +10,7 @@
   top: 0;
   flex-shrink: 0;
   align-self: flex-start;
-  padding: 24px;
+  padding: 24px 0 24px 24px;
   z-index: 1000;
 }
 

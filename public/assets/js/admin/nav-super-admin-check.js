@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const showAdminManagementLink = () => {
-    // Show ALL desktop navigation links (in case there are multiple)
+    // Show ALL desktop navigation links for admin-management
     const allDesktopLinks = document.querySelectorAll(
       'a[href="/admin-dashboard/admin-management.html"]'
     );
@@ -50,13 +50,30 @@ document.addEventListener("DOMContentLoaded", () => {
       link.style.display = "flex";
     });
 
-    // Show mobile navigation link
+    // Show mobile navigation link for admin-management
     const mobileLink = document.querySelector(
       '.admin-mobile-nav a[href="/admin-dashboard/admin-management.html"]'
     );
     if (mobileLink) {
       mobileLink.removeAttribute('style');
       mobileLink.style.display = "flex";
+    }
+
+    // Show custom-plans links for super admins
+    const customPlansDesktopLinks = document.querySelectorAll(
+      'a[href="/admin-dashboard/custom-plans.html"]'
+    );
+    customPlansDesktopLinks.forEach((link) => {
+      link.removeAttribute('style');
+      link.style.display = "flex";
+    });
+
+    const customPlansMobileLink = document.querySelector(
+      '.admin-mobile-nav a[href="/admin-dashboard/custom-plans.html"]'
+    );
+    if (customPlansMobileLink) {
+      customPlansMobileLink.removeAttribute('style');
+      customPlansMobileLink.style.display = "flex";
     }
 
     // Show Assign Plan button for Super Admins
@@ -67,20 +84,35 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const hideAdminManagementLink = () => {
-    // Hide desktop navigation link
-    const desktopLink = document.querySelector(
+    // Hide desktop navigation links for admin-management
+    const desktopLinks = document.querySelectorAll(
       'a[href="/admin-dashboard/admin-management.html"]'
     );
-    if (desktopLink) {
-      desktopLink.style.display = "none";
-    }
+    desktopLinks.forEach((link) => {
+      link.style.display = "none";
+    });
 
-    // Hide mobile navigation link
+    // Hide mobile navigation link for admin-management
     const mobileLink = document.querySelector(
       '.admin-mobile-nav a[href="/admin-dashboard/admin-management.html"]'
     );
     if (mobileLink) {
       mobileLink.style.display = "none";
+    }
+
+    // Hide custom-plans links for non-super admins
+    const customPlansDesktopLinks = document.querySelectorAll(
+      'a[href="/admin-dashboard/custom-plans.html"]'
+    );
+    customPlansDesktopLinks.forEach((link) => {
+      link.style.display = "none";
+    });
+
+    const customPlansMobileLink = document.querySelector(
+      '.admin-mobile-nav a[href="/admin-dashboard/custom-plans.html"]'
+    );
+    if (customPlansMobileLink) {
+      customPlansMobileLink.style.display = "none";
     }
   };
 

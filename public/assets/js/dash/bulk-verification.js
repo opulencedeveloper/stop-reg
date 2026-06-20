@@ -33,21 +33,22 @@ document.addEventListener("DOMContentLoaded", () => {
     tr.className = "empty-state-row"; // Changed class slightly to distinguish
 
     const td = document.createElement("td");
-    td.colSpan = 10; // Span all columns (SN, Input, Disp, Relay, Pub, Role, Alias, Prov, Block, MX)
+    td.colSpan = 12; // Span all 12 table columns
+    td.style.height = "400px";
     td.style.padding = "0";
+    td.style.textAlign = "center";
+    td.style.verticalAlign = "middle";
 
-    const container = document.createElement("div");
-    container.className = "empty-state-animated";
-
-    container.innerHTML = `
-        <div class="empty-state-icon-wrapper">
-             <img src="/assets/icons/search-status.svg" alt="No Results" onerror="this.src='/assets/icons/empty.svg'" />
+    td.innerHTML = `
+        <div style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <div class="empty-state-icon-wrapper">
+                <img src="/assets/icons/search-status.svg" alt="No Results" onerror="this.src='/assets/icons/empty.svg'" />
+            </div>
+            <h3 class="empty-state-text">Ready to Verify</h3>
+            <p class="empty-state-subtext">Enter your list of domains or emails above and click Start Verification to see results.</p>
         </div>
-        <p class="empty-state-text">Ready to Verify</p>
-        <p class="empty-state-subtext">Enter your list of domains or emails above and click Start Verification to see results.</p>
     `;
 
-    td.appendChild(container);
     tr.appendChild(td);
     disposableResult.appendChild(tr);
 
@@ -202,12 +203,16 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>`
             : '-';
 
+        const disposableBadge = isDisposable === 'Yes'
+            ? `<span class="status-disposable-yes">${isDisposable}</span>`
+            : isDisposable;
+
         tr.innerHTML = `
           <td>${startIndex + index + 1}</td>
           <td>${domain}</td>
           <td>${isProvider}</td>
           <td>${isUnresolved}</td>
-          <td>${isDisposable}</td>
+          <td>${disposableBadge}</td>
           <td>${isRelay}</td>
           <td>${isPublic}</td>
           <td>${isRole}</td>
