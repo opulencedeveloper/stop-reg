@@ -187,14 +187,11 @@ document.addEventListener("DOMContentLoaded", () => {
     storedResponseData.forEach((item, index) => {
         const tr = document.createElement("tr");
         const domain = item.domain || '-';
-        const isDisposable = formatValue(item.isDiposableDomain);
-        const isRelay = formatValue(item.isRelayDomain);
         const publicVal = item.publicProvider === 1;
         const isPublic = formatValue(publicVal);
         const isRole = formatValue(item.isRoleDomain);
         const isAlias = formatValue(item.isAliasDomain);
         const isProvider = item.provider || '-';
-        const isBlocklisted = formatValue(item.isBlocklisted);
         const isMx = formatValue(item.hasMxRecords);
         const date = item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : '-';
         const unresolvedVal = (item.unresolved || 0);
@@ -203,9 +200,23 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>`
             : '-';
 
-        const disposableBadge = isDisposable === 'Yes'
-            ? `<span class="status-disposable-yes">${isDisposable}</span>`
-            : isDisposable;
+        // Disposable: Use red theme for "Yes"
+        const isDisposableBool = item.isDiposableDomain === true;
+        const disposableBadge = isDisposableBool
+            ? `<span class="status-disposable-yes"><span>Yes</span></span>`
+            : '-';
+
+        // Relay: Use red theme for "Yes"
+        const isRelayBool = item.isRelayDomain === true;
+        const relayBadge = isRelayBool
+            ? `<span class="status-relay-yes"><span>Yes</span></span>`
+            : '-';
+
+        // Blocklisted: Use red theme for "Yes"
+        const isBlocklistedBool = item.blocklisted === true;
+        const blocklistedBadge = isBlocklistedBool
+            ? `<span class="status-blocklisted-yes"><span>Yes</span></span>`
+            : '-';
 
         tr.innerHTML = `
           <td>${startIndex + index + 1}</td>
@@ -213,11 +224,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${isProvider}</td>
           <td>${isUnresolved}</td>
           <td>${disposableBadge}</td>
-          <td>${isRelay}</td>
+          <td>${relayBadge}</td>
           <td>${isPublic}</td>
           <td>${isRole}</td>
           <td>${isAlias}</td>
-          <td>${isBlocklisted}</td>
+          <td>${blocklistedBadge}</td>
           <td>${isMx}</td>
           <td>${date}</td>
         `;

@@ -76,9 +76,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setTimeout(() => {
       overlay.style.display = 'none';
+      overlay.classList.remove('is-active');
       document.querySelector(selectors.form).reset();
       clearCustomerSearch();
       document.body.style.overflow = '';
+
+      // Reset modal to create mode
+      const modalTitle = document.querySelector('.modal-overlay h2');
+      if (modalTitle) modalTitle.textContent = 'Create Custom Plan';
+
+      const submitBtn = document.querySelector(selectors.form).querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.textContent = 'Create Plan';
+        delete submitBtn.dataset.planId;
+      }
+
+      // Re-enable customer search
+      document.getElementById('customer-search-input').disabled = false;
     }, 300);
   }
 
@@ -89,6 +103,53 @@ document.addEventListener('DOMContentLoaded', async () => {
   const emptyCreateBtn = document.getElementById('empty-create-btn');
   if (emptyCreateBtn) {
     emptyCreateBtn.addEventListener('click', () => openModal());
+  }
+
+  // Handle Unlimited Checkboxes
+  const apiLimitUnlimited = document.getElementById('api-limit-unlimited');
+  const apiLimitInput = document.getElementById('api-limit');
+  const apiKeyLimitUnlimited = document.getElementById('api-key-limit-unlimited');
+  const apiKeyLimitInput = document.getElementById('api-key-limit');
+  const requestsPerSecondUnlimited = document.getElementById('requests-per-second-unlimited');
+  const requestsPerSecondInput = document.getElementById('requests-per-second');
+
+  if (apiLimitUnlimited && apiLimitInput) {
+    apiLimitUnlimited.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        apiLimitInput.disabled = true;
+        apiLimitInput.value = '';
+        apiLimitInput.removeAttribute('required');
+      } else {
+        apiLimitInput.disabled = false;
+        apiLimitInput.setAttribute('required', 'required');
+      }
+    });
+  }
+
+  if (apiKeyLimitUnlimited && apiKeyLimitInput) {
+    apiKeyLimitUnlimited.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        apiKeyLimitInput.disabled = true;
+        apiKeyLimitInput.value = '';
+        apiKeyLimitInput.removeAttribute('required');
+      } else {
+        apiKeyLimitInput.disabled = false;
+        apiKeyLimitInput.setAttribute('required', 'required');
+      }
+    });
+  }
+
+  if (requestsPerSecondUnlimited && requestsPerSecondInput) {
+    requestsPerSecondUnlimited.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        requestsPerSecondInput.disabled = true;
+        requestsPerSecondInput.value = '';
+        requestsPerSecondInput.removeAttribute('required');
+      } else {
+        requestsPerSecondInput.disabled = false;
+        requestsPerSecondInput.setAttribute('required', 'required');
+      }
+    });
   }
 
   // Load and render plans
@@ -142,19 +203,78 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="customer-name">${plan.customerId?.email || 'N/A'}</div>
           </td>
           <td><span class="price-badge">$${plan.monthlyPrice.toFixed(2)}</span></td>
-          <td><span class="limit-value">${plan.apiLimit.toLocaleString()}</span></td>
-          <td><span class="limit-value">${plan.seatLimit}</span></td>
+          <td><span class="limit-value">${plan.apiLimit === null ? 'Unlimited' : plan.apiLimit.toLocaleString()}</span></td>
+          <td><span class="limit-value">${plan.apiKeyLimit === null ? 'Unlimited' : plan.apiKeyLimit}</span></td>
+          <td><span class="limit-value">${plan.seatLimit === null ? 'Unlimited' : plan.seatLimit}</span></td>
+          <td><span class="limit-value">${plan.requestsPerSecond === null ? 'Unlimited' : plan.requestsPerSecond}</span></td>
+          <td><span class="limit-value">${plan.duration} (${plan.durationInDays}d)</span></td>
           <td>${plan.createdByAdmin?.email || 'System'}</td>
           <td>${createdDate}</td>
           <td>
-            <button class="btn-action delete-plan-btn" data-id="${plan._id}" data-plan-name="${plan.name}" title="Delete this plan">
-              <img src="/assets/icons/delete.svg" alt="Delete" width="16" height="16" />
-              Delete
-            </button>
+            <div class="action-buttons">
+              <button class="btn-action-icon edit-plan-btn" data-id="${plan._id}" title="Edit this plan">
+                <img src="/assets/icons/edit-outline.svg" alt="Edit" width="20" height="20" />
+              </button>
+              <button class="btn-action-icon delete-plan-btn" data-id="${plan._id}" data-plan-name="${plan.name}" title="Delete this plan">
+                <img src="/assets/icons/delete.svg" alt="Delete" width="20" height="20" />
+              </button>
+            </div>
           </td>
         </tr>
       `;
     }).join('');
+
+    // Edit Plan Button Listeners
+    document.querySelectorAll('.edit-plan-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const planId = e.currentTarget.dataset.id;
+
+        // Find the plan data from the current plans array
+        const plan = plans.find(p => p._id === planId);
+        if (!plan) {
+          if (typeof iziToast !== 'undefined') {
+            iziToast.error({ message: 'Plan not found', position: 'topRight' });
+          }
+          return;
+        }
+
+        // Populate form with existing plan data
+        document.getElementById('selected-customer-id').value = plan.customerId?._id || '';
+        document.getElementById('customer-search-input').value = plan.customerId?.email || '';
+        document.getElementById('monthly-price').value = plan.monthlyPrice;
+        document.getElementById('duration-select').value = plan.duration;
+        document.getElementById('api-limit').value = plan.apiLimit === null ? '' : plan.apiLimit;
+        document.getElementById('api-limit-unlimited').checked = plan.apiLimit === null;
+        document.getElementById('seat-limit').value = plan.seatLimit;
+        document.getElementById('api-key-limit').value = plan.apiKeyLimit === null ? '' : plan.apiKeyLimit;
+        document.getElementById('api-key-limit-unlimited').checked = plan.apiKeyLimit === null;
+        document.getElementById('requests-per-second').value = plan.requestsPerSecond === null ? '' : plan.requestsPerSecond;
+        document.getElementById('requests-per-second-unlimited').checked = plan.requestsPerSecond === null;
+        document.getElementById('duration-in-days').value = plan.durationInDays;
+
+        // Update modal title and button
+        const modalTitle = document.querySelector('.modal-overlay h2');
+        if (modalTitle) modalTitle.textContent = 'Edit Custom Plan';
+
+        const submitBtn = document.querySelector('.modal-overlay button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.dataset.planId = planId;
+          submitBtn.textContent = 'Update Plan';
+        }
+
+        // Disable customer search (can't change customer in edit mode)
+        document.getElementById('customer-search-input').disabled = true;
+
+        // Open modal using inline styles (same as closeModal does in reverse)
+        const overlay = document.querySelector(selectors.modalOverlay);
+        overlay.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+        overlay.style.pointerEvents = 'auto';
+        overlay.style.display = 'flex';  // flex for proper centering (horizontal + vertical)
+        document.body.style.overflow = 'hidden';
+      });
+    });
 
     document.querySelectorAll('.delete-plan-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
@@ -282,7 +402,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Form submission
+  // Form submission (Create or Edit)
   document.querySelector(selectors.form).addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -296,14 +416,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const submitBtn = document.querySelector(selectors.form).querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
+    const planId = submitBtn.dataset.planId; // Set if editing
+    const isEditing = !!planId;
 
     const formData = {
       customerId,
       monthlyPrice: parseFloat(document.getElementById('monthly-price').value),
-      apiLimit: parseInt(document.getElementById('api-limit').value),
+      apiLimit: document.getElementById('api-limit-unlimited').checked ? null : parseInt(document.getElementById('api-limit').value),
       seatLimit: parseInt(document.getElementById('seat-limit').value),
-      apiKeyLimit: parseInt(document.getElementById('api-key-limit').value),
-      requestsPerSecond: parseInt(document.getElementById('requests-per-second').value),
+      apiKeyLimit: document.getElementById('api-key-limit-unlimited').checked ? null : parseInt(document.getElementById('api-key-limit').value),
+      requestsPerSecond: document.getElementById('requests-per-second-unlimited').checked ? null : parseInt(document.getElementById('requests-per-second').value),
       durationInDays: parseInt(document.getElementById('duration-in-days').value),
       duration: document.getElementById('duration-select').value,
     };
@@ -311,16 +433,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       // Show loading state
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Creating Plan...';
+      submitBtn.textContent = isEditing ? 'Updating Plan...' : 'Creating Plan...';
       submitBtn.style.opacity = '0.7';
 
-      const response = await apiFetch('/custom-plans', {
-        method: 'POST',
-        body: JSON.stringify(formData)
+      const url = isEditing ? `/custom-plans/${planId}` : '/custom-plans';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      // For updates, exclude customerId (can't change customer assignment)
+      const dataToSend = isEditing ? {
+        monthlyPrice: formData.monthlyPrice,
+        apiLimit: formData.apiLimit,
+        seatLimit: formData.seatLimit,
+        apiKeyLimit: formData.apiKeyLimit,
+        requestsPerSecond: formData.requestsPerSecond,
+        durationInDays: formData.durationInDays,
+        duration: formData.duration,
+      } : formData;
+
+      const response = await apiFetch(url, {
+        method,
+        body: JSON.stringify(dataToSend)
       });
 
       if (typeof iziToast !== 'undefined') {
-        iziToast.success({ message: response.description || 'Plan created successfully!', position: 'topRight' });
+        const message = response.description || (isEditing ? 'Plan updated successfully!' : 'Plan created successfully!');
+        iziToast.success({ message, position: 'topRight' });
       }
 
       closeModal();
@@ -335,6 +472,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       submitBtn.disabled = false;
       submitBtn.textContent = originalBtnText;
       submitBtn.style.opacity = '1';
+      // Clear planId for next use
+      delete submitBtn.dataset.planId;
     }
   });
 

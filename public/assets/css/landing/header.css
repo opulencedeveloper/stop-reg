@@ -171,6 +171,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    width: max-content;
     padding: 5px 12px;
     background-color: #dcfce7;
     color: #16a34a;

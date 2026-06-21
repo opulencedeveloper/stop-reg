@@ -432,18 +432,19 @@ document.addEventListener("DOMContentLoaded", async () => {
               badgeHtml = `<span style="color: #667085; font-size: 14px;">-</span>`;
           }
 
-          // Helper to get color for boolean flags
-          const getFlagHtml = (val) => {
+          // Helper to get color for boolean flags (Red for Yes, Green for No)
+          const getFlagHtml = (val, columnType = '') => {
               const text = val ? 'Yes' : 'No';
-              const className = val ? 'status-bool-yes' : 'status-bool-no';
+              // Yes -> Red (status-disposable-yes), No -> Green (status-bool-yes)
+              const className = val ? 'status-disposable-yes' : 'status-bool-yes';
               return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
           const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Caution), 0 -> False (No/Red)
+             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
-             const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+             const className = isTrue ? 'status-bool-yes' : 'status-disposable-yes';
              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 

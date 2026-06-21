@@ -212,7 +212,10 @@
                     <th>Customer</th>
                     <th>Monthly Price</th>
                     <th>API Limit</th>
+                    <th>API Key Creation Limit</th>
                     <th>Seat Limit</th>
+                    <th>Req/Sec</th>
+                    <th>Duration</th>
                     <th>Created By</th>
                     <th>Created At</th>
                     <th>Actions</th>
@@ -311,7 +314,13 @@
           <div class="form-row">
             <div class="form-group">
               <label for="api-limit" class="form-label">API Request Limit <span class="required">*</span></label>
-              <input type="number" id="api-limit" class="form-input" placeholder="1000" min="100" max="100000000" required />
+              <div class="form-input-with-checkbox">
+                <input type="number" id="api-limit" class="form-input" placeholder="1000" min="100" max="100000000" required />
+                <label class="checkbox-label">
+                  <input type="checkbox" id="api-limit-unlimited" class="unlimited-checkbox" />
+                  <span>Unlimited</span>
+                </label>
+              </div>
             </div>
             <div class="form-group">
               <label for="seat-limit" class="form-label">Seat Limit <span class="required">*</span></label>
@@ -320,12 +329,24 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label for="api-key-limit" class="form-label">API Key Limit <span class="required">*</span></label>
-              <input type="number" id="api-key-limit" class="form-input" placeholder="5" min="1" max="1000" required />
+              <label for="api-key-limit" class="form-label">API Key Creation Limit <span class="required">*</span></label>
+              <div class="form-input-with-checkbox">
+                <input type="number" id="api-key-limit" class="form-input" placeholder="5" min="1" max="1000" required />
+                <label class="checkbox-label">
+                  <input type="checkbox" id="api-key-limit-unlimited" class="unlimited-checkbox" />
+                  <span>Unlimited</span>
+                </label>
+              </div>
             </div>
             <div class="form-group">
               <label for="requests-per-second" class="form-label">Requests/Second <span class="required">*</span></label>
-              <input type="number" id="requests-per-second" class="form-input" placeholder="10" min="1" max="100000" required />
+              <div class="form-input-with-checkbox">
+                <input type="number" id="requests-per-second" class="form-input" placeholder="10" min="1" max="100000" required />
+                <label class="checkbox-label">
+                  <input type="checkbox" id="requests-per-second-unlimited" class="unlimited-checkbox" />
+                  <span>Unlimited</span>
+                </label>
+              </div>
             </div>
           </div>
           <div class="form-group">

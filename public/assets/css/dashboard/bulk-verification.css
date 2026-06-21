@@ -540,12 +540,14 @@
   width: 100%;
 }
 
-/* Red theme for Disposable Yes values */
-.status-disposable-yes {
-  background-color: #FEE2E2;
-  color: #DC2626;
-  padding: 4px 8px;
-  border-radius: 4px;
-  display: inline-block;
-  font-weight: 500;
+/* Red theme for risk indicators (Disposable, Relay, Blocklisted) */
+.status-disposable-yes,
+.status-relay-yes,
+.status-blocklisted-yes {
+  background-color: #FEE2E2 !important;
+  color: #DC2626 !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  font-weight: 500 !important;
 }

@@ -1467,8 +1467,8 @@ canvas {
 }
 
 .status-bool-no {
-  background: #FFEBEB;
-  color: #FF0000;
+  background: #EBFFEB !important;
+  color: #008000 !important;
 }
 
 .status-bool-unresolved {

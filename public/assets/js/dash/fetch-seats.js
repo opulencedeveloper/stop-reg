@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // 1. RBAC & Plan Check
     const isFreePlan = planName === "Free";
+    // Get plan details from cache (populated by getUserPlan in main.js, no extra API call)
+    const planDetails = window.userPlanDetailsCache;
+    const seatLimit = planDetails?.seatLimit || null; // null = unlimited
     
     if (role === "Seat") {
         if (upgradeBtn) upgradeBtn.style.display = "none";
@@ -83,10 +86,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function renderSeats(users, totalCount) {
         if (!seatsList) return;
-        
-        // Update total count
+
+        // Check if limit reached (prevents unnecessary "Add more" clicks)
+        const isLimitReached = seatLimit !== null && seatLimit !== undefined && totalCount >= seatLimit;
+
+        // Update total count with limit info
         if (seatsTitle) {
-            seatsTitle.textContent = `You have invited ${totalCount} users`;
+            const limitText = seatLimit ? ` (${totalCount}/${seatLimit})` : "";
+            seatsTitle.textContent = `You have invited ${totalCount} users${limitText}`;
+        }
+
+        // Disable "Add more" button if limit reached
+        const addSeatsTrigger = document.getElementById("add-seats-trigger");
+        if (addSeatsTrigger) {
+            if (isLimitReached) {
+                addSeatsTrigger.style.opacity = "0.5";
+                addSeatsTrigger.style.cursor = "not-allowed";
+            }
         }
 
         if (users.length === 0) {
@@ -105,12 +121,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         `).join("");
 
         seatsList.innerHTML = html;
-        
-        // Add status pending style dynamically if not exists
-        // Note: Assuming 'seat-status' class already handles styles, or we add inline/css logic.
-        // Based on user snippet, 'Registered' is standard. 
-        // If pending, we might want to differentiate, but user prompt didn't specify strict styles for pending.
-        // We'll stick to basic text.
     }
 
     function renderError() {

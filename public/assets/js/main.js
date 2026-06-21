@@ -8,6 +8,7 @@ window.clearUserSession = function() {
 
 // Global plan cache to prevent redundant fetches on the same page load
 let userPlanPromise = null;
+window.userPlanDetailsCache = null; // Store full plan object (includes seatLimit, apiKeyLimit, etc.)
 
 window.getUserPlan = async function() {
   const token = localStorage.getItem("authToken");
@@ -27,9 +28,11 @@ window.getUserPlan = async function() {
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
-        const planName = data?.data?.userDetails?.planId?.name;
+        const planObject = data?.data?.userDetails?.planId;
+        window.userPlanDetailsCache = planObject; // Cache full plan (seatLimit, apiKeyLimit, etc.)
+        const planName = planObject?.name;
         if (planName) {
            localStorage.setItem("planName", planName); // Sync for compatibility
            return planName;

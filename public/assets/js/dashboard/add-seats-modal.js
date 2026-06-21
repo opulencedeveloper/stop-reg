@@ -14,8 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Action Functions ---
 
     const openModal = async () => {
+        console.log("[AddSeatsModal] openModal called");
         const planName = await window.getUserPlan();
+        console.log("[AddSeatsModal] planName:", planName);
+        console.log("[AddSeatsModal] userPlanDetailsCache:", window.userPlanDetailsCache);
+
         if (planName === "Free") {
+            console.log("[AddSeatsModal] Free plan detected, blocking");
             if (typeof iziToast !== 'undefined') {
                 iziToast.info({
                     title: 'Premium Feature',
@@ -28,12 +33,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Check seat limit for paid plans
-        const limit = getSeatLimit(planName);
+        // Check seat limit (fetched from server, no hardcoded values)
+        const seatLimit = window.userPlanDetailsCache?.seatLimit;
         const usedSeats = window.userSeatCount || 0;
 
-        if (hasReachedSeatLimit(planName, usedSeats)) {
-            const msg = getSeatLimitMessage(planName, limit);
+        console.log("[AddSeatsModal] Seat limit check:");
+        console.log("  - seatLimit:", seatLimit);
+        console.log("  - usedSeats:", usedSeats);
+        console.log("  - seatLimit type:", typeof seatLimit);
+        console.log("  - seatLimit !== null:", seatLimit !== null);
+        console.log("  - seatLimit !== undefined:", seatLimit !== undefined);
+        console.log("  - usedSeats >= seatLimit:", usedSeats >= seatLimit);
+
+        // Only enforce if limit is defined (null = unlimited)
+        if (seatLimit !== null && seatLimit !== undefined && usedSeats >= seatLimit) {
+            console.log("[AddSeatsModal] LIMIT REACHED - showing toast");
+            const msg = `You have reached the seat limit (${seatLimit} seat${seatLimit > 1 ? 's' : ''}). Please upgrade to invite more team members.`;
             if (typeof iziToast !== 'undefined') {
                 iziToast.error({
                     title: 'Seat Limit Reached',
@@ -45,6 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
+
+        console.log("[AddSeatsModal] Limit NOT reached - opening modal");
 
         // Prevent background scroll
         document.head.insertAdjacentHTML('beforeend', '<style id="modal-lock">body{overflow:hidden !important;}</style>');
