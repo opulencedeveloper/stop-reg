@@ -253,6 +253,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('requests-per-second-unlimited').checked = plan.requestsPerSecond === null;
         document.getElementById('duration-in-days').value = plan.durationInDays;
 
+        // Trigger change event to update input states (disabled, required attributes)
+        document.getElementById('api-limit-unlimited').dispatchEvent(new Event('change'));
+        document.getElementById('api-key-limit-unlimited').dispatchEvent(new Event('change'));
+        document.getElementById('requests-per-second-unlimited').dispatchEvent(new Event('change'));
+
         // Update modal title and button
         const modalTitle = document.querySelector('.modal-overlay h2');
         if (modalTitle) modalTitle.textContent = 'Edit Custom Plan';
