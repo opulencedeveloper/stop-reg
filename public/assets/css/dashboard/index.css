@@ -2565,6 +2565,33 @@ input:checked + .toggle-slider:before {
   transform: translateX(20px);
 }
 
+/* Status Badge Colors - API Requests Table */
+/* Green Theme (Safe/Success) */
+.status-unresolved-no,
+.status-unresolved-yes,
+.status-disposable-no,
+.status-relay-no {
+  background: #ECFDF3;
+  color: #027A48;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular";
+  display: inline-block;
+}
+
+/* Red Theme (Risk/Danger) */
+.status-disposable-yes,
+.status-relay-yes {
+  background: #FFECEC;
+  color: #CC0000;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular";
+  display: inline-block;
+}
+
 /* RESPONSIVE TABLE & CARDS */
 @media (max-width: 1024px) {
   .dash-stats-row {

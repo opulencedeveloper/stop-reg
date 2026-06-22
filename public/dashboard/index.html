@@ -540,9 +540,9 @@
                     <tr>
                       <td>www.macdonald.com</td>
                       <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
+                      <td class="table-center"><span class="status-unresolved-yes">-</span></td>
+                      <td class="table-center"><span class="status-disposable-no">-</span></td>
+                      <td class="table-center"><span class="status-relay-no">-</span></td>
                       <td class="table-center">5</td>
                       <td class="table-center">
                         <div class="status-badge status-reported">
@@ -577,9 +577,9 @@
                     <tr>
                       <td>www.macdonald.com</td>
                       <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
+                      <td class="table-center"><span class="status-unresolved-no">-</span></td>
+                      <td class="table-center"><span class="status-disposable-yes">-</span></td>
+                      <td class="table-center"><span class="status-relay-no">-</span></td>
                       <td class="table-center">6</td>
                       <td class="table-center">
                         <div class="status-badge status-blocked">
@@ -613,10 +613,10 @@
                     <!-- Row 3: Allowed -->
                     <tr>
                       <td>www.macdonald.com</td>
-                      <td class="table-center text-green">Yes</td>
-                      <td class="table-center text-green">Yes</td>
                       <td class="table-center">-</td>
-                      <td class="table-center">-</td>
+                      <td class="table-center"><span class="status-unresolved-no">-</span></td>
+                      <td class="table-center"><span class="status-disposable-yes">-</span></td>
+                      <td class="table-center"><span class="status-relay-yes">-</span></td>
                       <td class="table-center">3</td>
                       <td class="table-center">
                         <div class="status-badge status-allowed">
@@ -651,9 +651,9 @@
                     <tr>
                       <td>www.macdonald.com</td>
                       <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
-                      <td class="table-center">-</td>
+                      <td class="table-center"><span class="status-unresolved-yes">-</span></td>
+                      <td class="table-center"><span class="status-disposable-no">-</span></td>
+                      <td class="table-center"><span class="status-relay-no">-</span></td>
                       <td class="table-center">2</td>
                       <td class="table-center">
                         <div class="status-badge status-reported">
@@ -687,10 +687,10 @@
                     <!-- Row 5: Allowed -->
                     <tr>
                       <td>www.macdonald.com</td>
-                      <td class="table-center text-green">Yes</td>
-                      <td class="table-center text-green">Yes</td>
                       <td class="table-center">-</td>
-                      <td class="table-center">-</td>
+                      <td class="table-center"><span class="status-unresolved-no">-</span></td>
+                      <td class="table-center"><span class="status-disposable-no">-</span></td>
+                      <td class="table-center"><span class="status-relay-no">-</span></td>
                       <td class="table-center">8</td>
                       <td class="table-center">
                         <div class="status-badge status-allowed">
@@ -898,6 +898,24 @@
         <script src="/assets/js/dash/seat-actions.js" defer></script>
         <script src="/assets/js/dashboard/add-seats-modal.js" defer></script>
         <script src="/assets/js/dashboard/image-fallback.js" defer></script>
+
+        <!-- Debug: Check status badge styles -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Debugging Status Badges ===');
+            const unresolvedElements = document.querySelectorAll('[class*="status-unresolved"]');
+            console.log(`Found ${unresolvedElements.length} unresolved elements`);
+
+            unresolvedElements.forEach((el, idx) => {
+              const computed = window.getComputedStyle(el);
+              console.log(`[${idx}] Class: ${el.className}`);
+              console.log(`    Text: "${el.textContent.trim()}"`);
+              console.log(`    Background: ${computed.backgroundColor}`);
+              console.log(`    Color: ${computed.color}`);
+            });
+          });
+        </script>
+
         <!-- Zoho SalesIQ Live Chat Widget -->
         <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>
         <script id="zsiqscript"

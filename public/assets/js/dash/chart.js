@@ -435,21 +435,27 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Helper to get color for boolean flags (Red for Yes, Green for No)
           const getFlagHtml = (val, columnType = '') => {
               const text = val ? 'Yes' : 'No';
-              // Yes -> Red (status-disposable-yes), No -> Green (status-bool-yes)
-              const className = val ? 'status-disposable-yes' : 'status-bool-yes';
+              // Determine class based on column type and value
+              let className;
+              if (columnType === 'relay') {
+                className = val ? 'status-relay-yes' : 'status-relay-no';
+              } else {
+                // disposable
+                className = val ? 'status-disposable-yes' : 'status-disposable-no';
+              }
               return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
           const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Red)
+             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Green) - both are green
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
-             const className = isTrue ? 'status-bool-yes' : 'status-disposable-yes';
+             const className = isTrue ? 'status-unresolved-yes' : 'status-unresolved-no';
              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
-          const disposableHtml = getFlagHtml(req.isDiposableDomain);
-          const relayHtml = getFlagHtml(req.isRelayDomain);
+          const disposableHtml = getFlagHtml(req.isDiposableDomain, 'disposable');
+          const relayHtml = getFlagHtml(req.isRelayDomain, 'relay');
           const providerHtml = req.provider || '-';
           const unresolvedHtml = getUnresolvedHtml(req.unresolved || 0);
 
