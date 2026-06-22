@@ -77,20 +77,25 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
     
-    // --- Helper: Boolean Check Icon ---
-    function getBoolIcon(value) {
-        const text = value ? 'Yes' : 'No';
-        const className = value ? 'status-bool-yes' : 'status-bool-no';
+    // --- Helper: Unresolved Icon (Green for both Yes and No) ---
+    function getUnresolvedIcon(val) {
+        const isTrue = val > 0;
+        const text = isTrue ? "Yes" : "No";
+        const className = isTrue ? 'status-unresolved-yes' : 'status-unresolved-no';
         return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
+    // --- Helper: Disposable Icon (Red for Yes, Green for No) ---
+    function getDisposableIcon(value) {
+        const text = value ? 'Yes' : 'No';
+        const className = value ? 'status-disposable-yes' : 'status-disposable-no';
+        return `<div class="status-badge ${className}"><span>${text}</span></div>`;
+    }
 
-    // --- Helper: Unresolved Icon ---
-    function getUnresolvedIcon(val) {
-        // Logic: > 0 -> True (Yes/Caution), 0 -> False (No/Red)
-        const isTrue = val > 0;
-        const text = isTrue ? "Yes" : "No";
-        const className = isTrue ? 'status-bool-yes' : 'status-bool-no';
+    // --- Helper: Relay Icon (Yellow for Yes, Green for No) ---
+    function getRelayIcon(value) {
+        const text = value ? 'Yes' : 'No';
+        const className = value ? 'status-bool-unresolved' : 'status-relay-no';
         return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
@@ -182,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${domainName}</td>
                 <td class="table-center">${req.provider || '-'}</td>
                 <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
-                <td class="table-center">${getBoolIcon(req.isDiposableDomain)}</td>
-                <td class="table-center">${getBoolIcon(req.isRelayDomain)}</td>
+                <td class="table-center">${getDisposableIcon(req.isDiposableDomain)}</td>
+                <td class="table-center">${getRelayIcon(req.isRelayDomain)}</td>
                 <td class="table-center">${req.requestCount || 1}</td>
                 <td class="table-center">${getStatusBadge(req.status)}</td>
                 <td class="table-center">

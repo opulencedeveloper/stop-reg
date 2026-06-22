@@ -197,19 +197,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const unresolvedVal = (item.unresolved || 0);
         const isUnresolvedBool = unresolvedVal > 0;
         const isUnresolved = isUnresolvedBool
-            ? `<div class="status-badge status-bool-yes"><span>Yes</span></div>`
+            ? `<div class="status-badge status-unresolved-yes"><span>Yes</span></div>`
             : '-';
 
-        // Disposable: Use red theme for "Yes"
+        // Disposable: Red for "Yes", "-" for "No"
         const isDisposableBool = item.isDiposableDomain === true;
         const disposableBadge = isDisposableBool
             ? `<span class="status-disposable-yes"><span>Yes</span></span>`
             : '-';
 
-        // Relay: Use red theme for "Yes"
+        // Relay: Yellow for "Yes", "-" for "No"
         const isRelayBool = item.isRelayDomain === true;
         const relayBadge = isRelayBool
-            ? `<span class="status-relay-yes"><span>Yes</span></span>`
+            ? `<span class="status-bool-unresolved"><span>Yes</span></span>`
             : '-';
 
         // Blocklisted: Use red theme for "Yes"
@@ -488,8 +488,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         const data = await response.json();
         if (response.ok) {
-          // Refetch table data to show updated history (background)
-          fetchRequests();
+          // Display bulk verification results in submitted order (NO race condition)
+          storedResponseData = data.data || [];
+          totalPages = 1;
+          totalDocs = storedResponseData.length;
+          currentPage = 1;
+          rowsPerPage = 100;
+          renderTablePage();
+
           bulkLinks.value = "";
           if (typeof iziToast !== 'undefined') {
             iziToast.success({
@@ -498,6 +504,10 @@ document.addEventListener("DOMContentLoaded", () => {
               position: "topRight",
             });
           }
+
+          // Refetch updated database after showing current results
+          // (Backend now saves in correct order - no race condition)
+          setTimeout(() => fetchRequests(), 100);
         } else {
           if (await window.handleAuthError(response)) {
             return;

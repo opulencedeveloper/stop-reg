@@ -435,10 +435,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Helper to get color for boolean flags (Red for Yes, Green for No)
           const getFlagHtml = (val, columnType = '') => {
               const text = val ? 'Yes' : 'No';
-              // Determine class based on column type and value
               let className;
               if (columnType === 'relay') {
-                className = val ? 'status-relay-yes' : 'status-relay-no';
+                className = val ? 'status-bool-unresolved' : 'status-relay-no';
               } else {
                 // disposable
                 className = val ? 'status-disposable-yes' : 'status-disposable-no';
@@ -447,7 +446,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           };
 
           const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Green) - both are green
+             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Green)
              const isTrue = val > 0;
              const text = isTrue ? "Yes" : "No";
              const className = isTrue ? 'status-unresolved-yes' : 'status-unresolved-no';

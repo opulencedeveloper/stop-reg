@@ -1474,6 +1474,11 @@ canvas {
 .status-bool-unresolved {
   background: #FFFBD6;
   color: #854D0E;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular";
+  display: inline-block;
 }
 
 .action-icon-wrapper {
@@ -2567,8 +2572,8 @@ input:checked + .toggle-slider:before {
 
 /* Status Badge Colors - API Requests Table */
 /* Green Theme (Safe/Success) */
-.status-unresolved-no,
 .status-unresolved-yes,
+.status-unresolved-no,
 .status-disposable-no,
 .status-relay-no {
   background: #ECFDF3;
