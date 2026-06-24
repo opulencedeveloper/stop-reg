@@ -11,7 +11,7 @@
   <meta name="description"
     content="Complete developer guide for StopReg API. Learn how to block disposable emails with code examples in Python, JavaScript, and PHP." />
   <meta name="robots" content="index, follow" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
   <link rel="preconnect" href="https://salesiq.zohopublic.com" />
   <link rel="dns-prefetch" href="https://salesiq.zohopublic.com" />
@@ -49,7 +49,15 @@
   <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
   <link href="/assets/css/landing/header.css" rel="stylesheet" />
   <link href="/assets/css/landing/index.css" rel="stylesheet" />
-  <style>.val-lang-panel{display:none}.val-lang-panel.active{display:block}</style>
+  <style>
+    .val-lang-panel {
+      display: none
+    }
+
+    .val-lang-panel.active {
+      display: block
+    }
+  </style>
 
   <!-- Schema: TechArticle + Breadcrumbs -->
   <script type="application/ld+json">
@@ -117,7 +125,7 @@
   <!-- <script src="/assets/js/entrance-overlay.js"></script> -->
 
   <!-- Loading Spinner Start -->
-<!--
+  <!--
 <div id="spinner-body" class="spinner-body">
     <div class="stopreg-spinner"></div>
   </div>
@@ -130,7 +138,7 @@
     <!-- Mobile Navigation Start -->
     <div class="nav-menu">
       <div class="nav-menu-sect-one">
-        <a href="/" class="land-logo" aria-label="StopReg Home">
+        <a href="/dashboard/index.html" class="land-logo" aria-label="StopReg Home">
           <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
         </a>
         <div class="nav-icon2-mobile active">
@@ -369,8 +377,8 @@
                   checking with millisecond response times
                 </li>
                 <li>
-                  <strong>Comprehensive Database:</strong> Over 124,000
-                  disposable email domains in our database
+                  <strong>Extensive DEA Coverage</strong>: Detect disposable emails using our large and constantly
+                  growing domain database
                 </li>
                 <li>
                   <strong>Privacy-Focused:</strong> We don't store full email
@@ -383,6 +391,14 @@
                 <li>
                   <strong>Whitelisting Support:</strong> Whitelist trusted
                   domains to ensure legitimate users are never blocked
+                </li>
+                <li>
+                  <strong>Blacklisting Support:</strong> Blacklist unwanted domains to prevent fake signups and
+                  low-quality registrations.
+                </li>
+                <li>
+                  <strong>Role, Alias & Relay Detection:</strong> Identify role-based, alias, and relay email addresses
+                  for cleaner user data.
                 </li>
               </ul>
               <h3>Quick Start</h3>
@@ -664,15 +680,20 @@
                       <td>The root domain extracted from your input (e.g., <code>google.com</code>).</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_subdomain</span> <span class="type-badge type-boolean">Boolean</span></td>
+                      <td><span class="field-name">is_subdomain</span> <span
+                          class="type-badge type-boolean">Boolean</span></td>
                       <td>true / false</td>
-                      <td><code>true</code> if the input contained a subdomain prefix (e.g., <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.</td>
+                      <td><code>true</code> if the input contained a subdomain prefix (e.g.,
+                        <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">email_provider</span> <span class="type-badge type-string">String | null</span>
+                      <td><span class="field-name">email_provider</span> <span class="type-badge type-string">String |
+                          null</span>
                       </td>
                       <td>Host</td>
-                      <td>The identified email provider for this domain if a match is found in either the Email Domains table or MX Matching table. Returns <code>null</code> if no provider match is found or provider is "Unknown" (e.g., <code>"Google"</code>, <code>"Mailinator"</code>, <code>"Zoho"</code>).</td>
+                      <td>The identified email provider for this domain if a match is found in either the Email Domains
+                        table or MX Matching table. Returns <code>null</code> if no provider match is found or provider
+                        is "Unknown" (e.g., <code>"Google"</code>, <code>"Mailinator"</code>, <code>"Zoho"</code>).</td>
                     </tr>
                   </tbody>
                 </table>
@@ -737,9 +758,11 @@
                       <td><span class="field-name">mx_records</span> <span class="type-badge type-array">Array</span>
                       </td>
                       <td>List</td>
-                      <td>An ordered array of MX records resolved from the domain's DNS settings, sorted by priority (lowest number = highest precedence). Each entry contains:
+                      <td>An ordered array of MX records resolved from the domain's DNS settings, sorted by priority
+                        (lowest number = highest precedence). Each entry contains:
                         <ul class="field-desc">
-                          <li><strong>hostname:</strong> The mail exchange hostname (e.g., <code>"aspmx.l.google.com"</code>).</li>
+                          <li><strong>hostname:</strong> The mail exchange hostname (e.g.,
+                            <code>"aspmx.l.google.com"</code>).</li>
                           <li><strong>priority:</strong> The DNS priority value — lower numbers receive mail first.</li>
                         </ul>
                       </td>
@@ -892,8 +915,8 @@
             <article id="docume-item-sdks" class="documen-content-item doc-animate-init">
               <h2>Official Libraries</h2>
               <p>
-                We provide official SDKs for popular programming languages and frameworks. 
-                For a detailed comparison and quick-start guide for all available libraries, visit our 
+                We provide official SDKs for popular programming languages and frameworks.
+                For a detailed comparison and quick-start guide for all available libraries, visit our
                 <a href="/libraries.html" style="color: #1452ca; font-weight: bold;">Official Libraries Hub</a>.
               </p>
 
@@ -1241,12 +1264,15 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
             <article id="docume-item-validation" class="documen-content-item doc-animate-init">
               <h2>Recommended Validation Configurations</h2>
               <p>
-                Below are common StopReg validation configurations that can be used depending on your registration requirements.
-                Each configuration uses fields from the <code>data.classification</code> and <code>data.mail_server</code> objects in the API response.
+                Below are common StopReg validation configurations that can be used depending on your registration
+                requirements.
+                Each configuration uses fields from the <code>data.classification</code> and
+                <code>data.mail_server</code> objects in the API response.
               </p>
 
               <h3>1. Block Disposable Email Domains Only</h3>
-              <p>Recommended if you want to block temporary and disposable email providers while allowing most legitimate users.</p>
+              <p>Recommended if you want to block temporary and disposable email providers while allowing most
+                legitimate users.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1311,7 +1337,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>2. Allow Public &amp; Custom Domains</h3>
-              <p>Recommended if you want to allow Gmail, Yahoo, Outlook, and custom business domains while blocking risky email types.</p>
+              <p>Recommended if you want to allow Gmail, Yahoo, Outlook, and custom business domains while blocking
+                risky email types.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1335,7 +1362,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1412,7 +1440,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+                  <pre
+                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
 <span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
 <span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
 
@@ -1481,7 +1510,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1565,7 +1595,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+                  <pre
+                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
 <span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
 <span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
 
@@ -1634,7 +1665,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1718,7 +1750,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
+                  <pre
+                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
 <span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
 <span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
 
@@ -1759,7 +1792,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>5. Block Relay Emails</h3>
-              <p>Use this check to reject email addresses routed through relay or privacy-forwarding services such as Apple Hide My Email, SimpleLogin, or AnonAddy.</p>
+              <p>Use this check to reject email addresses routed through relay or privacy-forwarding services such as
+                Apple Hide My Email, SimpleLogin, or AnonAddy.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1771,7 +1805,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1810,7 +1845,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>6. Block Unresolved Domains</h3>
-              <p>Use this check to reject email addresses from domains that cannot be verified — unknown registrations, expired domains, or domains with no DNS records.</p>
+              <p>Use this check to reject email addresses from domains that cannot be verified — unknown registrations,
+                expired domains, or domains with no DNS records.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1822,7 +1858,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1861,7 +1898,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>7. Block Public Email Providers</h3>
-              <p>Use this check to reject free public email providers such as Gmail, Yahoo, and Outlook. Useful for B2B sign-up forms that require a company email address.</p>
+              <p>Use this check to reject free public email providers such as Gmail, Yahoo, and Outlook. Useful for B2B
+                sign-up forms that require a company email address.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1873,7 +1911,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1912,7 +1951,9 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>8. Block Role-Based Emails</h3>
-              <p>Use this check to reject role-based addresses such as <code>admin@</code>, <code>support@</code>, <code>info@</code>, and <code>noreply@</code> that are shared across teams and not tied to an individual user.</p>
+              <p>Use this check to reject role-based addresses such as <code>admin@</code>, <code>support@</code>,
+                <code>info@</code>, and <code>noreply@</code> that are shared across teams and not tied to an individual
+                user.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1924,7 +1965,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -1963,7 +2005,9 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
               </div>
 
               <h3>9. Block Alias Emails</h3>
-              <p>Use this check to reject email aliases — addresses containing a <code>+</code> suffix (e.g. <code>user+tag@gmail.com</code>) that could be used to bypass uniqueness checks or track your signup form.</p>
+              <p>Use this check to reject email aliases — addresses containing a <code>+</code> suffix (e.g.
+                <code>user+tag@gmail.com</code>) that could be used to bypass uniqueness checks or track your signup
+                form.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
@@ -1975,7 +2019,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
+                  <pre
+                    class="code-block"><code><span class="keyword">import</span> requests
 
 <span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
     <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
@@ -2015,11 +2060,14 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
               <h3>Allowing Trusted Domains</h3>
               <p>
-                To allow specific domain names regardless of their classification, add them to the <strong>Allow List</strong> from the
+                To allow specific domain names regardless of their classification, add them to the <strong>Allow
+                  List</strong> from the
                 <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
               </p>
               <p>
-                Domains added to the allow list will bypass validation restrictions and Form Abuse Shield checks entirely. This is useful for internal tools, partner organisations, or known corporate domains that may be flagged by classification rules.
+                Domains added to the allow list will bypass validation restrictions and Form Abuse Shield checks
+                entirely. This is useful for internal tools, partner organisations, or known corporate domains that may
+                be flagged by classification rules.
               </p>
               <p><strong>Example trusted domains:</strong></p>
               <div class="code-snippet-container">
@@ -2036,12 +2084,15 @@ business.net</code></pre>
 
               <h3>Form Abuse Shield</h3>
               <p>
-                To prevent abuse from unresolved or suspicious custom domains, configure <strong>Form Abuse Shield</strong> from the
+                To prevent abuse from unresolved or suspicious custom domains, configure <strong>Form Abuse
+                  Shield</strong> from the
                 <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
               </p>
               <ul>
-                <li>The Abuse Shield system works based on your selected validation configuration and detection rules.</li>
-                <li>The system monitors unresolved custom domains and automatically performs the configured action — <strong>block</strong> or <strong>notify</strong> — once the detection threshold is reached.</li>
+                <li>The Abuse Shield system works based on your selected validation configuration and detection rules.
+                </li>
+                <li>The system monitors unresolved custom domains and automatically performs the configured action —
+                  <strong>block</strong> or <strong>notify</strong> — once the detection threshold is reached.</li>
                 <li>Domains added to the allow list are excluded from Abuse Shield monitoring.</li>
               </ul>
 
@@ -2092,7 +2143,8 @@ business.net</code></pre>
             <div class="foot-col">
               <h4 class="foot-hd">Support</h4>
               <div class="foot-links">
-                <a href="https://status.stopreg.com/" target="_blank" class="foot-api-status"><span class="foot-api-status-dot"></span>Status</a>
+                <a href="https://status.stopreg.com/" target="_blank" class="foot-api-status"><span
+                    class="foot-api-status-dot"></span>Status</a>
                 <a href="/contact.html" class="foot-link">Contact Us</a>
                 <a href="/documentation.html" class="foot-link">API Documentation</a>
                 <a href="/libraries.html" class="foot-link">Official Libraries</a>
@@ -2143,15 +2195,15 @@ business.net</code></pre>
   <script src="/assets/js/doc-animations.js" defer></script>
   <script>
     // Tab switching for multi-language validation config snippets
-    document.querySelectorAll('[data-lang-group]').forEach(function(group) {
+    document.querySelectorAll('[data-lang-group]').forEach(function (group) {
       var tabs = group.querySelectorAll('.code-tab');
       var panels = group.querySelectorAll('.val-lang-panel');
-      tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
           var lang = this.getAttribute('data-lang');
-          tabs.forEach(function(t) { t.classList.remove('active'); });
+          tabs.forEach(function (t) { t.classList.remove('active'); });
           this.classList.add('active');
-          panels.forEach(function(p) {
+          panels.forEach(function (p) {
             p.classList.toggle('active', p.getAttribute('data-lang') === lang);
           });
         });

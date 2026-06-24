@@ -1595,13 +1595,30 @@ body {
   transition: max-height 0.3s ease-out;
 }
 
+.faq-answer-inner {
+  padding: 20px 30px;
+}
+
 .accordion-content p {
   margin: 0;
-  padding: 15px;
+  padding: 0;
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 .accordion-content.show {
   max-height: 150px;
+}
+
+.accordion-content ul {
+  margin: 15px 0 15px 0;
+  padding-left: 20px;
+}
+
+.accordion-content li {
+  margin-bottom: 12px;
+  list-style-type: disc;
+  line-height: 1.8;
 }
 
 .accordion-button.active .accordion-icon {
@@ -2497,6 +2514,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
     border-right: none;
     border-bottom: 1px solid #CCCCCC;
     padding: 10px 0 !important;
+    margin-bottom: 20px;
     box-sizing: border-box !important;
     align-self: flex-start !important;
     gap: 16px;
@@ -3029,12 +3047,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .fags-hd {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 10px;
   }
 
   .fags-tle {
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 24px;
   }
 
@@ -3046,7 +3064,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .accordion-content p {
-    font-size: 12px;
+    font-size: 16px;
   }
 
   .accordion {
@@ -5134,7 +5152,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
     height: auto !important;
     min-height: 60px;
     padding: 20px 20px !important;
-    font-size: 15px !important;
+    font-size: 17px !important;
     margin-bottom: 0 !important;
     /* Button itself has no margin */
     line-height: 1.4;
@@ -5153,6 +5171,26 @@ input[type="password"]::-webkit-textfield-decoration-container {
   .accordion-content.show {
     max-height: 1000px !important;
     /* Allow expansion */
+  }
+
+  .faq-answer-inner {
+    padding: 20px;
+  }
+
+  .accordion-content p {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  .accordion-content ul {
+    margin: 15px 0;
+    padding-left: 20px;
+  }
+
+  .accordion-content li {
+    margin-bottom: 5px;
+    list-style-type: disc;
+    line-height: 1.8;
   }
 
   /* Force animations to be visible and stable on mobile */

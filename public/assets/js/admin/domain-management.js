@@ -121,7 +121,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const diff = now - date;
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const finalDays = days < 0 ? 0 : days;
+        if (finalDays === 0) return "Today";
         return `${finalDays} days`;
+    };
+
+    const formatDataSource = (source) => {
+        if (!source || source === "null") return "N/A";
+        return source
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
     };
 
     // --- DATA LOADING & RENDERING ---
@@ -160,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!domains || domains.length === 0) {
-            const colspan = type === "username" ? 3 : 4;
+            const colspan = type === "username" ? 3 : 6;
             tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align: center; padding: 40px; color: #737373;">No ${type} records found.</td></tr>`;
             return;
         }
@@ -194,6 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td>${d.provider || "Unknown"}</td>
                         <td>${d.value}</td>
                         <td>${formatDomainAge(d.domain_age)}</td>
+                        <td>${formatDomainAge(d.createdAt)}</td>
+                        <td>${formatDataSource(d.data_source)}</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">

@@ -560,7 +560,7 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .privacy-hero p {
-  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-family: 'Inter_28pt-Regular', sans-serif;
   color: #737373;
   font-size: 18px;
   font-weight: 400;
@@ -583,7 +583,7 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .privacy-section h1 {
-  font-family: 'PlusJakartaSans-SemiBold', sans-serif;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 32px;
   color: #000000;
   margin-bottom: 16px;
@@ -591,7 +591,7 @@ body.hidden-overflow .auth-page-wrapper {
 
 .privacy-section p,
 .privacy-section li {
-  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 20px;
   color: #737373;
   line-height: 160%;
@@ -916,7 +916,7 @@ body.hidden-overflow .auth-page-wrapper {
 }
 
 .error-message-text {
-  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 16px;
   color: #6B7280;
   line-height: 1.5;
@@ -978,7 +978,7 @@ body.hidden-overflow .auth-page-wrapper {
 .custom-input-error {
   color: #DC2626;
   /* Red-600 */
-  font-family: 'PlusJakartaSans-SemiBold', sans-serif;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 13px;
   margin-top: 8px;
   /* Increased for better clearance */
@@ -1219,7 +1219,7 @@ select:-webkit-autofill:active {
 .docs-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'PlusJakartaSans-Regular', sans-serif;
+  font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 16px;
   min-width: 700px;
 }
@@ -1229,7 +1229,7 @@ select:-webkit-autofill:active {
   color: var(--primary-color);
   text-align: left;
   padding: 16px 20px;
-  font-family: 'PlusJakartaSans-Bold', sans-serif;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   border-bottom: 2px solid var(--color-twenty);
   white-space: nowrap;
 }
@@ -1259,7 +1259,7 @@ select:-webkit-autofill:active {
 }
 
 .field-name {
-  font-family: 'PlusJakartaSans-Bold', sans-serif;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   color: var(--secondary-color);
   font-size: 16px;
   word-break: normal;
@@ -1271,7 +1271,7 @@ select:-webkit-autofill:active {
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 10px;
-  font-family: 'PlusJakartaSans-Bold', sans-serif;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-left: 8px;
@@ -1299,11 +1299,23 @@ select:-webkit-autofill:active {
 .docs-content-list h4 {
   margin-top: 24px;
   margin-bottom: 8px;
-  font-family: 'PlusJakartaSans-Bold', sans-serif;
+  font-family: 'Inter_18pt-Bold', sans-serif;
   color: var(--primary-color);
   font-size: 20px;
   border-left: 4px solid var(--secondary-color);
   padding-left: 12px;
+}
+
+.docs-content-list p,
+.documen-content-item p,
+.documen-content-item li {
+  font-size: 18px !important;
+  line-height: 1.6;
+}
+
+.documen-content-item strong {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-weight: 510;
 }
 
 .field-desc code,
