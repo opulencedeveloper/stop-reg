@@ -193,6 +193,7 @@
                 <button class="tab-btn" data-tab="relay">Relay Domain</button>
                 <button class="tab-btn" data-tab="disposable">Disposable Email Provider</button>
                 <button class="tab-btn" data-tab="public">Public Email Provider</button>
+                <button class="tab-btn" data-tab="providers">Disposable Providers</button>
               </div>
 
               <div class="domain-mgmt-search-wrapper">
@@ -339,6 +340,25 @@
                       <td class="text-right"><button class="action-btn"><img src="/assets/icons/more-vert.svg"
                             alt="More" /></button></td>
                     </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Disposable Providers Tab Content -->
+            <div class="tab-content" id="providers-content">
+              <div class="domain-mgmt-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Provider</th>
+                      <th>Found</th>
+                      <th>Source</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="providers-tbody">
+                    <!-- Loaded dynamically -->
                   </tbody>
                 </table>
               </div>

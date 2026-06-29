@@ -391,10 +391,10 @@ const BLOG_POSTS = {
             The simplest approach is maintaining lists of known disposable domains. These are often open source and community-managed on GitHub.<br>
             Here are trusted GitHub repositories with large disposable email domain lists:<br>
             🔗 <strong>Disposable Email Domain Lists on GitHub</strong><br>
-            • https://github.com/tompec/disposable-email-domains/ — A massive communitymanaged list of disposable domains<br>
-            • https://github.com/ivolo/disposable-email-domains — Updated with thousands of temporary and throwaway domains<br>
-            • https://github.com/7c/fakefilter — 7c Fakefilter<br>
-            • https://github.com/wesbos/burner-email-providers  — Wes Bos' burner email list<br>
+            • https://github.com/tompec/disposable-email-domains/ - A massive communitymanaged list of disposable domains<br>
+            • https://github.com/ivolo/disposable-email-domains - Updated with thousands of temporary and throwaway domains<br>
+            • https://github.com/7c/fakefilter - 7c Fakefilter<br>
+            • https://github.com/wesbos/burner-email-providers: Wes Bos' burner email list<br>
             These lists can be used to cross-reference incoming emails against known disposable domains.<br>
             <strong>Limitations of Public Blocklists</strong><br>
             • New disposable providers appear continuously<br>
@@ -411,7 +411,7 @@ const BLOG_POSTS = {
  <br>
             <h2>Implementing Disposable Email Detection in Your System</h2>
             <p>To effectively protect your platform:<br>
-            <strong>Step 1 — Prevent at Signup</strong><br>
+            <strong>Step 1: Prevent at Signup</strong><br>
             Integrate email risk checks at the point of registration so that disposable addresses are blocked before an account is created.<br>
             <strong>Example logic (pseudo):</strong><br>
             if (email == disposable) {<br>
@@ -435,7 +435,7 @@ const BLOG_POSTS = {
             • Free trial integrity<br>
             • Email deliverability<br>
             • Analytics accuracy<br>
-            Opensource GitHub lists like the ones linked above offer excellent starting points for blocking known disposable domains. But <strong>static lists alone are not enough</strong> — new domains appear every day, and attackers evolve quickly. For full protection, you need <strong>real-time email intelligence</strong> that scales. Tools like <strong>StopReg.com</strong> pair well and help ensure your signup process accepts only legitimate, valuable users.</p>
+            Opensource GitHub lists like the ones linked above offer excellent starting points for blocking known disposable domains. But <strong>static lists alone are not enough,</strong> new domains appear every day, and attackers evolve quickly. For full protection, you need <strong>real-time email intelligence</strong> that scales. Tools like <strong>StopReg.com</strong> pair well and help ensure your signup process accepts only legitimate, valuable users.</p>
         `,
   },
   "why-disposable-emails-increase-bounce-rates": {
