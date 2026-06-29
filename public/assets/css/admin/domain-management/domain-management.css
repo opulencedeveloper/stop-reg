@@ -50,12 +50,39 @@
   align-items: flex-end;
   border-bottom: 1px solid #EDEDED;
   padding-bottom: 12px;
+  gap: 16px;
+  overflow: hidden;
 }
 
 /* Tabs */
 .domain-mgmt-tabs {
   display: flex;
   gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  flex: 1;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #CCCCCC transparent;
+}
+
+.domain-mgmt-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.domain-mgmt-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.domain-mgmt-tabs::-webkit-scrollbar-thumb {
+  background: #CCCCCC;
+  border-radius: 2px;
+}
+
+.domain-mgmt-tabs::-webkit-scrollbar-thumb:hover {
+  background: #999999;
 }
 
 .domain-mgmt-tabs .tab-btn {
@@ -87,7 +114,8 @@
 
 /* Search Box */
 .domain-mgmt-search-wrapper {
-  flex: none;
+  flex: 0 0 auto;
+  min-width: 280px;
 }
 
 .domain-mgmt-search-box {
@@ -685,4 +713,31 @@
 
 @keyframes btn-spin {
   to { transform: rotate(360deg); }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+  .domain-mgmt-tabs {
+    gap: 12px;
+    padding-bottom: 6px;
+  }
+
+  .domain-mgmt-tabs .tab-btn {
+    font-size: 13px;
+    padding: 10px 0;
+  }
+
+  .domain-mgmt-search-box {
+    width: 200px;
+    height: 38px;
+  }
+
+  .domain-mgmt-search-box input {
+    font-size: 12px;
+  }
+
+  .domain-search-shortcut {
+    font-size: 10px;
+    display: none;
+  }
 }
