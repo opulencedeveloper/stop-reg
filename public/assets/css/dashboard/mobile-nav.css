@@ -48,7 +48,7 @@
 }
 
 .dash-mobi-nav-links>a p {
-    font-family: "Inter_18pt-SemiBold";
+    font-family: 'Inter_28pt-Regular', sans-serif;
     font-size: 16px;
     color: #252525;
     margin: 0;
@@ -56,8 +56,8 @@
 }
 
 .dash-mobi-nav-links>a.dash-nav-link-active p {
-    font-family: "Inter_18pt-Bold";
-    font-weight: 700;
+    font-family: 'Inter_28pt-SemiBold', sans-serif;
+    font-weight: 600;
     /* Active text should be white on blue */
     color: #FDFDFD;
 }
