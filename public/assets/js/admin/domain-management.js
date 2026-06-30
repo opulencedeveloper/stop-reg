@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const finalDays = days < 0 ? 0 : days;
         if (finalDays === 0) return "Today";
-        return `${finalDays} days`;
+        return `${finalDays} day${finalDays === 1 ? '' : 's'}`;
     };
 
     const formatDataSource = (source) => {
