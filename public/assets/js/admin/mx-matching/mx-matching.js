@@ -154,14 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         tbody.innerHTML = records.map(r => `
             <tr>
-                <td>${r.provider}</td>
+                <td>${r.provider || "N/A"}</td>
                 <td>
                   <span title="${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}">
                     ${Array.isArray(r.mx_record) ? r.mx_record.join(', ') : r.mx_record}
                   </span>
                 </td>
-                <td style="text-transform: capitalize;">${r.service_type.replace(/_/g, " ")}</td>
-                <td style="text-transform: capitalize;">${r.grade}</td>
+                <td style="text-transform: capitalize;">${r.service_type ? r.service_type.replace(/_/g, " ") : "N/A"}</td>
+                <td style="text-transform: capitalize;">${r.grade || "N/A"}</td>
                 <td class="text-right">
                     <div class="action-btn-container">
                         <button class="action-btn" data-id="${r.id}">
