@@ -26,6 +26,7 @@ const FAQ_DATA = [
             <li>Relay</li>
             <li>Free email provider</li>
             <li>Alias</li>
+            <li>Role-based email address</li>
         </ul>
         Based on this classification, you can:
         <ul>
@@ -49,7 +50,7 @@ const FAQ_DATA = [
     },
     {
         question: "Is there a free plan?",
-        answer: "Yes. Feel free to test the free trial with 1,000 API requests per month."
+        answer: "Yes. Feel free to test the free trial with 200 API requests per month."
     },
     {
         question: "Who should use StopReg?",

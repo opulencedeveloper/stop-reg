@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!domains || domains.length === 0) {
-            const colspan = type === "username" ? 3 : (type === "providers" ? 4 : 6);
+            const colspan = type === "username" ? 3 : (type === "providers" ? 5 : 6);
             tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align: center; padding: 40px; color: #737373;">No ${type} records found.</td></tr>`;
             return;
         }
@@ -203,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td>${d.provider || "Unknown"}</td>
                         <td>${formatDomainAge(d.createdAt)}</td>
                         <td>${formatDataSource(d.data_source)}</td>
+                        <td>${d.totalDEA || 0}</td>
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">

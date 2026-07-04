@@ -14,7 +14,7 @@ const BLOG_POSTS = {
     content: `
             <h2>Introduction</h2>
             <p>Email marketing remains one of the most effective ways to engage customers, nurture leads, and drive conversions.<br> However, the success of your campaigns depends on the <strong>quality of your email list.</strong><br>
-            One of the biggest hidden threats is <strong>disposable email addresses</strong>—temporary inboxes that users create to sign up for services without providing their real email. While convenient for users, disposable emails can severely damage your email marketing campaigns, wasting resources and reducing ROI.<br>
+            One of the biggest hidden threats is <strong>disposable email addresses,</strong>temporary inboxes that users create to sign up for services without providing their real email. While convenient for users, disposable emails can severely damage your email marketing campaigns, wasting resources and reducing ROI.<br>
             In this guide, we'll explore how disposable emails affect marketing, why they're harmful, and how tools like <strong>StopReg.com</strong> can help maintain a clean, high-quality email list.</p>
  <br>
             <h2>What Are Disposable Emails?</h2>
@@ -29,7 +29,7 @@ const BLOG_POSTS = {
  <br>
             <h2>How Disposable Emails Impact Email Marketing</h2>
             <p><strong>1. Increased Bounce Rates</strong><br>
-            Sending emails to disposable addresses often results in <strong>hard bounces</strong>—messages that cannot be delivered. High bounce rates can:<br>
+            Sending emails to disposable addresses often results in <strong>hard bounces,</strong>messages that cannot be delivered. High bounce rates can:<br>
             • Damage your sender reputation<br>
             • Reduce inbox placement for legitimate subscribers<br>
             • Increase the likelihood of being flagged as spam<br>
