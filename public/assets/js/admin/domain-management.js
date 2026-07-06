@@ -440,11 +440,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     loadData(currentType, currentPage, currentLimit, currentSearch);
                 } else {
                     const desc = result?.description || "Failed to delete record.";
-                    if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Error', message: desc });
+                    if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Error', message: desc, position: 'topRight' });
                     else alert(desc);
                 }
             } catch (error) {
-                if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Network Error', message: error.message });
+                if (typeof iziToast !== 'undefined') iziToast.error({ title: 'Network Error', message: error.message, position: 'topRight' });
                 else alert(error.message);
             } finally {
                 confirmRemoveBtn.disabled = false;
