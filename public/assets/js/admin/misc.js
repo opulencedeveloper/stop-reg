@@ -228,11 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = loadedRecords.map(r => `
+        tbody.innerHTML = loadedRecords.map(r => {
+            const domainAge = r.domain_age ? new Date(r.domain_age).toLocaleDateString() : "-";
+            return `
             <tr>
                 <td>${r.provider || "-"}</td>
                 <td>${r.domain || "-"}</td>
@@ -241,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${r.premium ? 'Premium' : 'Free'}
                     </span>
                 </td>
+                <td>${domainAge}</td>
                 <td>${r.approval_mode || "-"}</td>
                 <td class="text-right">
                     <div class="action-btn-container">
@@ -249,7 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </td>
             </tr>
-        `).join("");
+        `;
+        }).join("");
 
         tbody.querySelectorAll(".edit-btn").forEach(btn => {
             btn.onclick = () => openSubdomainModal(btn.dataset.id);
