@@ -228,13 +228,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = loadedRecords.map(r => `
             <tr>
-                <td>${r.domain}</td>
+                <td>${r.provider || "-"}</td>
+                <td>${r.domain || "-"}</td>
+                <td>
+                    <span class="status-badge ${r.premium ? 'active' : 'inactive'}">
+                        ${r.premium ? 'Premium' : 'Free'}
+                    </span>
+                </td>
+                <td>${r.approval_mode || "-"}</td>
                 <td class="text-right">
                     <div class="action-btn-container">
                         <button class="edit-btn" data-id="${r.id || r._id}">Edit</button>
@@ -437,11 +444,14 @@ document.addEventListener("DOMContentLoaded", () => {
         currentEditingId = id;
         subdomainForm.reset();
         getEl("subdomain-id").value = id || "";
-        
+
         if (id) {
             const record = loadedRecords.find(r => (r.id || r._id) === id);
             if (record) {
-                getEl("subdomain-domain").value = record.domain;
+                getEl("subdomain-provider").value = record.provider || "";
+                getEl("subdomain-domain").value = record.domain || "";
+                getEl("subdomain-premium").checked = record.premium || false;
+                getEl("subdomain-approval").value = record.approval_mode || "null";
             }
             subdomainModalTitle.textContent = "Edit Subdomain Provider";
             submitSubdomainBtn.textContent = "Update Provider";
@@ -548,8 +558,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     subdomainForm.onsubmit = async (e) => {
         e.preventDefault();
+        const domain_provider = getEl("subdomain-provider").value.trim();
         const domain = getEl("subdomain-domain").value.trim();
-        
+        const premium_status = getEl("subdomain-premium").checked;
+        const approval_mode = getEl("subdomain-approval").value;
+
+        if (!domain_provider || !domain || !approval_mode) {
+            iziToast.error({ title: 'Error', message: "Provider, Domain, and Approval Mode are required.", position: 'topRight' });
+            return;
+        }
+
         submitSubdomainBtn.disabled = true;
         submitSubdomainBtn.innerHTML = `Saving...`;
 
@@ -559,10 +577,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
                 method,
-                body: JSON.stringify({ domain })
+                body: JSON.stringify({ domain_provider, domain, premium_status, approval_mode })
             });
 
-            if (result?.message === "success") {
+            if (result?.message === "success" || result?.message === "Success") {
                 iziToast.success({ title: 'Success', message: `Subdomain provider ${currentEditingId ? 'updated' : 'added'}.`, position: 'topRight' });
                 closeModals();
                 loadData(currentPage, currentLimit, currentSearch);

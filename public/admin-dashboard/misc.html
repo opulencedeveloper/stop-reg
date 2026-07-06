@@ -220,7 +220,10 @@
                   <table class="admin-table">
                     <thead>
                       <tr>
-                        <th>Provider Domain</th>
+                        <th>Provider</th>
+                        <th>Domain</th>
+                        <th>Premium</th>
+                        <th>Approval Mode</th>
                         <th class="text-right">Action</th>
                       </tr>
                     </thead>
@@ -419,7 +422,7 @@
   <div class="misc-modal-overlay" id="subdomain-modal">
     <div class="misc-modal-container">
       <div class="misc-modal-header">
-        <h3 id="subdomain-modal-title">Edit Subdomain Provider</h3>
+        <h3 id="subdomain-modal-title">Add Subdomain Provider</h3>
         <button class="misc-modal-close" id="close-subdomain-modal">
           <img src="/assets/icons/close.svg" alt="Close" />
         </button>
@@ -427,9 +430,30 @@
 
       <form class="misc-modal-form" id="subdomain-form">
         <input type="hidden" id="subdomain-id" value="">
+
         <div class="form-group">
-          <label for="subdomain-domain">Provider Domain</label>
+          <label for="subdomain-provider">Provider</label>
+          <input type="text" id="subdomain-provider" placeholder="e.g. temp-email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="subdomain-domain">Domain</label>
           <input type="text" id="subdomain-domain" placeholder="e.g. us.com" required>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="subdomain-premium">
+          <label for="subdomain-premium">Premium Domain</label>
+        </div>
+
+        <div class="form-group">
+          <label for="subdomain-approval">Approval Mode</label>
+          <select id="subdomain-approval" required>
+            <option value="">Select Approval Mode</option>
+            <option value="automatic">Automatic</option>
+            <option value="manual">Manual</option>
+            <option value="null">None</option>
+          </select>
         </div>
 
         <button type="submit" class="misc-submit-btn" id="submit-subdomain-btn">Save Provider</button>

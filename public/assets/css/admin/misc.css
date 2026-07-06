@@ -262,6 +262,11 @@
   margin-bottom: 8px;
 }
 
+.checkbox-group label {
+  display: inline;
+  margin-bottom: 0;
+}
+
 .form-group input {
   width: 100%;
   padding: 12px 16px;
@@ -275,6 +280,26 @@
 }
 
 .form-group input:focus {
+  outline: none;
+  border-color: #1452CA;
+  box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #111827;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.form-group select:focus {
   outline: none;
   border-color: #1452CA;
   box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
@@ -328,18 +353,36 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-bottom: 20px;
+  min-height: 20px;
 }
 
 .checkbox-group input[type="checkbox"] {
   width: 18px;
   height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  max-width: 18px;
+  max-height: 18px;
+  flex-shrink: 0;
   cursor: pointer;
+  accent-color: #1452CA;
+  padding: 0;
+  margin: 0;
+}
+
+.checkbox-group input[type="checkbox"]:focus {
+  outline: none;
 }
 
 .checkbox-group label {
   margin-bottom: 0;
   cursor: pointer;
+  font-family: 'Inter_28pt-Medium', sans-serif;
+  font-size: 14px;
+  color: #374151;
+  user-select: none;
+  line-height: 18px;
 }
 
 /* Action Buttons */
