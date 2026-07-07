@@ -187,6 +187,8 @@
             <div class="misc-header-bottom">
               <div class="misc-tabs">
                 <button class="tab-btn active" data-tab="subdomain">Subdomain Providers</button>
+                <button class="tab-btn" data-tab="super-subdomain">Super Subdomains</button>
+                <button class="tab-btn" data-tab="ignore-domain">Ignore Domains</button>
                 <button class="tab-btn" data-tab="rdap">RDAP Mappings</button>
                 <button class="tab-btn" data-tab="rdap-ip">RDAP IPs</button>
                 <button class="tab-btn" data-tab="reported">Submitted Domains</button>
@@ -229,6 +231,46 @@
                       </tr>
                     </thead>
                     <tbody id="subdomain-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Super Subdomains Content -->
+              <div class="tab-content" id="super-subdomain-content">
+                <div class="misc-table-action">
+                    <button class="add-more-btn" id="add-super-subdomain-btn">Add Domain</button>
+                </div>
+                <div class="misc-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Domain</th>
+                        <th class="text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="super-subdomain-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Ignore Domains Content -->
+              <div class="tab-content" id="ignore-domain-content">
+                <div class="misc-table-action">
+                    <button class="add-more-btn" id="add-ignore-domain-btn">Add Domain</button>
+                </div>
+                <div class="misc-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Domain</th>
+                        <th class="text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ignore-domain-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
@@ -458,6 +500,30 @@
         </div>
 
         <button type="submit" class="misc-submit-btn" id="submit-subdomain-btn">Save Provider</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add/Edit Domain Modal (Reused for Super Subdomains & Ignore Domains) -->
+  <div class="misc-modal-overlay" id="domain-modal">
+    <div class="misc-modal-container">
+      <div class="misc-modal-header">
+        <h3 id="domain-modal-title">Add Domain</h3>
+        <button class="misc-modal-close" id="close-domain-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+
+      <form class="misc-modal-form" id="domain-form">
+        <input type="hidden" id="domain-id" value="">
+        <input type="hidden" id="domain-type" value="">
+
+        <div class="form-group">
+          <label for="domain-input">Domain</label>
+          <input type="text" id="domain-input" placeholder="e.g. us.com" required>
+        </div>
+
+        <button type="submit" class="misc-submit-btn" id="submit-domain-btn">Save Domain</button>
       </form>
     </div>
   </div>

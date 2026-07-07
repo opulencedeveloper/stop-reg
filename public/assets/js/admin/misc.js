@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- ENUMS ---
     const MiscTab = Object.freeze({
         SUBDOMAIN: "subdomain",
+        SUPER_SUBDOMAIN: "super-subdomain",
+        IGNORE_DOMAIN: "ignore-domain",
         RDAP: "rdap",
         RDAP_IP: "rdap-ip",
         REPORTED: "reported",
@@ -48,6 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const rdapIpForm = getEl("rdap-ip-form");
     const rdapIpModalTitle = getEl("rdap-ip-modal-title");
     const submitRdapIpBtn = getEl("submit-rdap-ip-btn");
+
+    // Domain Modal Elements (Shared for Super Subdomains & Ignore Domains)
+    const addSuperSubdomainBtn = getEl("add-super-subdomain-btn");
+    const addIgnoreDomainBtn = getEl("add-ignore-domain-btn");
+    const domainModal = getEl("domain-modal");
+    const closeDomainModal = getEl("close-domain-modal");
+    const domainForm = getEl("domain-form");
+    const domainModalTitle = getEl("domain-modal-title");
+    const submitDomainBtn = getEl("submit-domain-btn");
+    const domainTypeInput = getEl("domain-type");
+    const domainIdInput = getEl("domain-id");
+    const domainInput = getEl("domain-input");
 
     // Delete Modal Elements
     const deleteModal = getEl("delete-modal");
@@ -143,6 +157,12 @@ document.addEventListener("DOMContentLoaded", () => {
             case MiscTab.SUBDOMAIN:
                 endpoint = "/misc/subdomain-providers";
                 break;
+            case MiscTab.SUPER_SUBDOMAIN:
+                endpoint = "/misc/super-subdomains";
+                break;
+            case MiscTab.IGNORE_DOMAIN:
+                endpoint = "/misc/ignore-domains";
+                break;
             case MiscTab.RDAP:
                 endpoint = "/misc/tld-rdap";
                 break;
@@ -166,6 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedRecords = data.records || data.domains || data.data || [];
 
             if (currentTab === MiscTab.SUBDOMAIN) renderSubdomainTable();
+            else if (currentTab === MiscTab.SUPER_SUBDOMAIN) renderSuperSubdomainTable();
+            else if (currentTab === MiscTab.IGNORE_DOMAIN) renderIgnoreDomainTable();
             else if (currentTab === MiscTab.RDAP) renderRdapTable();
             else if (currentTab === MiscTab.RDAP_IP) renderRdapIpTable();
             else if (currentTab === MiscTab.REPORTED) renderReportedTable();
@@ -260,6 +282,64 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         tbody.querySelectorAll(".delete-btn").forEach(btn => {
             btn.onclick = () => openDeleteModal(btn.dataset.id, MiscTab.SUBDOMAIN);
+        });
+    }
+
+    function renderSuperSubdomainTable() {
+        const tbody = getEl("super-subdomain-tbody");
+        if (!tbody) return;
+
+        if (loadedRecords.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 40px; color: #737373;">No super subdomains found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = loadedRecords.map(r => `
+            <tr>
+                <td>${r.domain || "-"}</td>
+                <td class="text-right">
+                    <div class="action-btn-container">
+                        <button class="edit-btn" data-id="${r.id || r._id}">Edit</button>
+                        <button class="delete-btn" data-id="${r.id || r._id}">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+
+        tbody.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.onclick = () => openDomainModal(MiscTab.SUPER_SUBDOMAIN, btn.dataset.id);
+        });
+        tbody.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.onclick = () => openDeleteModal(btn.dataset.id, MiscTab.SUPER_SUBDOMAIN);
+        });
+    }
+
+    function renderIgnoreDomainTable() {
+        const tbody = getEl("ignore-domain-tbody");
+        if (!tbody) return;
+
+        if (loadedRecords.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 40px; color: #737373;">No ignore domains found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = loadedRecords.map(r => `
+            <tr>
+                <td>${r.domain || "-"}</td>
+                <td class="text-right">
+                    <div class="action-btn-container">
+                        <button class="edit-btn" data-id="${r.id || r._id}">Edit</button>
+                        <button class="delete-btn" data-id="${r.id || r._id}">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        `).join("");
+
+        tbody.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.onclick = () => openDomainModal(MiscTab.IGNORE_DOMAIN, btn.dataset.id);
+        });
+        tbody.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.onclick = () => openDeleteModal(btn.dataset.id, MiscTab.IGNORE_DOMAIN);
         });
     }
 
@@ -470,7 +550,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentEditingId = id;
         rdapIpForm.reset();
         getEl("rdap-ip-id").value = id || "";
-        
+
         if (id) {
             const record = loadedRecords.find(r => (r.id || r._id) === id);
             if (record) {
@@ -489,6 +569,28 @@ document.addEventListener("DOMContentLoaded", () => {
             getEl("rdap-ip-active").checked = true;
         }
         rdapIpModal.classList.add("active");
+    };
+
+    const openDomainModal = (type, id = null) => {
+        currentEditingId = id;
+        domainForm.reset();
+        domainTypeInput.value = type;
+        domainIdInput.value = id || "";
+
+        const typeLabel = type === MiscTab.SUPER_SUBDOMAIN ? "Super Subdomain" : "Ignore Domain";
+
+        if (id) {
+            const record = loadedRecords.find(r => (r.id || r._id) === id);
+            if (record) {
+                domainInput.value = record.domain || "";
+            }
+            domainModalTitle.textContent = `Edit ${typeLabel}`;
+            submitDomainBtn.textContent = `Update ${typeLabel}`;
+        } else {
+            domainModalTitle.textContent = `Add ${typeLabel}`;
+            submitDomainBtn.textContent = `Save ${typeLabel}`;
+        }
+        domainModal.classList.add("active");
     };
 
     const openDeleteModal = (id, type) => {
@@ -520,6 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModals = () => {
         rdapModal.classList.remove("active");
         subdomainModal.classList.remove("active");
+        domainModal.classList.remove("active");
         rdapIpModal.classList.remove("active");
         deleteModal.classList.remove("active");
         currentEditingId = null;
@@ -607,7 +710,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = getEl("rdap-ip-password").value.trim();
         const note = getEl("rdap-ip-note").value.trim();
         const isActive = getEl("rdap-ip-active").checked;
-        
+
         submitRdapIpBtn.disabled = true;
         submitRdapIpBtn.innerHTML = `Saving...`;
 
@@ -635,9 +738,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    domainForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const type = domainTypeInput.value;
+        const domain = domainInput.value.trim();
+
+        if (!domain) {
+            iziToast.error({ title: 'Error', message: "Domain is required.", position: 'topRight' });
+            return;
+        }
+
+        submitDomainBtn.disabled = true;
+        submitDomainBtn.innerHTML = `Saving...`;
+
+        try {
+            const method = currentEditingId ? "PATCH" : "POST";
+            const endpoint = currentEditingId ? `/misc/${type}/${currentEditingId}` : `/misc/${type}`;
+
+            const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
+                method,
+                body: JSON.stringify({ domain })
+            });
+
+            if (result?.message === "success" || result?.message === "Success") {
+                const typeLabel = type === MiscTab.SUPER_SUBDOMAIN ? "Super Subdomain" : "Ignore Domain";
+                iziToast.success({ title: 'Success', message: `${typeLabel} ${currentEditingId ? 'updated' : 'added'}.`, position: 'topRight' });
+                closeModals();
+                loadData(currentPage, currentLimit, currentSearch);
+            } else {
+                throw new Error(result?.description || "Failed to save domain.");
+            }
+        } catch (error) {
+            iziToast.error({ title: 'Error', message: error.message, position: 'topRight' });
+        } finally {
+            submitDomainBtn.disabled = false;
+            const typeLabel = type === MiscTab.SUPER_SUBDOMAIN ? "Super Subdomain" : "Ignore Domain";
+            submitDomainBtn.innerHTML = currentEditingId ? `Update ${typeLabel}` : `Save ${typeLabel}`;
+        }
+    };
+
     confirmDeleteBtn.onclick = async () => {
         if (!currentDeletingId || !deleteType) return;
-        
+
         confirmDeleteBtn.disabled = true;
         confirmDeleteBtn.innerHTML = "Removing...";
 
@@ -647,6 +789,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 endpoint = `/misc/tld-rdap/${currentDeletingId}`;
             } else if (deleteType === MiscTab.SUBDOMAIN) {
                 endpoint = `/misc/subdomain-providers/${currentDeletingId}`;
+            } else if (deleteType === MiscTab.SUPER_SUBDOMAIN) {
+                endpoint = `/misc/super-subdomains/${currentDeletingId}`;
+            } else if (deleteType === MiscTab.IGNORE_DOMAIN) {
+                endpoint = `/misc/ignore-domains/${currentDeletingId}`;
             } else if (deleteType === MiscTab.RDAP_IP) {
                 endpoint = `/rdap-ip/${currentDeletingId}`;
             } else if (deleteType === MiscTab.REPORTED) {
@@ -711,10 +857,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (addRdapBtn) addRdapBtn.onclick = () => openRdapModal();
     if (addSubdomainBtn) addSubdomainBtn.onclick = () => openSubdomainModal();
+    if (addSuperSubdomainBtn) addSuperSubdomainBtn.onclick = () => openDomainModal(MiscTab.SUPER_SUBDOMAIN);
+    if (addIgnoreDomainBtn) addIgnoreDomainBtn.onclick = () => openDomainModal(MiscTab.IGNORE_DOMAIN);
     if (addRdapIpBtn) addRdapIpBtn.onclick = () => openRdapIpModal();
 
     if (closeRdapModal) closeRdapModal.onclick = closeModals;
     if (closeSubdomainModal) closeSubdomainModal.onclick = closeModals;
+    if (closeDomainModal) closeDomainModal.onclick = closeModals;
     if (closeRdapIpModal) closeRdapIpModal.onclick = closeModals;
     if (closeDeleteModal) closeDeleteModal.onclick = closeModals;
     if (cancelDeleteBtn) cancelDeleteBtn.onclick = closeModals;
