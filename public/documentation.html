@@ -351,6 +351,9 @@
             <button policy-data-target="docume-item-validation" class="docsScrollButton">
               Validation Configurations
             </button>
+            <button policy-data-target="docume-item-abuse-shield" class="docsScrollButton">
+              Form Abuse Shield
+            </button>
           </div>
           <div class="docs-content-list">
             <article id="docume-item1" class="documen-content-item doc-animate-init">
@@ -2102,6 +2105,205 @@ business.net</code></pre>
                 support team at
                 <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a>
                 or visit your dashboard for more resources.
+              </p>
+            </article>
+            <article id="docume-item-abuse-shield" class="documen-content-item doc-animate-init">
+              <h2>Form Abuse Shield</h2>
+              <p>
+                <strong>Form Abuse Shield</strong> is a premium feature that automatically detects and blocks suspicious email domains from registering on your platform. It works alongside email validation to provide an additional layer of protection against form abuse, spam registrations, and fraudulent activity.
+              </p>
+
+              <h3>What is Form Abuse Shield?</h3>
+              <p>
+                Form Abuse Shield monitors unresolved and suspicious domains that reach your configured threshold. When a domain exceeds the threshold, the system automatically:
+              </p>
+              <ul>
+                <li><strong>Notify mode:</strong> Automatically adds the domain to your allowlist and sends you an alert</li>
+                <li><strong>Block mode:</strong> Automatically blocks the domain from further registrations</li>
+              </ul>
+
+              <h3>Key Features</h3>
+              <ul>
+                <li>
+                  <strong>Automatic Detection:</strong> Monitors unresolved domains and suspicious registration patterns
+                </li>
+                <li>
+                  <strong>Configurable Threshold:</strong> Set the number of unresolved requests before action is triggered (2-50 requests)
+                </li>
+                <li>
+                  <strong>Flexible Time Window:</strong> Choose your monitoring period (1, 3, or 7 days)
+                </li>
+                <li>
+                  <strong>Two Action Modes:</strong> Notify (alert + allowlist) or Block (automatic blocking)
+                </li>
+                <li>
+                  <strong>Manual Override Protection:</strong> Manually allowlisted domains are never auto-blocked, permanently protected
+                </li>
+                <li>
+                  <strong>Dashboard Control:</strong> Manage, review, and adjust abuse shield settings anytime
+                </li>
+              </ul>
+
+              <h3>How Form Abuse Shield Works</h3>
+
+              <h4>Step 1: Enable and Configure</h4>
+              <p>
+                Navigate to <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> and configure your abuse shield settings:
+              </p>
+              <ul>
+                <li><strong>Detection Rule:</strong> Set the threshold (e.g., block after 5 unresolved requests)</li>
+                <li><strong>Time Window:</strong> Choose your lookback period (1, 3, or 7 days)</li>
+                <li><strong>Action:</strong> Select Notify (alert only) or Block (automatic blocking)</li>
+              </ul>
+
+              <h4>Step 2: Monitoring Begins</h4>
+              <p>
+                Once configured, Form Abuse Shield continuously monitors incoming domain registrations:
+              </p>
+              <ul>
+                <li>Counts unresolved requests for each domain within your specified time window</li>
+                <li>Tracks suspicious patterns and registration velocity</li>
+                <li>Compares metrics against your configured threshold</li>
+              </ul>
+
+              <h4>Step 3: Automatic Action Triggered</h4>
+              <p>
+                When a domain reaches your threshold:
+              </p>
+              <ul>
+                <li>
+                  <strong>Notify Mode:</strong> Domain is automatically added to your allowlist and you receive an email alert with domain details and threshold information
+                </li>
+                <li>
+                  <strong>Block Mode:</strong> Domain is automatically added to your blocklist and further registrations from that domain are rejected
+                </li>
+              </ul>
+
+              <h3>Notify Mode vs. Block Mode</h3>
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Notify Mode</th>
+                    <th>Block Mode</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Action</strong></td>
+                    <td>Auto-adds domain to allowlist</td>
+                    <td>Auto-blocks domain from registering</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Email Alert</strong></td>
+                    <td>✓ You receive notification</td>
+                    <td>✓ You receive notification</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Use Case</strong></td>
+                    <td>Review suspicious domains before making decisions</td>
+                    <td>Automatically reject high-risk domains</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Flexibility</strong></td>
+                    <td>Domain allowed; you can adjust later</td>
+                    <td>Domain blocked; manually unblock if needed</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h3>Manual Allowlist Protection</h3>
+              <p>
+                <strong>Critical Protection:</strong> Domains that you manually allowlist are permanently protected and will <strong>never</strong> be automatically blocked by Form Abuse Shield, regardless of:
+              </p>
+              <ul>
+                <li>How many unresolved requests they receive</li>
+                <li>Whether you switch from Notify to Block mode</li>
+                <li>How high your threshold is configured</li>
+              </ul>
+              <p>
+                This ensures trusted domains, partner organizations, and corporate email providers remain permanently accessible to your users.
+              </p>
+
+              <h3>Manual Blocklist Protection</h3>
+              <p>
+                Similarly, domains that you manually block will remain blocked permanently and cannot be unblocked by any automatic process.
+              </p>
+
+              <h3>Best Practices</h3>
+              <ul>
+                <li>
+                  <strong>Start Conservative:</strong> Begin with a higher threshold (e.g., 10 requests) to reduce false positives
+                </li>
+                <li>
+                  <strong>Review Regularly:</strong> Check your dashboard to see which domains have been flagged
+                </li>
+                <li>
+                  <strong>Adjust as Needed:</strong> Lower your threshold as you become confident with the system
+                </li>
+                <li>
+                  <strong>Trust Your Instincts:</strong> Manually allowlist corporate domains that might be flagged as suspicious
+                </li>
+                <li>
+                  <strong>Monitor Email Alerts:</strong> Keep your admin email up-to-date to receive abuse shield notifications
+                </li>
+                <li>
+                  <strong>Use Notify First:</strong> Consider starting with Notify mode to review flagged domains before auto-blocking
+                </li>
+              </ul>
+
+              <h3>Configuration Examples</h3>
+
+              <h4>Conservative Setup (Fewer False Positives)</h4>
+              <ul>
+                <li><strong>Threshold:</strong> 20 unresolved requests</li>
+                <li><strong>Window:</strong> 7 days</li>
+                <li><strong>Action:</strong> Notify</li>
+                <li><strong>Result:</strong> Only extremely suspicious domains are flagged after sustained abuse</li>
+              </ul>
+
+              <h4>Aggressive Setup (Maximum Protection)</h4>
+              <ul>
+                <li><strong>Threshold:</strong> 2 unresolved requests</li>
+                <li><strong>Window:</strong> 1 day</li>
+                <li><strong>Action:</strong> Block</li>
+                <li><strong>Result:</strong> Suspicious domains are immediately blocked with minimal tolerance</li>
+              </ul>
+
+              <h4>Balanced Setup (Recommended)</h4>
+              <ul>
+                <li><strong>Threshold:</strong> 5 unresolved requests</li>
+                <li><strong>Window:</strong> 3 days</li>
+                <li><strong>Action:</strong> Notify</li>
+                <li><strong>Result:</strong> Good balance between security and false positive reduction</li>
+              </ul>
+
+              <h3>FAQ</h3>
+              <p><strong>Q: Can I manually allowlist a domain to prevent auto-blocking?</strong></p>
+              <p>
+                A: Yes! Manually allowlisted domains are permanently protected and will never be auto-blocked, regardless of Form Abuse Shield settings.
+              </p>
+
+              <p><strong>Q: What happens if I switch from Notify to Block mode?</strong></p>
+              <p>
+                A: Domains previously auto-added to the allowlist in Notify mode may be auto-blocked if they continue to receive unresolved requests and reach your threshold. However, manually allowlisted domains will remain protected.
+              </p>
+
+              <p><strong>Q: Can I unblock an automatically blocked domain?</strong></p>
+              <p>
+                A: Yes, you can manually remove it from your blocklist at any time from the dashboard.
+              </p>
+
+              <p><strong>Q: Is Form Abuse Shield available on all plans?</strong></p>
+              <p>
+                A: Form Abuse Shield is a premium feature available to paid plan subscribers. Free accounts do not have access to automatic abuse detection.
+              </p>
+
+              <h3>Support</h3>
+              <p>
+                If you have questions about Form Abuse Shield or need help configuring it, contact our support team at
+                <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a>
+                or visit the <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page to get started.
               </p>
             </article>
           </div>

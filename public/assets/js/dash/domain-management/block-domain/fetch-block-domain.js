@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const fetchBlockedDomains = async () => {
         try {
-            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/fetch", {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/fetch?status=blocked", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -21,25 +21,28 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const data = await response.json();
             if (response.ok) {
-                const userDomain = data?.data || data;
-                const blockedDomains = userDomain.filter(d => d.type === "blocked");
+                const blockedDomains = Array.isArray(data?.data) ? data.data : [];
 
                 if (tableBody) {
-                    tableBody.innerHTML = blockedDomains.map(user => `
-                        <tr class="table-inner" id="${user._id}">
-                            <td class="table-inner-inner">${user.domain}</td>
-                            <td>${user.status}</td>
-                            <td class="comment-td">${user.comment}</td>
-                            <td>
-                                <button class="deleteEmail" data-id="${user._id}">Delete</button>
-                            </td>
-                        </tr>
-                    `).join("");
-                    
-                    attachDeleteHandlers();
+                    if (blockedDomains.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center;padding:20px;'>No blocked domains</td></tr>";
+                    } else {
+                        tableBody.innerHTML = blockedDomains.map(user => `
+                            <tr class="table-inner" id="${user._id}">
+                                <td class="table-inner-inner">${user.domain}</td>
+                                <td>${user.status}</td>
+                                <td class="comment-td">${user.comment || ""}</td>
+                                <td>
+                                    <button class="deleteEmail" data-id="${user._id}">Delete</button>
+                                </td>
+                            </tr>
+                        `).join("");
+
+                        attachDeleteHandlers();
+                    }
                 }
             } else {
-                throw new Error(data.description || data.message || "Failed to fetch domains.");
+                throw new Error(data?.description || data?.message || "Failed to fetch domains.");
             }
         } catch (error) {
             console.error("Fetch error:", error);
