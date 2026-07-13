@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const customSelectorPlugin = {
         id: "customSelector",
         afterDraw: (chart) => {
-            const activePoints = chart.tooltip._active || [];
+            const activePoints = (chart.tooltip && chart.tooltip._active) || [];
             if (!activePoints.length) return;
             
             const ctx = chart.ctx;
@@ -363,12 +363,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    if (mobiMenuBtn && mobileOverlay) {
-        mobiMenuBtn.onclick = () => mobileOverlay.classList.add("open");
-    }
-    if (mobiCloseBtn && mobileOverlay) {
-        mobiCloseBtn.onclick = () => mobileOverlay.classList.remove("open");
-    }
+    // Mobile menu is handled by admin-main.js with proper toggle logic
+    // Don't override with simple onclick handlers
 
     if (errorRetryBtn) {
         errorRetryBtn.onclick = () => {

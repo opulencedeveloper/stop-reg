@@ -1,0 +1,115 @@
+/**
+ * Reusable Loading and Error States
+ * Used across all admin pages for consistent UI
+ */
+
+/* Loading State Container */
+.loading-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: 100%;
+  width: 100%;
+  flex: 1;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e1e4e8;
+  border-top-color: #1452ca;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state-container p,
+.loading-state-container span {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+  margin: 0;
+}
+
+/* Error State Container */
+.error-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: 100%;
+  width: 100%;
+  flex: 1;
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Error Icon */
+.error-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: #FEF2F2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.error-state-container h3 {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  color: #131313;
+  font-weight: 600;
+}
+
+.error-state-container p {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+  margin: 0 0 20px 0;
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+/* Retry Button */
+.retry-button {
+  padding: 10px 24px;
+  background-color: #1452CA;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.retry-button:hover {
+  background-color: #0f3fa6;
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.15);
+}
+
+.retry-button:active {
+  transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

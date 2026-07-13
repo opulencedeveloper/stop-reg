@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
 
     if (mobiMenuBtn && mobileNavOverlay) {
-        mobiMenuBtn.addEventListener('click', () => {
+        mobiMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const isOpen = mobileNavOverlay.classList.contains('open');
             if (isOpen) {
                 mobileNavOverlay.classList.remove('open');
@@ -30,10 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobiCloseBtn && mobileNavOverlay && mobiMenuBtn) {
-        mobiCloseBtn.addEventListener('click', () => {
+        mobiCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             mobileNavOverlay.classList.remove('open');
             mobiMenuBtn.classList.remove('open');
             document.body.style.overflow = '';
+        });
+    }
+
+    // Close mobile nav when clicking outside (on overlay background)
+    if (mobileNavOverlay) {
+        mobileNavOverlay.addEventListener('click', (e) => {
+            // Only close if clicking on the overlay itself, not on nav content
+            if (e.target === mobileNavOverlay) {
+                mobileNavOverlay.classList.remove('open');
+                if (mobiMenuBtn) {
+                    mobiMenuBtn.classList.remove('open');
+                }
+                document.body.style.overflow = '';
+            }
         });
     }
 

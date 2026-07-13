@@ -84,6 +84,10 @@
           <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
           <span>Misc</span>
         </a>
+        <a href="/admin-dashboard/api-documentation.html" class="admin-nav-link">
+          <img src="/assets/icons/api.svg" alt="" class="nav-icon" />
+          <span>API Docs</span>
+        </a>
         <a href="/admin-dashboard/profile.html" class="admin-nav-link">
           <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
           <span>Profile</span>
@@ -143,6 +147,10 @@
           <img src="/assets/icons/settings-outline.svg" alt="" class="nav-icon" />
           <span>Misc</span>
         </a>
+        <a href="/admin-dashboard/api-documentation.html" class="admin-nav-link">
+          <img src="/assets/icons/api.svg" alt="" class="nav-icon" />
+          <span>API Docs</span>
+        </a>
         <a href="/admin-dashboard/profile.html" class="admin-nav-link">
           <img src="/assets/icons/profile-inactive.svg" alt="" class="nav-icon" />
           <span>Profile</span>
@@ -187,8 +195,8 @@
             <div class="misc-header-bottom">
               <div class="misc-tabs">
                 <button class="tab-btn active" data-tab="subdomain">Subdomain Providers</button>
-                <button class="tab-btn" data-tab="super-subdomain">Super Subdomains</button>
-                <button class="tab-btn" data-tab="ignore-domain">Ignore Domains</button>
+                <button class="tab-btn" data-tab="super-subdomains">Super Subdomains</button>
+                <button class="tab-btn" data-tab="ignore-domains">Ignore Domains</button>
                 <button class="tab-btn" data-tab="rdap">RDAP Mappings</button>
                 <button class="tab-btn" data-tab="rdap-ip">RDAP IPs</button>
                 <button class="tab-btn" data-tab="reported">Submitted Domains</button>
@@ -238,9 +246,9 @@
               </div>
 
               <!-- Super Subdomains Content -->
-              <div class="tab-content" id="super-subdomain-content">
+              <div class="tab-content" id="super-subdomains-content">
                 <div class="misc-table-action">
-                    <button class="add-more-btn" id="add-super-subdomain-btn">Add Domain</button>
+                    <button class="add-more-btn" id="add-super-subdomains-btn">Add Domain</button>
                 </div>
                 <div class="misc-table-wrapper">
                   <table class="admin-table">
@@ -250,7 +258,7 @@
                         <th class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="super-subdomain-tbody">
+                    <tbody id="super-subdomains-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>
@@ -258,9 +266,9 @@
               </div>
 
               <!-- Ignore Domains Content -->
-              <div class="tab-content" id="ignore-domain-content">
+              <div class="tab-content" id="ignore-domains-content">
                 <div class="misc-table-action">
-                    <button class="add-more-btn" id="add-ignore-domain-btn">Add Domain</button>
+                    <button class="add-more-btn" id="add-ignore-domains-btn">Add Domain</button>
                 </div>
                 <div class="misc-table-wrapper">
                   <table class="admin-table">
@@ -270,7 +278,7 @@
                         <th class="text-right">Action</th>
                       </tr>
                     </thead>
-                    <tbody id="ignore-domain-tbody">
+                    <tbody id="ignore-domains-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>

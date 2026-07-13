@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- ENUMS ---
     const MiscTab = Object.freeze({
         SUBDOMAIN: "subdomain",
-        SUPER_SUBDOMAIN: "super-subdomain",
-        IGNORE_DOMAIN: "ignore-domain",
+        SUPER_SUBDOMAIN: "super-subdomains",
+        IGNORE_DOMAIN: "ignore-domains",
         RDAP: "rdap",
         RDAP_IP: "rdap-ip",
         REPORTED: "reported",
@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitRdapIpBtn = getEl("submit-rdap-ip-btn");
 
     // Domain Modal Elements (Shared for Super Subdomains & Ignore Domains)
-    const addSuperSubdomainBtn = getEl("add-super-subdomain-btn");
-    const addIgnoreDomainBtn = getEl("add-ignore-domain-btn");
+    const addSuperSubdomainBtn = getEl("add-super-subdomains-btn");
+    const addIgnoreDomainBtn = getEl("add-ignore-domains-btn");
     const domainModal = getEl("domain-modal");
     const closeDomainModal = getEl("close-domain-modal");
     const domainForm = getEl("domain-form");
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderSuperSubdomainTable() {
-        const tbody = getEl("super-subdomain-tbody");
+        const tbody = getEl("super-subdomains-tbody");
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderIgnoreDomainTable() {
-        const tbody = getEl("ignore-domain-tbody");
+        const tbody = getEl("ignore-domains-tbody");
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
