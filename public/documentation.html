@@ -2222,7 +2222,7 @@ business.net</code></pre>
                 <li>How high your threshold is configured</li>
               </ul>
               <p>
-                This ensures trusted domains, partner organizations, and corporate email providers remain permanently accessible to your users.
+              This ensures that manually allowlisted domains remain permanently trusted and are never blocked by any request made through your account.
               </p>
 
               <h3>Manual Blocklist Protection</h3>
@@ -2230,45 +2230,7 @@ business.net</code></pre>
                 Similarly, domains that you manually block will remain blocked permanently and cannot be unblocked by any automatic process.
               </p>
 
-              <h3>Best Practices</h3>
-              <ul>
-                <li>
-                  <strong>Start Conservative:</strong> Begin with a higher threshold (e.g., 10 requests) to reduce false positives
-                </li>
-                <li>
-                  <strong>Review Regularly:</strong> Check your dashboard to see which domains have been flagged
-                </li>
-                <li>
-                  <strong>Adjust as Needed:</strong> Lower your threshold as you become confident with the system
-                </li>
-                <li>
-                  <strong>Trust Your Instincts:</strong> Manually allowlist corporate domains that might be flagged as suspicious
-                </li>
-                <li>
-                  <strong>Monitor Email Alerts:</strong> Keep your admin email up-to-date to receive abuse shield notifications
-                </li>
-                <li>
-                  <strong>Use Notify First:</strong> Consider starting with Notify mode to review flagged domains before auto-blocking
-                </li>
-              </ul>
-
               <h3>Configuration Examples</h3>
-
-              <h4>Conservative Setup (Fewer False Positives)</h4>
-              <ul>
-                <li><strong>Threshold:</strong> 20 unresolved requests</li>
-                <li><strong>Window:</strong> 7 days</li>
-                <li><strong>Action:</strong> Notify</li>
-                <li><strong>Result:</strong> Only extremely suspicious domains are flagged after sustained abuse</li>
-              </ul>
-
-              <h4>Aggressive Setup (Maximum Protection)</h4>
-              <ul>
-                <li><strong>Threshold:</strong> 2 unresolved requests</li>
-                <li><strong>Window:</strong> 1 day</li>
-                <li><strong>Action:</strong> Block</li>
-                <li><strong>Result:</strong> Suspicious domains are immediately blocked with minimal tolerance</li>
-              </ul>
 
               <h4>Balanced Setup (Recommended)</h4>
               <ul>

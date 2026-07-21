@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const detailEmail = getEl("detail-user-email");
     const detailApiCreated = getEl("detail-api-created");
     const detailApiRequests = getEl("detail-api-requests");
+    const detailApiRequestsLeft = getEl("detail-api-requests-left");
     const detailJoinedDate = getEl("detail-joined-date");
     const subUsersTbody = getEl("sub-users-tbody");
     const subUsersCountText = getEl("detail-sub-users-count");
@@ -327,6 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
         detailEmail.textContent = data.email;
         detailApiCreated.textContent = data.stats.apiCreated;
         detailApiRequests.textContent = data.stats.apiRequestCount;
+        detailApiRequestsLeft.textContent = data.apiRequestLeft || 0;
         detailJoinedDate.textContent = new Date(data.joinedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ".";
 
         const planBadge = getEl("detail-plan-badge");
