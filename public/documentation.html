@@ -605,7 +605,7 @@
     <span class="string">"classification"</span>: {
       <span class="string">"is_disposable"</span>: <span class="keyword">false</span>,
       <span class="string">"is_relay"</span>: <span class="keyword">false</span>,
-      <span class="string">"is_unresolved"</span>: <span class="keyword">false</span>,
+      <span class="string">"is_private"</span>: <span class="keyword">false</span>,
       <span class="string">"is_public"</span>: <span class="keyword">true</span>,
       <span class="string">"is_role_based"</span>: <span class="keyword">false</span>,
       <span class="string">"is_alias"</span>: <span class="keyword">false</span>
@@ -815,7 +815,7 @@
                         My Email). Common among privacy-conscious users.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_unresolved</span> <span
+                      <td><span class="field-name">is_private</span> <span
                           class="type-badge type-boolean">Boolean</span></td>
                       <td>Neutral</td>
                       <td><strong>Zero-Trust Flag.</strong> <code>true</code> for unknown, non-major domains that proxy
@@ -1856,7 +1856,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 <span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
 
 <span class="comment">// Block unresolved domains</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_unresolved</span>) {
+<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_private</span>) {
   <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
 }</code></pre>
                 </div>
@@ -1871,7 +1871,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 <span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
 
 <span class="comment"># Block unresolved domains</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_unresolved'</span>):
+<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_private'</span>):
     <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>)</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="php">
@@ -1885,7 +1885,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 <span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
 
 <span class="comment">// Block unresolved domains</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_unresolved'</span>] ?? <span class="keyword">false</span>) {
+<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_private'</span>] ?? <span class="keyword">false</span>) {
     <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
 }</code></pre>
                 </div>

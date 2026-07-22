@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isRelay = details?.classification?.is_relay === true;
             const isRole = details?.classification?.is_role_based === true;
             const isAlias = details?.classification?.is_alias === true;
-            const isUnresolved = details?.classification?.is_unresolved === true;
+            const isPrivate = details?.classification?.is_private === true;
 
             listContainer.innerHTML = `
                 <!-- Mx Record (True/False) -->
@@ -487,12 +487,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <!-- Unresolved (True/False) -->
-                <div class="result-card ${isUnresolved ? 'status-true' : 'status-false'}" style="border-bottom: none;">
-                    <p class="result-boolean">${isUnresolved ? 'True' : 'False'}</p>
+                <div class="result-card ${isPrivate ? 'status-true' : 'status-false'}" style="border-bottom: none;">
+                    <p class="result-boolean">${isPrivate ? 'True' : 'False'}</p>
                     <div class="result-content">
                         <h3 class="result-head">Unresolved</h3>
                         <p class="result-desc">
-                            ${isUnresolved
+                            ${isPrivate
                                 ? "This domain could not be resolved or found in our global database. It may be a dead or inactive domain"
                                 : "This domain was resolved successfully via DNS or Database"}
                         </p>
