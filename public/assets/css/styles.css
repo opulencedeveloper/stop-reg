@@ -1322,3 +1322,18 @@ select:-webkit-autofill:active {
 .docs-table code {
   font-size: 16px !important;
 }
+/* Risk Level Colors for Documentation */
+.risk-high {
+  color: #DC2626 !important;
+  font-weight: 600 !important;
+}
+
+.risk-low {
+  color: #16A34A !important;
+  font-weight: 600 !important;
+}
+
+.risk-caution {
+  color: #D97706 !important;
+  font-weight: 600 !important;
+}

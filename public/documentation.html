@@ -803,14 +803,14 @@
                     <tr>
                       <td><span class="field-name">is_disposable</span> <span
                           class="type-badge type-boolean">Boolean</span></td>
-                      <td>High Risk</td>
+                      <td class="risk-high">High Risk</td>
                       <td><strong>Critical Flag.</strong> <code>true</code> if the domain belongs to a temporary,
                         throwaway, or 10-minute mail provider. High correlation with fraud.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_relay</span> <span class="type-badge type-boolean">Boolean</span>
                       </td>
-                      <td>Low Risk</td>
+                      <td class="risk-low">Low Risk</td>
                       <td><code>true</code> if the provider is a forwarding service or alias system (e.g., iCloud Hide
                         My Email). Common among privacy-conscious users.</td>
                     </tr>
@@ -831,14 +831,14 @@
                     <tr>
                       <td><span class="field-name">is_role_based</span> <span
                           class="type-badge type-boolean">Boolean</span></td>
-                      <td>Caution</td>
+                      <td class="risk-caution">Caution</td>
                       <td><code>true</code> for address intended for groups (e.g., <i>admin@</i>, <i>support@</i>). Not
                         ideal for personal account signups.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_alias</span> <span class="type-badge type-boolean">Boolean</span>
                       </td>
-                      <td>Low Risk</td>
+                      <td class="risk-high">High Risk</td>
                       <td><code>true</code> if sub-addressing was detected (e.g., <i>user+tag@gmail.com</i>). Often used
                         to track source of signups.</td>
                     </tr>
