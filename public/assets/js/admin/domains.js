@@ -173,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td>${d.domain}</td>
                         <td><div class="comment-text">${d.comment || "-"}</div></td>
                         <td class="status-cell">${getStatusBadge(d.status)}</td>
+                        <!--
                         <td class="action-cell">
                             <div class="action-btn-container">
                                 <button class="action-btn" data-id="${d.id}">
@@ -186,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 </div>
                             </div>
                         </td>
+                        -->
                     </tr>
                 `;
             } else { // allowlist (allowed)

@@ -328,7 +328,9 @@ document.addEventListener("DOMContentLoaded", () => {
         detailEmail.textContent = data.email;
         detailApiCreated.textContent = data.stats.apiCreated;
         detailApiRequests.textContent = data.stats.apiRequestCount;
-        detailApiRequestsLeft.textContent = data.apiRequestLeft || 0;
+        // Display correct quota based on plan type
+        const requestsLeft = data.plan === "Free" ? (data.extraApiLimitLeft || 0) : (data.apiRequestLeft || 0);
+        detailApiRequestsLeft.textContent = requestsLeft;
         detailJoinedDate.textContent = new Date(data.joinedDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ".";
 
         const planBadge = getEl("detail-plan-badge");
