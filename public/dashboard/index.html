@@ -327,7 +327,7 @@
                   <div class="graph-sub-head">
                     <div class="graph-head-dot4 doting"></div>
                     <p class="graph-sub-head-text">
-                      Unresolved
+                      Private
                     </p>
                   </div>
                 </div>
@@ -527,7 +527,7 @@
                     <tr>
                       <th>Domain</th>
                       <th class="table-center">Email Provider</th>
-                      <th class="table-center">Unresolved</th>
+                      <th class="table-center">Private</th>
                       <th class="table-center">Disposable</th>
                       <th class="table-center">Relay</th>
                       <th class="table-center">Request Count</th>
@@ -904,7 +904,7 @@
           document.addEventListener('DOMContentLoaded', function() {
             console.log('=== Debugging Status Badges ===');
             const unresolvedElements = document.querySelectorAll('[class*="status-unresolved"]');
-            console.log(`Found ${unresolvedElements.length} unresolved elements`);
+            console.log(`Found ${unresolvedElements.length} private elements`);
 
             unresolvedElements.forEach((el, idx) => {
               const computed = window.getComputedStyle(el);

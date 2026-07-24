@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const classificationSelect = getEl("mx-classification");
         if (classificationSelect) {
-            classificationSelect.value = record.classification || "unresolved";
+            classificationSelect.value = record.classification || "private";
         }
 
         addModal.classList.add("active");
@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const mx_record = getEl("domain-name")?.value;
             const service_type = getEl("service-type")?.value || "disposable";
             const grade = getEl("mx-grade")?.value || "standard";
-            const classification = getEl("mx-classification")?.value || "unresolved";
+            const classification = getEl("mx-classification")?.value || "private";
 
             submitMxBtn.disabled = true;
             submitMxBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> ${currentEditingId ? 'Updating...' : 'Adding...'}`;

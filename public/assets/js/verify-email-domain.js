@@ -486,11 +486,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
 
-                <!-- Unresolved (True/False) -->
+                <!-- Private (True/False) -->
                 <div class="result-card ${isPrivate ? 'status-true' : 'status-false'}" style="border-bottom: none;">
                     <p class="result-boolean">${isPrivate ? 'True' : 'False'}</p>
                     <div class="result-content">
-                        <h3 class="result-head">Unresolved</h3>
+                        <h3 class="result-head">Private</h3>
                         <p class="result-desc">
                             ${isPrivate
                                 ? "This domain could not be resolved or found in our global database. It may be a dead or inactive domain"

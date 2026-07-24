@@ -216,10 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p class="result-boolean">${isAlias ? 'True' : 'False'}</p>
                         </div>
 
-                        <!-- Unresolved (True/False) -->
+                        <!-- Private (True/False) -->
                         <div class="result-card ${isUnresolved ? 'status-false' : 'status-true'}">
                             <div class="result-content">
-                                <h3 class="result-head">Unresolved</h3>
+                                <h3 class="result-head">Private</h3>
                                 <p class="result-desc">
                                     ${isUnresolved
                                         ? "This domain could not be resolved or found in our global database."

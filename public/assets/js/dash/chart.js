@@ -378,7 +378,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   badgeIcon = "approve-outline.svg";
                   badgeText = "Allow";
                   break;
-              default: // "-" or Unresolved
+              default: // "-" or Private
                   badgeClass = ""; 
                   badgeIcon = ""; 
                   badgeText = "-";
@@ -837,7 +837,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             pointHoverRadius: 0,
           },
           {
-            label: 'Unresolved',
+            label: 'Private',
             data: dUnresolved,
             borderColor: '#049286',
             backgroundColor: '#049286',
@@ -881,7 +881,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     // We might need to change the innerHTML structure entirely if the CSS allows.
                     // Or we just format the strong tag to have breaks?
                     
-                    // Let's check the user request: "The tool tip should also show if it is Public Provider ... or Unresolved"
+                    // Let's check the user request: "The tool tip should also show if it is Public Provider ... or Private"
                     // Since it's a line chart with 'index' interaction, we have values for all 4 categories for that day.
                     // We should list them.
                     

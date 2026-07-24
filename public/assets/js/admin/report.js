@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         pointHoverRadius: 0
                     },
                     {
-                        label: 'Unresolved',
+                        label: 'Private',
                         data: data.map(d => d.unresolved),
                         borderColor: '#049286',
                         backgroundColor: 'rgba(4, 146, 134, 0.01)',

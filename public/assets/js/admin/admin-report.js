@@ -59,7 +59,7 @@ function initUsageStatsChart() {
                     pointHoverRadius: 6,
                 },
                 {
-                    label: 'Unresolved',
+                    label: 'Private',
                     data: unresolvedData,
                     borderColor: '#049286', // Teal
                     backgroundColor: 'transparent',

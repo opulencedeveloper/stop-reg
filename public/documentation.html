@@ -818,8 +818,7 @@
                       <td><span class="field-name">is_private</span> <span
                           class="type-badge type-boolean">Boolean</span></td>
                       <td>Neutral</td>
-                      <td><strong>Zero-Trust Flag.</strong> <code>true</code> for unknown, non-major domains that proxy
-                        through professional mail hosts. High correlation with "Stealth Disposable" providers.</td>
+                      <td><code>true</code> if the email domain is a private or custom domain owned and managed by an individual, business, organization, or institution. Not associated with major public email providers.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span>
@@ -1302,7 +1301,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
     <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
 
 <span class="comment"># Allow relay emails           ✓</span>
-<span class="comment"># Allow unresolved domains      ✓</span>
+<span class="comment"># Allow private domains      ✓</span>
 <span class="comment"># Allow public email providers  ✓</span>
 <span class="comment"># Allow role-based emails       ✓</span>
 <span class="comment"># Allow alias emails            ✓</span></code></pre>
@@ -1323,7 +1322,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 }
 
 <span class="comment">// Allow relay emails           ✓</span>
-<span class="comment">// Allow unresolved domains      ✓</span>
+<span class="comment">// Allow private domains      ✓</span>
 <span class="comment">// Allow public email providers  ✓</span>
 <span class="comment">// Allow role-based emails       ✓</span>
 <span class="comment">// Allow alias emails            ✓</span></code></pre>
@@ -1847,17 +1846,16 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 </div>
               </div>
 
-              <h3>6. Block Unresolved Domains</h3>
-              <p>Use this check to reject email addresses from domains that cannot be verified — unknown registrations,
-                expired domains, or domains with no DNS records.</p>
+              <h3>6. Block Private Domains</h3>
+              <p>Blocks email addresses that use private or custom domains owned by individuals, businesses, organizations, or institutions.</p>
               <div class="code-snippet-container" data-lang-group>
                 <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
                   <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
 <span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
 
-<span class="comment">// Block unresolved domains</span>
+<span class="comment">// Block private domains</span>
 <span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_private</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
+  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Private or custom domain name blocked.'</span>);
 }</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="python">
@@ -1870,9 +1868,9 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 )
 <span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
 
-<span class="comment"># Block unresolved domains</span>
+<span class="comment"># Block private domains</span>
 <span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_private'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>)</code></pre>
+    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Private or custom domain name blocked.'</span>)</code></pre>
                 </div>
                 <div class="code-snippet-content val-lang-panel" data-lang="php">
                   <pre class="code-block"><code><span class="keyword">&lt;?php</span>
@@ -1884,9 +1882,9 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
 <span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
 
-<span class="comment">// Block unresolved domains</span>
+<span class="comment">// Block private domains</span>
 <span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_private'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain could not be verified. Please use a different address.'</span>);
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Private or custom domain name blocked.'</span>);
 }</code></pre>
                 </div>
                 <button class="code-copy-btn" aria-label="Copy code">
@@ -2087,14 +2085,14 @@ business.net</code></pre>
 
               <h3>Form Abuse Shield</h3>
               <p>
-                To prevent abuse from unresolved or suspicious custom domains, configure <strong>Form Abuse
+                To prevent abuse from private or custom domains, configure <strong>Form Abuse
                   Shield</strong> from the
                 <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
               </p>
               <ul>
                 <li>The Abuse Shield system works based on your selected validation configuration and detection rules.
                 </li>
-                <li>The system monitors unresolved custom domains and automatically performs the configured action —
+                <li>The system monitors private custom domains and automatically performs the configured action —
                   <strong>block</strong> or <strong>notify</strong> — once the detection threshold is reached.</li>
                 <li>Domains added to the allow list are excluded from Abuse Shield monitoring.</li>
               </ul>
@@ -2115,7 +2113,7 @@ business.net</code></pre>
 
               <h3>What is Form Abuse Shield?</h3>
               <p>
-                Form Abuse Shield monitors unresolved and suspicious domains that reach your configured threshold. When a domain exceeds the threshold, the system automatically:
+                Form Abuse Shield monitors private and suspicious domains that reach your configured threshold. When a domain exceeds the threshold, the system automatically:
               </p>
               <ul>
                 <li><strong>Notify mode:</strong> Automatically adds the domain to your allowlist and sends you an alert</li>
@@ -2125,10 +2123,10 @@ business.net</code></pre>
               <h3>Key Features</h3>
               <ul>
                 <li>
-                  <strong>Automatic Detection:</strong> Monitors unresolved domains and suspicious registration patterns
+                  <strong>Automatic Detection:</strong> Monitors private domains and suspicious registration patterns
                 </li>
                 <li>
-                  <strong>Configurable Threshold:</strong> Set the number of unresolved requests before action is triggered (2-50 requests)
+                  <strong>Configurable Threshold:</strong> Set the number of private requests before action is triggered (2-50 requests)
                 </li>
                 <li>
                   <strong>Flexible Time Window:</strong> Choose your monitoring period (1, 3, or 7 days)
@@ -2151,7 +2149,7 @@ business.net</code></pre>
                 Navigate to <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> and configure your abuse shield settings:
               </p>
               <ul>
-                <li><strong>Detection Rule:</strong> Set the threshold (e.g., block after 5 unresolved requests)</li>
+                <li><strong>Detection Rule:</strong> Set the threshold (e.g., block after 5 requests)</li>
                 <li><strong>Time Window:</strong> Choose your lookback period (1, 3, or 7 days)</li>
                 <li><strong>Action:</strong> Select Notify (alert only) or Block (automatic blocking)</li>
               </ul>
@@ -2161,7 +2159,7 @@ business.net</code></pre>
                 Once configured, Form Abuse Shield continuously monitors incoming domain registrations:
               </p>
               <ul>
-                <li>Counts unresolved requests for each domain within your specified time window</li>
+                <li>Counts private requests for each domain within your specified time window</li>
                 <li>Tracks suspicious patterns and registration velocity</li>
                 <li>Compares metrics against your configured threshold</li>
               </ul>
@@ -2217,7 +2215,7 @@ business.net</code></pre>
                 <strong>Critical Protection:</strong> Domains that you manually allowlist are permanently protected and will <strong>never</strong> be automatically blocked by Form Abuse Shield, regardless of:
               </p>
               <ul>
-                <li>How many unresolved requests they receive</li>
+                <li>How many requests they receive</li>
                 <li>Whether you switch from Notify to Block mode</li>
                 <li>How high your threshold is configured</li>
               </ul>
@@ -2234,7 +2232,7 @@ business.net</code></pre>
 
               <h4>Balanced Setup (Recommended)</h4>
               <ul>
-                <li><strong>Threshold:</strong> 5 unresolved requests</li>
+                <li><strong>Threshold:</strong> 5 requests</li>
                 <li><strong>Window:</strong> 3 days</li>
                 <li><strong>Action:</strong> Notify</li>
                 <li><strong>Result:</strong> Good balance between security and false positive reduction</li>
@@ -2248,7 +2246,7 @@ business.net</code></pre>
 
               <p><strong>Q: What happens if I switch from Notify to Block mode?</strong></p>
               <p>
-                A: Domains previously auto-added to the allowlist in Notify mode may be auto-blocked if they continue to receive unresolved requests and reach your threshold. However, manually allowlisted domains will remain protected.
+                A: Domains previously auto-added to the allowlist in Notify mode may be auto-blocked if they continue to receive requests and reach your threshold. However, manually allowlisted domains will remain protected.
               </p>
 
               <p><strong>Q: Can I unblock an automatically blocked domain?</strong></p>
