@@ -1,0 +1,389 @@
+/* Email Domain Checker Section */
+.edc-wrapper {
+  background-color: var(--color-one);
+  padding: 80px var(--desktop-padding);
+}
+
+.edc-container {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  justify-content: space-between;
+  margin: auto;
+}
+
+/* Left Section: Domain Card */
+.edc-sect-one {
+  display: flex;
+  width: 100%;
+  max-width: 630px;
+  flex-direction: column;
+}
+
+
+.edc-domain-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.edc-domain-name {
+  font-family: "Inter_18pt-Bold";
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.edc-domain-badge {
+  background-color: var(--color-thirty-five);
+  color: #FF383C;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-family: "Inter_28pt-SemiBold";
+  line-height: 160%;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.edc-domain-subtitle {
+  font-family: "Inter_28pt-Regular";
+  font-size: 28px;
+  color: var(--color-twelve);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* Features Section */
+.edc-features {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.edc-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 8px;
+}
+
+.edc-feature-item.edc-feature-acc {
+  background-color: #EBF5FF;
+}
+
+.edc-feature-item.edc-feature-reg {
+  background-color: #F2F2F2;
+}
+
+.edc-feature-item.edc-feature-risk {
+  background-color: #FFEBEE;
+}
+
+.edc-feature-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.edc-feature-text {
+  font-family: "Inter_28pt-SemiBold";
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.edc-feature-acc-text {
+  color: #0088FF;
+}
+
+.edc-feature-reg-text {
+  color: #252525;
+}
+
+.edc-feature-risk-text {
+  color: #FF2D55;
+}
+
+/* Buttons */
+.edc-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  max-width: 413px;
+  width: 100%;
+}
+
+.edc-btn {
+  height: 58px;
+  border: none;
+  border-radius: 8px;
+  font-family: "Inter_28pt-SemiBold";
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.edc-btn-primary {
+  width: 60%;
+  background-color: #1452CA;
+  color: #FDFDFD;
+}
+
+.edc-btn-primary:hover {
+  background-color: #0F3DB3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.3);
+}
+
+.edc-btn-secondary {
+  background-color: white;
+  color: #1452CA;
+  border: 1px solid #1452CA;
+}
+
+.edc-btn-secondary:hover {
+  background-color: var(--color-twenty-two);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.15);
+}
+
+/* Footer Info */
+.edc-footer-info {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.edc-last-updated {
+  font-family: "Inter_28pt-Regular";
+  font-size: 20px;
+  color: #252525 !important;
+  margin: 0;
+}
+
+.edc-check-again-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Inter_28pt-Regular";
+  font-size: 20px;
+  color: #0000FF;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.edc-check-again-btn img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.edc-check-again-btn:hover img {
+  transform: rotate(180deg);
+}
+
+/* Right Section: Checker Card */
+.edc-sect-two {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #E5E7EB;
+}
+
+.edc-checker-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+
+.edc-checker-icon {
+  height: 64px;
+  width: 64px;
+}
+
+
+.edc-checker-title {
+  font-family: "Inter_28pt-SemiBold";
+  font-size: 24px;
+  font-weight: 600;
+  color: #252525;
+  line-height: 1.4;
+}
+
+.edc-checker-desc {
+  font-family: "Inter_28pt-Regular";
+  font-size: 14px;
+  color: #737373;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.edc-btn-checker {
+  background-color: var(--secondary-color);
+  color: var(--color-six);
+}
+
+.edc-btn-checker:hover {
+  background-color: #0F3DB3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 82, 202, 0.3);
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .edc-wrapper {
+    padding: 60px 24px;
+  }
+
+  .edc-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .edc-buttons,
+  .edc-sect-one,
+  .edc-sect-two {
+    max-width: 100%;
+  }
+
+  .edc-domain-card,
+  .edc-checker-card {
+    padding: 32px;
+  }
+
+  .edc-domain-name {
+    font-size: 40px;
+  }
+
+  .edc-checker-title {
+    font-size: 22px;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .edc-wrapper {
+    padding: 16px var(--mobile-padding) 20px var(--mobile-padding);
+  }
+
+  .edc-container {
+    gap: 20px;
+  }
+
+  .edc-domain-card,
+  .edc-checker-card {
+    padding: 24px;
+  }
+
+  .edc-domain-header {
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .edc-domain-name {
+    font-size: 32px;
+    width: 100%;
+  }
+
+  .edc-domain-badge {
+    padding: 2px 8px;
+    font-size: 12px;
+  }
+
+  .edc-domain-subtitle {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .edc-features {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .edc-feature-item {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .edc-feature-text {
+    font-size: 12px;
+  }
+
+  .edc-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .edc-btn-primary {
+    width: 100%;
+  }
+
+  .edc-btn {
+    height: 41px;
+    font-size: 14px;
+  }
+
+  .edc-footer-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .edc-last-updated {
+    font-size: 13px;
+  }
+
+  .edc-check-again-btn {
+    font-size: 12px;
+  }
+
+  .edc-check-again-btn img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .edc-checker-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .edc-checker-title {
+    font-size: 16px;
+  }
+
+  .edc-checker-desc {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .edc-checker-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .edc-checker-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+}

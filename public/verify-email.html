@@ -240,90 +240,11 @@
         <button id="submit-otp-btn" class="otp-submit-btn">Verify OTP</button>
 
         <p class="otp-resend cr-auth-tle">
-          Didn’t receive the code? <span id="resend-otp-btn">Resend</span>
+          Didn't receive the code? <span id="resend-otp-btn">Resend</span>
         </p>
       </div>
     </div>
     <!-- OTP End here -->
-
-    <!-- Authentication Overlay Start -->
-    <div id="overlay" class="overlay">
-      <!-- SignUp Dialog Start -->
-      <div id="signup-dialog" class="auth-container overlay-animate">
-        <button id="signup-close-btn" class="auth-close-btn" aria-label="Close signup dialog">
-          <img src="/assets/icons/close-outline.svg" alt="Close" />
-        </button>
-        <div class="auth-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
-        </div>
-        <p class="cr-auth-header">Create an Account</p>
-        <p class="cr-auth-tle">
-          Already have an account?
-          <span class="signin-overlay-btn cr-auth-auth">Log In</span>
-        </p>
-        <form class="form-container" id="signup-form">
-          <div class="form-item">
-            <label for="email">Email</label>
-            <input id="email" required type="email" placeholder="Example: xyz@gmail.com" />
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signup-password">Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Enter password" id="signup-password" />
-              <img id="signup-password-btn" class="password-icon" src="/assets/icons/obsured.svg"
-                alt="Toggle password visibility" role="button" tabindex="0" />
-            </div>
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signup-cpassword">Confirm Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Confirm password" id="signup-cpassword" /><img
-                id="signup-cpassword-btn" class="password-icon" src="/assets/icons/obsured.svg" />
-            </div>
-            <div id="message"></div>
-          </div>
-          <button class="cr-btn">Create an Account</button>
-        </form>
-      </div>
-      <!-- SignUp Dialog Ends -->
-
-      <!-- SignIn Dialog Start -->
-      <div id="signin-dialog" class="auth-container overlay-animate">
-        <button id="signin-close-btn" class="auth-close-btn" aria-label="Close login dialog">
-          <img src="/assets/icons/close-outline.svg" alt="Close" />
-        </button>
-        <div class="auth-logo">
-          <img src="/assets/logo/stopreg-logo.svg" alt="StopReg Logo" />
-        </div>
-        <p class="cr-auth-header">Log in</p>
-        <p class="cr-auth-tle">
-          Don't have an account?
-          <span class="signup-overlay-btn cr-auth-auth">Sign up</span>
-        </p>
-        <form class="form-container" id="signIn-form">
-          <div class="form-item">
-            <label for="signin-email">Email</label>
-            <input id="signin-email" required type="email" placeholder="Example: xyz@gmail.com" />
-          </div>
-          <div class="form-item">
-            <div class="form-item-inner">
-              <label for="signin-password">Password</label>
-            </div>
-            <div class="password-container">
-              <input required type="password" placeholder="Enter password" id="signin-password" /><img
-                id="signin-password-btn" class="password-icon" src="/assets/icons/obsured.svg" />
-            </div>
-          </div>
-          <button class="cr-btn">Log in</button>
-        </form>
-      </div>
-      <!-- SignIn Dialog Ends -->
-    </div>
-    <!-- Authentication Overlay End -->
 
     <!-- Header Start -->
     <header class="main-head-cont">
@@ -464,8 +385,6 @@
   <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/landing/index.js" defer></script>
   <script src="/assets/js/landing/header.js" defer></script>
-  <script src="/assets/js/auth/signUp.js" defer></script>
-  <script src="/assets/js/auth/login.js" defer></script>
 
   <script src="/assets/js/auth/otp.js" defer></script>
   <script src="/assets/js/verify-email-domain.js"></script>
