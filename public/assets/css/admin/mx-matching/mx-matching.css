@@ -456,7 +456,7 @@
   font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 14px;
   color: #252525;
-  transition: color 0.2s ease;
+   
 }
 
 .mx-radio-box input:checked ~ .radio-label {

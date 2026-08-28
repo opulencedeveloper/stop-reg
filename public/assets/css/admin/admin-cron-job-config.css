@@ -1,0 +1,350 @@
+/**
+ * Admin Cron Job Configuration Styles
+ */
+
+.cron-config-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Status Card */
+.cron-status-card {
+  background: #FFFFFF;
+  border: 1px solid #EBEBEB;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.cron-status-card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+  margin: 0 0 20px 0;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #737373;
+  letter-spacing: 0.5px;
+}
+
+.status-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.status-value.success {
+  color: #22863a;
+}
+
+.status-value.failed {
+  color: #cb2431;
+}
+
+.status-value.running {
+  color: #ffa500;
+}
+
+/* Configuration Card */
+.cron-config-card {
+  background: #FFFFFF;
+  border: 1px solid #EBEBEB;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.cron-config-card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+  margin: 0 0 24px 0;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 24px;
+}
+
+.form-section:last-child {
+  margin-bottom: 0;
+}
+
+.form-section label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #131313;
+  margin-bottom: 8px;
+}
+
+.form-section select,
+.form-section input[type="number"],
+.form-section input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #D1D1D1;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #131313;
+  background-color: #FFFFFF;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.form-section select:focus,
+.form-section input[type="number"]:focus,
+.form-section input[type="text"]:focus {
+  outline: none;
+  border-color: #1452CA;
+  box-shadow: 0 0 0 3px rgba(20, 82, 202, 0.1);
+}
+
+.form-section select:disabled,
+.form-section input:disabled {
+  background-color: #F9F9F9;
+  color: #A3A3A3;
+  border-color: #E5E5E5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.form-section small {
+  display: block;
+  font-size: 12px;
+  color: #737373;
+  margin-top: 6px;
+}
+
+/* Toggle Checkbox */
+.form-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #F9F9F9;
+  border: 1px solid #EBEBEB;
+  border-radius: 6px;
+  gap: 16px;
+}
+
+.form-toggle label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.form-toggle .form-description {
+  font-size: 12px;
+  color: #737373;
+  margin: 4px 0 0 0;
+}
+
+.toggle-checkbox {
+  width: 48px;
+  height: 28px;
+  appearance: none;
+  background-color: #D1D1D1;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-checkbox::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: left 0.2s ease;
+}
+
+.toggle-checkbox:checked {
+  background-color: #1452CA;
+}
+
+.toggle-checkbox:checked::after {
+  left: 22px;
+}
+
+.toggle-checkbox:focus {
+  outline: 2px solid #1452CA;
+  outline-offset: 2px;
+}
+
+.form-description {
+  font-size: 12px;
+  color: #737373;
+  margin: 0;
+}
+
+/* Config Subsections */
+.config-subsection {
+  background-color: #F9F9F9;
+  border: 1px solid #E5E5E5;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0 24px 0;
+}
+
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group-row .form-section {
+  margin-bottom: 0;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #EBEBEB;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.btn-primary {
+  background-color: #1452CA;
+  color: #FFFFFF;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0f3ba0;
+  box-shadow: 0 2px 8px rgba(20, 82, 202, 0.2);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #1452CA;
+  border: 1px solid #D1D1D1;
+}
+
+.btn-secondary:hover {
+  background-color: #F9F9F9;
+  border-color: #1452CA;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Spinner Animation */
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error States */
+.form-error {
+  color: #cb2431;
+  font-size: 12px;
+  margin-top: 6px;
+  display: block;
+}
+
+/* Loading State */
+.config-loading {
+  text-align: center;
+  padding: 32px;
+  color: #737373;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cron-config-wrapper {
+    padding: 16px 12px;
+  }
+
+  .cron-status-card,
+  .cron-config-card {
+    padding: 16px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-toggle {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-checkbox {
+    align-self: flex-end;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+}

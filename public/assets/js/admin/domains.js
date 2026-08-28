@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isSilent) showLoading();
         try {
             const result = await apiFetch(`/domains?status=${status}&page=${page}&limit=${currentLimit}`);
-            if (!result || result.message === "Error") {
+            if (!result || result.message === "error") {
                 throw new Error(result?.description || "Failed to fetch domains.");
             }
 
@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const result = await apiFetch(`/domains/${domainId}/block`, { method: "PATCH" });
-                if (!result || result.message === "Error") throw new Error(result?.description || "Failed to block domain");
+                if (!result || result.message === "error") throw new Error(result?.description || "Failed to block domain");
                 
                 if (typeof iziToast !== 'undefined') {
                     iziToast.success({ title: "Success", message: result.description || "Domain blocked successfully", position: "topRight" });
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const result = await apiFetch(`/domains/${currentDeletingId}`, { method: "DELETE" });
-                if (!result || result.message === "Error") throw new Error(result?.description || "Failed to delete report.");
+                if (!result || result.message === "error") throw new Error(result?.description || "Failed to delete report.");
                 
                 if (typeof iziToast !== 'undefined') {
                     iziToast.success({ title: "Success", message: "Domain report removed successfully", position: "topRight" });
