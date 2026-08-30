@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true&requestType=single`, {
+            const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true&requestType=single`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

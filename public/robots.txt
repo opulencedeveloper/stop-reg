@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://stopreg.com/sitemap.xml
-Sitemap: https://stopreg.com/seo/provider
-Sitemap: https://stopreg.com/seo/domain
+Sitemap: https://stopreg.com/provider
+Sitemap: https://stopreg.com/domain

@@ -353,7 +353,7 @@
   border: 1px solid #E5E7EB;
   border-radius: 16px;
   padding: 16px;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .related-provider-title {
@@ -592,6 +592,7 @@
 }
 
 .insights-cta-button {
+  display: block;
   width: max-content;
   height: 50px;
   padding: 0px 24px;
@@ -604,6 +605,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
+  line-height: 50px;
+  text-align: center;
 }
 
 .insights-cta-button:hover {
@@ -775,13 +779,20 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #1452CA;
+  color: #1452CA !important;
   text-decoration: none;
   font-family: "Inter_28pt-Regular";
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
 
+button.dns-mail-link {
+  color: #1452CA !important;
 }
 
 

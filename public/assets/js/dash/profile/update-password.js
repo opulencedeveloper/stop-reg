@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/user/update/password",
+        "https://api.stopreg.com/api/v1/user/update/password",
         {
           method: "PATCH",
           headers: {

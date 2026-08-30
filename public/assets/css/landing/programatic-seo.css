@@ -153,6 +153,9 @@
 }
 
 .edc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 58px;
   border: none;
   border-radius: 8px;
@@ -169,6 +172,7 @@
   padding: 0 32px;
   width: 100%;
   margin-bottom: 16px;
+  text-decoration: none;
 }
 
 /* Footer Info */
@@ -1712,6 +1716,7 @@
   border-radius: 16px;
   padding: 16px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .api-access-title {
@@ -1759,7 +1764,8 @@
 }
 
 .api-access-btn {
-  width: 100%;
+  display: block;
+  width: 100% !important;
   padding: 16px 32px;
   border: 1px solid #1452CA;
   background-color: transparent;
@@ -1770,6 +1776,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none !important;
+  margin-top: 24px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .api-access-btn:hover {
@@ -2433,4 +2443,261 @@
     transform: translateY(30px);
     opacity: 0;
   }
+}
+
+/* DNS Records Modal Styles */
+.dns-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
+
+.dns-modal-overlay.active {
+  display: flex;
+  animation: dnsOverlayFadeIn 0.3s ease-out;
+}
+
+.dns-modal-overlay.closing {
+  animation: dnsOverlayFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes dnsOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dnsOverlayFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.dns-modal-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 20px 20px 40px 0px #25252529;
+  max-width: 500px;
+  width: 100%;
+  padding: 16px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  animation: dnsContainerSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dns-modal-container.closing {
+  animation: dnsContainerSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes dnsContainerSlideIn {
+  from { transform: translateY(40px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes dnsContainerSlideOut {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to { transform: translateY(-30px) scale(0.95); opacity: 0; }
+}
+
+.dns-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.dns-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.dns-modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.dns-modal-close:hover {
+  color: #1f2937;
+}
+
+.dns-modal-content {
+  overflow-y: auto;
+  gap: 16px;
+  flex: 1;
+}
+
+.dns-modal-section {
+  margin-bottom: 28px;
+}
+
+.dns-modal-section:last-child {
+  margin-bottom: 0;
+}
+
+.dns-modal-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: "Inter_28pt-Regular";
+  margin: 0 0 12px 0;
+  padding: 0;
+}
+
+.dns-modal-records {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dns-record-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #374151;
+  flex-wrap: wrap;
+}
+
+.dns-record-priority,
+.dns-record-selector {
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.dns-record-ns {
+  background: #dbeafe;
+  color: #0c4a6e;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 500;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.dns-record-value {
+  font-family: monospace;
+  font-size: 12px;
+  word-break: break-all;
+  color: #1f2937;
+  flex: 1;
+}
+
+.dns-record-full {
+  background: #f9fafb;
+  border-radius: 6px;
+  padding: 12px;
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.dns-record-full code {
+  font-family: "Inter_28pt-Regular";
+  font-size: 16px;
+  color: #1f2937;
+  word-break: break-all;
+  display: block;
+}
+
+.dns-modal-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.dns-modal-btn-close {
+  background: #ECF2FD;
+  width: 100%;
+  color: #1452CA;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+
+@media (max-width: 768px) {
+  .dns-modal-container {
+    width: 95%;
+  }
+
+  .dns-record-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* DNS Mail Link Styles (for both <a> and <button>) */
+.dns-mail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1452ca;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+.dns-mail-link:hover {
+  color: #0d3fa3;
+  transform: translateX(4px);
+}
+
+.dns-mail-link:active {
+  transform: translateX(2px) scale(0.98);
+}
+
+button.dns-mail-link {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #1452ca !important;
+}
+
+.dns-mail-link-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.dns-mail-link:hover .dns-mail-link-icon {
+  transform: translateX(2px);
 }

@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inviteSubmitBtn.innerHTML = `<span class="stopreg-btn-spinner" style="border-top-color: #fff"></span> Sending...`;
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1/seat/invite", {
+            const response = await fetch("https://api.stopreg.com/api/v1/seat/invite", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

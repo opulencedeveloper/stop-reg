@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Processing...`;
         
         try {
-            const baseUrl = "http://localhost:8080/api/v1/manage/domain";
+            const baseUrl = "https://api.stopreg.com/api/v1/manage/domain";
             const url = isUpdate ? `${baseUrl}/update?domainId=${currentEditId}` : `${baseUrl}/add`;
             const method = isUpdate ? "PATCH" : "POST";
 
@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!token) return;
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1/manage/domain/settings", {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/settings", {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             const { data } = await response.json();
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         btn.innerHTML = `<span class="stopreg-btn-spinner" style="width:16px; height:16px; border-width:2px; vertical-align: middle;"></span> Saving...`;
         
         try {
-            const response = await fetch("http://localhost:8080/api/v1/manage/domain/settings", {
+            const response = await fetch("https://api.stopreg.com/api/v1/manage/domain/settings", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

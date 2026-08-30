@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1/payment/initialize", {
+            const response = await fetch("https://api.stopreg.com/api/v1/payment/initialize", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

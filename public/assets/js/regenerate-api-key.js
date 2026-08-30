@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("authToken");
     if (token) {
         try {
-            const response = await fetch("http://localhost:8080/api/v1/user/info", {
+            const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -65,7 +65,7 @@ async function handleRegenerate(btn) {
 
     try {
         const response = await fetch(
-            "http://localhost:8080/api/v1/api-token/create",
+            "https://api.stopreg.com/api/v1/api-token/create",
             {
                 method: "POST",
                 headers: {

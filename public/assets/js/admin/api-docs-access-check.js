@@ -3,7 +3,7 @@
  * Shows loading state while verifying, displays error with retry on failure
  */
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_BASE_URL = "http://localhost:8080/api/v1/admin";
+  const API_BASE_URL = "https://api.stopreg.com/api/v1/admin";
   const TOKEN_KEY = "adminToken";
 
   const showLoadingState = () => {

@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // ------------------------------------------------------
   async function fetchUserInfo() {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/user/info", {
+      const response = await fetch("https://api.stopreg.com/api/v1/user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -142,14 +142,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="input-group">
             <label>Email Verification API Endpoint</label>
             <div class="copy-input-field grey-bg">
-              <span class="truncated-text" id="email-endpoint-text">http://localhost:8080/api/v1/verify/email</span>
+              <span class="truncated-text" id="email-endpoint-text">https://api.stopreg.com/api/v1/verify/email</span>
               <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
             </div>
           </div>
           <div class="input-group">
             <label>Domain Verification API Endpoint</label>
             <div class="copy-input-field grey-bg">
-              <span class="truncated-text" id="domain-endpoint-text">http://localhost:8080/api/v1/verify/domain</span>
+              <span class="truncated-text" id="domain-endpoint-text">https://api.stopreg.com/api/v1/verify/domain</span>
               <button class="copy-btn"><img src="/assets/icons/copy.svg" alt="Copy" /> Copy</button>
             </div>
           </div>`;
@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-       const response = await fetch("http://localhost:8080/api/v1/user/info/requests?limit=0&requestType=single", {
+       const response = await fetch("https://api.stopreg.com/api/v1/user/info/requests?limit=0&requestType=single", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -1107,7 +1107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   
       try {
-          const url = `http://localhost:8080/api/v1/user/info/requests?month=${monthIndex}&requestType=single`;
+          const url = `https://api.stopreg.com/api/v1/user/info/requests?month=${monthIndex}&requestType=single`;
           const response = await fetch(url, {
                method: "GET",
                headers: {
@@ -1139,7 +1139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (!apiTokenEl) return;
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1/api-token/fetch/default", {
+            const response = await fetch("https://api.stopreg.com/api/v1/api-token/fetch/default", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -1159,7 +1159,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     // Update Link Container if needed
                     const linkContainer = document.querySelector(".link-container");
                     // if (linkContainer) {
-                    //     const newLink = ` http://localhost:8080/api/v1/check/${apiToken}?email=test@test.com`;
+                    //     const newLink = ` https://api.stopreg.com/api/v1/check/${apiToken}?email=test@test.com`;
                     //     linkContainer.href = newLink;
                     //     const linkTitle = linkContainer.querySelector(".token-link-title");
                     //     if (linkTitle) linkTitle.textContent = newLink;

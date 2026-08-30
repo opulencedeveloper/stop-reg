@@ -22,7 +22,7 @@ function getEnumOptions(field) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "http://localhost:8080/api/v1/admin";
+    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
 
     // --- DOM ELEMENTS ---
     const getEl = (id) => document.getElementById(id);
@@ -177,26 +177,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- UI HELPERS ---
     const showLoading = () => {
-        const disposablesLoading = getEl("admin-disposables-loading");
-        if (disposablesLoading) disposablesLoading.style.display = "flex";
-
+        console.log("showLoading called, currentTab:", currentTab);
         const activeTabContent = document.querySelector(".tab-content.active");
+        console.log("activeTabContent:", activeTabContent);
+
         if (activeTabContent) {
-            const table = activeTabContent.querySelector("table");
-            if (table) table.style.display = "none";
+            // Hide all buttons in this tab's header
+            const buttons = activeTabContent.querySelectorAll("button[class*='add-'], button[class*='submit-']");
+            buttons.forEach(btn => {
+                btn.style.display = "none";
+                btn.disabled = true;
+                console.log("Hiding button:", btn.className);
+            });
+
+            // Find existing spinner or create one
+            let spinner = activeTabContent.querySelector(".chart-loading-state");
+            if (!spinner) {
+                spinner = document.createElement("div");
+                spinner.className = "chart-loading-state";
+                spinner.style.cssText = "display: flex; align-items: center; justify-content: center; padding: 60px 0;";
+                spinner.innerHTML = `<div class="chart-spinner"></div>`;
+                activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
+                console.log("Created new spinner for", currentTab);
+            }
+
+            spinner.style.display = "flex";
+            console.log("Showing spinner for", currentTab);
+
+            // Hide tables and wrappers
+            const tableWrapper = activeTabContent.querySelector("div[class*='-table-wrapper']") || activeTabContent.querySelector(".disposables-table-wrapper");
+            if (tableWrapper) {
+                tableWrapper.style.display = "none";
+                console.log("Hiding table wrapper");
+            }
         }
 
         if (paginationContainer) paginationContainer.style.display = "none";
     };
 
     const hideLoading = () => {
-        const disposablesLoading = getEl("admin-disposables-loading");
-        if (disposablesLoading) disposablesLoading.style.display = "none";
-
+        console.log("hideLoading called, currentTab:", currentTab);
         const activeTabContent = document.querySelector(".tab-content.active");
+
         if (activeTabContent) {
-            const table = activeTabContent.querySelector("table");
-            if (table) table.style.display = "";
+            // Show all buttons in this tab's header
+            const buttons = activeTabContent.querySelectorAll("button[class*='add-'], button[class*='submit-']");
+            buttons.forEach(btn => {
+                btn.style.display = "";
+                btn.disabled = false;
+                console.log("Showing button:", btn.className);
+            });
+
+            // Hide spinner
+            const spinner = activeTabContent.querySelector(".chart-loading-state");
+            if (spinner) {
+                spinner.style.display = "none";
+                console.log("Hiding spinner for", currentTab);
+            }
+
+            // Show tables and wrappers
+            const tableWrapper = activeTabContent.querySelector("div[class*='-table-wrapper']") || activeTabContent.querySelector(".disposables-table-wrapper");
+            if (tableWrapper) {
+                tableWrapper.style.display = "";
+                console.log("Showing table wrapper");
+            }
         }
 
         if (paginationContainer) paginationContainer.style.display = "flex";
@@ -1048,16 +1092,32 @@ document.addEventListener("DOMContentLoaded", () => {
     seoTabButtons.forEach(btn => {
         btn.onclick = () => {
             const tab = btn.dataset.tab;
+            console.log("Tab clicked:", tab);
             if (tab === currentTab) return;
             seoTabButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            hideAllTabs();
+            showTab(tab + "-content");
             currentTab = tab;
             currentPage = 1;
             currentSearch = "";
-            if (searchInput) searchInput.value = "";
-            if (tab === "disposables") loadDisposables(currentPage, currentSearch);
+            if (searchInput) {
+                searchInput.value = "";
+                // Show search input only for disposables and provider-features tabs
+                if (tab === "disposables" || tab === "provider-features") {
+                    searchInput.parentElement.style.display = "flex";
+                    console.log("Showing search input");
+                } else {
+                    searchInput.parentElement.style.display = "none";
+                    console.log("Hiding search input");
+                }
+            }
+            console.log("About to load tab data for:", tab);
+            if (tab === "disposables") {
+                console.log("Loading disposables");
+                loadDisposables(currentPage, currentSearch);
+            }
             else if (tab === "meta-provider") {
+                console.log("Loading meta-provider");
                 loadMetaProviders(currentPage);
             }
             else if (tab === "meta-domains") loadMetaDomains(currentPage);

@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const adminToken = localStorage.getItem("adminToken");
-  const BASE_ADMIN_URL = "http://localhost:8080/api/v1/admin";
+  const BASE_ADMIN_URL = "https://api.stopreg.com/api/v1/admin";
 
   // --- DOM ELEMENTS ---
   const getEl = (id) => document.getElementById(id);
