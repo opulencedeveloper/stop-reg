@@ -186,9 +186,17 @@
 
       <!-- Admin Content -->
       <main class="admin-content">
-        <div class="cron-config-wrapper">
-          <!-- Status Section -->
-          <div class="cron-status-card">
+        <div class="cron-config-wrapper" id="cron-config-error-target">
+          <!-- Loading Spinner -->
+          <div id="cron-config-spinner" class="chart-loading-state" style="display: none;">
+            <div class="chart-spinner"></div>
+            <span class="chart-loading-text">Loading configuration...</span>
+          </div>
+
+          <!-- Content Container (hidden during loading) -->
+          <div id="cron-config-content">
+            <!-- Status Section -->
+            <div class="cron-status-card">
             <h2>Job Status</h2>
             <div class="status-grid">
               <div class="status-item">
@@ -219,6 +227,7 @@
                 <label for="runInterval">Run Interval</label>
                 <select id="runInterval" required>
                   <option value="">Select interval...</option>
+                  <option value="1_minute">Every 1 Minute</option>
                   <option value="6_hours">Every 6 Hours</option>
                   <option value="12_hours">Every 12 Hours</option>
                   <option value="24_hours">Every 24 Hours</option>
@@ -290,6 +299,7 @@
                 <button type="button" class="btn-secondary" id="resetBtn">Reset</button>
               </div>
             </form>
+          </div>
           </div>
         </div>
       </main>

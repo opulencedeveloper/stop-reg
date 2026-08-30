@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
             // Fetch all seats to get accurate total, then show only top 3
-            const response = await fetch("https://api.stopreg.com/api/v1/seat/fetch?limit=9&page=1", {
+            const response = await fetch("http://localhost:8080/api/v1/seat/fetch?limit=9&page=1", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -731,7 +731,7 @@ const apiToken = 'YOUR_API_TOKEN';
 const email = 'test@example.com';
 
 const response = await fetch(
-  \`https://api.stopreg.com/api/v1/verify/email/\${email}\`,
+  \`http://localhost:8080/api/v1/verify/email/\${email}\`,
   {
     method: 'GET',
     headers: {
@@ -744,7 +744,7 @@ const response = await fetch(
 const data = await response.json();
 console.log(data);`,
     curl: `curl -X GET \\
-  "https://api.stopreg.com/api/v1/verify/email/test@example.com" \\
+  "http://localhost:8080/api/v1/verify/email/test@example.com" \\
   -H "Content-Type: application/json" \\
   -H "x-api-token: YOUR_API_TOKEN"`,
     python: `import requests
@@ -752,7 +752,7 @@ console.log(data);`,
 api_token = 'YOUR_API_TOKEN'
 email = 'test@example.com'
 
-url = f'https://api.stopreg.com/api/v1/verify/email/{email}'
+url = f'http://localhost:8080/api/v1/verify/email/{email}'
 
 response = requests.get(url, headers={
     'Content-Type': 'application/json',
@@ -766,7 +766,7 @@ print(data)`,
 $apiToken = 'YOUR_API_TOKEN';
 $email = 'test@example.com';
 
-$url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
+$url = "http://localhost:8080/api/v1/verify/email/" . urlencode($email);
 
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -794,7 +794,7 @@ func main() {
     apiToken := "YOUR_API_TOKEN"
     email := "test@example.com"
     
-    reqURL := "https://api.stopreg.com/api/v1/verify/email/" + url.PathEscape(email)
+    reqURL := "http://localhost:8080/api/v1/verify/email/" + url.PathEscape(email)
     
     req, _ := http.NewRequest("GET", reqURL, nil)
     req.Header.Set("Content-Type", "application/json")
@@ -820,7 +820,7 @@ public class ApiCheck {
         String apiToken = "YOUR_API_TOKEN";
         String email = "test@example.com";
         
-        String urlString = "https://api.stopreg.com/api/v1/verify/email/" 
+        String urlString = "http://localhost:8080/api/v1/verify/email/" 
             + URLEncoder.encode(email, "UTF-8");
         
         URL url = new URL(urlString);
@@ -853,7 +853,7 @@ class Program
         string apiToken = "YOUR_API_TOKEN";
         string email = "test@example.com";
         
-        string url = $"https://api.stopreg.com/api/v1/verify/email/{Uri.EscapeDataString(email)}";
+        string url = $"http://localhost:8080/api/v1/verify/email/{Uri.EscapeDataString(email)}";
         
         using (HttpClient client = new HttpClient())
         {

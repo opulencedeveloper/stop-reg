@@ -18,11 +18,107 @@
   padding: 24px 24px 0 24px;
 }
 
+.seo-header-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
 .seo-header-info h2 {
   font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
   color: #252525;
+  flex: 0 0 auto;
+}
+
+.seo-search-wrapper {
+  flex: 1;
+  min-width: 250px;
+  max-width: 350px;
+}
+
+.seo-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #EDEDED;
+  border-radius: 8px;
+  height: 42px;
+  padding: 0px 12px;
+  gap: 8px;
+}
+
+.seo-search-box img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+
+.seo-search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex: 1;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #131313;
+  min-width: 100px;
+}
+
+.seo-search-box input::placeholder {
+  color: #999999;
+}
+
+.seo-search-box input:focus {
+  outline: none;
+}
+
+.seo-search-shortcut {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 11px;
+  color: #999999;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+.disposables-stats-card {
+  display: none;
+  gap: 24px;
+  padding: 24px;
+  background: #F9F9F9;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  border: 1px solid #EDEDED;
+}
+
+.disposables-stats-card.loaded {
+  display: flex;
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.stat-value {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 28px;
+  color: #1452CA;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #737373;
 }
 
 .disposables-table-wrapper {
@@ -2783,7 +2879,6 @@
   font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease;
   margin-top: 24px;
 }
 
@@ -2801,6 +2896,37 @@
 @media screen and (max-width: 768px) {
   .seo-header {
     padding: 16px 12px 0 12px;
+  }
+
+  .seo-header-info {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 12px;
+  }
+
+  .seo-header-info h2 {
+    width: 100%;
+  }
+
+  .seo-search-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: auto;
+  }
+
+  .seo-search-box {
+    width: 100%;
+    height: 38px;
+    padding: 0px 10px;
+  }
+
+  .seo-search-box input {
+    font-size: 13px;
+  }
+
+  .seo-search-shortcut {
+    font-size: 10px;
+    display: none;
   }
 
   .seo-tabs {

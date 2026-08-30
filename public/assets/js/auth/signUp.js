@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       try {
         const response = await fetch(
-          "https://api.stopreg.com/api/v1/auth/register",
+          "http://localhost:8080/api/v1/auth/register",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

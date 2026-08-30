@@ -5,7 +5,7 @@
  */
 
 const APIDocumentation = {
-  baseUrl: "https://api.stopreg.com/api/v1",
+  baseUrl: "http://localhost:8080/api/v1",
   adminPath: "/admin",
 
   endpoints: {

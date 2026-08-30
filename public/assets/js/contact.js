@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const messageInput = document.getElementById("message");
   const turnstileWidget = document.getElementById("turnstile-widget");
 
-  const API_URL = "https://api.stopreg.com/api/v1/contact/us";
+  const API_URL = "http://localhost:8080/api/v1/contact/us";
 
   // -------------------------------------------------------------------------
   // 1. Turnstile Setup (Industrial Pattern)

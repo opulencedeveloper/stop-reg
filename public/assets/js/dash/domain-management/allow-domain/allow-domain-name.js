@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://api.stopreg.com/api/v1/manage/domain/add",
+        "http://localhost:8080/api/v1/manage/domain/add",
         {
           method: "POST",
           headers: {

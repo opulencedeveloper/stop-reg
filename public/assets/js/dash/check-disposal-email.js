@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             // Using relative path as per plan
             const response = await fetch(
-        "https://api.stopreg.com/api/v1/email-domains/check-disposable-email-domain",
+        "http://localhost:8080/api/v1/email-domains/check-disposable-email-domain",
                 {
                     method: "POST",
                     headers: {

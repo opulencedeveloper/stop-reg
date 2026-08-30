@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Construct API URL
-            const url = `https://api.stopreg.com/api/v1/seo/ip-addresses?domain=${encodeURIComponent(domain.toLowerCase())}`;
+            const url = `http://localhost:8080/api/v1/seo/ip-addresses?domain=${encodeURIComponent(domain.toLowerCase())}`;
 
             const response = await fetch(url, {
                 method: 'GET',

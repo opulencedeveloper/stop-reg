@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE_URL = "https://api.stopreg.com/api/v1/admin";
+  const API_BASE_URL = "http://localhost:8080/api/v1/admin";
 
   // --- ELEMENTS ---
   const getEl = (id) => document.getElementById(id);

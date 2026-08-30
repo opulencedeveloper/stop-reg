@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Construct Query
             // Note: Endpoint /api/v1/user/info/requests is verified from user prompt
-            const url = `https://api.stopreg.com/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
+            const url = `http://localhost:8080/api/v1/api-token/fetch?page=${page}&limit=${pageSize}`;
             
             const response = await fetch(url, {
                 method: 'GET',
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken"); 
-                const response = await fetch(`https://api.stopreg.com/api/v1/api-token/delete?id=${requestToDeleteId}`, {
+                const response = await fetch(`http://localhost:8080/api/v1/api-token/delete?id=${requestToDeleteId}`, {
                     method: 'DELETE',
                     headers: {
                        "Authorization": `Bearer ${token}`

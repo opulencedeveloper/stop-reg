@@ -209,6 +209,14 @@
           <div class="seo-header">
             <div class="seo-header-info">
               <h2>Programmatic SEO</h2>
+              <!-- Search Box -->
+              <div class="seo-search-wrapper">
+                <div class="seo-search-box">
+                  <img src="/assets/icons/search.svg" alt="" />
+                  <input type="text" placeholder="Search" id="seo-search-input" />
+                  <span class="seo-search-shortcut">&#8984; 1</span>
+                </div>
+              </div>
             </div>
             <div class="seo-tabs">
               <button class="seo-tab-btn active" data-tab="disposables">Disposable Domains</button>
@@ -224,13 +232,25 @@
 
           <!-- Disposables Table Section -->
           <div class="disposables-table-container" id="admin-disposables-error-target">
-            <div class="chart-loading-state" id="admin-disposables-loading" style="display: none;">
-              <div class="chart-spinner"></div>
-              <span class="chart-loading-text">Loading disposable domains...</span>
-            </div>
-
             <!-- Disposables Tab Content -->
             <div class="tab-content active" id="disposables-content">
+              <!-- Stats Card -->
+              <div class="disposables-stats-card">
+                <div class="stat-item">
+                  <div class="stat-value" id="total-providers-count">-</div>
+                  <div class="stat-label">Total Providers</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="total-domains-count">-</div>
+                  <div class="stat-label">Total Domains</div>
+                </div>
+              </div>
+
+              <div class="chart-loading-state" id="admin-disposables-loading" style="display: none;">
+                <div class="chart-spinner"></div>
+                <span class="chart-loading-text">Loading disposable domains...</span>
+              </div>
+
               <div class="disposables-table-wrapper">
                 <table class="admin-table">
                   <thead>
@@ -256,7 +276,6 @@
                 <table class="admin-table">
                   <thead>
                     <tr>
-                      <th>Provider</th>
                       <th>Page Title</th>
                       <th>Page Description</th>
                       <th>Action</th>
@@ -278,7 +297,6 @@
                 <table class="admin-table">
                   <thead>
                     <tr>
-                      <th>Domain</th>
                       <th>Page Title</th>
                       <th>Page Description</th>
                       <th>Action</th>
@@ -300,7 +318,6 @@
                 <table class="admin-table">
                   <thead>
                     <tr>
-                      <th>Provider</th>
                       <th>Description</th>
                       <th>About Provider</th>
                       <th>Action</th>
@@ -322,7 +339,6 @@
                 <table class="admin-table">
                   <thead>
                     <tr>
-                      <th>Domain</th>
                       <th>Overview</th>
                       <th>About</th>
                       <th>How DEA Was Discovered</th>
@@ -352,6 +368,7 @@
                       <th>Mobile App</th>
                       <th>Provider Sitemap</th>
                       <th>Domain Sitemap</th>
+                      <th>Domains Per Day</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -434,11 +451,6 @@
         <input type="hidden" id="meta-provider-id" value="">
 
         <div class="form-group">
-          <label for="meta-provider-name">Provider</label>
-          <input type="text" id="meta-provider-name" placeholder="Enter provider name" required>
-        </div>
-
-        <div class="form-group">
           <label for="meta-page-title">Page Title</label>
           <input type="text" id="meta-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160" required>
           <span class="char-count"><span id="title-char-count">0</span>/160</span>
@@ -491,11 +503,6 @@
         <input type="hidden" id="meta-domains-id" value="">
 
         <div class="form-group">
-          <label for="meta-domains-name">Domain</label>
-          <input type="text" id="meta-domains-name" placeholder="Enter domain name" required>
-        </div>
-
-        <div class="form-group">
           <label for="meta-domains-page-title">Page Title</label>
           <input type="text" id="meta-domains-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160" required>
           <span class="char-count"><span id="domains-title-char-count">0</span>/160</span>
@@ -546,11 +553,6 @@
 
       <form class="provider-descriptions-modal-form" id="provider-descriptions-form">
         <input type="hidden" id="provider-descriptions-id" value="">
-
-        <div class="form-group">
-          <label for="provider-descriptions-name">Provider</label>
-          <input type="text" id="provider-descriptions-name" placeholder="Enter provider name" required>
-        </div>
 
         <div class="form-group">
           <label for="provider-descriptions-description">Description</label>
@@ -661,11 +663,6 @@
 
       <form class="domain-descriptions-modal-form" id="domain-descriptions-form">
         <input type="hidden" id="domain-descriptions-id" value="">
-
-        <div class="form-group">
-          <label for="domain-descriptions-domain">Domain Name</label>
-          <input type="text" id="domain-descriptions-domain" placeholder="Enter domain name (e.g., example.com)" pattern="[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$" title="Please enter a valid domain name with at least one dot (e.g., example.com)" required readonly>
-        </div>
 
         <div class="form-group">
           <label for="domain-descriptions-overview">Overview</label>
@@ -862,47 +859,52 @@
 
         <div class="form-group">
           <label for="provider-features-registration-required">Registration Required</label>
-          <select id="provider-features-registration-required" required></select>
+          <select id="provider-features-registration-required"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-public-inbox">Public Inbox</label>
-          <select id="provider-features-public-inbox" required></select>
+          <select id="provider-features-public-inbox"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-email-retention">Email Retention</label>
-          <select id="provider-features-email-retention" required></select>
+          <select id="provider-features-email-retention"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-paid-plans">Paid Plans</label>
-          <select id="provider-features-paid-plans" required></select>
+          <select id="provider-features-paid-plans"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-domain-rotation">Domain Rotation</label>
-          <select id="provider-features-domain-rotation" required></select>
+          <select id="provider-features-domain-rotation"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-api-available">API Available</label>
-          <select id="provider-features-api-available" required></select>
+          <select id="provider-features-api-available"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-mobile-app">Mobile App</label>
-          <select id="provider-features-mobile-app" required></select>
+          <select id="provider-features-mobile-app"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-publish-provider-sitemap">Provider Sitemap</label>
-          <select id="provider-features-publish-provider-sitemap" required></select>
+          <select id="provider-features-publish-provider-sitemap"></select>
         </div>
 
         <div class="form-group">
           <label for="provider-features-publish-domain-sitemap">Domain Sitemap</label>
-          <select id="provider-features-publish-domain-sitemap" required></select>
+          <select id="provider-features-publish-domain-sitemap"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="provider-features-domains-per-day-count">Domains Per Day Count</label>
+          <input type="number" id="provider-features-domains-per-day-count" placeholder="Enter domains per day (1-1000)" min="1" max="1000" value="10">
         </div>
 
         <button type="submit" class="provider-features-submit-btn" id="submit-provider-features-btn">Update Record</button>

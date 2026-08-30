@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_ADMIN_URL = "https://api.stopreg.com/api/v1/admin";
+    const BASE_ADMIN_URL = "http://localhost:8080/api/v1/admin";
 
     // --- ENUMS ---
     const MiscTab = Object.freeze({
@@ -438,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!confirm("Are you sure you want to block this reported domain? This will add it to the global blacklist.")) return;
         
         try {
-            const result = await apiFetch("https://api.stopreg.com/api/v1/admin", `/domains/${id}/block`, {
+            const result = await apiFetch("http://localhost:8080/api/v1/admin", `/domains/${id}/block`, {
                 method: "PATCH"
             });
 

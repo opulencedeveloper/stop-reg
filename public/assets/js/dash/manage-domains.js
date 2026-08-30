@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 limit: limitValue
             });
 
-            const url = `https://api.stopreg.com/api/v1/manage/domain/fetch?${params.toString()}`;
+            const url = `http://localhost:8080/api/v1/manage/domain/fetch?${params.toString()}`;
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const token = localStorage.getItem("authToken");
-                const response = await fetch(`https://api.stopreg.com/api/v1/manage/domain/delete?domainId=${itemToDeleteId}`, {
+                const response = await fetch(`http://localhost:8080/api/v1/manage/domain/delete?domainId=${itemToDeleteId}`, {
                     method: 'DELETE',
                     headers: { "Authorization": `Bearer ${token}` }
                 });

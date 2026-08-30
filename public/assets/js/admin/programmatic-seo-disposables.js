@@ -21,9 +21,8 @@ function getEnumOptions(field) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('[Programmatic SEO Script Started]');
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
+    const BASE_URL = "http://localhost:8080/api/v1/admin";
 
     // --- DOM ELEMENTS ---
     const getEl = (id) => document.getElementById(id);
@@ -98,7 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPage = 1;
     let currentLimit = 10;
     let currentTab = "disposables";
+    let currentSearch = "";
     let currentEditingId = null;
+    let isApiLoading = false;
+
+    // Search elements
+    const searchInput = getEl("seo-search-input");
     let currentDeletingId = null;
     let loadedMetaProviders = [];
     let loadedMetaDomains = [];
@@ -176,10 +180,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const disposablesLoading = getEl("admin-disposables-loading");
         if (disposablesLoading) disposablesLoading.style.display = "flex";
 
-        document.querySelectorAll(".tab-content").forEach(content => {
-            content.style.display = "none";
-            content.classList.remove("active");
-        });
+        const activeTabContent = document.querySelector(".tab-content.active");
+        if (activeTabContent) {
+            const table = activeTabContent.querySelector("table");
+            if (table) table.style.display = "none";
+        }
 
         if (paginationContainer) paginationContainer.style.display = "none";
     };
@@ -187,6 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const hideLoading = () => {
         const disposablesLoading = getEl("admin-disposables-loading");
         if (disposablesLoading) disposablesLoading.style.display = "none";
+
+        const activeTabContent = document.querySelector(".tab-content.active");
+        if (activeTabContent) {
+            const table = activeTabContent.querySelector("table");
+            if (table) table.style.display = "";
+        }
+
+        if (paginationContainer) paginationContainer.style.display = "flex";
     };
 
     const renderSectionError = (message, retryFn) => {
@@ -220,10 +233,14 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- DATA LOADING & RENDERING ---
-    async function loadDisposables(page = 1, isSilent = false) {
+    async function loadDisposables(page = 1, search = "", isSilent = false) {
+        if (isApiLoading) return;
+
+        isApiLoading = true;
         if (!isSilent) showLoading();
         try {
-            const result = await apiFetch(`/programmatic-seo/disposables?page=${page}&limit=${currentLimit}`);
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/disposables?page=${page}&limit=${currentLimit}${searchParam}`);
             if (!result || result.message === "error") {
                 throw new Error(result?.description || "Failed to fetch disposable domains.");
             }
@@ -232,15 +249,34 @@ document.addEventListener("DOMContentLoaded", () => {
             renderDisposablesTable(result.data.data);
             renderPagination(result.data.pagination);
 
-            const activeTabContent = getEl("disposables-content");
-            if (activeTabContent) {
-                activeTabContent.style.display = "block";
-                activeTabContent.classList.add("active");
+            // Update stats only if they're included in response (initial load)
+            // Preserve existing stats during search (don't overwrite)
+            if (result.data.stats) {
+                const totalProvidersEl = getEl("total-providers-count");
+                const totalDomainsEl = getEl("total-domains-count");
+                const statsCard = getEl("disposables-stats-card") || document.querySelector(".disposables-stats-card");
+
+                if (totalProvidersEl && result.data.stats.length > 0) {
+                    const totalProviders = result.data.stats.reduce((sum, stat) => sum + (stat.uniqueProviders?.length || 0), 0);
+                    totalProvidersEl.textContent = totalProviders.toLocaleString();
+                }
+
+                if (totalDomainsEl && result.data.stats.length > 0) {
+                    const totalDomains = result.data.stats.reduce((sum, stat) => sum + (stat.uniqueDomains?.length || 0), 0);
+                    totalDomainsEl.textContent = totalDomains.toLocaleString();
+                }
+
+                if (statsCard) statsCard.classList.add("loaded");
             }
+            // If no stats in response (search), keep existing stats displayed
+
+            showTab("disposables-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
 
         } catch (error) {
-            renderSectionError(error.message, () => loadDisposables(page));
+            renderSectionError(error.message, () => loadDisposables(page, search));
+        } finally {
+            isApiLoading = false;
         }
     }
 
@@ -249,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (disposables.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; padding: 40px; color: #737373;">No disposable domains found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3" style="text-align: center !important; padding: 40px; color: #737373;">No disposable domains found.</td></tr>`;
             return;
         }
 
@@ -310,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (targetPage !== page) {
                     currentPage = targetPage;
                     if (currentTab === "disposables") {
-                        loadDisposables(currentPage);
+                        loadDisposables(currentPage, currentSearch);
                     } else if (currentTab === "meta-provider") {
                         loadMetaProviders(currentPage);
                     } else if (currentTab === "meta-domains") {
@@ -320,7 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else if (currentTab === "domain-descriptions") {
                         loadDomainDescriptions(currentPage);
                     } else if (currentTab === "provider-features") {
-                        loadProviderFeatures(currentPage);
+                        loadProviderFeatures(currentPage, currentSearch);
                     } else if (currentTab === "provider-sitemaps") {
                         loadProviderSitemaps(currentPage);
                     } else if (currentTab === "domain-sitemaps") {
@@ -333,13 +369,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- META PROVIDER FUNCTIONS ---
     async function loadMetaProviders(page = 1) {
-        console.log('[loadMetaProviders called] page:', page);
         showLoading();
         try {
             const result = await apiFetch(`/programmatic-seo/meta-providers?page=${page}&limit=${currentLimit}`);
-            console.log('[Meta Providers Full API Response]', JSON.stringify(result, null, 2));
-            console.log('[result.data]', result?.data);
-            console.log('[result.data.data]', result?.data?.data);
 
             if (!result || result.message === "error") {
                 throw new Error(result?.description || "Failed to fetch meta providers.");
@@ -347,15 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             hideLoading();
             loadedMetaProviders = result.data?.data || result.data || [];
-            console.log('[Meta Providers Final Loaded Data]', loadedMetaProviders);
             renderMetaProvidersTable(loadedMetaProviders);
             renderPagination(result.data.pagination);
 
-            const activeTabContent = getEl("meta-provider-content");
-            if (activeTabContent) {
-                activeTabContent.style.display = "block";
-                activeTabContent.classList.add("active");
-            }
+            showTab("meta-provider-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
 
         } catch (error) {
@@ -368,32 +395,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (providers.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #737373;">No meta providers found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No meta providers found.</td></tr>`;
             return;
-        }
-
-        console.log('[Rendering Meta Providers]', providers);
-        if (providers.length > 0) {
-            console.log('[First Provider Object]', providers[0]);
         }
 
         tbody.innerHTML = providers.map(p => `
             <tr>
-                <td>${p.provider || '-'}</td>
                 <td>${p.metaPageTitle || '-'}</td>
                 <td>${p.metaPageDescription || '-'}</td>
                 <td class="text-left">
                     <div class="action-btn-container">
-                        <button class="action-btn" data-provider="${p.provider}">
+                        <button class="action-btn" data-id="${p._id}">
                             <img src="/assets/icons/more-vert.svg" alt="More" />
                         </button>
-                        <div class="action-dropdown" id="dropdown-${p.provider}">
-                            <button class="dropdown-item-edit" data-provider="${p.provider}">
+                        <div class="action-dropdown" id="dropdown-${p._id}">
+                            <button class="dropdown-item-edit" data-id="${p._id}">
                                 <img src="/assets/icons/edit-outline.svg" alt="" />
                                 <span>Edit Record</span>
                             </button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item-remove" data-provider="${p.provider}">
+                            <button class="dropdown-item-remove" data-id="${p._id}">
                                 <img src="/assets/icons/delete.svg" alt="" />
                                 <span>Remove Record</span>
                             </button>
@@ -410,8 +431,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-provider-content .dropdown-item-edit").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const provider = btn.dataset.provider;
-                handleMetaProviderEdit(provider);
+                const id = btn.dataset.id;
+                handleMetaProviderEdit(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -419,8 +440,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-provider-content .dropdown-item-remove").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const provider = btn.dataset.provider;
-                handleMetaProviderDelete(provider);
+                const id = btn.dataset.id;
+                handleMetaProviderDelete(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -428,35 +449,32 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-provider-content .action-btn").forEach(btn => {
             btn.onclick = (e) => {
                 e.stopPropagation();
-                const provider = btn.dataset.provider;
-                const dropdown = document.getElementById(`dropdown-${provider}`);
+                const id = btn.dataset.id;
+                const dropdown = document.getElementById(`dropdown-${id}`);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
                 if (dropdown) dropdown.classList.add("show");
             };
         });
     }
 
-    function handleMetaProviderEdit(provider) {
-        const record = loadedMetaProviders.find(r => r.provider === provider);
+    function handleMetaProviderEdit(id) {
+        const record = loadedMetaProviders.find(r => r._id === id);
         if (!record) return;
 
-        currentEditingId = provider;
+        currentEditingId = id;
         if (metaProviderModalTitle) metaProviderModalTitle.textContent = "Edit Meta Provider";
         if (submitMetaProviderBtn) submitMetaProviderBtn.textContent = "Update Record";
 
-        const nameField = getEl("meta-provider-name");
-        if (nameField) nameField.setAttribute("readonly", "");
-        nameField.value = record.provider || "";
         getEl("meta-page-title").value = record.metaPageTitle || "";
         getEl("meta-page-description").value = record.metaPageDescription || "";
-        getEl("meta-provider-id").value = provider;
+        getEl("meta-provider-id").value = id;
 
         updateCharCounts();
         if (metaProviderModal) metaProviderModal.classList.add("active");
     }
 
-    function handleMetaProviderDelete(provider) {
-        currentDeletingId = provider;
+    function handleMetaProviderDelete(id) {
+        currentDeletingId = id;
         if (metaProviderDeleteModal) metaProviderDeleteModal.classList.add("is-active");
     }
 
@@ -492,29 +510,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- META DOMAINS FUNCTIONS ---
     async function loadMetaDomains(page = 1) {
-        console.log('[loadMetaDomains called] page:', page);
         showLoading();
         try {
             const result = await apiFetch(`/programmatic-seo/meta-domains?page=${page}&limit=${currentLimit}`);
-            console.log('[Meta Domains API Response]', result);
-            if (result?.data) {
-                console.log('[Meta Domains First Item]', result.data.data?.[0]);
-            }
             if (!result || result.message === "error") {
                 throw new Error(result?.description || "Failed to fetch meta domains.");
             }
 
             hideLoading();
             loadedMetaDomains = result.data.data || [];
-            console.log('[Meta Domains Loaded]', loadedMetaDomains);
             renderMetaDomainsTable(loadedMetaDomains);
             renderPagination(result.data.pagination);
 
-            const activeTabContent = getEl("meta-domains-content");
-            if (activeTabContent) {
-                activeTabContent.style.display = "block";
-                activeTabContent.classList.add("active");
-            }
+            showTab("meta-domains-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
 
         } catch (error) {
@@ -527,27 +535,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (domains.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #737373;">No meta domains found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No meta domains found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = domains.map(d => `
             <tr>
-                <td>${d.domain || '-'}</td>
                 <td>${d.metaDomainPageTitle || '-'}</td>
                 <td>${d.metaDomainPageDescription || '-'}</td>
                 <td class="text-left">
                     <div class="action-btn-container">
-                        <button class="action-btn" data-domain="${d.domain}">
+                        <button class="action-btn" data-id="${d._id}">
                             <img src="/assets/icons/more-vert.svg" alt="More" />
                         </button>
-                        <div class="action-dropdown" id="domains-dropdown-${d.domain}">
-                            <button class="dropdown-item-edit" data-domain="${d.domain}">
+                        <div class="action-dropdown" id="domains-dropdown-${d._id}">
+                            <button class="dropdown-item-edit" data-id="${d._id}">
                                 <img src="/assets/icons/edit-outline.svg" alt="" />
                                 <span>Edit Record</span>
                             </button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item-remove" data-domain="${d.domain}">
+                            <button class="dropdown-item-remove" data-id="${d._id}">
                                 <img src="/assets/icons/delete.svg" alt="" />
                                 <span>Remove Record</span>
                             </button>
@@ -564,8 +571,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-domains-content .dropdown-item-edit").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const domain = btn.dataset.domain;
-                handleMetaDomainsEdit(domain);
+                const id = btn.dataset.id;
+                handleMetaDomainsEdit(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -573,8 +580,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-domains-content .dropdown-item-remove").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const domain = btn.dataset.domain;
-                handleMetaDomainsDelete(domain);
+                const id = btn.dataset.id;
+                handleMetaDomainsDelete(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -582,33 +589,32 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#meta-domains-content .action-btn").forEach(btn => {
             btn.onclick = (e) => {
                 e.stopPropagation();
-                const domain = btn.dataset.domain;
-                const dropdown = document.getElementById(`domains-dropdown-${domain}`);
+                const id = btn.dataset.id;
+                const dropdown = document.getElementById(`domains-dropdown-${id}`);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
                 if (dropdown) dropdown.classList.add("show");
             };
         });
     }
 
-    function handleMetaDomainsEdit(domain) {
-        const record = loadedMetaDomains.find(r => r.domain === domain);
+    function handleMetaDomainsEdit(id) {
+        const record = loadedMetaDomains.find(r => r._id === id);
         if (!record) return;
 
-        currentEditingId = domain;
+        currentEditingId = id;
         if (metaDomainsModalTitle) metaDomainsModalTitle.textContent = "Edit Meta Domain";
         if (submitMetaDomainsBtn) submitMetaDomainsBtn.textContent = "Update Record";
 
-        getEl("meta-domains-name").value = record.domain || "";
-        getEl("meta-domains-page-title").value = record.metaPageTitle || "";
-        getEl("meta-domains-page-description").value = record.metaPageDescription || "";
-        getEl("meta-domains-id").value = domain;
+        getEl("meta-domains-page-title").value = record.metaDomainPageTitle || "";
+        getEl("meta-domains-page-description").value = record.metaDomainPageDescription || "";
+        getEl("meta-domains-id").value = id;
 
         updateMetaDomainsCharCounts();
         if (metaDomainsModal) metaDomainsModal.classList.add("active");
     }
 
-    function handleMetaDomainsDelete(domain) {
-        currentDeletingId = domain;
+    function handleMetaDomainsDelete(id) {
+        currentDeletingId = id;
         if (metaDomainsDeleteModal) metaDomainsDeleteModal.classList.add("is-active");
     }
 
@@ -642,12 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedProviderDescriptions = result.data.data || [];
             renderProviderDescriptionsTable(loadedProviderDescriptions);
             renderPagination(result.data.pagination);
-
-            const activeTabContent = getEl("provider-descriptions-content");
-            if (activeTabContent) {
-                activeTabContent.style.display = "block";
-                activeTabContent.classList.add("active");
-            }
+            showTab("provider-descriptions-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
 
         } catch (error) {
@@ -660,27 +661,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (descriptions.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 40px; color: #737373;">No provider descriptions found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No provider descriptions found.</td></tr>`;
             return;
         }
 
         tbody.innerHTML = descriptions.map(d => `
             <tr>
-                <td>${d.provider || '-'}</td>
                 <td>${d.providerDescription ? d.providerDescription.substring(0, 50) + (d.providerDescription.length > 50 ? '...' : '') : '-'}</td>
                 <td>${d.aboutProvider ? d.aboutProvider.substring(0, 50) + (d.aboutProvider.length > 50 ? '...' : '') : '-'}</td>
                 <td class="text-left">
                     <div class="action-btn-container">
-                        <button class="action-btn" data-provider="${d.provider}">
+                        <button class="action-btn" data-id="${d._id}">
                             <img src="/assets/icons/more-vert.svg" alt="More" />
                         </button>
-                        <div class="action-dropdown" id="desc-dropdown-${d.provider}">
-                            <button class="dropdown-item-edit" data-provider="${d.provider}">
+                        <div class="action-dropdown" id="desc-dropdown-${d._id}">
+                            <button class="dropdown-item-edit" data-id="${d._id}">
                                 <img src="/assets/icons/edit-outline.svg" alt="" />
                                 <span>Edit Record</span>
                             </button>
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item-remove" data-provider="${d.provider}">
+                            <button class="dropdown-item-remove" data-id="${d._id}">
                                 <img src="/assets/icons/delete.svg" alt="" />
                                 <span>Remove Record</span>
                             </button>
@@ -697,8 +697,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#provider-descriptions-content .dropdown-item-edit").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const provider = btn.dataset.provider;
-                handleProviderDescriptionsEdit(provider);
+                const id = btn.dataset.id;
+                handleProviderDescriptionsEdit(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -706,8 +706,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#provider-descriptions-content .dropdown-item-remove").forEach(btn => {
             btn.onclick = (e) => {
                 e.preventDefault();
-                const provider = btn.dataset.provider;
-                handleProviderDescriptionsDelete(provider);
+                const id = btn.dataset.id;
+                handleProviderDescriptionsDelete(id);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
             };
         });
@@ -715,34 +715,31 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#provider-descriptions-content .action-btn").forEach(btn => {
             btn.onclick = (e) => {
                 e.stopPropagation();
-                const provider = btn.dataset.provider;
-                const dropdown = document.getElementById(`desc-dropdown-${provider}`);
+                const id = btn.dataset.id;
+                const dropdown = document.getElementById(`desc-dropdown-${id}`);
                 document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
                 if (dropdown) dropdown.classList.add("show");
             };
         });
     }
 
-    function handleProviderDescriptionsEdit(provider) {
-        const record = loadedProviderDescriptions.find(r => r.provider === provider);
+    function handleProviderDescriptionsEdit(id) {
+        const record = loadedProviderDescriptions.find(r => r._id === id);
         if (!record) return;
 
-        currentEditingId = provider;
+        currentEditingId = id;
         if (providerDescriptionsModalTitle) providerDescriptionsModalTitle.textContent = "Edit Provider Description";
         if (submitProviderDescriptionsBtn) submitProviderDescriptionsBtn.textContent = "Update Record";
 
-        const nameField = getEl("provider-descriptions-name");
-        if (nameField) nameField.setAttribute("readonly", "");
-        nameField.value = record.provider || "";
         getEl("provider-descriptions-description").value = record.providerDescription || "";
         getEl("provider-descriptions-about").value = record.aboutProvider || "";
-        getEl("provider-descriptions-id").value = provider;
+        getEl("provider-descriptions-id").value = id;
 
         if (providerDescriptionsModal) providerDescriptionsModal.classList.add("active");
     }
 
-    function handleProviderDescriptionsDelete(provider) {
-        currentDeletingId = provider;
+    function handleProviderDescriptionsDelete(id) {
+        currentDeletingId = id;
         if (providerDescriptionsDeleteModal) providerDescriptionsDeleteModal.classList.add("is-active");
     }
 
@@ -782,19 +779,19 @@ document.addEventListener("DOMContentLoaded", () => {
         populateSelectOptions("provider-features-domain-sitemap", "publishDomainSitemap");
     }
 
-    async function loadProviderFeatures(page = 1) {
+    async function loadProviderFeatures(page = 1, search = "") {
         showLoading();
         try {
-            const result = await apiFetch(`/programmatic-seo/provider-features?page=${page}&limit=${currentLimit}`);
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/provider-features?page=${page}&limit=${currentLimit}${searchParam}`);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
             hideLoading();
             loadedProviderFeatures = result.data.data || [];
             renderProviderFeaturesTable(loadedProviderFeatures);
             renderPagination(result.data.pagination);
-            const activeTabContent = getEl("provider-features-content");
-            if (activeTabContent) { activeTabContent.style.display = "block"; activeTabContent.classList.add("active"); }
+            showTab("provider-features-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
-        } catch (error) { renderSectionError(error.message, () => loadProviderFeatures(page)); }
+        } catch (error) { renderSectionError(error.message, () => loadProviderFeatures(page, search)); }
     }
 
     function renderProviderFeaturesTable(features) {
@@ -802,11 +799,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (features.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 40px; color: #737373;">No provider features found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="12" style="text-align: center !important; padding: 40px; color: #737373;">No provider features found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = features.map(f => `<tr><td>${f.provider || '-'}</td><td>${getEnumLabel("registrationRequired", f.registrationRequired)}</td><td>${getEnumLabel("publicInbox", f.publicInbox)}</td><td>${getEnumLabel("emailRetention", f.emailRetention)}</td><td>${getEnumLabel("paidPlans", f.paidPlans)}</td><td>${getEnumLabel("domainRotation", f.domainRotation)}</td><td>${getEnumLabel("apiAvailable", f.apiAvailable)}</td><td>${getEnumLabel("mobileApp", f.mobileApp)}</td><td>${getEnumLabel("publishProviderSitemap", f.publishProviderSitemap)}</td><td>${getEnumLabel("publishDomainSitemap", f.publishDomainSitemap)}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-provider="${f.provider}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="pf-dropdown-${f.provider}"><button class="dropdown-item-edit" data-provider="${f.provider}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-provider="${f.provider}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
+        tbody.innerHTML = features.map(f => `<tr><td>${f.provider || '-'}</td><td>${getEnumLabel("registrationRequired", f.registrationRequired)}</td><td>${getEnumLabel("publicInbox", f.publicInbox)}</td><td>${getEnumLabel("emailRetention", f.emailRetention)}</td><td>${getEnumLabel("paidPlans", f.paidPlans)}</td><td>${getEnumLabel("domainRotation", f.domainRotation)}</td><td>${getEnumLabel("apiAvailable", f.apiAvailable)}</td><td>${getEnumLabel("mobileApp", f.mobileApp)}</td><td>${getEnumLabel("publishProviderSitemap", f.publishProviderSitemap)}</td><td>${getEnumLabel("publishDomainSitemap", f.publishDomainSitemap)}</td><td>${f.domainsPerDayCount || '-'}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-provider="${f.provider}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="pf-dropdown-${f.provider}"><button class="dropdown-item-edit" data-provider="${f.provider}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-provider="${f.provider}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
         document.querySelectorAll("#provider-features-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleProviderFeaturesEdit(btn.dataset.provider); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#provider-features-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleProviderFeaturesDelete(btn.dataset.provider); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#provider-features-content .action-btn").forEach(btn => {btn.onclick = (e) => {e.stopPropagation(); const provider = btn.dataset.provider; const dropdown = document.getElementById(`pf-dropdown-${provider}`); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show")); if (dropdown) dropdown.classList.add("show");};});
@@ -829,6 +826,7 @@ document.addEventListener("DOMContentLoaded", () => {
         getEl("provider-features-mobile-app").value = record.mobileApp || "";
         getEl("provider-features-publish-provider-sitemap").value = record.publishProviderSitemap || "";
         getEl("provider-features-publish-domain-sitemap").value = record.publishDomainSitemap || "";
+        getEl("provider-features-domains-per-day-count").value = record.domainsPerDayCount || "";
         getEl("provider-features-id").value = provider;
 
         if (providerFeaturesModal) providerFeaturesModal.classList.add("active");
@@ -855,8 +853,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedProviderSitemaps = result.data.data || [];
             renderProviderSitemapsTable(loadedProviderSitemaps);
             renderPagination(result.data.pagination);
-            const activeTabContent = getEl("provider-sitemaps-content");
-            if (activeTabContent) { activeTabContent.style.display = "block"; activeTabContent.classList.add("active"); }
+            showTab("provider-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
         } catch (error) { renderSectionError(error.message, () => loadProviderSitemaps(page)); }
     }
@@ -866,7 +863,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (sitemaps.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #737373;">No provider site maps found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center !important; padding: 40px; color: #737373;">No provider site maps found.</td></tr>`;
             return;
         }
 
@@ -921,8 +918,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedDomainSitemaps = result.data.data || [];
             renderDomainSitemapsTable(loadedDomainSitemaps);
             renderPagination(result.data.pagination);
-            const activeTabContent = getEl("domain-sitemaps-content");
-            if (activeTabContent) { activeTabContent.style.display = "block"; activeTabContent.classList.add("active"); }
+            showTab("domain-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
         } catch (error) { renderSectionError(error.message, () => loadDomainSitemaps(page)); }
     }
@@ -930,7 +926,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderDomainSitemapsTable(sitemaps) {
         const tbody = getEl("domain-sitemaps-tbody");
         if (!tbody) return;
-        if (sitemaps.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: #737373;">No records found.</td></tr>`; return; }
+        if (sitemaps.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align: center !important; padding: 40px; color: #737373;">No records found.</td></tr>`; return; }
         tbody.innerHTML = sitemaps.map(s => {
             const key = `${s.providerName}/${s.domainName}`;
             return `<tr><td>${s.providerName || '-'}</td><td>${s.domainName || '-'}</td><td>${s.metaDomainPageTitle ? s.metaDomainPageTitle.substring(0, 25) + (s.metaDomainPageTitle.length > 25 ? '...' : '') : '-'}</td><td>${s.metaDomainPageDescription ? s.metaDomainPageDescription.substring(0, 25) + (s.metaDomainPageDescription.length > 25 ? '...' : '') : '-'}</td><td>${s.deaOverview ? s.deaOverview.substring(0, 25) + (s.deaOverview.length > 25 ? '...' : '') : '-'}</td><td>${s.aboutDea ? s.aboutDea.substring(0, 25) + (s.aboutDea.length > 25 ? '...' : '') : '-'}</td><td>${s.howDeaDiscovered ? s.howDeaDiscovered.substring(0, 25) + (s.howDeaDiscovered.length > 25 ? '...' : '') : '-'}</td><td><a href="${s.publishedUrl}" target="_blank" style="color: #1570EF; text-decoration: none;">View</a></td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-key="${key}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dsm-dropdown-${key.replace(/\//g, '-')}"><button class="dropdown-item-edit" data-key="${key}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-key="${key}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`;
@@ -987,8 +983,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadedDomainDescriptions = result.data.data || [];
             renderDomainDescriptionsTable(loadedDomainDescriptions);
             renderPagination(result.data.pagination);
-            const activeTabContent = getEl("domain-descriptions-content");
-            if (activeTabContent) { activeTabContent.style.display = "block"; activeTabContent.classList.add("active"); }
+            showTab("domain-descriptions-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
         } catch (error) { renderSectionError(error.message, () => loadDomainDescriptions(page)); }
     }
@@ -998,33 +993,31 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (descriptions.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #737373;">No domain descriptions found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No domain descriptions found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = descriptions.map(d => `<tr><td style="white-space: nowrap;">${d.domain || '-'}</td><td>${d.deaOverview ? d.deaOverview.substring(0, 40) + (d.deaOverview.length > 40 ? '...' : '') : '-'}</td><td>${d.aboutDea ? d.aboutDea.substring(0, 40) + (d.aboutDea.length > 40 ? '...' : '') : '-'}</td><td>${d.howDeaDiscovered ? d.howDeaDiscovered.substring(0, 40) + (d.howDeaDiscovered.length > 40 ? '...' : '') : '-'}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-domain="${d.domain}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dd-dropdown-${d.domain}"><button class="dropdown-item-edit" data-domain="${d.domain}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-domain="${d.domain}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
-        document.querySelectorAll("#domain-descriptions-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsEdit(btn.dataset.domain); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
-        document.querySelectorAll("#domain-descriptions-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsDelete(btn.dataset.domain); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
-        document.querySelectorAll("#domain-descriptions-content .action-btn").forEach(btn => {btn.onclick = (e) => {e.stopPropagation(); const domain = btn.dataset.domain; const dropdown = document.getElementById(`dd-dropdown-${domain}`); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show")); if (dropdown) dropdown.classList.add("show");};});
+        tbody.innerHTML = descriptions.map(d => `<tr><td>${d.deaOverview ? d.deaOverview.substring(0, 40) + (d.deaOverview.length > 40 ? '...' : '') : '-'}</td><td>${d.aboutDea ? d.aboutDea.substring(0, 40) + (d.aboutDea.length > 40 ? '...' : '') : '-'}</td><td>${d.howDeaDiscovered ? d.howDeaDiscovered.substring(0, 40) + (d.howDeaDiscovered.length > 40 ? '...' : '') : '-'}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-id="${d._id}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dd-dropdown-${d._id}"><button class="dropdown-item-edit" data-id="${d._id}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-id="${d._id}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
+        document.querySelectorAll("#domain-descriptions-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsEdit(btn.dataset.id); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
+        document.querySelectorAll("#domain-descriptions-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsDelete(btn.dataset.id); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
+        document.querySelectorAll("#domain-descriptions-content .action-btn").forEach(btn => {btn.onclick = (e) => {e.stopPropagation(); const id = btn.dataset.id; const dropdown = document.getElementById(`dd-dropdown-${id}`); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show")); if (dropdown) dropdown.classList.add("show");};});
     }
 
-    function handleDomainDescriptionsEdit(domain) {
-        const record = loadedDomainDescriptions.find(r => r.domain === domain);
+    function handleDomainDescriptionsEdit(id) {
+        const record = loadedDomainDescriptions.find(r => r._id === id);
         if (!record) return;
-        currentEditingId = domain;
+        currentEditingId = id;
         if (domainDescriptionsModalTitle) domainDescriptionsModalTitle.textContent = "Edit Domain Description";
         if (submitDomainDescriptionsBtn) submitDomainDescriptionsBtn.textContent = "Update Record";
-        getEl("domain-descriptions-domain").value = record.domain || "";
-        getEl("domain-descriptions-domain").readOnly = true;
         getEl("domain-descriptions-overview").value = record.deaOverview || "";
         getEl("domain-descriptions-about").value = record.aboutDea || "";
         getEl("domain-descriptions-discovered").value = record.howDeaDiscovered || "";
-        getEl("domain-descriptions-id").value = domain;
+        getEl("domain-descriptions-id").value = id;
         if (domainDescriptionsModal) domainDescriptionsModal.classList.add("active");
     }
 
-    function handleDomainDescriptionsDelete(domain) {
-        currentDeletingId = domain;
+    function handleDomainDescriptionsDelete(id) {
+        currentDeletingId = id;
         if (domainDescriptionsDeleteModal) domainDescriptionsDeleteModal.classList.add("is-active");
     }
 
@@ -1036,19 +1029,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- TAB SWITCHING ---
+    function hideAllTabs() {
+        document.querySelectorAll(".tab-content").forEach(c => {
+            c.style.display = "none";
+            c.classList.remove("active");
+        });
+    }
+
+    function showTab(tabId) {
+        hideAllTabs();
+        const tabContent = getEl(tabId);
+        if (tabContent) {
+            tabContent.style.display = "block";
+            tabContent.classList.add("active");
+        }
+    }
+
     seoTabButtons.forEach(btn => {
         btn.onclick = () => {
             const tab = btn.dataset.tab;
-            console.log('[Tab Clicked]', tab);
             if (tab === currentTab) return;
             seoTabButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            document.querySelectorAll(".tab-content").forEach(c => {c.style.display = "none"; c.classList.remove("active");});
+            hideAllTabs();
             currentTab = tab;
             currentPage = 1;
-            if (tab === "disposables") loadDisposables(currentPage);
+            currentSearch = "";
+            if (searchInput) searchInput.value = "";
+            if (tab === "disposables") loadDisposables(currentPage, currentSearch);
             else if (tab === "meta-provider") {
-                console.log('[Loading Meta Providers]');
                 loadMetaProviders(currentPage);
             }
             else if (tab === "meta-domains") loadMetaDomains(currentPage);
@@ -1056,7 +1065,7 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (tab === "domain-descriptions") loadDomainDescriptions(currentPage);
             else if (tab === "provider-features") {
                 initializeProviderFeaturesForm();
-                loadProviderFeatures(currentPage);
+                loadProviderFeatures(currentPage, currentSearch);
             }
             else if (tab === "provider-sitemaps") {
                 loadProviderSitemaps(currentPage);
@@ -1067,6 +1076,23 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
+    // --- SEARCH FUNCTIONALITY ---
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.oninput = () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                currentSearch = searchInput.value.trim();
+                currentPage = 1;
+                if (currentTab === "disposables") {
+                    loadDisposables(currentPage, currentSearch);
+                } else if (currentTab === "provider-features") {
+                    loadProviderFeatures(currentPage, currentSearch);
+                }
+            }, 300);
+        };
+    }
+
     // --- META PROVIDER MODAL LISTENERS ---
     if (addMetaProviderBtn) {
         addMetaProviderBtn.onclick = () => {
@@ -1074,8 +1100,6 @@ document.addEventListener("DOMContentLoaded", () => {
             metaProviderForm.reset();
             if (metaProviderModalTitle) metaProviderModalTitle.textContent = "Add Meta Provider";
             if (submitMetaProviderBtn) submitMetaProviderBtn.textContent = "Continue";
-            const nameField = getEl("meta-provider-name");
-            if (nameField) nameField.removeAttribute("readonly");
             updateCharCounts();
             if (metaProviderModal) metaProviderModal.classList.add("active");
         };
@@ -1210,7 +1234,6 @@ document.addEventListener("DOMContentLoaded", () => {
         metaProviderForm.onsubmit = async (e) => {
             e.preventDefault();
 
-            const provider = getEl("meta-provider-name").value;
             const metaPageTitle = getEl("meta-page-title").value;
             const metaPageDescription = getEl("meta-page-description").value;
 
@@ -1225,7 +1248,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const result = await apiFetch(endpoint, {
                     method: method,
                     body: JSON.stringify({
-                        provider,
                         metaPageTitle,
                         metaPageDescription
                     })
@@ -1276,6 +1298,7 @@ document.addEventListener("DOMContentLoaded", () => {
             metaDomainsForm.reset();
             if (metaDomainsModalTitle) metaDomainsModalTitle.textContent = "Add Meta Domain";
             if (submitMetaDomainsBtn) submitMetaDomainsBtn.textContent = "Continue";
+            getEl("meta-domains-id").value = "";
             updateMetaDomainsCharCounts();
             if (metaDomainsModal) metaDomainsModal.classList.add("active");
         };
@@ -1354,7 +1377,6 @@ document.addEventListener("DOMContentLoaded", () => {
         metaDomainsForm.onsubmit = async (e) => {
             e.preventDefault();
 
-            const domain = getEl("meta-domains-name").value;
             const metaDomainPageTitle = getEl("meta-domains-page-title").value;
             const metaDomainPageDescription = getEl("meta-domains-page-description").value;
 
@@ -1369,7 +1391,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const result = await apiFetch(endpoint, {
                     method: method,
                     body: JSON.stringify({
-                        domain,
                         metaDomainPageTitle,
                         metaDomainPageDescription
                     })
@@ -1420,8 +1441,7 @@ document.addEventListener("DOMContentLoaded", () => {
             providerDescriptionsForm.reset();
             if (providerDescriptionsModalTitle) providerDescriptionsModalTitle.textContent = "Add Provider Description";
             if (submitProviderDescriptionsBtn) submitProviderDescriptionsBtn.textContent = "Continue";
-            const nameField = getEl("provider-descriptions-name");
-            if (nameField) nameField.removeAttribute("readonly");
+            getEl("provider-descriptions-id").value = "";
             if (providerDescriptionsModal) providerDescriptionsModal.classList.add("active");
         };
     }
@@ -1487,7 +1507,6 @@ document.addEventListener("DOMContentLoaded", () => {
         providerDescriptionsForm.onsubmit = async (e) => {
             e.preventDefault();
 
-            const provider = getEl("provider-descriptions-name").value;
             const providerDescription = getEl("provider-descriptions-description").value;
             const aboutProvider = getEl("provider-descriptions-about").value;
 
@@ -1502,7 +1521,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const result = await apiFetch(endpoint, {
                     method: method,
                     body: JSON.stringify({
-                        provider,
                         providerDescription,
                         aboutProvider
                     })
@@ -1553,7 +1571,6 @@ document.addEventListener("DOMContentLoaded", () => {
             domainDescriptionsForm.reset();
             if (domainDescriptionsModalTitle) domainDescriptionsModalTitle.textContent = "Add Domain Description";
             if (submitDomainDescriptionsBtn) submitDomainDescriptionsBtn.textContent = "Continue";
-            getEl("domain-descriptions-domain").readOnly = false;
             if (domainDescriptionsModal) domainDescriptionsModal.classList.add("active");
         };
     }
@@ -1663,7 +1680,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (domainDescriptionsForm) {
         domainDescriptionsForm.onsubmit = async (e) => {
             e.preventDefault();
-            const domain = getEl("domain-descriptions-domain").value;
             const deaOverview = getEl("domain-descriptions-overview").value;
             const aboutDea = getEl("domain-descriptions-about").value;
             const howDeaDiscovered = getEl("domain-descriptions-discovered").value;
@@ -1673,7 +1689,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const method = currentEditingId ? "PUT" : "POST";
                 const endpoint = currentEditingId ? `/programmatic-seo/disposable-domain-descriptions/${currentEditingId}` : "/programmatic-seo/disposable-domain-descriptions";
-                const body = {domain, deaOverview, aboutDea, howDeaDiscovered};
+                const body = {deaOverview, aboutDea, howDeaDiscovered};
                 const result = await apiFetch(endpoint, {
                     method: method,
                     body: JSON.stringify(body)
@@ -1927,25 +1943,30 @@ document.addEventListener("DOMContentLoaded", () => {
             const mobileApp = getEl("provider-features-mobile-app").value;
             const publishProviderSitemap = getEl("provider-features-publish-provider-sitemap").value;
             const publishDomainSitemap = getEl("provider-features-publish-domain-sitemap").value;
+            const domainsPerDayCountValue = getEl("provider-features-domains-per-day-count").value;
+            const domainsPerDayCount = domainsPerDayCountValue ? parseInt(domainsPerDayCountValue) : null;
 
             const originalBtnHTML = submitProviderFeaturesBtn.innerHTML;
             submitProviderFeaturesBtn.disabled = true;
             submitProviderFeaturesBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Updating...`;
 
             try {
+                // Only include fields with values (optional fields)
+                const payload = {};
+                if (registrationRequired) payload.registrationRequired = registrationRequired;
+                if (publicInbox) payload.publicInbox = publicInbox;
+                if (emailRetention) payload.emailRetention = emailRetention;
+                if (paidPlans) payload.paidPlans = paidPlans;
+                if (domainRotation) payload.domainRotation = domainRotation;
+                if (apiAvailable) payload.apiAvailable = apiAvailable;
+                if (mobileApp) payload.mobileApp = mobileApp;
+                if (publishProviderSitemap) payload.publishProviderSitemap = publishProviderSitemap;
+                if (publishDomainSitemap) payload.publishDomainSitemap = publishDomainSitemap;
+                if (domainsPerDayCount) payload.domainsPerDayCount = domainsPerDayCount;
+
                 const result = await apiFetch(`/programmatic-seo/provider-features/${currentEditingId}`, {
                     method: "PUT",
-                    body: JSON.stringify({
-                        registrationRequired,
-                        publicInbox,
-                        emailRetention,
-                        paidPlans,
-                        domainRotation,
-                        apiAvailable,
-                        mobileApp,
-                        publishProviderSitemap,
-                        publishDomainSitemap
-                    })
+                    body: JSON.stringify(payload)
                 });
 
                 if (result?.message === "success" || result?.message === "Success") {
