@@ -234,18 +234,6 @@
           <div class="disposables-table-container" id="admin-disposables-error-target">
             <!-- Disposables Tab Content -->
             <div class="tab-content active" id="disposables-content">
-              <!-- Stats Card -->
-              <div class="disposables-stats-card">
-                <div class="stat-item">
-                  <div class="stat-value" id="total-providers-count">-</div>
-                  <div class="stat-label">Total Providers</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-value" id="total-domains-count">-</div>
-                  <div class="stat-label">Total Domains</div>
-                </div>
-              </div>
-
               <div class="chart-loading-state" id="admin-disposables-loading" style="display: none;">
                 <div class="chart-spinner"></div>
                 <span class="chart-loading-text">Loading disposable domains...</span>
@@ -381,6 +369,12 @@
 
             <!-- Provider Site Maps Tab Content -->
             <div class="tab-content" id="provider-sitemaps-content">
+              <!-- Provider Sitemaps Count Card -->
+              <div class="sitemap-count-card">
+                <span class="count-label">Published Providers</span>
+                <span class="count-value" id="provider-sitemaps-count">-</span>
+              </div>
+
               <div class="provider-sitemaps-table-wrapper">
                 <table class="admin-table">
                   <thead>
@@ -403,6 +397,12 @@
 
             <!-- Domain Site Maps Tab Content -->
             <div class="tab-content" id="domain-sitemaps-content">
+              <!-- Domain Sitemaps Count Card -->
+              <div class="sitemap-count-card">
+                <span class="count-label">Published Domains</span>
+                <span class="count-value" id="domain-sitemaps-count">-</span>
+              </div>
+
               <div class="domain-sitemaps-table-wrapper">
                 <table class="admin-table">
                   <thead>

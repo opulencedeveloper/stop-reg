@@ -197,12 +197,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 spinner.className = "chart-loading-state";
                 spinner.style.cssText = "display: flex; align-items: center; justify-content: center; padding: 60px 0;";
                 spinner.innerHTML = `<div class="chart-spinner"></div>`;
-                activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
+
+                // For sitemap tabs, insert after count card; otherwise insert at beginning
+                const isSitemapTab = currentTab === "provider-sitemaps" || currentTab === "domain-sitemaps";
+                if (isSitemapTab) {
+                    const countCard = activeTabContent.querySelector(".sitemap-count-card");
+                    if (countCard) {
+                        // Insert spinner right after count card
+                        if (countCard.nextSibling) {
+                            activeTabContent.insertBefore(spinner, countCard.nextSibling);
+                        } else {
+                            activeTabContent.appendChild(spinner);
+                        }
+                    } else {
+                        activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
+                    }
+                } else {
+                    activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
+                }
                 console.log("Created new spinner for", currentTab);
             }
 
             spinner.style.display = "flex";
             console.log("Showing spinner for", currentTab);
+
+            // Hide count cards (keep visible only for sitemap tabs during search)
+            const countCard = activeTabContent.querySelector(".sitemap-count-card");
+            if (countCard) {
+                const isSearch = currentSearch !== ""; // Only keep visible during search
+                const isSitemapTab = currentTab === "provider-sitemaps" || currentTab === "domain-sitemaps";
+                if (!isSearch || !isSitemapTab) {
+                    countCard.style.display = "none";
+                    console.log("Hiding count card");
+                }
+            }
 
             // Hide tables and wrappers
             const tableWrapper = activeTabContent.querySelector("div[class*='-table-wrapper']") || activeTabContent.querySelector(".disposables-table-wrapper");
@@ -233,6 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (spinner) {
                 spinner.style.display = "none";
                 console.log("Hiding spinner for", currentTab);
+            }
+
+            // Show count cards
+            const countCard = activeTabContent.querySelector(".sitemap-count-card");
+            if (countCard) {
+                countCard.style.display = "";
+                console.log("Showing count card");
             }
 
             // Show tables and wrappers
@@ -292,28 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isSilent) hideLoading();
             renderDisposablesTable(result.data.data);
             renderPagination(result.data.pagination);
-
-            // Update stats only if they're included in response (initial load)
-            // Preserve existing stats during search (don't overwrite)
-            if (result.data.stats) {
-                const totalProvidersEl = getEl("total-providers-count");
-                const totalDomainsEl = getEl("total-domains-count");
-                const statsCard = getEl("disposables-stats-card") || document.querySelector(".disposables-stats-card");
-
-                if (totalProvidersEl && result.data.stats.length > 0) {
-                    const totalProviders = result.data.stats.reduce((sum, stat) => sum + (stat.uniqueProviders?.length || 0), 0);
-                    totalProvidersEl.textContent = totalProviders.toLocaleString();
-                }
-
-                if (totalDomainsEl && result.data.stats.length > 0) {
-                    const totalDomains = result.data.stats.reduce((sum, stat) => sum + (stat.uniqueDomains?.length || 0), 0);
-                    totalDomainsEl.textContent = totalDomains.toLocaleString();
-                }
-
-                if (statsCard) statsCard.classList.add("loaded");
-            }
-            // If no stats in response (search), keep existing stats displayed
-
             showTab("disposables-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
 
@@ -888,23 +901,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function loadProviderSitemaps(page = 1) {
-        showLoading();
+    async function loadProviderSitemaps(page = 1, search = "", isSilent = false) {
+        if (!isSilent) showLoading();
         try {
-            const result = await apiFetch(`/programmatic-seo/provider-sitemaps?page=${page}&limit=${currentLimit}`);
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/provider-sitemaps?page=${page}&limit=${currentLimit}${searchParam}`);
+            console.log('[loadProviderSitemaps] API result:', result);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
-            hideLoading();
+            if (!isSilent) hideLoading();
             loadedProviderSitemaps = result.data.data || [];
-            renderProviderSitemapsTable(loadedProviderSitemaps);
+            console.log('[loadProviderSitemaps] result.data.count:', result.data.count);
+            renderProviderSitemapsTable(loadedProviderSitemaps, result.data.count);
             renderPagination(result.data.pagination);
             showTab("provider-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
-        } catch (error) { renderSectionError(error.message, () => loadProviderSitemaps(page)); }
+        } catch (error) { renderSectionError(error.message, () => loadProviderSitemaps(page, search)); }
     }
 
-    function renderProviderSitemapsTable(sitemaps) {
+    function renderProviderSitemapsTable(sitemaps, count) {
+        console.log('[renderProviderSitemapsTable] sitemaps:', sitemaps, 'count:', count);
         const tbody = getEl("provider-sitemaps-tbody");
         if (!tbody) return;
+
+        const countEl = getEl("provider-sitemaps-count");
+        console.log('[renderProviderSitemapsTable] countEl:', countEl);
+        if (countEl && count !== undefined) {
+            console.log('[renderProviderSitemapsTable] Setting count to:', count);
+            countEl.textContent = count;
+        } else {
+            console.log('[renderProviderSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
+        }
 
         if (sitemaps.length === 0) {
             tbody.innerHTML = `<tr><td colspan="7" style="text-align: center !important; padding: 40px; color: #737373;">No provider site maps found.</td></tr>`;
@@ -953,23 +979,37 @@ document.addEventListener("DOMContentLoaded", () => {
         if (descInput) getEl("provider-sitemaps-meta-description-count").textContent = descInput.value.length;
     }
 
-    async function loadDomainSitemaps(page = 1) {
-        showLoading();
+    async function loadDomainSitemaps(page = 1, search = "", isSilent = false) {
+        if (!isSilent) showLoading();
         try {
-            const result = await apiFetch(`/programmatic-seo/domain-sitemaps?page=${page}&limit=${currentLimit}`);
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/domain-sitemaps?page=${page}&limit=${currentLimit}${searchParam}`);
+            console.log('[loadDomainSitemaps] API result:', result);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
-            hideLoading();
+            if (!isSilent) hideLoading();
             loadedDomainSitemaps = result.data.data || [];
-            renderDomainSitemapsTable(loadedDomainSitemaps);
+            console.log('[loadDomainSitemaps] result.data.count:', result.data.count);
+            renderDomainSitemapsTable(loadedDomainSitemaps, result.data.count);
             renderPagination(result.data.pagination);
             showTab("domain-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
-        } catch (error) { renderSectionError(error.message, () => loadDomainSitemaps(page)); }
+        } catch (error) { renderSectionError(error.message, () => loadDomainSitemaps(page, search)); }
     }
 
-    function renderDomainSitemapsTable(sitemaps) {
+    function renderDomainSitemapsTable(sitemaps, count) {
+        console.log('[renderDomainSitemapsTable] sitemaps:', sitemaps, 'count:', count);
         const tbody = getEl("domain-sitemaps-tbody");
         if (!tbody) return;
+
+        const countEl = getEl("domain-sitemaps-count");
+        console.log('[renderDomainSitemapsTable] countEl:', countEl);
+        if (countEl && count !== undefined) {
+            console.log('[renderDomainSitemapsTable] Setting count to:', count);
+            countEl.textContent = count;
+        } else {
+            console.log('[renderDomainSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
+        }
+
         if (sitemaps.length === 0) { tbody.innerHTML = `<tr><td colspan="9" style="text-align: center !important; padding: 40px; color: #737373;">No records found.</td></tr>`; return; }
         tbody.innerHTML = sitemaps.map(s => {
             const key = `${s.providerName}/${s.domainName}`;
@@ -1102,8 +1142,8 @@ document.addEventListener("DOMContentLoaded", () => {
             currentSearch = "";
             if (searchInput) {
                 searchInput.value = "";
-                // Show search input only for disposables and provider-features tabs
-                if (tab === "disposables" || tab === "provider-features") {
+                // Show search input for disposables, provider-features, and sitemap tabs
+                if (tab === "disposables" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps") {
                     searchInput.parentElement.style.display = "flex";
                     console.log("Showing search input");
                 } else {
@@ -1144,10 +1184,15 @@ document.addEventListener("DOMContentLoaded", () => {
             searchTimeout = setTimeout(() => {
                 currentSearch = searchInput.value.trim();
                 currentPage = 1;
+                const isSilent = currentSearch !== ""; // Silent mode for searches to keep count card visible
                 if (currentTab === "disposables") {
-                    loadDisposables(currentPage, currentSearch);
+                    loadDisposables(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "provider-features") {
-                    loadProviderFeatures(currentPage, currentSearch);
+                    loadProviderFeatures(currentPage, currentSearch, isSilent);
+                } else if (currentTab === "provider-sitemaps") {
+                    loadProviderSitemaps(currentPage, currentSearch, false); // Always show loading spinner
+                } else if (currentTab === "domain-sitemaps") {
+                    loadDomainSitemaps(currentPage, currentSearch, false); // Always show loading spinner
                 }
             }, 300);
         };
@@ -2140,6 +2185,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // --- LOAD SITEMAP COUNTS ---
+    async function loadSitemapCounts() {
+        try {
+            const [providerResult, domainResult] = await Promise.all([
+                apiFetch("/programmatic-seo/provider-sitemaps?limit=1&page=1"),
+                apiFetch("/programmatic-seo/domain-sitemaps?limit=1&page=1")
+            ]);
+
+            const providersCount = providerResult?.data?.pagination?.total || 0;
+            const domainsCount = domainResult?.data?.pagination?.total || 0;
+
+            const providerEl = getEl("provider-sitemaps-count");
+            const domainEl = getEl("domain-sitemaps-count");
+
+            if (providerEl) providerEl.textContent = providersCount.toLocaleString();
+            if (domainEl) domainEl.textContent = domainsCount.toLocaleString();
+        } catch (error) {
+            console.warn("Failed to load sitemap counts:", error.message);
+        }
+    }
+
     // --- INITIAL LOAD ---
     loadDisposables(currentPage);
+    loadSitemapCounts();
 });

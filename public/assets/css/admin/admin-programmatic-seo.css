@@ -100,6 +100,30 @@
   display: flex;
 }
 
+.sitemap-count-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #F9F9F9;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #EDEDED;
+}
+
+.sitemap-count-card .count-label {
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-size: 14px;
+  color: #737373;
+}
+
+.sitemap-count-card .count-value {
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-size: 18px;
+  color: #1452CA;
+  margin-left: auto;
+}
+
 .stat-item {
   flex: 1;
   display: flex;
@@ -1369,6 +1393,33 @@
   visibility: visible !important;
   transform: translateY(0) scale(1) !important;
   pointer-events: auto !important;
+}
+
+/* Sitemap Counts Card */
+.sitemap-counts-card {
+  display: flex;
+  gap: 20px;
+  padding: 12px 0;
+  font-size: 13px;
+}
+
+.count-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count-label {
+  color: #737373;
+  font-family: 'Inter_28pt-Regular', sans-serif;
+  font-weight: 400;
+}
+
+.count-value {
+  color: #1452CA;
+  font-family: 'Inter_28pt-SemiBold', sans-serif;
+  font-weight: 600;
+  min-width: 30px;
 }
 
 /* Hover trigger for Desktop */
