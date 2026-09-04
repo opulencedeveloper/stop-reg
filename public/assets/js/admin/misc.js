@@ -536,6 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 getEl("subdomain-domain").value = record.domain || "";
                 getEl("subdomain-premium").checked = record.premium || false;
                 getEl("subdomain-approval").value = record.approval_mode || "null";
+                getEl("subdomain-grade").value = record.grade !== undefined ? record.grade : "0";
             }
             subdomainModalTitle.textContent = "Edit Subdomain Provider";
             submitSubdomainBtn.textContent = "Update Provider";
@@ -669,6 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const domain = getEl("subdomain-domain").value.trim();
         const premium_status = getEl("subdomain-premium").checked;
         const approval_mode = getEl("subdomain-approval").value;
+        const grade = parseInt(getEl("subdomain-grade").value);
 
         if (!domain_provider || !domain || !approval_mode) {
             iziToast.error({ title: 'Error', message: "Provider, Domain, and Approval Mode are required.", position: 'topRight' });
@@ -684,7 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const result = await apiFetch(BASE_ADMIN_URL, endpoint, {
                 method,
-                body: JSON.stringify({ domain_provider, domain, premium_status, approval_mode })
+                body: JSON.stringify({ domain_provider, domain, premium_status, approval_mode, grade })
             });
 
             if (result?.message === "success" || result?.message === "Success") {

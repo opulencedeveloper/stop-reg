@@ -239,6 +239,7 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
+                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -259,6 +260,7 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
+                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -279,6 +281,7 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
+                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -352,6 +355,7 @@
             <option value="email_api">Email API</option>
             <option value="email_routing">Email Routing</option>
             <option value="secure_email_gateway">Secure Email Gateway</option>
+            <option value="forwarding">Forwarding</option>
           </select>
         </div>
 
@@ -364,6 +368,11 @@
             <option value="relay">Relay</option>
             <option value="unresolved">Private</option>
           </select>
+        </div>
+
+        <div class="form-group">
+          <label for="forward-alias">Forward Alias Domain</label>
+          <input type="text" id="forward-alias" placeholder="e.g., mail.example.com">
         </div>
 
         <button type="submit" class="mx-submit-btn" id="submit-mx-btn">Continue</button>

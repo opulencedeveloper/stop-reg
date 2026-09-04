@@ -208,7 +208,7 @@
             <div class="domain-mgmt-header-bottom">
               <div class="domain-mgmt-tabs">
                 <button class="tab-btn active" data-tab="username">Restricted Username</button>
-                <button class="tab-btn" data-tab="relay">Relay Domain</button>
+                <button class="tab-btn" data-tab="forward_alias">Forward Alias Domain</button>
                 <button class="tab-btn" data-tab="disposable">Disposable Email Provider Domains</button>
                 <button class="tab-btn" data-tab="public">Public Email Provider</button>
                 <button class="tab-btn" data-tab="providers">Disposable Providers</button>
@@ -280,21 +280,22 @@
               </div>
             </div>
 
-            <!-- Relay Tab Content -->
-            <div class="tab-content" id="relay-content">
+            <!-- Forward Alias Tab Content -->
+            <div class="tab-content" id="forward_alias-content">
               <div class="domain-mgmt-table-wrapper">
                 <table class="admin-table">
                   <thead>
                     <tr>
                       <th>Providers</th>
-                      <th>Domain</th>
+                      <th>Forward Alias Domain</th>
+                      <th>ISP Domain</th>
+                      <th>Edu Domain</th>
                       <th>Domain Age</th>
-                      <th>Found</th>
                       <th>Source</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody id="relay-tbody">
+                  <tbody id="forward_alias-tbody">
                     <tr>
                       <td>Yahoo.com</td>
                       <td>macdonald@gmail.com</td>
@@ -429,7 +430,7 @@
             <select id="domain-type"
               style="width: 100%; height: 48px; border: 1px solid #EDEDED; border-radius: 8px; padding: 0 16px; font-family: 'Inter_28pt-Regular', sans-serif; font-size: 14px; margin-bottom: 16px;">
               <option value="username">Restricted Username</option>
-              <option value="relay">Relay Domain</option>
+              <option value="forward_alias">Forward Alias Domain</option>
               <option value="disposable">Disposable Email Provider</option>
               <option value="public">Public Email Provider</option>
             </select>
@@ -443,6 +444,16 @@
           <div class="form-group">
             <label for="domain-name">Value (Domain or Username)</label>
             <input type="text" id="domain-name" placeholder="Please type here" required>
+          </div>
+
+          <div class="form-group" id="isp-domain-group" style="display: none;">
+            <label for="isp-domain-input">ISP Domain</label>
+            <input type="text" id="isp-domain-input" placeholder="e.g. mail.example.com">
+          </div>
+
+          <div class="form-group" id="edu-domain-group" style="display: none;">
+            <label for="edu-domain-input">Edu Domain</label>
+            <input type="text" id="edu-domain-input" placeholder="e.g. mail.university.edu">
           </div>
 
           <button type="submit" class="domain-submit-btn">Continue</button>

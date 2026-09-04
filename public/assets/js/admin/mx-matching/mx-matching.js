@@ -257,6 +257,11 @@ document.addEventListener("DOMContentLoaded", () => {
             classificationSelect.value = record.classification || "private";
         }
 
+        const forwardAliasInput = getEl("forward-alias");
+        if (forwardAliasInput) {
+            forwardAliasInput.value = record.forward_alias || "";
+        }
+
         addModal.classList.add("active");
     };
 
@@ -415,12 +420,13 @@ document.addEventListener("DOMContentLoaded", () => {
         addMxForm.onsubmit = async (e) => {
             e.preventDefault();
             const originalBtnHTML = submitMxBtn.innerHTML;
-            
+
             const provider = getEl("email-provider")?.value;
             const mx_record = getEl("domain-name")?.value;
             const service_type = getEl("service-type")?.value || "disposable";
             const grade = getEl("mx-grade")?.value || "standard";
             const classification = getEl("mx-classification")?.value || "private";
+            const forward_alias = getEl("forward-alias")?.value?.trim() || undefined;
 
             submitMxBtn.disabled = true;
             submitMxBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> ${currentEditingId ? 'Updating...' : 'Adding...'}`;
@@ -429,15 +435,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 const method = currentEditingId ? "PATCH" : "POST";
                 const endpoint = currentEditingId ? `/mx-matching/${currentEditingId}` : "/mx-matching";
 
+                const body = {
+                    provider,
+                    mx_record,
+                    service_type,
+                    grade,
+                    classification
+                };
+
+                if (forward_alias) {
+                    body.forward_alias = forward_alias;
+                }
+
                 const result = await apiFetch(endpoint, {
                     method: method,
-                    body: JSON.stringify({
-                        provider,
-                        mx_record,
-                        service_type,
-                        grade,
-                        classification
-                    })
+                    body: JSON.stringify(body)
                 });
 
                 if (result?.message === "success" || result?.message === "Success") {
