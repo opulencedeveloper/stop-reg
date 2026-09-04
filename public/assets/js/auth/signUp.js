@@ -1,6 +1,7 @@
- 
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signup-form");
+  if (!form) return; // Exit if signup form doesn't exist
   const submitBtn = form.querySelector(".cr-btn");
   
   // Elements that might not exist on the standalone page

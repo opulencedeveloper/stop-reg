@@ -1047,13 +1047,21 @@
             parent.appendChild(elem);
           }
         }
-        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-        var address = protocol + window.location.host + window.location.pathname + '/ws';
-        var socket = new WebSocket(address);
-        socket.onmessage = function (msg) {
-          if (msg.data == 'reload') window.location.reload();
-          else if (msg.data == 'refreshcss') refreshCSS();
-        };
+        // Skip WebSocket for SEO pages (programmatic content loaded dynamically)
+        var isSeoPage = /^\/(providers|domains)\//.test(window.location.pathname);
+        if (!isSeoPage) {
+          var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+          var address = protocol + window.location.host + window.location.pathname + '/ws';
+          var socket = new WebSocket(address);
+        } else {
+          var socket = null;
+        }
+        if (socket) {
+          socket.onmessage = function (msg) {
+            if (msg.data == 'reload') window.location.reload();
+            else if (msg.data == 'refreshcss') refreshCSS();
+          };
+        }
         if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
           sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
         }

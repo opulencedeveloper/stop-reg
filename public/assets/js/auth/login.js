@@ -1,6 +1,7 @@
- 
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signIn-form");
+  if (!form) return; // Exit if login form doesn't exist
   const submitBtn = form.querySelector(".cr-btn");
   const overLay = document.getElementById("overlay");
     const description = document.querySelector(".otp-email");

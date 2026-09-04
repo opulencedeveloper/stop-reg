@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Details - StopReg</title>
+  <meta name="description" content="Disposable email provider information." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+
+  <!-- Stylesheets -->
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/landing/disposable-email-provider.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="page-container">
+    <div id="loading-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 20px;">
+      <div class="chart-spinner" style="width: 48px; height: 48px; border: 3px solid #F0F0F0; border-top-color: #1452CA; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      <p style="font-size: 16px; color: #737373;">Loading provider details...</p>
+    </div>
+    <div id="content-container"></div>
+    <div id="error-state" style="display: none; padding: 40px 20px; text-align: center;">
+      <h2 style="color: #DC2626; margin-bottom: 16px;">Error Loading Provider</h2>
+      <p id="error-message" style="color: #737373; margin-bottom: 24px;"></p>
+      <button onclick="location.href='/'" style="padding: 10px 24px; background: #1452CA; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px;">Go Home</button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    async function loadProviderPage() {
+      try {
+        // Extract provider name from query parameter
+        // e.g., ?name=emailondeck.com
+        const urlParams = new URLSearchParams(window.location.search);
+        const provider = urlParams.get('name');
+
+        if (!provider) {
+          throw new Error('Provider name not provided. Usage: /providers?name=emailondeck.com');
+        }
+
+        console.log('[Provider Page] Loading provider:', provider);
+
+        // Fetch provider HTML from API
+        const response = await fetch(`/api/v1/programmatic-seo/providers/${encodeURIComponent(provider)}`);
+
+        if (!response.ok) {
+          throw new Error(`Failed to load provider: ${response.statusText}`);
+        }
+
+        const html = await response.text();
+
+        // Try to extract title from the HTML
+        const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+        if (titleMatch) {
+          document.title = titleMatch[1];
+        }
+
+        // Hide loading, show content
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('content-container').innerHTML = html;
+        document.getElementById('error-state').style.display = 'none';
+
+        console.log('[Provider Page] Provider loaded successfully');
+
+        // Run any scripts that were in the HTML
+        const scripts = document.getElementById('content-container').querySelectorAll('script');
+        scripts.forEach(script => {
+          const newScript = document.createElement('script');
+          newScript.textContent = script.textContent;
+          if (script.src) newScript.src = script.src;
+          document.body.appendChild(newScript);
+        });
+
+      } catch (error) {
+        console.error('[Provider Page] Error:', error);
+
+        // Hide loading, show error
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('content-container').innerHTML = '';
+        document.getElementById('error-state').style.display = 'block';
+        document.getElementById('error-message').textContent = error.message;
+      }
+    }
+
+    // Load when page is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadProviderPage);
+    } else {
+      loadProviderPage();
+    }
+  </script>
+</body>
+</html>

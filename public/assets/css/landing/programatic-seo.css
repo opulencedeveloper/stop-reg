@@ -94,6 +94,7 @@
 
 .edc-feature-item {
   display: flex;
+  width: max-content;
   align-items: center;
   gap: 8px;
   padding: 7px 8px;
@@ -1308,7 +1309,7 @@
   .edc-feature-item {
     padding: 4px 8px;
     gap: 4px;
-    flex: 0 0 calc(50% - 4px);
+    width: max-content;
   }
 
   .edc-feature-text {
