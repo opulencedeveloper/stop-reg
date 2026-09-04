@@ -207,6 +207,7 @@
               <div class="mx-tabs">
                 <button class="tab-btn active" data-tab="disposable">Disposable</button>
                 <button class="tab-btn" data-tab="relay">Relay</button>
+                <button class="tab-btn" data-tab="forward_alias">Forward Alias</button>
                 <button class="tab-btn" data-tab="others">Others</button>
               </div>
 
@@ -220,15 +221,14 @@
             </div>
           </div>
 
-          <!-- Loading Spinner -->
-          <div class="chart-loading-state" id="admin-mx-loading" style="display: none;">
-            <div class="chart-spinner"></div>
-            <span class="chart-loading-text">Loading data...</span>
-          </div>
-
           <!-- Table Section -->
           <div id="admin-mx-error-target">
             <div class="mx-table-container">
+              <!-- Loading Spinner -->
+              <div class="mx-loading-spinner" id="admin-mx-loading" style="display: none;">
+                <div class="mx-spinner-circle"></div>
+                <span class="mx-spinner-text">Loading data...</span>
+              </div>
               <!-- Disposable Content -->
               <div class="tab-content active" id="disposable-content">
                 <div class="mx-table-wrapper">
@@ -239,7 +239,6 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
-                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -260,7 +259,6 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
-                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -281,11 +279,30 @@
                         <th>MX Records</th>
                         <th>Service Type</th>
                         <th>Grade</th>
-                        <th>Forward Alias</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody id="others-tbody">
+                      <!-- Data injected here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Forward Alias Content -->
+              <div class="tab-content" id="forward_alias-content">
+                <div class="mx-table-wrapper">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Providers</th>
+                        <th>Alias MX Record</th>
+                        <th>Service Type</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="forward_alias-tbody">
                       <!-- Data injected here -->
                     </tbody>
                   </table>

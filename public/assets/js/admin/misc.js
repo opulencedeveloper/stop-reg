@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (loadedRecords.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #737373;">No subdomain providers found.</td></tr>`;
             return;
         }
 
@@ -267,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </td>
                 <td>${domainAge}</td>
                 <td>${r.approval_mode || "-"}</td>
+                <td>${r.grade !== undefined && r.grade !== null ? r.grade : "-"}</td>
                 <td class="text-right">
                     <div class="action-btn-container">
                         <button class="edit-btn" data-id="${r.id || r._id}">Edit</button>
