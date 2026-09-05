@@ -209,6 +209,8 @@
               <div class="domain-mgmt-tabs">
                 <button class="tab-btn active" data-tab="username">Restricted Username</button>
                 <button class="tab-btn" data-tab="forward_alias">Forward Alias Domain</button>
+                <button class="tab-btn" data-tab="isp_domain">ISP Domain</button>
+                <button class="tab-btn" data-tab="edu_domain">Edu Domain</button>
                 <button class="tab-btn" data-tab="disposable">Disposable Email Provider Domains</button>
                 <button class="tab-btn" data-tab="public">Public Email Provider</button>
                 <button class="tab-btn" data-tab="providers">Disposable Providers</button>
@@ -288,8 +290,6 @@
                     <tr>
                       <th>Providers</th>
                       <th>Forward Alias Domain</th>
-                      <th>ISP Domain</th>
-                      <th>Edu Domain</th>
                       <th>Domain Age</th>
                       <th>Source</th>
                       <th>Action</th>
@@ -309,6 +309,44 @@
                             alt="More" /></button></td>
                     </tr>
                     <!-- More rows... -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ISP Domain Tab Content -->
+            <div class="tab-content" id="isp_domain-content">
+              <div class="domain-mgmt-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Providers</th>
+                      <th>ISP Domain</th>
+                      <th>Domain Age</th>
+                      <th>Source</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="isp_domain-tbody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Edu Domain Tab Content -->
+            <div class="tab-content" id="edu_domain-content">
+              <div class="domain-mgmt-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Providers</th>
+                      <th>Edu Domain</th>
+                      <th>Domain Age</th>
+                      <th>Source</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="edu_domain-tbody">
                   </tbody>
                 </table>
               </div>
@@ -446,15 +484,6 @@
             <input type="text" id="domain-name" placeholder="Please type here" required>
           </div>
 
-          <div class="form-group" id="isp-domain-group" style="display: none;">
-            <label for="isp-domain-input">ISP Domain</label>
-            <input type="text" id="isp-domain-input" placeholder="e.g. mail.example.com">
-          </div>
-
-          <div class="form-group" id="edu-domain-group" style="display: none;">
-            <label for="edu-domain-input">Edu Domain</label>
-            <input type="text" id="edu-domain-input" placeholder="e.g. mail.university.edu">
-          </div>
 
           <button type="submit" class="domain-submit-btn">Continue</button>
         </form>

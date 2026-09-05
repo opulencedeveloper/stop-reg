@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!domains || domains.length === 0) {
-            const colspan = type === "username" ? 3 : (type === "providers" ? 5 : (type === "forward_alias" ? 7 : 6));
+            const colspan = type === "username" ? 3 : (type === "providers" ? 5 : 5);
             tbody.innerHTML = `<tr><td colspan="${colspan}" style="text-align: center; padding: 40px; color: #737373;">No ${type} records found.</td></tr>`;
             return;
         }
@@ -223,8 +223,54 @@ document.addEventListener("DOMContentLoaded", () => {
                     <tr>
                         <td>${d.provider || "Unknown"}</td>
                         <td>${d.value}</td>
-                        <td>${d.isp_domains || "-"}</td>
-                        <td>${d.edu_domains || "-"}</td>
+                        <td>${formatDomainAge(d.domain_age)}</td>
+                        <td>${formatDataSource(d.data_source)}</td>
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown" id="dropdown-${d.id}">
+                                    <button class="dropdown-item edit-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/edit-outline.svg" alt="" /> Edit
+                                    </button>
+                                    <button class="dropdown-item delete-btn text-danger" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" /> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            } else if (type === "isp_domain") {
+                return `
+                    <tr>
+                        <td>${d.provider || "Unknown"}</td>
+                        <td>${d.value}</td>
+                        <td>${formatDomainAge(d.domain_age)}</td>
+                        <td>${formatDataSource(d.data_source)}</td>
+                        <td class="action-cell">
+                            <div class="action-btn-container">
+                                <button class="action-btn" data-id="${d.id}">
+                                    <img src="/assets/icons/more-vert.svg" alt="More" />
+                                </button>
+                                <div class="action-dropdown" id="dropdown-${d.id}">
+                                    <button class="dropdown-item edit-btn" data-id="${d.id}">
+                                        <img src="/assets/icons/edit-outline.svg" alt="" /> Edit
+                                    </button>
+                                    <button class="dropdown-item delete-btn text-danger" data-id="${d.id}">
+                                        <img src="/assets/icons/delete.svg" alt="" /> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            } else if (type === "edu_domain") {
+                return `
+                    <tr>
+                        <td>${d.provider || "Unknown"}</td>
+                        <td>${d.value}</td>
                         <td>${formatDomainAge(d.domain_age)}</td>
                         <td>${formatDataSource(d.data_source)}</td>
                         <td class="action-cell">
@@ -390,17 +436,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (currentType === "username") {
                     getEl("email-provider").value = "System"; // Abstracted for user
                     getEl("domain-name").value = item.value;
+                } else if (currentType === "isp_domain") {
+                    getEl("email-provider").value = item.provider || "";
+                    getEl("domain-name").value = item.value || "";
+                } else if (currentType === "edu_domain") {
+                    getEl("email-provider").value = item.provider || "";
+                    getEl("domain-name").value = item.value || "";
                 } else {
                     getEl("email-provider").value = item.provider || "";
                     getEl("domain-name").value = item.value || "";
-                }
-
-                // Populate ISP and Edu domain fields for forward_alias type
-                if (currentType === "forward_alias") {
-                    const ispInput = getEl("isp-domain-input");
-                    const eduInput = getEl("edu-domain-input");
-                    if (ispInput) ispInput.value = item.isp_domains || "";
-                    if (eduInput) eduInput.value = item.edu_domains || "";
                 }
 
                 // Trigger type change to show/hide fields
@@ -502,24 +546,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // Show/hide ISP and Edu domain fields based on domain type
-    const domainTypeSelect = getEl("domain-type");
-    const ispDomainGroup = getEl("isp-domain-group");
-    const eduDomainGroup = getEl("edu-domain-group");
-
-    if (domainTypeSelect) {
-        const toggleForwardAliasFields = () => {
-            const typeValue = domainTypeSelect.value;
-            if (typeValue === "forward_alias") {
-                if (ispDomainGroup) ispDomainGroup.style.display = "block";
-                if (eduDomainGroup) eduDomainGroup.style.display = "block";
-            } else {
-                if (ispDomainGroup) ispDomainGroup.style.display = "none";
-                if (eduDomainGroup) eduDomainGroup.style.display = "none";
-            }
-        };
-        domainTypeSelect.onchange = toggleForwardAliasFields;
-    }
 
     if (addDomainForm) {
         addDomainForm.onsubmit = async (e) => {
@@ -539,12 +565,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 let method = "POST";
                 let body = { type: typeValue, provider, value };
 
-                // Add ISP and Edu domains if forward_alias type
-                if (typeValue === "forward_alias") {
-                    const ispDomains = getEl("isp-domain-input")?.value.trim();
-                    const eduDomains = getEl("edu-domain-input")?.value.trim();
-                    if (ispDomains) body.isp_domains = ispDomains;
-                    if (eduDomains) body.edu_domains = eduDomains;
+                // Map value to correct field based on tab type
+                if (typeValue === "isp_domain") {
+                    body.isp_domains = value;
+                    delete body.value;
+                } else if (typeValue === "edu_domain") {
+                    body.edu_domains = value;
+                    delete body.value;
                 }
 
                 if (currentEditingId) {
