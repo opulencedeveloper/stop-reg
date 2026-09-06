@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const totalReqEl = document.querySelector(".dash-total-1");
   const successfulReqEl = document.querySelector(".dash-total-2");
   const blockReqEl = document.querySelector(".dash-total-3");
+  const warnReqEl = document.querySelector(".dash-total-4");
   const chartContainer = document.querySelector(".chart-container");
   
   const apiRequestLeftEl = document.querySelector(".api-request-left");
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (totalReqEl) totalReqEl.innerHTML = spinnerHtml;
   if (successfulReqEl) successfulReqEl.innerHTML = spinnerHtml;
   if (blockReqEl) blockReqEl.innerHTML = spinnerHtml;
+  if (warnReqEl) warnReqEl.innerHTML = spinnerHtml;
 
   // Plan & Token
   if (apiRequestLeftEl) apiRequestLeftEl.innerHTML = spinnerHtml;
@@ -474,34 +476,38 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function processRequests(requests) {
-     // --- A. Calculate Card Totals ---
+     // --- A. Calculate Card Totals Based on Status ---
      let total = 0;
-     let successful = 0; 
-     let blocked = 0;    
-     
-     requests.forEach(req => {
-        // Reverting to 'Winner-takes-all' logic as per user preference (Card totals match requestCount)
-        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            successful += (req.requestCount || 0);
-        }
+     let successful = 0;
+     let warned = 0;
+     let blocked = 0;
 
-        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            blocked += (req.requestCount || 0);
+     requests.forEach(req => {
+        const status = (req.status || "").toLowerCase();
+        const count = req.requestCount || 0;
+
+        if (status === "allow") {
+            successful += count;
+        } else if (status === "warn") {
+            warned += count;
+        } else if (status === "blocked") {
+            blocked += count;
         }
      });
-     
-     // 3. Total
-     // Balanced sum of components
-     total = successful + blocked;
+
+     // Total = Allow + Warn + Block
+     total = successful + warned + blocked;
      
      // Re-select total elements
      const totalReqEl = document.querySelector(".dash-total-1");
      const successfulReqEl = document.querySelector(".dash-total-2");
      const blockReqEl = document.querySelector(".dash-total-3");
+     const warnReqEl = document.querySelector(".dash-total-4");
 
-     if (totalReqEl) totalReqEl.textContent = total.toLocaleString();
-     if (successfulReqEl) successfulReqEl.textContent = successful.toLocaleString();
-     if (blockReqEl) blockReqEl.textContent = blocked.toLocaleString();
+     if (totalReqEl) totalReqEl.innerHTML = total.toLocaleString();
+     if (successfulReqEl) successfulReqEl.innerHTML = successful.toLocaleString();
+     if (warnReqEl) warnReqEl.innerHTML = warned.toLocaleString();
+     if (blockReqEl) blockReqEl.innerHTML = blocked.toLocaleString();
      
      // --- B. Prepare Chart Data & Calculate Trends (Today vs Yesterday) ---
      const currentDate = new Date();
@@ -519,16 +525,15 @@ document.addEventListener("DOMContentLoaded", async () => {
      const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
      const daysLabels = Array.from({length: daysInMonth}, (_, i) => i + 1);
      
-     // Data Arrays for Chart
-     const dataPublic = Array(daysInMonth).fill(0);
-     const dataDisposable = Array(daysInMonth).fill(0);
-     const dataRelay = Array(daysInMonth).fill(0);
-     const dataUnresolved = Array(daysInMonth).fill(0);
+     // Data Arrays for Chart (Allow/Warn/Block)
+     const dataAllow = Array(daysInMonth).fill(0);
+     const dataWarn = Array(daysInMonth).fill(0);
+     const dataBlock = Array(daysInMonth).fill(0);
 
      // Trend Accumulators
      const stats = {
-        today: { total: 0, successful: 0, blocked: 0 },
-        yesterday: { total: 0, successful: 0, blocked: 0 }
+        today: { total: 0, successful: 0, warned: 0, blocked: 0 },
+        yesterday: { total: 0, successful: 0, warned: 0, blocked: 0 }
      };
 
      requests.forEach(req => {
@@ -536,46 +541,45 @@ document.addEventListener("DOMContentLoaded", async () => {
          const isToday = req.day === currentDay && req.month === currentMonth && req.year === currentYear;
          const isYesterday = req.day === prevDay && req.month === prevMonth && req.year === prevYear;
 
-         // Restore requestCount logic for accurately calculated trends
+         const status = (req.status || "").toLowerCase();
+         const count = req.requestCount || 0;
+
          let sVal = 0;
+         let wVal = 0;
          let bVal = 0;
 
-         if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            sVal = (req.requestCount || 0);
+         if (status === "allow") {
+            sVal = count;
+         } else if (status === "warn") {
+            wVal = count;
+         } else if (status === "blocked") {
+            bVal = count;
          }
-
-         if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            bVal = (req.requestCount || 0);
-         }
-         const tVal = sVal + bVal;
+         const tVal = sVal + wVal + bVal;
 
          if (isToday) {
             stats.today.successful += sVal;
+            stats.today.warned += wVal;
             stats.today.blocked += bVal;
             stats.today.total += tVal;
          }
          if (isYesterday) {
             stats.yesterday.successful += sVal;
+            stats.yesterday.warned += wVal;
             stats.yesterday.blocked += bVal;
             stats.yesterday.total += tVal;
          }
 
-         // Chart Data (Current Month)
+         // Chart Data (Current Month) - based on policy action status
          if (req.month === currentMonth && req.year === currentYear) {
              const dayIdx = req.day - 1;
              if (dayIdx >= 0 && dayIdx < daysInMonth) {
-                 // Fix under-counting: Use requestCount volume for each classification dataset
-                 if (req.isFreeEmailProvider === true) {
-                     dataPublic[dayIdx] += (req.requestCount || 0);
-                 }
-                 if (req.isDiposableDomain === true) {
-                     dataDisposable[dayIdx] += (req.requestCount || 0);
-                 }
-                 if (req.isRelayDomain === true) {
-                     dataRelay[dayIdx] += (req.requestCount || 0);
-                 }
-                 if ((req.unresolved || 0) > 0) {
-                     dataUnresolved[dayIdx] += (req.requestCount || 0);
+                 if (status === "allow") {
+                     dataAllow[dayIdx] += count;
+                 } else if (status === "warn") {
+                     dataWarn[dayIdx] += count;
+                 } else if (status === "blocked") {
+                     dataBlock[dayIdx] += count;
                  }
              }
          }
@@ -590,11 +594,12 @@ document.addEventListener("DOMContentLoaded", async () => {
      const trends = [
         calculateTrend(stats.today.total, stats.yesterday.total),
         calculateTrend(stats.today.successful, stats.yesterday.successful),
-        calculateTrend(stats.today.blocked, stats.yesterday.blocked)
+        calculateTrend(stats.today.blocked, stats.yesterday.blocked),
+        calculateTrend(stats.today.warned, stats.yesterday.warned)
      ];
 
      document.querySelectorAll(".card-trend-row").forEach((row, index) => {
-        if(index < 3) {
+        if(index < 4) {
             const pct = trends[index];
             const isPositive = pct >= 0;
             const textEl = row.querySelector(".trend-text");
@@ -624,14 +629,18 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // If it's the 3rd card (Blocked Request), always red
                 if (valueEl.classList.contains("dash-total-3")) {
                      valueEl.style.setProperty("color", "#cc0000", "important");
-                } 
+                }
+                // If it's the 4th card (Warn Request), always orange
+                if (valueEl.classList.contains("dash-total-4")) {
+                     valueEl.style.setProperty("color", "#FF8D28", "important");
+                }
             }
             }
         }
      });
 
 
-     renderChart(daysLabels, dataPublic, dataDisposable, dataRelay, dataUnresolved);
+     renderChart(daysLabels, dataAllow, dataWarn, dataBlock);
      
      // Update Donut Chart
      updateMonitoringCard(requests);
@@ -746,7 +755,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
   }
 
-  function renderChart(labels, dPublic, dDisposable, dRelay, dUnresolved) {
+  function renderChart(labels, dAllow, dWarn, dBlock) {
       const spinner = document.getElementById(chartSpinnerId);
       if (spinner) spinner.remove();
       
@@ -807,40 +816,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         labels: labels,
         datasets: [
           {
-            label: 'Public Provider',
-            data: dPublic,
-            borderColor: '#0000ff',
-            backgroundColor: '#0000ff',
+            label: 'Allow',
+            data: dAllow,
+            borderColor: '#34C759',
+            backgroundColor: '#34C759',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
             pointHoverRadius: 0,
           },
           {
-            label: 'Disposable Domains',
-            data: dDisposable,
-            borderColor: '#cc0000',
-            backgroundColor: '#cc0000',
+            label: 'Warn',
+            data: dWarn,
+            borderColor: '#FF8D28',
+            backgroundColor: '#FF8D28',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,
             pointHoverRadius: 0,
           },
           {
-            label: 'Relay domains',
-            data: dRelay,
-            borderColor: '#CCCCCC',
-            backgroundColor: '#CCCCCC',
-            tension: 0.45,
-            borderWidth: 3,
-            pointRadius: 0,
-            pointHoverRadius: 0,
-          },
-          {
-            label: 'Private',
-            data: dUnresolved,
-            borderColor: '#049286',
-            backgroundColor: '#049286',
+            label: 'Block',
+            data: dBlock,
+            borderColor: '#FF383C',
+            backgroundColor: '#FF383C',
             tension: 0.45,
             borderWidth: 3,
             pointRadius: 0,

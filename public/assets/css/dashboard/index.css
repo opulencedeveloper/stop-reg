@@ -251,28 +251,21 @@
 }
 
 .graph-head-dot1 {
-  background-color: #0000ff;
+  background-color: #34C759;
   height: 16px;
   width: 16px;
   border-radius: 100%;
 }
 
 .graph-head-dot2 {
-  background-color: #cc0000;
+  background-color: #FF8D28;
   height: 16px;
   width: 16px;
   border-radius: 100%;
 }
 
 .graph-head-dot3 {
-  background-color: #CCCCCC;
-  height: 16px;
-  width: 16px;
-  border-radius: 100%;
-}
-
-.graph-head-dot4 {
-  background-color: #049286;
+  background-color: #FF383C;
   height: 16px;
   width: 16px;
   border-radius: 100%;
