@@ -20,6 +20,40 @@
     margin-bottom: 0;
 }
 
+.mng-dom-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border: 1px solid #1452CA;
+    border-radius: 8px;
+    color: #1452CA;
+    text-decoration: none;
+    height: 50px;
+    width: max-content;
+}
+
+.mng-dom-tle {
+    font-family: 'Inter_28pt-SemiBold';
+    font-weight: 600;
+    font-size: 16px;
+    color: #1452CA;
+    white-space: nowrap;
+}
+
+.mng-dom-icon {
+    height: 24px;
+    width: 24px;
+}
+
+.page-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 11px;
+    margin-bottom: 24px;
+}
+
 .section-card {
     background: #FFFFFF;
     border: 1px solid #EDEDED;
@@ -532,6 +566,20 @@
     .empty-state-cell {
         height: 420px;
         border-bottom: none !important;
+    }
+
+    .page-title-row {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .mng-dom-icon {
+        height: 20px;
+        width: 20px;
+    }
+
+    .mng-dom-tle {
+        font-size: 14px;
     }
 }
 
