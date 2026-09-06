@@ -23,7 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let rowsPerPage = 6;
   let totalPages = 1;
   let totalDocs = 0;
+  let currentSearchFilter = '';
+  let filteredResults = [];
 
+  // --- Search Handler ---
+  const searchInput = document.getElementById('bulk-verification-search-input');
+  if (searchInput) {
+    let debounceTimer;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        currentSearchFilter = searchInput.value.trim().toLowerCase();
+        currentPage = 1;
+        renderTable();
+      }, 500);
+    });
+  }
 
   function renderEmptyState() {
     if (!disposableResult) return;
@@ -162,12 +177,55 @@ document.addEventListener("DOMContentLoaded", () => {
     return [...new Set(links)];
   }
 
+  // --- Helper: Map Classification Enum to Display Value ---
+  function mapClassificationToDisplay(classification) {
+      if (!classification) return '-';
+
+      const classificationMap = {
+          'disposable_address': 'disposable',
+          'undeliverable_domain': 'private',
+          'email_alias_native': 'alias:native',
+          'email_alias_forwarding': 'alias:forwarding',
+          'role_account': 'role',
+          'free_subdomain_provider': 'free subdomain',
+          'email_edu': 'edu',
+          'email_isp': 'isp',
+          'email_routing': 'relay',
+          'private_domain': 'private',
+          'public_mailbox_provider': 'public',
+          'allowlisted_domain': 'allowlisted',
+          'blocklisted_domain': 'blocklisted'
+      };
+
+      return classificationMap[classification] || '-';
+  }
+
   function renderTablePage() {
     if (!disposableResult) return;
     disposableResult.innerHTML = "";
 
     if (storedResponseData.length === 0) {
       renderEmptyState();
+      return;
+    }
+
+    // Filter by classification if search filter is set
+    filteredResults = storedResponseData;
+    if (currentSearchFilter) {
+      filteredResults = storedResponseData.filter(item => {
+        const classification = mapClassificationToDisplay(item.classification).toLowerCase();
+        return classification.includes(currentSearchFilter);
+      });
+    }
+
+    if (filteredResults.length === 0) {
+      disposableResult.innerHTML = `
+        <tr>
+          <td colspan="10" style="text-align: center; padding: 40px; color: #667085;">
+            No results found for "${currentSearchFilter}"
+          </td>
+        </tr>
+      `;
       return;
     }
 
@@ -184,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return val || '-';
     };
 
-    storedResponseData.forEach((item, index) => {
+    filteredResults.forEach((item, index) => {
         const tr = document.createElement("tr");
         const domain = item.domain || '-';
         const publicVal = item.publicProvider === 1;
@@ -200,17 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<div class="status-badge status-unresolved-yes"><span>Yes</span></div>`
             : '-';
 
-        // Disposable: Red for "Yes", "-" for "No"
-        const isDisposableBool = item.isDiposableDomain === true;
-        const disposableBadge = isDisposableBool
-            ? `<span class="status-disposable-yes"><span>Yes</span></span>`
-            : '-';
-
-        // Relay: Yellow for "Yes", "-" for "No"
-        const isRelayBool = item.isRelayDomain === true;
-        const relayBadge = isRelayBool
-            ? `<span class="status-bool-unresolved"><span>Yes</span></span>`
-            : '-';
+        // Classification: Map enum to display value
+        const classificationDisplay = mapClassificationToDisplay(item.classification);
+        const classificationHtml = classificationDisplay === '-'
+            ? '<span style="color: #667085; font-size: 14px;">-</span>'
+            : `<span style="color: #404040; font-size: 14px;">${classificationDisplay}</span>`;
 
         // Blocklisted: Use red theme for "Yes"
         const isBlocklistedBool = item.blocklisted === true;
@@ -222,9 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <td>${startIndex + index + 1}</td>
           <td>${domain}</td>
           <td>${isProvider}</td>
-          <td>${isUnresolved}</td>
-          <td>${disposableBadge}</td>
-          <td>${relayBadge}</td>
+          <td>${classificationHtml}</td>
           <td>${isPublic}</td>
           <td>${isRole}</td>
           <td>${isAlias}</td>
@@ -245,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (disposableResult) {
         disposableResult.innerHTML = `
             <tr>
-                <td colspan="12" style="text-align: center; padding: 40px;">
+                <td colspan="10" style="text-align: center; padding: 40px;">
                     <div class="stopreg-spinner" style="border-top-color: #1452CA; border-right-color: #1452CA; margin: 0 auto;"></div>
                 </td>
             </tr>
@@ -277,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (disposableResult) {
             disposableResult.innerHTML = `
                 <tr>
-                    <td colspan="12" style="text-align: center; color: var(--error-color); padding: 20px;">
+                    <td colspan="10" style="text-align: center; color: var(--error-color); padding: 20px;">
                         Failed to load data. <button onclick="window.retryBulkFetch()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
                     </td>
                 </tr>

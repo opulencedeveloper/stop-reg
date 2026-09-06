@@ -297,7 +297,15 @@
                         </div>
 
                         <section class="dash-requests-section detailed-view">
-                            <h3 class="req-table-title">Requests Count (Last 30 Days)</h3>
+                            <div class="req-table-header-row">
+                                <h3 class="req-table-title">Requests Count (Last 30 Days)</h3>
+                                <div class="domain-mgmt-search-wrapper">
+                                    <div class="domain-mgmt-search-box">
+                                        <img src="/assets/icons/search.svg" alt="" />
+                                        <input type="text" placeholder="Search by classification..." id="api-stats-search-input" />
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="req-table-container">
                                 <table class="req-table">
@@ -305,9 +313,9 @@
                                         <tr>
                                             <th>Domain</th>
                                             <th class="table-center">Provider</th>
-                                            <th class="table-center">Private</th>
-                                            <th class="table-center">Disposable</th>
-                                            <th class="table-center">Relay</th>
+                                            <th class="table-center">Classification</th>
+                                            <th class="table-center">MX Found</th>
+                                            <th class="table-center">Role Acc</th>
                                             <th class="table-center">Request Count</th>
                                             <th class="table-center">Status</th>
                                             <th class="table-center">Action</th>

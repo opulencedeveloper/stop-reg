@@ -176,12 +176,12 @@
                         <div class="page-title-row">
                             <h1 class="page-title">Manage Domains</h1>
                             <a href="/dashboard/enforcement-policy.html" class="mng-dom-link">
-                                    <img class="mng-dom-icon" src="/assets/icons/outline-policy.svg" alt="" />
-                      
+                                <img class="mng-dom-icon" src="/assets/icons/outline-policy.svg" alt="" />
+
                                 <span class="mng-dom-tle">
                                     Policy
                                 </span>
-                                  </a>
+                            </a>
                         </div>
 
                         <!-- Blocked List Section -->
@@ -244,16 +244,21 @@
                                     our existing database status and ensure consistent blocking in all future API
                                     interactions.
                                 </p>
+                                <div class="manage-btns-group-cont">
+                                    <div class="manage-btns-group">
+                                        <button id="open-block-modal" class="btn-manage btn-block">
+                                            <img src="/assets/icons/empty.svg" alt="" />
+                                            Block a Domain
+                                        </button>
+                                        <button id="open-settings-modal" class="btn-manage btn-block">
+                                            <img src="/assets/icons/settings-outline.svg" alt=""
+                                                class="btn-icon-settings" />
+                                            Settings
+                                        </button>
+                                    </div>
 
-                                <div class="manage-btns-group">
-                                    <button id="open-block-modal" class="btn-manage btn-block">
-                                        <img src="/assets/icons/empty.svg" alt="" />
-                                        Block a Domain
-                                    </button>
-                                    <button id="open-settings-modal" class="btn-manage btn-block">
-                                        <img src="/assets/icons/settings-outline.svg" alt=""
-                                            class="btn-icon-settings" />
-                                        Settings
+                                    <button class="md-import-csv" data-status="blocked">
+                                        Import CSV
                                     </button>
                                 </div>
                             </div>
@@ -313,11 +318,15 @@
                                     database
                                     status, ensuring these domains are reported as approved for future API interactions.
                                 </p>
-
-                                <button id="open-allow-modal" class="btn-manage btn-allow">
-                                    <img src="/assets/icons/empty.svg" alt="" />
-                                    Allow a Domain
-                                </button>
+                                <div class="manage-btns-group-cont-allow">
+                                    <button id="open-allow-modal" class="btn-manage btn-allow">
+                                        <img src="/assets/icons/empty.svg" alt="" />
+                                        Allow a Domain
+                                    </button>
+                                    <button class="md-import-csv" data-status="allowed">
+                                        Import CSV
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="req-table-container">
@@ -673,6 +682,76 @@
         </div>
     </div>
     <!-- Settings Modal End -->
+
+    <!-- CSV Import Modal Start -->
+    <div id="csv-import-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="csv-import-modal-title">
+        <div class="add-seats-modal-container">
+            <div class="add-seats-header block-modal-header">
+                <h2 id="csv-import-modal-title" class="add-seats-title">Import Domains</h2>
+                <button id="close-csv-import-modal" class="add-seats-close-btn" aria-label="Close modal">
+                    <img src="/assets/icons/close.svg" alt="Close" />
+                </button>
+            </div>
+            <p class="add-seats-desc block-modal-desc">Import domains from a CSV file</p>
+
+            <div class="add-seats-body block-modal-body">
+                <div id="csv-import-step-1">
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label" for="csv-file-input">Upload CSV File</label>
+                        <div class="csv-file-input-wrapper">
+                            <input type="file" id="csv-file-input" accept=".csv" class="csv-file-input" />
+                            <label for="csv-file-input" class="csv-file-label">
+                                <img src="/assets/icons/upload.png" alt="" />
+                                <span>Click to upload or drag and drop</span>
+                                <p>CSV files only</p>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="csv-import-step-2" style="display: none;">
+                    <div class="add-seats-form-group">
+                        <label class="add-seats-label">Preview (First 10 domains)</label>
+                        <div class="csv-preview-table-wrapper">
+                            <table class="csv-preview-table">
+                                <thead>
+                                    <tr>
+                                        <th>Domain</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="csv-preview-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="csv-import-actions">
+                        <button type="button" class="btn-text-close" id="csv-back-btn">Back</button>
+                        <button type="button" class="add-seats-submit-btn" id="csv-import-btn">Import</button>
+                    </div>
+                </div>
+
+                <div id="csv-import-step-3" style="display: none;">
+                    <div class="csv-import-results">
+                        <div class="csv-result-item">
+                            <span>Added:</span>
+                            <strong id="csv-result-added">0</strong>
+                        </div>
+                        <div class="csv-result-item">
+                            <span>Duplicates:</span>
+                            <strong id="csv-result-duplicates">0</strong>
+                        </div>
+                        <div class="csv-result-item">
+                            <span>Failed:</span>
+                            <strong id="csv-result-failed">0</strong>
+                        </div>
+                    </div>
+                    <button type="button" class="add-seats-submit-btn" id="csv-done-btn">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CSV Import Modal End -->
 
 </body>
 

@@ -15,29 +15,45 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 1;
     let limit = 10;
     let totalPages = 1;
+    let currentSearchFilter = '';
+    let allRequests = [];
+
+    // --- Search Handler ---
+    const searchInput = document.getElementById('api-stats-search-input');
+    if (searchInput) {
+        let debounceTimer;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentSearchFilter = searchInput.value.trim().toLowerCase();
+                currentPage = 1;
+                fetchApiStats(1);
+            }, 500);
+        });
+    }
 
     // --- Helper: Status Badge HTML ---
     function getStatusBadge(status) {
         if (!status) return '<span class="status-badge">Unknown</span>';
         const s = status.toLowerCase();
-        
-        if (s === 'allowed' || s === 'allow') {
+
+        if (s === 'allow') {
             return `
                 <div class="status-badge status-allowed">
-                    <img src="/assets/icons/approve-outline.svg" alt="Allow" />
+                    <img src="/assets/icons/approve-outline.svg" alt="Allowed" />
                     <span>Allowed</span>
                 </div>`;
-        } else if (s === 'blocked' || s === 'block' || s === 'auto_blocked') {
+        } else if (s === 'warn') {
+            return `
+                <div class="status-badge status-warn">
+                    <img src="/assets/icons/warning-outline.svg" alt="Warn" />
+                    <span>Warn</span>
+                </div>`;
+        } else if (s === 'blocked' || s === 'auto_blocked') {
             return `
                 <div class="status-badge status-blocked">
-                    <img src="/assets/icons/block-outline.svg" alt="Blocked" />
-                    <span>Blocked</span>
-                </div>`;
-        } else if (s === 'reported' || s === 'report') {
-            return `
-                <div class="status-badge status-reported">
-                    <img src="/assets/icons/flag-linear.svg" alt="Reported" />
-                    <span>Reported</span>
+                    <img src="/assets/icons/block-outline.svg" alt="Block" />
+                    <span>Block</span>
                 </div>`;
         }
         return `<span class="status-badge">${status}</span>`;
@@ -85,17 +101,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
-    // --- Helper: Disposable Icon (Red for Yes, Green for No) ---
-    function getDisposableIcon(value) {
-        const text = value ? 'Yes' : 'No';
-        const className = value ? 'status-disposable-yes' : 'status-disposable-no';
-        return `<div class="status-badge ${className}"><span>${text}</span></div>`;
+    // --- Helper: Map Classification Enum to Display Value ---
+    function mapClassificationToDisplay(classification) {
+        if (!classification) return '-';
+
+        const classificationMap = {
+            'disposable_address': 'disposable',
+            'undeliverable_domain': 'private',
+            'email_alias_native': 'alias:native',
+            'email_alias_forwarding': 'alias:forwarding',
+            'role_account': 'role',
+            'free_subdomain_provider': 'free subdomain',
+            'email_edu': 'edu',
+            'email_isp': 'isp',
+            'email_routing': 'relay',
+            'private_domain': 'private',
+            'public_mailbox_provider': 'public',
+            'allowlisted_domain': 'allowlisted',
+            'blocklisted_domain': 'blocklisted'
+        };
+
+        return classificationMap[classification] || '-';
     }
 
-    // --- Helper: Relay Icon (Yellow for Yes, Green for No) ---
-    function getRelayIcon(value) {
+    // --- Helper: Classification Display ---
+    function getClassificationDisplay(classification) {
+        const displayValue = mapClassificationToDisplay(classification);
+        if (displayValue === '-') return '<span style="color: #667085; font-size: 14px;">-</span>';
+        return `<span style="color: #404040; font-size: 14px;">${displayValue}</span>`;
+    }
+
+    // --- Helper: Yes/No Badge ---
+    function getYesNoBadge(value) {
         const text = value ? 'Yes' : 'No';
-        const className = value ? 'status-bool-unresolved' : 'status-relay-no';
+        const className = value ? 'status-yes' : 'status-no';
         return `<div class="status-badge ${className}"><span>${text}</span></div>`;
     }
 
@@ -104,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show Spinner
         tableBody.innerHTML = `
             <tr>
-                <td colspan="7" style="text-align: center; padding: 40px;">
+                <td colspan="8" style="text-align: center; padding: 40px;">
                     <div class="stopreg-spinner" style="border-top-color: #1452CA; border-right-color: #1452CA; margin: 0 auto;"></div>
                 </td>
             </tr>
@@ -112,7 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const token = localStorage.getItem('authToken');
         try {
-            const response = await fetch(`https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true&requestType=single`, {
+            let url = `https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true&requestType=single`;
+            if (currentSearchFilter) {
+                url += `&search=${encodeURIComponent(currentSearchFilter)}`;
+            }
+            const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -128,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Response structure: { data: { docs: [...], meta: { ... } } }
                 const requests = data.data.docs || [];
                 const pagination = data.data.meta || {};
-                
+
+                allRequests = requests;
                 renderTable(requests);
                 setupPagination(pagination);
             } else {
@@ -139,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Fetch error:', error);
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="7" style="text-align: center; color: var(--error-color);">
+                    <td colspan="8" style="text-align: center; color: var(--error-color);">
                         Failed to load data. <button onclick="window.fetchRequests()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
                     </td>
                 </tr>
@@ -163,32 +207,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Render Table ---
     function renderTable(requests) {
         tableBody.innerHTML = '';
-        
+
         if (requests.length === 0) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="7" style="text-align: center; padding: 20px;">No requests found.</td>
+                    <td colspan="8" style="text-align: center; padding: 20px;">No requests found.</td>
                 </tr>
             `;
             return;
         }
 
         requests.forEach(req => {
-            // Format: Domain, Status, Disposable, Relay, Free Provider, Request Count, Action
             const row = document.createElement('tr');
-            
-            // Domain (req.domainId.domainName or req.domainName?)
-            // Based on user sample: "domain": "samplemail.com"
+
             const domainName = req.domain || 'N/A';
             const reqId = req._id;
             const comment = req.comment;
-            
+
+            // Classification display (mapped from enum)
+            const classificationHtml = getClassificationDisplay(req.classification);
+
+            // MX Found (hasMxRecords) and Role Acc (isRoleDomain) badges
+            const mxFoundHtml = getYesNoBadge(req.hasMxRecords);
+            const roleAccHtml = getYesNoBadge(req.isRoleDomain);
+
             row.innerHTML = `
                 <td>${domainName}</td>
                 <td class="table-center">${req.provider || '-'}</td>
-                <td class="table-center">${getUnresolvedIcon(req.unresolved || 0)}</td>
-                <td class="table-center">${getDisposableIcon(req.isDiposableDomain)}</td>
-                <td class="table-center">${getRelayIcon(req.isRelayDomain)}</td>
+                <td class="table-center">${classificationHtml}</td>
+                <td class="table-center">${mxFoundHtml}</td>
+                <td class="table-center">${roleAccHtml}</td>
                 <td class="table-center">${req.requestCount || 1}</td>
                 <td class="table-center">${getStatusBadge(req.status)}</td>
                 <td class="table-center">

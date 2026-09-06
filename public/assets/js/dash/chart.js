@@ -323,6 +323,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     
 
 
+  function mapClassificationToDisplay(classification) {
+      if (!classification) return '-';
+
+      const classificationMap = {
+          'disposable_address': 'disposable',
+          'undeliverable_domain': 'private',
+          'email_alias_native': 'alias:native',
+          'email_alias_forwarding': 'alias:forwarding',
+          'role_account': 'role',
+          'free_subdomain_provider': 'free subdomain',
+          'email_edu': 'edu',
+          'email_isp': 'isp',
+          'email_routing': 'relay',
+          'private_domain': 'private',
+          'public_mailbox_provider': 'public',
+          'allowlisted_domain': 'allowlisted',
+          'blocklisted_domain': 'blocklisted'
+      };
+
+      return classificationMap[classification] || '-';
+  }
+
   function renderTable(requests) {
       const tableBody = document.querySelector(".req-table tbody");
       if (!tableBody) return;
@@ -362,34 +384,32 @@ document.addEventListener("DOMContentLoaded", async () => {
           let badgeIcon = "";
           let badgeText = "";
 
-          // Map Status Badge
+          // Map Status Badge (Allowed, Warn, Block)
           switch (status.toLowerCase()) {
               case "blocked":
               case "auto_blocked":
                   badgeClass = "status-blocked";
                   badgeIcon = "block-outline.svg";
-                  badgeText = "Blocked";
+                  badgeText = "Block";
                   break;
-              case "reported":
-                  badgeClass = "status-reported";
-                  badgeIcon = "flag-linear.svg";
-                  badgeText = "Reported";
+              case "warn":
+                  badgeClass = "status-warn";
+                  badgeIcon = "alert-circle.svg";
+                  badgeText = "Warn";
                   break;
               case "allow":
                   badgeClass = "status-allowed";
                   badgeIcon = "approve-outline.svg";
-                  badgeText = "Allow";
+                  badgeText = "Allowed";
                   break;
-              default: // "-" or Private
-                  badgeClass = ""; 
-                  badgeIcon = ""; 
+              default: // "-" or unknown
+                  badgeClass = "";
+                  badgeIcon = "";
                   badgeText = "-";
                   break;
           }
 
           // Action Button Logic
-          // Action Button Logic
-          // Action Button Logic (Dropdown)
           const reqId = req._id || req.id || "";
           const reqComment = req.comment ? req.comment.replace(/"/g, '&quot;') : ""; // Escape quotes
           const btnAttrs = `data-id="${reqId}" data-comment="${reqComment}"`;
@@ -420,7 +440,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
           `;
 
-          // If valid status, build badge HTML
+          // Status Badge HTML
           let badgeHtml = "";
           if (badgeClass) {
               badgeHtml = `
@@ -430,43 +450,37 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
               `;
           } else {
-              // Just text for "-"
               badgeHtml = `<span style="color: #667085; font-size: 14px;">-</span>`;
           }
 
-          // Helper to get color for boolean flags (Red for Yes, Green for No)
-          const getFlagHtml = (val, columnType = '') => {
+          // Helper to get Yes/No badge
+          const getYesNoBadge = (val, type = 'default') => {
               const text = val ? 'Yes' : 'No';
-              let className;
-              if (columnType === 'relay') {
-                className = val ? 'status-bool-unresolved' : 'status-relay-no';
-              } else {
-                // disposable
-                className = val ? 'status-disposable-yes' : 'status-disposable-no';
-              }
+              const className = val ? 'status-yes' : 'status-no';
               return `<div class="status-badge ${className}"><span>${text}</span></div>`;
           };
 
-          const getUnresolvedHtml = (val) => {
-             // Logic: > 0 -> True (Yes/Green), 0 -> False (No/Green)
-             const isTrue = val > 0;
-             const text = isTrue ? "Yes" : "No";
-             const className = isTrue ? 'status-unresolved-yes' : 'status-unresolved-no';
-             return `<div class="status-badge ${className}"><span>${text}</span></div>`;
-          };
+          // Classification display (map enum to display value)
+          const classificationDisplay = mapClassificationToDisplay(req.classification);
+          const classificationHtml = classificationDisplay === '-'
+              ? `<span style="color: #667085; font-size: 14px;">-</span>`
+              : `<span style="color: #404040; font-size: 14px;">${classificationDisplay}</span>`;
 
-          const disposableHtml = getFlagHtml(req.isDiposableDomain, 'disposable');
-          const relayHtml = getFlagHtml(req.isRelayDomain, 'relay');
+          // MX Found (hasMxRecords)
+          const mxFoundHtml = getYesNoBadge(req.hasMxRecords);
+
+          // Role Acc (isRoleDomain)
+          const roleAccHtml = getYesNoBadge(req.isRoleDomain);
+
           const providerHtml = req.provider || '-';
-          const unresolvedHtml = getUnresolvedHtml(req.unresolved || 0);
 
           return `
             <tr>
               <td>${req.domain || "Unknown"}</td>
               <td class="table-center">${providerHtml}</td>
-              <td class="table-center">${unresolvedHtml}</td>
-              <td class="table-center">${disposableHtml}</td>
-              <td class="table-center">${relayHtml}</td>
+              <td class="table-center">${classificationHtml}</td>
+              <td class="table-center">${mxFoundHtml}</td>
+              <td class="table-center">${roleAccHtml}</td>
               <td class="table-center">${req.requestCount || 0}</td>
               <td class="table-center">${badgeHtml}</td>
               <td class="table-center">${actionBtn}</td>
@@ -647,46 +661,50 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updateMonitoringCard(requests) {
-      // 1. Calculate Counts
-      let blockedCount = 0;
-      let cleanCount = 0; 
-      
+      // 1. Calculate Counts by Status (Allow/Warn/Block)
+      let allowCount = 0;
+      let warnCount = 0;
+      let blockCount = 0;
+
       requests.forEach(req => {
-        // Blocked: isDiposableDomain=true OR isRelayDomain=true -> add requestCount
-        if (req.isDiposableDomain === true || req.isRelayDomain === true) {
-            blockedCount += (req.requestCount || 0);
-        }
-        // Clean: unresolved > 0 OR isFreeEmailProvider=true -> add requestCount
-        if ((req.unresolved || 0) > 0 || (req.isFreeEmailProvider === true)) {
-            cleanCount += (req.requestCount || 0);
+        const status = (req.status || "").toLowerCase();
+        const count = req.requestCount || 0;
+
+        if (status === "allow") {
+            allowCount += count;
+        } else if (status === "warn") {
+            warnCount += count;
+        } else if (status === "blocked") {
+            blockCount += count;
         }
       });
-      
-      const total = blockedCount + cleanCount;
-      // If total is 0, we avoid division by zero
-      
+
+      const total = allowCount + warnCount + blockCount;
+
       // 2. Select Elements
       const donutContainer = document.querySelector(".chart-donut-container");
       if (!donutContainer) return;
-      
+
       // 3. Calculate Percentages & Metrics (Circumference ~ 502.65 for r=80)
       const C = 502.65;
-      
-      const blockedPct = total > 0 ? (blockedCount / total) : 0;
-      const cleanPct = total > 0 ? (cleanCount / total) : 0; // Clean/Allow
-      
-      const blockedVal = blockedPct * 100;
-      const cleanVal = cleanPct * 100;
-      
-      // Stroke (Green=Clean, Red=Blocked)
-      const cleanStroke = cleanPct * C;
-      const blockedStroke = blockedPct * C;
-      
-      // Rotations
-      // Green (Clean) starts at -90
-      const cleanRot = -90; 
-      // Red (Blocked) starts at -90 + (cleanPct * 360)
-      const blockedRot = -90 + (cleanPct * 360);
+
+      const allowPct = total > 0 ? (allowCount / total) : 0;
+      const warnPct = total > 0 ? (warnCount / total) : 0;
+      const blockPct = total > 0 ? (blockCount / total) : 0;
+
+      const allowVal = allowPct * 100;
+      const warnVal = warnPct * 100;
+      const blockVal = blockPct * 100;
+
+      // Stroke lengths (Circumference = 502.65)
+      const allowStroke = allowPct * C;
+      const warnStroke = warnPct * C;
+      const blockStroke = blockPct * C;
+
+      // Rotations (starts at -90)
+      const allowRot = -90;
+      const warnRot = -90 + (allowPct * 360);
+      const blockRot = -90 + ((allowPct + warnPct) * 360);
       
       const donutHtml = `
                   <div class="donut-chart-wrapper">
@@ -698,32 +716,46 @@ document.addEventListener("DOMContentLoaded", async () => {
                         </circle>
                         <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" fill="#9CA3AF" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="pointer-events:none;">0%</text>
                       ` : `
-                        <!-- Green Segment (Clean/Allow) -->
-                        ${cleanCount > 0 ? `<circle cx="100" cy="100" r="80" fill="transparent" stroke="#009900" stroke-width="40"
-                          stroke-dasharray="${cleanStroke.toFixed(1)} ${C}" stroke-dashoffset="0" transform="rotate(${cleanRot} 100 100)">
+                        <!-- Green Segment (Allow) -->
+                        ${allowCount > 0 ? `<circle cx="100" cy="100" r="80" fill="transparent" stroke="#34C759" stroke-width="40"
+                          stroke-dasharray="${allowStroke.toFixed(1)} ${C}" stroke-dashoffset="0" transform="rotate(${allowRot} 100 100)">
                         </circle>` : ''}
 
-                        <!-- Red Segment (Blocked) -->
-                        ${blockedCount > 0 ? `<circle cx="100" cy="100" r="80" fill="transparent" stroke="#F1416C" stroke-width="40"
-                          stroke-dasharray="${blockedStroke.toFixed(1)} ${C}" stroke-dashoffset="0" transform="rotate(${blockedRot} 100 100)"
+                        <!-- Orange Segment (Warn) -->
+                        ${warnCount > 0 ? `<circle cx="100" cy="100" r="80" fill="transparent" stroke="#FF8D28" stroke-width="40"
+                          stroke-dasharray="${warnStroke.toFixed(1)} ${C}" stroke-dashoffset="0" transform="rotate(${warnRot} 100 100)">
+                        </circle>` : ''}
+
+                        <!-- Red Segment (Block) -->
+                        ${blockCount > 0 ? `<circle cx="100" cy="100" r="80" fill="transparent" stroke="#FF383C" stroke-width="40"
+                          stroke-dasharray="${blockStroke.toFixed(1)} ${C}" stroke-dashoffset="0" transform="rotate(${blockRot} 100 100)"
                           stroke-linecap="round"></circle>` : ''}
 
                         <!-- Text Labels -->
-                        ${cleanCount > 0 ? (() => {
-                            const angle = -90 + ((cleanPct * 360) / 2);
+                        ${allowCount > 0 ? (() => {
+                            const angle = -90 + ((allowPct * 360) / 2);
                             const rad = angle * (Math.PI / 180);
                             const x = 100 + (80 * Math.cos(rad));
                             const y = 100 + (80 * Math.sin(rad));
-                            return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="text-shadow: 0 1px 2px rgba(0,0,0,0.5); pointer-events:none;">${cleanVal.toFixed(1)}%</text>`;
+                            return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="text-shadow: 0 1px 2px rgba(0,0,0,0.5); pointer-events:none;">${allowVal.toFixed(1)}%</text>`;
                         })() : ''}
-                        
-                        ${blockedCount > 0 ? (() => {
-                            const blockedDeg = blockedPct * 360;
-                            const angle = -90 + (cleanPct * 360) + (blockedDeg / 2);
+
+                        ${warnCount > 0 ? (() => {
+                            const warnDeg = warnPct * 360;
+                            const angle = -90 + (allowPct * 360) + (warnDeg / 2);
                             const rad = angle * (Math.PI / 180);
                             const x = 100 + (80 * Math.cos(rad));
                             const y = 100 + (80 * Math.sin(rad));
-                            return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="text-shadow: 0 1px 2px rgba(0,0,0,0.5); pointer-events:none;">${blockedVal.toFixed(1)}%</text>`;
+                            return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="text-shadow: 0 1px 2px rgba(0,0,0,0.5); pointer-events:none;">${warnVal.toFixed(1)}%</text>`;
+                        })() : ''}
+
+                        ${blockCount > 0 ? (() => {
+                            const blockDeg = blockPct * 360;
+                            const angle = -90 + ((allowPct + warnPct) * 360) + (blockDeg / 2);
+                            const rad = angle * (Math.PI / 180);
+                            const x = 100 + (80 * Math.cos(rad));
+                            const y = 100 + (80 * Math.sin(rad));
+                            return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="14" font-family="Inter_28pt-SemiBold" font-weight="600" style="text-shadow: 0 1px 2px rgba(0,0,0,0.5); pointer-events:none;">${blockVal.toFixed(1)}%</text>`;
                         })() : ''}
                       `}
                     </svg>
@@ -738,17 +770,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (legendContainer) {
           legendContainer.innerHTML = `
                   <div class="legend-item">
-                    <span class="legend-indicator indicator-blocked"></span>
+                    <span class="legend-indicator indicator-allow"></span>
                     <div class="legend-text">
-                      <p class="legend-value">${blockedVal.toFixed(1)}% - ${blockedCount.toLocaleString()}</p>
-                      <p class="legend-label">Blocked Email</p>
+                      <p class="legend-value">${allowVal.toFixed(1)}% - ${allowCount.toLocaleString()}</p>
+                      <p class="legend-label">Allow</p>
                     </div>
                   </div>
                   <div class="legend-item">
-                    <span class="legend-indicator indicator-clean"></span>
+                    <span class="legend-indicator indicator-warn"></span>
                     <div class="legend-text">
-                      <p class="legend-value">${cleanVal.toFixed(1)}% - ${cleanCount.toLocaleString()}</p>
-                      <p class="legend-label">Clean Email</p>
+                      <p class="legend-value">${warnVal.toFixed(1)}% - ${warnCount.toLocaleString()}</p>
+                      <p class="legend-label">Warn</p>
+                    </div>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-indicator indicator-block"></span>
+                    <div class="legend-text">
+                      <p class="legend-value">${blockVal.toFixed(1)}% - ${blockCount.toLocaleString()}</p>
+                      <p class="legend-label">Block</p>
                     </div>
                   </div>
           `;

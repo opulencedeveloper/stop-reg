@@ -1171,12 +1171,16 @@ canvas {
   border-radius: 5px;
 }
 
-.indicator-blocked {
-  background-color: #F1416C;
+.indicator-allow {
+  background-color: #34C759;
 }
 
-.indicator-clean {
-  background-color: #009900;
+.indicator-warn {
+  background-color: #FF8D28;
+}
+
+.indicator-block {
+  background-color: #FF383C;
 }
 
 .legend-text {
@@ -1335,8 +1339,7 @@ canvas {
 }
 
 .req-table-title {
-  padding: 16px 24px;
-  border-bottom: 1px solid #EDEDED;
+  margin: 0;
   font-family: 'Inter_28pt-SemiBold';
   font-size: 16px;
   color: #252525;
@@ -1446,10 +1449,25 @@ canvas {
 
 .status-blocked {
   background: #FFEBEB;
-  color: #FF0000;
+  color: #FF383C;
 }
 
 .status-allowed {
+  background: #EFFBF2;
+  color: #34C759;
+}
+
+.status-warn {
+  background: #FFE9D6;
+  color: #FF8D28;
+}
+
+.status-yes {
+  background: #EBFFEB;
+  color: #008000;
+}
+
+.status-no {
   background: #EBFFEB;
   color: #008000;
 }

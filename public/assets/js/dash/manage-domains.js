@@ -502,4 +502,239 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // CSV Import Handler
+    const csvImportOverlay = document.getElementById('csv-import-modal-overlay');
+    const csvFileInput = document.getElementById('csv-file-input');
+    const csvBackBtn = document.getElementById('csv-back-btn');
+    const csvImportBtn = document.getElementById('csv-import-btn');
+    const csvDoneBtn = document.getElementById('csv-done-btn');
+    const closeCSVModal = document.getElementById('close-csv-import-modal');
+
+    console.log('CSV Import elements loaded:');
+    console.log('- csvImportOverlay:', csvImportOverlay);
+    console.log('- csvFileInput:', csvFileInput);
+    console.log('- csvBackBtn:', csvBackBtn);
+    console.log('- csvImportBtn:', csvImportBtn);
+    console.log('- csvDoneBtn:', csvDoneBtn);
+    console.log('- closeCSVModal:', closeCSVModal);
+
+    let csvData = [];
+    let currentStatus = '';
+
+    // Open modal from import buttons
+    document.querySelectorAll('.md-import-csv').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentStatus = btn.dataset.status;
+            csvImportOverlay.classList.add('is-active');
+            resetCSVImportModal();
+        });
+    });
+
+    // Close modal
+    if (closeCSVModal) {
+        closeCSVModal.addEventListener('click', () => {
+            csvImportOverlay.classList.add('is-exiting');
+            setTimeout(() => {
+                csvImportOverlay.classList.remove('is-active', 'is-exiting');
+            }, 300);
+        });
+    }
+
+    // File input change (for click selection)
+    if (csvFileInput) {
+        csvFileInput.addEventListener('change', async () => {
+            console.log('File input changed');
+            if (csvFileInput.files.length > 0) {
+                try {
+                    const file = csvFileInput.files[0];
+                    console.log('Processing selected file:', file.name);
+                    const text = await file.text();
+                    const rows = text.trim().split('\n').map(row => row.trim()).filter(row => row);
+
+                    csvData = rows.map(row => row.split(',')[0].trim()).filter(domain => domain);
+                    console.log('CSV Data parsed:', csvData);
+
+                    showCSVPreview();
+                    console.log('Preview shown after click selection');
+                } catch (err) {
+                    console.error('Error processing selected file:', err);
+                }
+            }
+        });
+    }
+
+    // Drag and drop functionality
+    const csvFileLabel = document.querySelector('.csv-file-label');
+    if (csvFileLabel) {
+        console.log('CSV File Label found:', csvFileLabel);
+
+        // Click to select file
+        csvFileLabel.addEventListener('click', () => {
+            console.log('Label clicked, triggering file input');
+            csvFileInput.click();
+        });
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            csvFileLabel.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            csvFileLabel.addEventListener(eventName, () => {
+                console.log('Drag over detected');
+                csvFileLabel.classList.add('csv-file-label-active');
+            }, false);
+        });
+
+        // Remove highlight when item leaves
+        ['dragleave', 'drop'].forEach(eventName => {
+            csvFileLabel.addEventListener(eventName, () => {
+                console.log('Drag leave/drop detected');
+                csvFileLabel.classList.remove('csv-file-label-active');
+            }, false);
+        });
+
+        // Handle dropped files
+        csvFileLabel.addEventListener('drop', async (e) => {
+            console.log('Drop event triggered');
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            console.log('Files received:', files);
+
+            if (files.length > 0) {
+                console.log('Processing file:', files[0].name);
+
+                // Create a DataTransfer to set files
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(files[0]);
+                csvFileInput.files = dataTransfer.files;
+
+                console.log('File set to input, csvFileInput.files:', csvFileInput.files);
+
+                // Auto-preview after drop
+                try {
+                    const file = files[0];
+                    const text = await file.text();
+                    const rows = text.trim().split('\n').map(row => row.trim()).filter(row => row);
+
+                    csvData = rows.map(row => row.split(',')[0].trim()).filter(domain => domain);
+                    console.log('CSV Data parsed:', csvData);
+
+                    showCSVPreview();
+                    console.log('Preview auto-shown after drop');
+                } catch (err) {
+                    console.error('Error auto-previewing:', err);
+                }
+            }
+        }, false);
+    } else {
+        console.error('CSV File Label not found!');
+    }
+
+    // Back button
+    if (csvBackBtn) {
+        csvBackBtn.addEventListener('click', () => {
+            document.getElementById('csv-import-step-2').style.display = 'none';
+            document.getElementById('csv-import-step-1').style.display = 'block';
+        });
+    }
+
+    // Import button
+    if (csvImportBtn) {
+        csvImportBtn.addEventListener('click', async () => {
+            csvImportBtn.disabled = true;
+            csvImportBtn.innerHTML = '<span class="stopreg-btn-spinner" style="width: 14px; height: 14px;"></span> Importing...';
+
+            try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch('https://api.stopreg.com/api/v1/manage/domain/import-csv', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        domains: csvData,
+                        status: currentStatus
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showCSVResults(result.data);
+                    fetchDomains(currentStatus, state[currentStatus].page, state[currentStatus].limit);
+                } else {
+                    throw new Error(result.description || 'Import failed');
+                }
+            } catch (err) {
+                console.error(err);
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({ message: err.message || 'Failed to import', position: 'topRight' });
+                }
+                document.getElementById('csv-import-step-2').style.display = 'none';
+                document.getElementById('csv-import-step-1').style.display = 'block';
+            } finally {
+                csvImportBtn.disabled = false;
+                csvImportBtn.innerHTML = 'Import';
+            }
+        });
+    }
+
+    // Done button
+    if (csvDoneBtn) {
+        csvDoneBtn.addEventListener('click', () => {
+            csvImportOverlay.classList.add('is-exiting');
+            setTimeout(() => {
+                csvImportOverlay.classList.remove('is-active', 'is-exiting');
+            }, 300);
+        });
+    }
+
+    function resetCSVImportModal() {
+        csvData = [];
+        csvFileInput.value = '';
+        document.getElementById('csv-import-step-1').style.display = 'block';
+        document.getElementById('csv-import-step-2').style.display = 'none';
+        document.getElementById('csv-import-step-3').style.display = 'none';
+    }
+
+    function showCSVPreview() {
+        const tbody = document.getElementById('csv-preview-tbody');
+        tbody.innerHTML = '';
+
+        const previewData = csvData.slice(0, 10);
+        previewData.forEach(domain => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${domain}</td>`;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById('csv-import-step-1').style.display = 'none';
+        document.getElementById('csv-import-step-2').style.display = 'block';
+    }
+
+    function showCSVResults(results) {
+        document.getElementById('csv-result-added').textContent = results.added;
+        document.getElementById('csv-result-duplicates').textContent = results.duplicates;
+        document.getElementById('csv-result-failed').textContent = results.failed;
+
+        document.getElementById('csv-import-step-2').style.display = 'none';
+        document.getElementById('csv-import-step-3').style.display = 'block';
+
+        if (typeof iziToast !== 'undefined') {
+            iziToast.success({
+                message: `Successfully imported ${results.added} domains`,
+                position: 'topRight'
+            });
+        }
+    }
 });

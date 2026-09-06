@@ -103,7 +103,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
+    padding: 0px 24px;
+    height: 52px;
     border-radius: 8px;
     font-size: 16px;
     font-family: "Inter_18pt-Bold";
@@ -323,6 +324,31 @@
     color: #1452CA;
     background-color: #F6F9FE;
     font-family: 'Inter_28pt-SemiBold';
+}
+
+.md-import-csv {
+    background-color: #1452CA;
+    border: none;
+    border-radius: 8px;
+    padding: 0px 24px;
+    height: 52px;
+    color: #FDFDFD;
+    font-family: 'Inter_18pt-Bold';
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 16px;
+}
+
+.manage-btns-group-cont {
+   display: flex;
+   flex-direction: column;
+   align-items: end;
+   gap: 8px;
+}
+
+.manage-btns-group-cont-allow {
+    display: flex;
+    gap: 8px;
 }
 
 .page-dots {
@@ -748,4 +774,264 @@
     .rule-desc {
         font-size: 12px;
     }
+}
+
+/* CSV Import Modal - Self-Contained Styles */
+
+/* --- Overlay --- */
+#csv-import-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background: rgba(16, 24, 40, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Default Hidden State */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Active State (Entry) */
+#csv-import-modal-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: csvOverlayFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Exiting State */
+#csv-import-modal-overlay.is-exiting {
+    visibility: visible;
+    pointer-events: none;
+    animation: csvOverlayFadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Modal Container --- */
+#csv-import-modal-overlay .add-seats-modal-container {
+    width: 100%;
+    padding: 16px;
+    max-width: 600px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow:
+        0px 20px 24px -4px rgba(16, 24, 40, 0.08),
+        0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+    overflow: hidden;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    margin: 16px;
+}
+
+/* Trigger animation when active */
+#csv-import-modal-overlay.is-active .add-seats-modal-container {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    animation: csvModalPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Trigger animation when exiting */
+#csv-import-modal-overlay.is-exiting .add-seats-modal-container {
+    animation: csvModalPopOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- Animations --- */
+@keyframes csvOverlayFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes csvOverlayFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes csvModalPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+}
+
+@keyframes csvModalPopOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+        filter: blur(5px);
+    }
+}
+
+@keyframes csvDragPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(20, 82, 202, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(20, 82, 202, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 0 4px rgba(20, 82, 202, 0.1);
+    }
+}
+
+/* --- CSV Import File Input --- */
+.csv-file-input {
+    display: none;
+}
+
+.csv-file-input-wrapper {
+    position: relative;
+    margin: 12px 0;
+}
+
+.csv-file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    border: 2px dashed #D0D5DD;
+    border-radius: 8px;
+    background: #FAFBFC;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.csv-file-label:hover {
+    border-color: #1452CA;
+    background: #F0F4FF;
+}
+
+.csv-file-label-active {
+    border-color: #1452CA;
+    background: #EBF0FF;
+    border-style: solid;
+    box-shadow: 0 0 0 4px rgba(20, 82, 202, 0.1);
+    transform: scale(1.02);
+    animation: csvDragPulse 0.4s ease-in-out;
+}
+
+.csv-file-label img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+}
+
+.csv-file-label span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #404040;
+    text-align: center;
+}
+
+.csv-file-label p {
+    font-size: 12px;
+    color: #667085;
+    margin-top: 4px;
+}
+
+.csv-preview-table-wrapper {
+    border: 1px solid #EDEDED;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.csv-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.csv-preview-table thead {
+    background: #F9FAFB;
+}
+
+.csv-preview-table th {
+    padding: 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #404040;
+    border-bottom: 1px solid #EDEDED;
+}
+
+.csv-preview-table td {
+    padding: 12px;
+    font-size: 14px;
+    color: #404040;
+    border-bottom: 1px solid #EDEDED;
+}
+
+.csv-preview-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.csv-import-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.csv-import-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.csv-result-item {
+    padding: 16px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #EDEDED;
+}
+
+.csv-result-item span {
+    display: block;
+    font-size: 12px;
+    color: #667085;
+    margin-bottom: 8px;
+}
+
+.csv-result-item strong {
+    display: block;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1452CA;
 }
