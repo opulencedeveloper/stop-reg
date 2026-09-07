@@ -230,14 +230,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 planInfoEl.innerHTML = `
                     <div style="display:flex; flex-direction:column; gap:4px;">
                         <span style="color:#666; font-size:14px;">Failed to load plan info.</span>
-                        ${retryBtn}
+                        ${retryBtnHTML}
                     </div>
                 `;
                 planInfoEl.querySelector('.plan-retry-btn')?.addEventListener('click', fetchPlanDetails);
             }
 
             if (expiryDateEl) {
-                expiryDateEl.innerHTML = `<span style="font-size:12px;">Error. ${retryBtn}</span>`;
+                expiryDateEl.innerHTML = `<span style="font-size:12px;">Error. ${retryBtnHTML}</span>`;
                 expiryDateEl.querySelector('.plan-retry-btn')?.addEventListener('click', fetchPlanDetails);
             }
 

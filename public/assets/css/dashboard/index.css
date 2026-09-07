@@ -1345,6 +1345,11 @@ canvas {
   color: #252525;
 }
 
+.req-table-title-hm {
+    padding: 16px 24px;
+    border-bottom: 1px solid #EDEDED;
+}
+
 .req-table-container {
   width: 100%;
   overflow-x: auto;
@@ -1774,6 +1779,10 @@ canvas {
     font-size: 12px;
     font-weight: 800;
   }
+
+  .req-table-title-hm {
+    padding: 16px 12px;
+}
 
 
   .dash-inner-section .page-title {

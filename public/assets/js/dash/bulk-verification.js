@@ -26,17 +26,34 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentSearchFilter = '';
   let filteredResults = [];
 
-  // --- Search Handler ---
+  // --- Search Handler with Dropdown (Read-only) ---
   const searchInput = document.getElementById('bulk-verification-search-input');
-  if (searchInput) {
-    let debounceTimer;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        currentSearchFilter = searchInput.value.trim().toLowerCase();
+  const dropdown = document.getElementById('bulk-verification-dropdown');
+
+  if (searchInput && dropdown) {
+    // Show dropdown on focus or click
+    const showDropdown = () => dropdown.classList.add('active');
+    searchInput.addEventListener('focus', showDropdown);
+    searchInput.addEventListener('click', showDropdown);
+
+    // Handle dropdown item selection only
+    dropdown.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const value = item.getAttribute('data-value');
+        const label = item.textContent;
+        searchInput.value = label;
+        currentSearchFilter = value;
         currentPage = 1;
-        renderTable();
-      }, 500);
+        dropdown.classList.remove('active');
+        renderTablePage();
+      });
+    });
+
+    // Close dropdown when clicking outside (not on blur to avoid flicker)
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
     });
   }
 
@@ -177,6 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return [...new Set(links)];
   }
 
+  // --- Helper: Get classification from item (handles both nested dbEntry and root level) ---
+  function getClassification(item) {
+    return item.classification || (item.dbEntry && item.dbEntry.classification) || null;
+  }
+
   // --- Helper: Map Classification Enum to Display Value ---
   function mapClassificationToDisplay(classification) {
       if (!classification) return '-';
@@ -213,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredResults = storedResponseData;
     if (currentSearchFilter) {
       filteredResults = storedResponseData.filter(item => {
-        const classification = mapClassificationToDisplay(item.classification).toLowerCase();
+        const classification = mapClassificationToDisplay(getClassification(item)).toLowerCase();
         return classification.includes(currentSearchFilter);
       });
     }
@@ -245,8 +267,6 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredResults.forEach((item, index) => {
         const tr = document.createElement("tr");
         const domain = item.domain || '-';
-        const publicVal = item.publicProvider === 1;
-        const isPublic = formatValue(publicVal);
         const isRole = formatValue(item.isRoleDomain);
         const isAlias = formatValue(item.isAliasDomain);
         const isProvider = item.provider || '-';
@@ -259,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
             : '-';
 
         // Classification: Map enum to display value
-        const classificationDisplay = mapClassificationToDisplay(item.classification);
+        const classificationDisplay = mapClassificationToDisplay(getClassification(item));
         const classificationHtml = classificationDisplay === '-'
             ? '<span style="color: #667085; font-size: 14px;">-</span>'
             : `<span style="color: #404040; font-size: 14px;">${classificationDisplay}</span>`;
@@ -271,11 +291,10 @@ document.addEventListener("DOMContentLoaded", () => {
             : '-';
 
         tr.innerHTML = `
-          <td>${startIndex + index + 1}</td>
+          <td style="text-align: center;">${startIndex + index + 1}</td>
           <td>${domain}</td>
           <td>${isProvider}</td>
           <td>${classificationHtml}</td>
-          <td>${isPublic}</td>
           <td>${isRole}</td>
           <td>${isAlias}</td>
           <td>${blocklistedBadge}</td>
@@ -314,6 +333,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (await window.handleAuthError(response)) return;
 
         if (result.message === "success" && result.data && result.data.docs) {
+            console.log("[Bulk Verification] API Response - Success:", result);
+            console.log("[Bulk Verification] Data received:", {
+                docsCount: result.data.docs?.length || 0,
+                totalPages: result.data.meta?.totalPages,
+                totalDocs: result.data.meta?.totalDocs,
+                hasSearch: currentSearchFilter ? true : false
+            });
             storedResponseData = result.data.docs;
             totalPages = result.data.meta.totalPages || 1;
             totalDocs = result.data.meta.totalDocs || 0;
@@ -322,22 +348,44 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error(result.message || "Failed to load requests");
         }
     } catch (error) {
-        console.error("Error fetching requests:", error);
+        console.error("[Bulk Verification] Error fetching requests:", error);
+        console.log("[Bulk Verification] Full error object:", {
+            message: error.message,
+            status: error.status,
+            statusText: error.statusText,
+            response: error.response,
+            stack: error.stack
+        });
         if (window.handleAuthError && await window.handleAuthError(error)) return;
         if (disposableResult) {
+            console.log("[Bulk Verification] Rendering error state UI");
             disposableResult.innerHTML = `
                 <tr>
-                    <td colspan="10" style="text-align: center; color: var(--error-color); padding: 20px;">
-                        Failed to load data. <button onclick="window.retryBulkFetch()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
+                    <td colspan="9">
+                        <div class="fetch-error-state">
+                            <div class="error-icon-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+                            <h3 class="error-title">Failed to load data</h3>
+                            <p class="error-desc">Something went wrong. Please try again.</p>
+                            <button class="retry-btn">Try Again</button>
+                        </div>
                     </td>
                 </tr>
             `;
+            const retryBtn = disposableResult.querySelector('.retry-btn');
+            if (retryBtn) {
+                console.log("[Bulk Verification] Retry button attached");
+                retryBtn.onclick = () => {
+                    console.log("[Bulk Verification] Retry button clicked - refetching data from API");
+                    fetchRequests(currentPage);
+                };
+            }
         }
     }
   };
-
-  // Expose for retry button
-  window.retryBulkFetch = () => fetchRequests(currentPage);
 
   fetchRequests(1);
 
@@ -513,7 +561,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      console.log("[Bulk Verification] ========== FORM SUBMITTED ==========");
       const links = getLinksArray();
+      console.log("[Bulk Verification] Domains to verify:", links);
+      console.log("[Bulk Verification] Total domains:", links.length);
+
       if (links.length === 0) {
         if (typeof iziToast !== 'undefined') {
           iziToast.warning({
@@ -528,16 +580,36 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Verifying...`;
       try {
+        const payload = { emailDomains: links };
+        console.log("[Bulk Verification] ========== SENDING REQUEST ==========");
+        console.log("[Bulk Verification] Endpoint: POST /api/v1/email-domains/bulk-verification");
+        console.log("[Bulk Verification] Payload:", JSON.stringify(payload, null, 2));
+
         const response = await fetch("https://api.stopreg.com/api/v1/email-domains/bulk-verification", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({  emailDomains: links }),
+          body: JSON.stringify(payload),
         });
+
         const data = await response.json();
+        console.log("[Bulk Verification] ========== RESPONSE RECEIVED ==========");
+        console.log("[Bulk Verification] Status:", response.status, response.statusText);
+        console.log("[Bulk Verification] Response Data:", data);
+        console.log("[Bulk Verification] Documents received:", data.data?.length || 0);
+
+        // Log classification values
+        if (data.data && Array.isArray(data.data)) {
+          console.log("[Bulk Verification] Classification values:");
+          data.data.forEach((doc, idx) => {
+            console.log(`  ${idx + 1}. ${doc.domain}: classification=${doc.classification}`);
+          });
+        }
+
         if (response.ok) {
+          console.log("[Bulk Verification] Verification successful!");
           // Display bulk verification results in submitted order (NO race condition)
           storedResponseData = data.data || [];
           totalPages = 1;
@@ -559,6 +631,15 @@ document.addEventListener("DOMContentLoaded", () => {
           // (Backend now saves in correct order - no race condition)
           setTimeout(() => fetchRequests(), 100);
         } else {
+          console.log("[Bulk Verification] ========== ERROR RESPONSE ==========");
+          console.log("[Bulk Verification] ❌ Verification failed!");
+          console.log("[Bulk Verification] Status Code:", response.status);
+          console.log("[Bulk Verification] Status Text:", response.statusText);
+          console.log("[Bulk Verification] Full Error Response:", data);
+          console.log("[Bulk Verification] Error Message:", data.message);
+          console.log("[Bulk Verification] Error Description:", data.description);
+          console.log("[Bulk Verification] Error Details:", JSON.stringify(data, null, 2));
+
           if (await window.handleAuthError(response)) {
             return;
           }
@@ -568,7 +649,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       } catch (err) {
-        console.error(err);
+        console.log("[Bulk Verification] ========== CATCH ERROR ==========");
+        console.error("[Bulk Verification] ❌ Network/Exception error:", err);
+        console.log("[Bulk Verification] Error name:", err.name);
+        console.log("[Bulk Verification] Error message:", err.message);
+        console.log("[Bulk Verification] Error cause:", err.cause);
+        console.log("[Bulk Verification] Full error stack:", err.stack);
+        console.log("[Bulk Verification] Error object:", JSON.stringify(err, null, 2));
+
         if (window.handleAuthError && await window.handleAuthError(err)) {
           return;
         }

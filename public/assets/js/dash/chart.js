@@ -394,7 +394,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   break;
               case "warn":
                   badgeClass = "status-warn";
-                  badgeIcon = "alert-circle.svg";
+                  badgeIcon = "warning-outline.svg";
                   badgeText = "Warn";
                   break;
               case "allow":

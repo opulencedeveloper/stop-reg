@@ -231,9 +231,19 @@
               <div class="req-table-header-row">
                   <h3 class="req-table-title">Verification Results</h3>
                   <div class="domain-mgmt-search-wrapper">
-                      <div class="domain-mgmt-search-box">
+                      <div class="domain-mgmt-search-box classification-search-box">
                           <img src="/assets/icons/search.svg" alt="" />
-                          <input type="text" placeholder="Search by classification..." id="bulk-verification-search-input" />
+                          <input type="text" placeholder="Search by classification..." id="bulk-verification-search-input" readonly />
+                          <div class="classification-dropdown" id="bulk-verification-dropdown">
+                              <div class="dropdown-item" data-value="relay">relay</div>
+                              <div class="dropdown-item" data-value="private">private</div>
+                              <div class="dropdown-item" data-value="public">public</div>
+                              <div class="dropdown-item" data-value="alias:native">alias:native</div>
+                              <div class="dropdown-item" data-value="alias:forwarding">alias:forwarding</div>
+                              <div class="dropdown-item" data-value="edu">edu email</div>
+                              <div class="dropdown-item" data-value="isp">isp email</div>
+                              <div class="dropdown-item" data-value="free subdomain">free subdomain</div>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -245,8 +255,7 @@
                       <th>SN</th>
                       <th>Input</th>
                       <th>Email Provider</th>
-                      <th class="table-center">Classification</th>
-                      <th>Public</th>
+                      <th>Classification</th>
                       <th>Role</th>
                       <th>Alias</th>
                       <th>Blocklisted</th>

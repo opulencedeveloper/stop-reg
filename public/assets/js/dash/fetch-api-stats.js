@@ -18,17 +18,34 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSearchFilter = '';
     let allRequests = [];
 
-    // --- Search Handler ---
+    // --- Search Handler with Dropdown (Read-only) ---
     const searchInput = document.getElementById('api-stats-search-input');
-    if (searchInput) {
-        let debounceTimer;
-        searchInput.addEventListener('input', () => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                currentSearchFilter = searchInput.value.trim().toLowerCase();
+    const dropdown = document.getElementById('api-stats-dropdown');
+
+    if (searchInput && dropdown) {
+        // Show dropdown on focus or click
+        const showDropdown = () => dropdown.classList.add('active');
+        searchInput.addEventListener('focus', showDropdown);
+        searchInput.addEventListener('click', showDropdown);
+
+        // Handle dropdown item selection only
+        dropdown.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const value = item.getAttribute('data-value');
+                const label = item.textContent;
+                searchInput.value = label;
+                currentSearchFilter = value;
                 currentPage = 1;
+                dropdown.classList.remove('active');
                 fetchApiStats(1);
-            }, 500);
+            });
+        });
+
+        // Close dropdown when clicking outside (not on blur to avoid flicker)
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
         });
     }
 
