@@ -2617,6 +2617,27 @@ input:checked + .toggle-slider:before {
   display: inline-block;
 }
 
+/* Table Cell Conditional Styling */
+.mx-found-no {
+  background: #FFEBEB !important;
+  color: #FF383C !important;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular";
+  display: inline-block;
+}
+
+.role-acc-yes {
+  background: #FFE9D6 !important;
+  color: #FF8D28 !important;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular";
+  display: inline-block;
+}
+
 /* RESPONSIVE TABLE & CARDS */
 @media (max-width: 1024px) {
   .dash-stats-row {

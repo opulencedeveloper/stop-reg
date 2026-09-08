@@ -453,24 +453,21 @@ document.addEventListener("DOMContentLoaded", async () => {
               badgeHtml = `<span style="color: #667085; font-size: 14px;">-</span>`;
           }
 
-          // Helper to get Yes/No badge
-          const getYesNoBadge = (val, type = 'default') => {
-              const text = val ? 'Yes' : 'No';
-              const className = val ? 'status-yes' : 'status-no';
-              return `<div class="status-badge ${className}"><span>${text}</span></div>`;
-          };
-
           // Classification display (map enum to display value)
           const classificationDisplay = mapClassificationToDisplay(req.classification);
           const classificationHtml = classificationDisplay === '-'
               ? `<span style="color: #667085; font-size: 14px;">-</span>`
               : `<span style="color: #404040; font-size: 14px;">${classificationDisplay}</span>`;
 
-          // MX Found (hasMxRecords)
-          const mxFoundHtml = getYesNoBadge(req.hasMxRecords);
+          // MX Found (hasMxRecords) - Apply red styling if No
+          const mxFoundText = req.hasMxRecords ? 'Yes' : 'No';
+          const mxFoundClass = req.hasMxRecords ? 'status-yes' : 'mx-found-no';
+          const mxFoundHtml = `<div class="status-badge ${mxFoundClass}"><span>${mxFoundText}</span></div>`;
 
-          // Role Acc (isRoleDomain)
-          const roleAccHtml = getYesNoBadge(req.isRoleDomain);
+          // Role Acc (isRoleDomain) - Apply yellow styling if Yes
+          const roleAccText = req.isRoleDomain ? 'Yes' : 'No';
+          const roleAccClass = req.isRoleDomain ? 'role-acc-yes' : 'status-no';
+          const roleAccHtml = `<div class="status-badge ${roleAccClass}"><span>${roleAccText}</span></div>`;
 
           const providerHtml = req.provider || '-';
 
