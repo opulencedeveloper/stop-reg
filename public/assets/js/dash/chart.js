@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lineChartContainer = document.querySelector(".chart-container");
     
     if (tableBody) {
-       tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px;"><div class="stopreg-btn-spinner" style="border-width: 3px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 30px; height: 30px; margin: 0 auto;"></div></td></tr>`;
+       tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 40px;"><div class="stopreg-btn-spinner" style="border-width: 3px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 30px; height: 30px; margin: 0 auto;"></div></td></tr>`;
     }
 
     try {
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (tableBody) {
              tableBody.innerHTML = `
                 <tr>
-                  <td colspan="7" style="padding: 0; border: none; height: 300px;">
+                  <td colspan="8" style="padding: 0; border: none; height: 300px;">
                      <div class="fetch-error-state">
                         <div class="error-icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -453,8 +453,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               badgeHtml = `<span style="color: #667085; font-size: 14px;">-</span>`;
           }
 
-          // Classification display (map enum to display value)
-          const classificationDisplay = mapClassificationToDisplay(req.classification);
+          // Classification display - For role emails show domain type, not "role"
+          let classificationValue = req.classification;
+          if (req.isRoleDomain && req.secondary_classification) {
+            classificationValue = req.secondary_classification;
+          }
+          const classificationDisplay = mapClassificationToDisplay(classificationValue);
           const classificationHtml = classificationDisplay === '-'
               ? `<span style="color: #667085; font-size: 14px;">-</span>`
               : `<span style="color: #404040; font-size: 14px;">${classificationDisplay}</span>`;
@@ -794,7 +798,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderChart(labels, dAllow, dWarn, dBlock) {
       const spinner = document.getElementById(chartSpinnerId);
       if (spinner) spinner.remove();
-      
+
+      // Remove loading state from monitoring card
+      const loadingState = document.querySelector('.chart-loading-state');
+      if (loadingState) loadingState.remove();
+
       const canvas = document.getElementById("lineChart");
       if (!canvas) return;
       
@@ -809,7 +817,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const customSelectorPlugin = {
           id: "customSelector",
           afterDraw: (chart) => {
-            const activePoints = chart.tooltip._active || [];
+            const activePoints = (chart.tooltip && chart.tooltip._active) || [];
             if (!activePoints.length) return;
             
             const ctx = chart.ctx;
@@ -1129,7 +1137,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchMonthData(monthIndex) {
       const token = localStorage.getItem("authToken");
       if (!token) return;
-  
+
       // Show loading state
       const donutContainer = document.querySelector(".chart-donut-container");
       if (donutContainer) {
@@ -1140,7 +1148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 data...</span>
           </div>`;
       }
-  
+
       try {
           const url = `https://api.stopreg.com/api/v1/user/info/requests?month=${monthIndex}&requestType=single`;
           const response = await fetch(url, {
@@ -1150,7 +1158,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                    "Authorization": `Bearer ${token}`
                }
           });
-  
+
           if (response.ok) {
               const result = await response.json();
               // Correctly access nested data structure: result.data.request
@@ -1225,5 +1233,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     fetchApiToken();
 
 });
-
 

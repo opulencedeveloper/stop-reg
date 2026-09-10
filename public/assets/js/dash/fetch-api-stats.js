@@ -234,8 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const reqId = req._id;
             const comment = req.comment;
 
-            // Classification display (mapped from enum)
-            const classificationHtml = getClassificationDisplay(req.classification);
+            // Classification display - For role emails show domain type, not "role"
+            let classificationValue = req.classification;
+            if (req.isRoleDomain && req.secondary_classification) {
+              classificationValue = req.secondary_classification;
+            }
+            const classificationHtml = getClassificationDisplay(classificationValue);
 
             // MX Found (hasMxRecords) - Apply red styling if No
             const mxFoundText = req.hasMxRecords ? 'Yes' : 'No';
