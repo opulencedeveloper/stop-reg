@@ -467,25 +467,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (typeof iziToast !== 'undefined') {
                         iziToast.success({ message: "Deleted successfully", position: "topRight" });
                     }
-                    
-                    // Local UI removal instead of refetching
+
+                    // Refetch the table after successful delete
                     if (btnTriggeringDelete) {
                         const row = btnTriggeringDelete.closest('tr');
                         const tbody = row?.parentElement;
-                        if (row) row.remove();
-
-                        // If table becomes empty, show empty state and hide pagination
-                        if (tbody && tbody.querySelectorAll('tr').length === 0) {
+                        if (tbody) {
                             const status = Object.keys(configs).find(key => configs[key].tbody === tbody);
                             if (status) {
-                                renderEmptyRow(tbody, configs[status].emptyTitle, configs[status].emptyDesc);
-                                if (configs[status].pagination) {
-                                    configs[status].pagination.style.display = 'none';
-                                }
+                                fetchDomains(status, state[status].page, state[status].limit);
                             }
                         }
                     }
-                    
+
                     closeDeleteModal();
                 } else {
                     const data = await response.json();
