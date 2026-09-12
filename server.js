@@ -7,12 +7,12 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route provider pages to provider template
-app.get(/^\/providers\//, (req, res) => {
+app.get(/^\/provider\//, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'provider', 'index.html'));
 });
 
 // Route domain pages to domain template
-app.get(/^\/domains\//, (req, res) => {
+app.get(/^\/domain\//, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'domain', 'index.html'));
 });
 
@@ -24,7 +24,7 @@ app.get(/.*/, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   console.log('Clean URL routing:');
-  console.log('  /providers/* → /public/provider/index.html');
-  console.log('  /domains/*   → /public/domain/index.html');
-  console.log('  /*           → /public/index.html');
+  console.log('  /provider/* → /public/provider/index.html');
+  console.log('  /domain/*   → /public/domain/index.html');
+  console.log('  /*          → /public/index.html');
 });

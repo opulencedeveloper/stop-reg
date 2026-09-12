@@ -1,0 +1,51 @@
+.spinner-body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  z-index: 99999999;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.spinner-body.spinner-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.stopreg-spinner {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  will-change: transform;
+}
+
+.stopreg-spinner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #1452CA;
+  animation: stopreg-spin 0.35s linear infinite;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+@keyframes stopreg-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

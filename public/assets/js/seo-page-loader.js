@@ -17,7 +17,7 @@ class SeoPageLoader {
     const path = window.location.pathname;
     console.log(`[SeoPageLoader] handleNavigation() - path: ${path}`);
 
-    const providerMatch = path.match(/^\/providers\/([^/]+)$/);
+    const providerMatch = path.match(/^\/provider\/([^/]+)$/);
     if (providerMatch) {
       const provider = decodeURIComponent(providerMatch[1]);
       console.log(`[SeoPageLoader] Matched provider: ${provider}`);
@@ -25,7 +25,7 @@ class SeoPageLoader {
       return;
     }
 
-    const domainMatch = path.match(/^\/domains\/([^/]+)$/);
+    const domainMatch = path.match(/^\/domain\/([^/]+)$/);
     if (domainMatch) {
       const domain = decodeURIComponent(domainMatch[1]);
       console.log(`[SeoPageLoader] Matched domain: ${domain}`);
@@ -39,7 +39,7 @@ class SeoPageLoader {
   async loadProviderPage(provider) {
     try {
       console.log(`[SeoPageLoader] loadProviderPage() called for: ${provider}`);
-      const url = `http://localhost:8080/api/v1/seo/page/provider/${encodeURIComponent(provider)}`;
+      const url = `${this.apiBaseUrl}/page/provider/${encodeURIComponent(provider)}`;
       console.log(`[SeoPageLoader] Fetching: ${url}`);
 
       const response = await fetch(url);
@@ -60,7 +60,7 @@ class SeoPageLoader {
 
   async loadDomainPage(domain) {
     try {
-      const url = `http://localhost:8080/api/v1/seo/page/domain/${encodeURIComponent(domain)}`;
+      const url = `${this.apiBaseUrl}/page/domain/${encodeURIComponent(domain)}`;
       console.log(`[SeoPageLoader] Fetching: ${url}`);
 
       const response = await fetch(url);
@@ -78,35 +78,88 @@ class SeoPageLoader {
   }
 
   displayPage(html) {
-    console.log(`[SeoPageLoader] Displaying full HTML page (${html.length} bytes)`);
+    const startTime = performance.now();
+    console.log(`[SeoPageLoader] ===== DISPLAY PAGE START =====`);
+    console.log(`[SeoPageLoader] HTML size: ${html.length} bytes`);
     console.log(`[SeoPageLoader] Page title from backend:`, html.match(/<title>([^<]*)<\/title>/)?.[1] || 'N/A');
+
+    // Check if spinner exists before replacement
+    const spinnerBefore = document.getElementById('spinner-body');
+    console.log(`[SeoPageLoader] Spinner exists BEFORE document.write:`, spinnerBefore ? 'YES' : 'NO');
+    if (spinnerBefore) {
+      console.log(`[SeoPageLoader] Spinner visibility BEFORE:`, window.getComputedStyle(spinnerBefore).visibility);
+    }
 
     // Clear global variables that might conflict with backend scripts
     console.log(`[SeoPageLoader] Clearing potentially conflicting globals...`);
     delete window.FAQ_DATA;
     delete window.userPlanPromise;
 
-    console.log(`[SeoPageLoader] Calling document.open/write/close`);
+    console.log(`[SeoPageLoader] Calling document.open/write/close...`);
+    const writeStartTime = performance.now();
     document.open();
     document.write(html);
     document.close();
+    console.log(`[SeoPageLoader] document.write completed in ${performance.now() - writeStartTime}ms`);
 
-    console.log(`[SeoPageLoader] Document replaced successfully`);
+    // Check if spinner exists after replacement
+    const spinnerAfter = document.getElementById('spinner-body');
+    console.log(`[SeoPageLoader] Spinner exists AFTER document.write:`, spinnerAfter ? 'YES' : 'NO');
+    if (spinnerAfter) {
+      console.log(`[SeoPageLoader] Spinner visibility AFTER:`, window.getComputedStyle(spinnerAfter).visibility);
+      console.log(`[SeoPageLoader] Spinner has spinner-hidden class AFTER:`, spinnerAfter.classList.contains('spinner-hidden'));
+    }
+
     console.log(`[SeoPageLoader] New document title:`, document.title);
+    console.log(`[SeoPageLoader] Waiting for window.load event...`);
 
-    // Wait for all deferred scripts to execute, then trigger initialization
-    console.log(`[SeoPageLoader] Waiting for deferred scripts to load...`);
-
-    // Use load event which fires after all deferred scripts execute
+    // Wait for load event (all resources loaded) + CSS rendering
     window.addEventListener('load', () => {
-      console.log(`[SeoPageLoader] Load event fired - dispatching DOMContentLoaded for missed listeners...`);
-      const event = new Event('DOMContentLoaded', {
-        bubbles: true,
-        cancelable: true
+      const loadTime = performance.now() - startTime;
+      console.log(`[SeoPageLoader] ===== LOAD EVENT FIRED =====`);
+      console.log(`[SeoPageLoader] Time since displayPage called: ${loadTime}ms`);
+
+      // Check spinner before requestAnimationFrame
+      const spinnerOnLoad = document.getElementById('spinner-body');
+      console.log(`[SeoPageLoader] Spinner exists on load event:`, spinnerOnLoad ? 'YES' : 'NO');
+      if (spinnerOnLoad) {
+        console.log(`[SeoPageLoader] Spinner visibility on load:`, window.getComputedStyle(spinnerOnLoad).visibility);
+        console.log(`[SeoPageLoader] Spinner classes on load:`, spinnerOnLoad.className);
+      }
+
+      // Ensure CSS is applied before hiding spinner (requestAnimationFrame waits for paint)
+      console.log(`[SeoPageLoader] Calling requestAnimationFrame...`);
+      requestAnimationFrame(() => {
+        const rafTime = performance.now() - startTime;
+        console.log(`[SeoPageLoader] ===== ANIMATION FRAME CALLBACK FIRED =====`);
+        console.log(`[SeoPageLoader] Time since displayPage called: ${rafTime}ms`);
+
+        // Hide the loading spinner
+        const spinner = document.getElementById('spinner-body');
+        console.log(`[SeoPageLoader] Spinner exists on RAF:`, spinner ? 'YES' : 'NO');
+
+        if (spinner) {
+          console.log(`[SeoPageLoader] Spinner visibility BEFORE hidden class:`, window.getComputedStyle(spinner).visibility);
+          spinner.classList.add('spinner-hidden');
+          console.log(`[SeoPageLoader] Added spinner-hidden class`);
+          console.log(`[SeoPageLoader] Spinner visibility AFTER hidden class:`, window.getComputedStyle(spinner).visibility);
+          console.log(`[SeoPageLoader] Spinner opacity AFTER hidden class:`, window.getComputedStyle(spinner).opacity);
+          console.log(`[SeoPageLoader] Spinner classes AFTER hidden:`, spinner.className);
+        } else {
+          console.error(`[SeoPageLoader] ERROR: Spinner not found during RAF callback!`);
+        }
+
+        const event = new Event('DOMContentLoaded', {
+          bubbles: true,
+          cancelable: true
+        });
+        document.dispatchEvent(event);
+        console.log(`[SeoPageLoader] DOMContentLoaded event dispatched`);
+
+        const totalTime = performance.now() - startTime;
+        console.log(`[SeoPageLoader] ===== PAGE READY =====`);
+        console.log(`[SeoPageLoader] Total time: ${totalTime}ms`);
       });
-      document.dispatchEvent(event);
-      console.log(`[SeoPageLoader] DOMContentLoaded event dispatched`);
-      console.log(`[SeoPageLoader] Page ready`);
     }, { once: true });
   }
 
