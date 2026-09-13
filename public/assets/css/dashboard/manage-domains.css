@@ -653,7 +653,6 @@
     text-decoration: none;
     font-family: 'Inter_28pt-SemiBold';
     font-size: 16px;
-    transition: background 0.2s;
 }
 
 .btn-upgrade:hover {

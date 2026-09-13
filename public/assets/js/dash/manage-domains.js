@@ -54,6 +54,26 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchDomains(status, state[status].page, state[status].limit);
     });
 
+    // 4.5 Plan Gating for Import CSV buttons
+    (async () => {
+        const planName = await window.getUserPlan();
+        const planLower = planName?.trim().toLowerCase() || '';
+        console.log(`[ManageDomains] Import CSV - Plan: "${planName}", Lowercase: "${planLower}"`);
+
+        if (planLower === 'free') {
+            console.log(`[ManageDomains] Import CSV - User is FREE plan, graying out Import CSV buttons`);
+            setTimeout(() => {
+                document.querySelectorAll('.md-import-csv').forEach(btn => {
+                    btn.style.opacity = "0.4";
+                    btn.style.cursor = "not-allowed";
+                    btn.title = 'Import CSV is a premium feature. Please upgrade to Launch or higher.';
+                });
+            }, 100);
+        } else {
+            console.log(`[ManageDomains] Import CSV - User is on ${planLower} plan (not free), Import CSV buttons enabled`);
+        }
+    })();
+
     // 5. Fetch Function
     async function fetchDomains(status, page, limitValue) {
         const token = localStorage.getItem('authToken');
@@ -81,13 +101,43 @@ document.addEventListener('DOMContentLoaded', () => {
         if (status === 'blocked' || status === 'allowed') {
             try {
                 const planName = await window.getUserPlan();
-                if (planName && planName.trim().toLowerCase() === "free") {
+                console.log(`[ManageDomains] ${status} - RAW planName: "${planName}"`);
+                console.log(`[ManageDomains] ${status} - Type: ${typeof planName}, Length: ${planName?.length}`);
+                console.log(`[ManageDomains] ${status} - Character codes:`, planName?.split('').map(c => c.charCodeAt(0)));
+                console.log(`[ManageDomains] ${status} - planName === "Free": ${planName === "Free"}`);
+                console.log(`[ManageDomains] ${status} - planName === "Launch": ${planName === "Launch"}`);
+                console.log(`[ManageDomains] ${status} - planName?.toLowerCase() === "free": ${planName?.toLowerCase() === "free"}`);
+
+                if (planName === "Free") {
+                    console.log(`[ManageDomains] ${status} - ✗ BLOCKED: User is FREE plan, showing premium restriction`);
                     renderPremiumRestriction(config.tbody, status === 'blocked' ? 'Block list' : 'Allow list', config.colspan);
                     if (config.pagination) config.pagination.style.display = 'none';
                     return;
+                } else {
+                    console.log(`[ManageDomains] ${status} - ✓ ALLOWED: User is on "${planName}" plan, loading table normally`);
                 }
             } catch (err) {
                 console.warn("Plan check failed for fetch", err);
+            }
+        }
+
+        // Plan Check for Form Abuse Shield (Scale+ plans only)
+        if (status === 'abuse_shield') {
+            try {
+                const planName = await window.getUserPlan();
+                const planLower = planName?.trim().toLowerCase() || '';
+                console.log(`[ManageDomains] abuse_shield - Plan: "${planName}", Lowercase: "${planLower}"`);
+
+                if (planLower === 'free' || planLower === 'launch') {
+                    console.log(`[ManageDomains] abuse_shield - User is ${planLower} plan, showing premium restriction (Scale+ required)`);
+                    renderPremiumRestriction(config.tbody, 'Form Abuse Shield', config.colspan, 'scale');
+                    if (config.pagination) config.pagination.style.display = 'none';
+                    return;
+                } else {
+                    console.log(`[ManageDomains] abuse_shield - User is on ${planLower} plan (Scale+), loading table normally`);
+                }
+            } catch (err) {
+                console.warn("Plan check failed for abuse_shield", err);
             }
         }
 
@@ -309,14 +359,21 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    function renderPremiumRestriction(tbody, featureName, colspan = 5) {
+    function renderPremiumRestriction(tbody, featureName, colspan = 5, minimumPlan = 'launch') {
+        let subtitle = '';
+        if (minimumPlan.toLowerCase() === 'scale') {
+            subtitle = '<strong>Form Abuse Shield</strong> is available on the Scale plan and above.<br>Please upgrade to the Scale plan or higher to configure Form Abuse Shield.';
+        } else {
+            subtitle = `${featureName} is available on paid plans. <br>Please upgrade to <strong>Launch</strong> or higher to manage your domain lists.`;
+        }
+
         tbody.innerHTML = `
             <tr>
                 <td colspan="${colspan}" class="empty-state-cell">
                     <div class="empty-state-content premium-restriction">
                         <img src="/assets/icons/lock-blue.svg" alt="Premium" />
                         <p class="empty-state-title">Premium Feature</p>
-                        <p class="empty-state-subtitle">${featureName} is available on paid plans. <br>Please upgrade to <strong>Launch</strong> or higher to manage your domain lists.</p>
+                        <p class="empty-state-subtitle">${subtitle}</p>
                         <a href="/dashboard/payments.html" class="btn btn-primary btn-upgrade">Upgrade Now</a>
                     </div>
                 </td>
@@ -555,7 +612,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Open modal from import buttons
     document.querySelectorAll('.md-import-csv').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async (e) => {
+            // Check if user is Free plan
+            const planName = await window.getUserPlan();
+            if (planName === "Free") {
+                e.preventDefault();
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.info({
+                        message: "Import CSV is available on paid plans. Please upgrade to Launch or higher.",
+                        position: "topRight"
+                    });
+                }
+                return;
+            }
+
+            // For paid users, open the modal
             currentStatus = btn.dataset.status;
             csvImportOverlay.classList.add('is-active');
             resetCSVImportModal();

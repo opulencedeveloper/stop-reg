@@ -162,6 +162,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                         const totalRemaining = isPaid ? paid : free;
                         const planLimit = userDetails.planId.apiLimit ?? 0;
                         const durationInDays = userDetails.planId.durationInDays ?? 30;
+
+                        console.log('[Plan Details] API Response for requests:', {
+                            planName: userDetails.planId.name,
+                            extraApiLimitLeft: userDetails.extraApiLimitLeft,
+                            apiRequestLeft: userDetails.apiRequestLeft,
+                            isPaid,
+                            totalRemaining,
+                            planLimit,
+                            durationInDays
+                        });
                         
                         const usageText = `
                     <span class="plan-limit-line">Plan limit: ${planLimit.toLocaleString()} tokens</span>

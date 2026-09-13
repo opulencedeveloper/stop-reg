@@ -45,16 +45,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (isFreePlan) {
-        [openBlockBtn, openAllowBtn, openSettingsBtn].forEach(btn => {
+        [openBlockBtn, openAllowBtn].forEach(btn => {
             if (btn) btn.style.opacity = "0.6";
         });
     }
+
+    // Gray out Settings button for Free and Launch plans (Scale+ required)
+    (async () => {
+        try {
+            const planName = await window.getUserPlan();
+            const planLower = planName?.trim().toLowerCase() || '';
+            console.log(`[Modals] Settings button - Plan: "${planName}", Lowercase: "${planLower}"`);
+
+            if (planLower === "free" || planLower === "launch") {
+                console.log(`[Modals] Settings button - User is ${planLower} plan, graying out Settings button (Scale+ required)`);
+                // Use setTimeout to ensure button element is available
+                setTimeout(() => {
+                    if (openSettingsBtn) {
+                        openSettingsBtn.style.opacity = "0.4";
+                        openSettingsBtn.style.cursor = "not-allowed";
+                    }
+                }, 100);
+            } else {
+                console.log(`[Modals] Settings button - User is on ${planLower} plan (Scale+), Settings button enabled`);
+            }
+        } catch (err) {
+            console.warn("Could not apply Settings button styling", err);
+        }
+    })();
 
     function showUpgradeToast() {
         if (typeof iziToast !== 'undefined') {
             iziToast.info({
                 title: 'Upgrade Required',
-                message: 'Domain management features (Blocking, Allowing, Reporting, and Settings) are available on Paid plans.',
+                message: 'Domain management features are available on Launch plan or higher.',
                 position: 'topRight',
                 timeout: 5000
             });
@@ -124,16 +148,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- Trigger Listeners ---
-    openBlockBtn?.addEventListener('click', (e) => {
-        if (isFreePlan) {
+    openBlockBtn?.addEventListener('click', async (e) => {
+        const planName = await window.getUserPlan();
+        const planLower = planName?.trim().toLowerCase() || '';
+        if (planLower === "free" || planLower === "launch") {
             e.preventDefault();
             return showUpgradeToast();
         }
         openModal(blockOverlay);
     });
-    
-    openAllowBtn?.addEventListener('click', (e) => {
-        if (isFreePlan) {
+
+    openAllowBtn?.addEventListener('click', async (e) => {
+        const planName = await window.getUserPlan();
+        const planLower = planName?.trim().toLowerCase() || '';
+        if (planLower === "free" || planLower === "launch") {
             e.preventDefault();
             return showUpgradeToast();
         }
@@ -421,10 +449,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    openSettingsBtn?.addEventListener('click', (e) => {
-        if (isFreePlan) {
-            e.preventDefault();
-            return showUpgradeToast();
+    openSettingsBtn?.addEventListener('click', async (e) => {
+        try {
+            const planName = await window.getUserPlan();
+            const planLower = planName?.trim().toLowerCase() || '';
+            if (planLower === "free" || planLower === "launch") {
+                e.preventDefault();
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.info({ title: "Upgrade Required", message: "Form Abuse Shield is available on the Scale plan and above. Please upgrade to Scale or higher to access these features.", position: "topRight" });
+                }
+                return;
+            }
+        } catch (err) {
+            console.warn("Plan check failed", err);
         }
         fetchAbuseSettings();
         openModal(settingsOverlay);
