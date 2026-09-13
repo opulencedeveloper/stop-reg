@@ -78,7 +78,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (window.handleAuthError && await window.handleAuthError(error)) {
         return;
       }
-      showErrorState(error.message || "Failed to load enforcement policy");
+      const errorType = classifyError(error, null);
+      showErrorState(errorType);
     }
   }
 
@@ -246,7 +247,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (window.handleAuthError && await window.handleAuthError(error)) {
         return;
       }
-      showErrorToast(error.message || "Failed to save enforcement policy");
+      const errorType = classifyError(error, null);
+      showErrorToast(errorType);
     } finally {
       saveBtn.disabled = false;
       saveBtn.innerHTML = originalHTML;
@@ -317,7 +319,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (window.handleAuthError && await window.handleAuthError(error)) {
         return;
       }
-      showErrorToast(error.message || "Failed to reset enforcement policy");
+      const errorType = classifyError(error, null);
+      showErrorToast(errorType);
     } finally {
       resetConfirmBtn.disabled = false;
       resetCancelBtn.disabled = false;
@@ -367,10 +370,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     ].includes(classification);
   }
 
-  function showErrorToast(message) {
+  function showErrorToast(errorType = 'unknown') {
+    const errorMsg = getErrorMessage(errorType);
     if (typeof iziToast !== 'undefined') {
       iziToast.error({
-        message: message,
+        message: errorMsg.desc,
         position: "topRight"
       });
     }
@@ -392,8 +396,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  function showErrorState(errorMessage) {
+  function showErrorState(errorType = 'unknown') {
     if (!requestsSection) return;
+    const errorMsg = getErrorMessage(errorType);
     requestsSection.innerHTML = `
       <div style="display: flex; justify-content: center; align-items: center; padding: 40px; min-height: 300px;">
         <div class="fetch-error-state" style="min-height: auto;">
@@ -402,8 +407,8 @@ document.addEventListener("DOMContentLoaded", async () => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h3 class="error-title">Failed to load policy</h3>
-          <p class="error-desc">${errorMessage || 'Something went wrong. Please try again.'}</p>
+          <h3 class="error-title">${errorMsg.title}</h3>
+          <p class="error-desc">${errorMsg.desc}</p>
           <button class="retry-btn">Try Again</button>
         </div>
       </div>

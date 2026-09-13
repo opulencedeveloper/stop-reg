@@ -344,7 +344,6 @@
 .provider-overview-main-wrapper {
   display: flex;
   align-items: start;
-  border: 1px solid red;
 }
 
 /* Related Provider Section */

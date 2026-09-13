@@ -386,10 +386,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (actionDesc) {
                     if (!data.action) {
                         actionDesc.textContent = 'Nil';
-                    } else {
-                        actionDesc.textContent = data.action === 'block' 
-                            ? 'Block Domain when threshold is reached' 
-                            : 'Notify Only when threshold is reached';
+                    } else if (data.action === 'block') {
+                        actionDesc.textContent = 'Block Domain when threshold is reached';
+                    } else if (data.action === 'notify') {
+                        actionDesc.textContent = 'Notify Only when threshold is reached';
+                    } else if (data.action === 'none') {
+                        actionDesc.textContent = 'Do nothing when threshold is reached';
                     }
                 }
             }
@@ -495,9 +497,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 */
 
                 if (actionDesc) {
-                    actionDesc.textContent = action === 'block'
-                        ? 'Block Domain when threshold is reached'
-                        : 'Notify Only when threshold is reached';
+                    if (action === 'block') {
+                        actionDesc.textContent = 'Block Domain when threshold is reached';
+                    } else if (action === 'notify') {
+                        actionDesc.textContent = 'Notify Only when threshold is reached';
+                    } else if (action === 'none') {
+                        actionDesc.textContent = 'Do nothing when threshold is reached';
+                    }
                 }
 
                 closeModal(settingsOverlay);

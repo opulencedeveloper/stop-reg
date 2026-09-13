@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Initial Spinner Handling
     const spinner = document.getElementById('spinner-body');
     const content = document.getElementById('content');
-    
+
     window.addEventListener('load', () => {
         if (spinner) spinner.style.display = 'none';
         if (content) content.style.display = 'block';
@@ -13,31 +13,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         blocked: { page: 1, limit: 10 },
         allowed: { page: 1, limit: 10 },
-        reported: { page: 1, limit: 10 }
+        reported: { page: 1, limit: 10 },
+        abuse_shield: { page: 1, limit: 10 }
     };
-    
+
     // 3. Elements Mapping
     const configs = {
         blocked: {
-            tbody: document.querySelector('.manage-domains-section:nth-of-type(1) .req-table tbody'),
-            pagination: document.querySelector('.manage-domains-section:nth-of-type(1) .pagination-container'),
+            tbody: document.querySelector('[data-section="blocked"] .req-table tbody'),
+            pagination: document.querySelector('[data-section="blocked"] .pagination-container'),
             colspan: 4,
             emptyTitle: "No domains have been blocked yet",
             emptyDesc: "Block a domain to view results here."
         },
         allowed: {
-            tbody: document.querySelector('.manage-domains-section:nth-of-type(2) .req-table tbody'),
-            pagination: document.querySelector('.manage-domains-section:nth-of-type(2) .pagination-container'),
+            tbody: document.querySelector('[data-section="allowed"] .req-table tbody'),
+            pagination: document.querySelector('[data-section="allowed"] .pagination-container'),
             colspan: 4,
             emptyTitle: "No domains have been allowed yet",
             emptyDesc: "Allow a domain to view results here."
         },
         reported: {
-            tbody: document.querySelector('.manage-domains-section:nth-of-type(3) .req-table tbody'),
-            pagination: document.querySelector('.manage-domains-section:nth-of-type(3) .pagination-container'),
+            tbody: document.querySelector('[data-section="reported"] .req-table tbody'),
+            pagination: document.querySelector('[data-section="reported"] .pagination-container'),
             colspan: 5,
             emptyTitle: "No domains have been reported yet",
             emptyDesc: "Report a domain to view results here."
+        },
+        abuse_shield: {
+            tbody: document.querySelector('[data-section="abuse_shield"] .req-table tbody'),
+            pagination: document.querySelector('[data-section="abuse_shield"] .pagination-container'),
+            colspan: 6,
+            emptyTitle: "No abuse shield blocks yet",
+            emptyDesc: "Domains will appear here when Form Abuse Shield triggers."
         }
     };
 
@@ -74,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const planName = await window.getUserPlan();
                 if (planName && planName.trim().toLowerCase() === "free") {
-                    renderPremiumRestriction(config.tbody, status === 'blocked' ? 'Block list' : 'Allow list');
+                    renderPremiumRestriction(config.tbody, status === 'blocked' ? 'Block list' : 'Allow list', config.colspan);
                     if (config.pagination) config.pagination.style.display = 'none';
                     return;
                 }
@@ -122,13 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } else {
-                console.error(`Failed to fetch ${status} domains`);
-                renderErrorByStatus(status, () => fetchDomains(status, page, limitValue));
+                console.error(`Failed to fetch ${status} domains:`, response.status, response.statusText);
+                const errorType = classifyError(null, response);
+                renderErrorByStatus(status, () => fetchDomains(status, page, limitValue), errorType);
             }
 
         } catch (error) {
-            console.error(`Network error, for ${status}:`, error);
-            renderErrorByStatus(status, () => fetchDomains(status, page, limitValue));
+            console.error(`Error fetching ${status} domains:`, error);
+            const errorType = classifyError(error, null);
+            renderErrorByStatus(status, () => fetchDomains(status, page, limitValue), errorType);
         }
     }
 
@@ -185,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!config.tbody) return;
 
         if (items.length === 0) {
-            renderEmptyRow(config.tbody, config.emptyTitle, config.emptyDesc);
+            renderEmptyRow(config.tbody, config.emptyTitle, config.emptyDesc, config.colspan);
             return;
         }
 
@@ -238,6 +248,29 @@ document.addEventListener('DOMContentLoaded', () => {
                         </td>
                     </tr>
                 `;
+            } else if (status === 'abuse_shield') {
+                const duration = item.unblockAfterDays !== null && item.unblockAfterDays !== undefined
+                    ? `${item.unblockAfterDays} day${item.unblockAfterDays === 1 ? '' : 's'}`
+                    : '-';
+                const classification = item.classification || '-';
+                return `
+                    <tr>
+                        <td>${domainName || "Unknown"}</td>
+                        <td>
+                            ${getStatusBadgeHtml(currentStatus)}
+                        </td>
+                        <td>${classification}</td>
+                        <td class="comment-td">${domainComment || "-"}</td>
+                        <td>${duration}</td>
+                        <td class="table-right">
+                             <div class="domain-actions">
+                                <button class="action-icon-btn delete-action-btn" title="Delete" data-id="${domainId}">
+                                    <img src="/assets/icons/delete.svg" alt="Delete" class="icon-delete" />
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             } else { // reported
                  return `
                     <tr>
@@ -263,10 +296,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    function renderEmptyRow(tbody, title, desc) {
+    function renderEmptyRow(tbody, title, desc, colspan = 5) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="5" class="empty-state-cell">
+                <td colspan="${colspan}" class="empty-state-cell">
                     <div class="empty-state-content">
                         <h3 class="empty-state-title">${title}</h3>
                         <p class="empty-state-desc">${desc}</p>
@@ -276,10 +309,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    function renderPremiumRestriction(tbody, featureName) {
+    function renderPremiumRestriction(tbody, featureName, colspan = 5) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="5" class="empty-state-cell">
+                <td colspan="${colspan}" class="empty-state-cell">
                     <div class="empty-state-content premium-restriction">
                         <img src="/assets/icons/lock-blue.svg" alt="Premium" />
                         <p class="empty-state-title">Premium Feature</p>
@@ -291,9 +324,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    function renderErrorByStatus(status, retryFn) {
+    function renderErrorByStatus(status, retryFn, errorType = 'unknown') {
         const config = configs[status];
         if (!config?.tbody) return;
+
+        const errorMsg = getErrorMessage(errorType);
 
         config.tbody.innerHTML = `
             <tr>
@@ -304,15 +339,17 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                         </div>
-                        <h3 class="error-title">Failed to load data</h3>
-                        <p class="error-desc">Something went wrong. Please try again.</p>
+                        <h3 class="error-title">${errorMsg.title}</h3>
+                        <p class="error-desc">${errorMsg.desc}</p>
                         <button class="retry-btn">Try Again</button>
                     </div>
                 </td>
             </tr>
         `;
         const btn = config.tbody.querySelector('.retry-btn');
-        if (btn) btn.onclick = retryFn;
+        if (btn) {
+            btn.onclick = retryFn;
+        }
     }
 
     // 7. Pagination Logic (Status Aware)

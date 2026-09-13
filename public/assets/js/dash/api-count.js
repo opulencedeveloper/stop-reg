@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             } else {
                 console.error("API Error:", await response.text());
-                renderErrorState(() => fetchApiRequests(page, pageSize));
+                const errorType = classifyError(null, response);
+                renderErrorState(() => fetchApiRequests(page, pageSize), errorType);
             }
 
         } catch (error) {
@@ -93,7 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.handleAuthError && await window.handleAuthError(error)) {
                 return;
             }
-            renderErrorState(() => fetchApiRequests(page, pageSize));
+            const errorType = classifyError(error, null);
+            renderErrorState(() => fetchApiRequests(page, pageSize), errorType);
         } finally {
             isLoading = false;
         }
@@ -113,8 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    function renderErrorState(retryFn) {
+    function renderErrorState(retryFn, errorType = 'unknown') {
         if (!tableBody) return;
+        const errorMsg = getErrorMessage(errorType);
         tableBody.innerHTML = `
             <tr>
                 <td colspan="5" style="height: 300px; padding: 0;">
@@ -125,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             </svg>
                         </div>
                         <div style="text-align: center;">
-                            <h3 class="error-title" style="font-family: 'Inter_28pt-SemiBold'; font-size: 16px; color: #111827; margin-bottom: 4px;">Failed to load requests</h3>
-                            <p class="error-desc" style="font-family: 'Inter_28pt-Regular'; font-size: 14px; color: #6B7280;">We couldn't fetch the latest data.</p>
+                            <h3 class="error-title" style="font-family: 'Inter_28pt-SemiBold'; font-size: 16px; color: #111827; margin-bottom: 4px;">${errorMsg.title}</h3>
+                            <p class="error-desc" style="font-family: 'Inter_28pt-Regular'; font-size: 14px; color: #6B7280;">${errorMsg.desc}</p>
                         </div>
                         <button class="retry-btn retry-btn-style">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">

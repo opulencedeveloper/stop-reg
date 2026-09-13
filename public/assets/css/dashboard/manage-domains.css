@@ -68,6 +68,18 @@
     padding: 0 24px;
 }
 
+.section-header-fas {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.section-header-fab {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .section-title {
     font-size: 20px;
     font-family: "Inter_28pt-SemiBold";
@@ -92,6 +104,60 @@
     margin: 0;
 }
 
+.section-description-with-tooltip {
+    display: block;
+}
+
+.section-description-with-tooltip .section-description {
+    display: inline;
+    margin: 0;
+}
+
+.section-description-with-tooltip .card-tooltip-wrapper {
+    display: inline-block;
+    width: 16x;
+    height: 16x;
+    margin-left: 4px;
+    margin-top: 2px;
+    vertical-align: text-bottom;
+}
+
+.section-description-with-tooltip .card-tooltip-wrapper img {
+    width: 16x;
+    height: 16x;
+}
+
+
+.fas-tooltip {
+  height: 20px;
+  width: 20px;
+  vertical-align: text-bottom;
+  display: inline;
+  cursor: help;
+}
+
+.section-description .fas-tooltip {
+  position: relative;
+}
+
+.section-description .fas-tooltip:hover::after {
+  content: "Form Abuse Shield helps prevent repeat submissions and signup abuse by identifying domains associated with repeated activity.";
+  position: absolute;
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: normal;
+  width: 200px;
+  bottom: 130%;
+  right: -50px;
+  z-index: 999;
+  pointer-events: none;
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+}
+
 .manage-btns-group {
     display: flex;
     flex-direction: row;
@@ -113,6 +179,7 @@
     background: transparent;
     text-decoration: none;
     white-space: nowrap;
+    width: max-content;
 }
 
 .btn-manage img {
@@ -340,10 +407,10 @@
 }
 
 .manage-btns-group-cont {
-   display: flex;
-   flex-direction: column;
-   align-items: end;
-   gap: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 8px;
 }
 
 .manage-btns-group-cont-allow {
@@ -388,6 +455,12 @@
         margin-bottom: 12px;
     }
 
+    .section-header-fas {
+        gap: 8px;
+        flex-direction: column;
+    }
+
+
     .pagination-container {
         flex-direction: column;
         gap: 16px;
@@ -395,8 +468,7 @@
     }
 
     .table-pagination {
-        flex-direction: column;
-        /* Or match api-stats logic */
+        overflow-x: auto;
         gap: 16px;
     }
 }

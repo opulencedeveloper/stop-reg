@@ -184,8 +184,8 @@
                             </a>
                         </div>
 
-                        <!-- Blocked List Section -->
-                        <section class="manage-domains-section section-card">
+                        <!-- Form Abuse Shield List Section -->
+                        <section class="manage-domains-section section-card" data-section="abuse_shield">
                             <div class="rules-header">
                                 <div class="rule-item">
                                     <div class="rule-icon-box">
@@ -232,6 +232,81 @@
                                 </div> -->
                             </div>
 
+                            <div class="section-header section-header-fas">
+                                <div class="section-header-fab">
+                                    <h2 class="section-title">Form Abuse Shield</h2>
+                                    <div class="section-description-with-tooltip">
+                                        <p class="section-description">Automatically detect and stop private and relay
+                                            domains used to submit your forms multiple times or create multiple signups.
+                                        </p><span class="card-tooltip-wrapper tooltip"><img
+                                                src="/assets/icons/tooltip.svg" alt="Info" /><span class="tooltiptext">
+                                                <p class="tooltiptextsubtle">Form Abuse Shield helps prevent repeat
+                                                    submissions and signup abuse by identifying domains associated with
+                                                    repeated activity. You can choose to block these submissions,
+                                                    receive a notification, or allow them without taking action.</p>
+                                            </span></span>
+                                    </div>
+                                </div>
+
+                                <button id="open-settings-modal" class="btn-manage btn-block">
+                                    <img src="/assets/icons/settings-outline.svg" alt="" class="btn-icon-settings" />
+                                    Settings
+                                </button>
+                            </div>
+
+
+                            <div class="req-table-container">
+                                <table class="req-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Domain Name</th>
+                                            <th>Status</th>
+                                            <th>Classification</th>
+                                            <th>Comments</th>
+                                            <th>Duration</th>
+                                            <th class="table-right">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="pagination-container">
+                                <div class="table-pagination">
+                                    <div class="pagination-select-container">
+                                        <select class="pagination-select">
+                                            <option>10 per page</option>
+                                        </select>
+                                        <svg class="select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="#344054" stroke-width="1.33"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="pagination-controls">
+                                        <button class="page-nav-btn prev" disabled>
+                                            <img src="/assets/icons/angle-right.svg" alt="Previous"
+                                                class="rotate-180" />
+                                        </button>
+                                        <button class="page-number active">1</button>
+                                        <button class="page-number">2</button>
+                                        <span class="page-dots">...</span>
+                                        <button class="page-number">9</button>
+                                        <button class="page-number">10</button>
+                                        <button class="page-nav-btn next">
+                                            <img src="/assets/icons/angle-right.svg" alt="Next" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+                        <!-- Blocked List Section -->
+                        <section class="manage-domains-section section-card" data-section="blocked">
+
+
                             <div class="section-header">
                                 <h2 class="section-title">Blocked List</h2>
 
@@ -250,16 +325,12 @@
                                             <img src="/assets/icons/empty.svg" alt="" />
                                             Block a Domain
                                         </button>
-                                        <button id="open-settings-modal" class="btn-manage btn-block">
-                                            <img src="/assets/icons/settings-outline.svg" alt=""
-                                                class="btn-icon-settings" />
-                                            Settings
+                                        <button class="md-import-csv" data-status="blocked">
+                                            Import CSV
                                         </button>
                                     </div>
 
-                                    <button class="md-import-csv" data-status="blocked">
-                                        Import CSV
-                                    </button>
+
                                 </div>
                             </div>
 
@@ -308,7 +379,7 @@
                         </section>
 
                         <!-- Allow List Section -->
-                        <section class="manage-domains-section section-card">
+                        <section class="manage-domains-section section-card" data-section="allowed">
                             <div class="section-header">
                                 <h2 class="section-title">Allow List</h2>
                             </div>
@@ -374,7 +445,7 @@
                         </section>
 
                         <!-- Report a Domain Section -->
-                        <section class="manage-domains-section section-card">
+                        <section class="manage-domains-section section-card" data-section="reported">
                             <div class="section-header">
                                 <h2 class="section-title">Report a Domain</h2>
                             </div>
@@ -450,6 +521,7 @@
     <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/dash/header.js"></script>
     <script src="/assets/js/dash/portal-manager.js" defer></script>
+    <script src="/assets/js/utils/error-handler.js" defer></script>
     <script src="/assets/js/dash/manage-domains.js" defer></script>
     <script src="/assets/js/dash/manage-domains-modals.js" defer></script>
 
@@ -656,7 +728,8 @@
                             </div>
                             <div class="radio-text-content">
                                 <span class="radio-title">Take No Action</span>
-                                <p class="radio-desc">Disable Form Abuse Shield. The system will not monitor or take any action on domain registrations, regardless of threshold settings</p>
+                                <p class="radio-desc">Disable Form Abuse Shield. The system will not monitor or take any
+                                    action on domain registrations, regardless of threshold settings</p>
                             </div>
                         </div>
                     </div>
@@ -681,10 +754,11 @@
                     </div>
                     <div class="caution-text-block">
                         <span class="caution-title">Important limitation</span>
-                        <p class="caution-desc">This option in the Form Abuse Shield Settings does not block public
-                            email addresses (e.g., Gmail, Yahoo, Outlook), relay emails, or disposable email providers.
-                            The Form Abuse Shield will only monitor private domains and act according to your
-                            settings.</p>
+                        <p class="caution-desc">This Form Abuse Shield option does not block public emails such as
+                            Gmail, Yahoo, or Outlook, or ISP, .edu, subdomain providers, or disposable email addresses
+                            and domains.
+                            It monitors individual and business emails and domains classified as private or relay and
+                            takes action according to your settings</p>
                     </div>
                 </div>
 
