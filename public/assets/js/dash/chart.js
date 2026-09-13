@@ -384,7 +384,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           let badgeIcon = "";
           let badgeText = "";
 
-          // Map Status Badge (Allowed, Warn, Block)
+          // Map Status Badge (Allowed, Warn, Block, Reported)
           switch (status.toLowerCase()) {
               case "blocked":
               case "auto_blocked":
@@ -401,6 +401,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                   badgeClass = "status-allowed";
                   badgeIcon = "approve-outline.svg";
                   badgeText = "Allowed";
+                  break;
+              case "reported":
+                  badgeClass = "status-reported";
+                  badgeIcon = "flag-linear.svg";
+                  badgeText = "Reported";
                   break;
               default: // "-" or unknown
                   badgeClass = "";
@@ -496,6 +501,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      let successful = 0;
      let warned = 0;
      let blocked = 0;
+     let reported = 0;
 
      requests.forEach(req => {
         const status = (req.status || "").toLowerCase();
@@ -505,13 +511,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             successful += count;
         } else if (status === "warn") {
             warned += count;
-        } else if (status === "blocked") {
+        } else if (status === "blocked" || status === "auto_blocked") {
             blocked += count;
+        } else if (status === "reported") {
+            reported += count;
         }
      });
 
-     // Total = Allow + Warn + Block
-     total = successful + warned + blocked;
+     // Total = Allow + Warn + Block + Reported
+     total = successful + warned + blocked + reported;
      
      // Re-select total elements
      const totalReqEl = document.querySelector(".dash-total-1");

@@ -476,14 +476,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (response.ok) {
+                const responseBody = await response.json().catch(() => response.text());
+                console.log("[Settings Save Response Body]", responseBody);
                 if (typeof iziToast !== 'undefined') {
-                    iziToast.success({ message: "Settings saved successfully!", position: "topRight" });
+                    iziToast.success({ message: responseBody.description || "Settings saved successfully!", position: "topRight" });
                 }
 
                 // Update summary header immediately without refresh
                 if (headerThreshold) headerThreshold.textContent = ruleThreshold;
                 if (headerWindow) headerWindow.textContent = windowDays;
-                
+
                 /*
                 if (headerUnblockPolicy) {
                     if (unblockAfterDays === 0) {
@@ -508,11 +510,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 closeModal(settingsOverlay);
             } else {
-                throw new Error("Failed to save settings");
+                const responseBody = await response.json().catch(() => response.text());
+                console.log("[Settings Save Error Response Body]", responseBody);
+                const errorDesc = typeof responseBody === 'object' ? responseBody.description : responseBody;
+                throw new Error(errorDesc || "Failed to save settings");
             }
         } catch (err) {
-            console.error(err);
-            if (typeof iziToast !== 'undefined') iziToast.error({ message: "Failed to save settings", position: "topRight" });
+            console.error("[Settings Save Error]", err);
+
+            const errorType = classifyError(err, null);
+            const errorMsg = getErrorMessage(errorType);
+            const displayMessage = (errorType !== 'unknown' && errorMsg.desc) || err.message || "Failed to save settings";
+
+            if (typeof iziToast !== 'undefined') iziToast.error({ message: displayMessage, position: "topRight" });
         } finally {
             btn.innerHTML = originalText;
             btn.disabled = false;
