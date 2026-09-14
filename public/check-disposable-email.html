@@ -260,177 +260,209 @@
       <section class="verifyEmail-hero animation3">
         <div class="hero-content-box">
           <div class="verifyEmail-title">
-            <h1>Check disposable email</h1>
+            <h1>The Most Accurate <span class="verifyEmail-title-ind"> Disposable Email Checker</span></h1>
             <p>
-              Verify whether the provided email address is disposable or
-              temporary
+             Check any email address or domain against our continuously updated database of disposable and temporary email domains
             </p>
           </div>
           <div>
             <form action="">
-              <div>
-                <div class="email-container">
+                <div class="email-container email-container-disp">
+                  <div class="email-input-wrapper">
                   <input type="text" required placeholder="Enter email address or domain" id="email" name="email" />
+                  <span class="disp-err"></span>
+                  </div>
+                 <button class="bulk-verify-domain-btn">Verify Domain</button>
                 </div>
                 <div id="captcha-container" style="margin-bottom: 24px;">
                   <div id="turnstile-widget" data-sitekey="0x4AAAAAACEca11RLVJeokxF"></div>
                 </div>
 
-                <button class="bulk-verify-domain-btn">Verify Now</button>
+               
               </div>
             </form>
           </div>
         </div>
       </section>
       <!--  -->
-      <!-- Results Section (Overlay) -->
-      <section style="display: none;" id="verify-email-result-section" class="results-overlay-section">
+      <!-- Results Section (Overlay)  -->
+      <section
+      style="display: none;"
+      id="verify-email-result-section" class="results-overlay-section">
 
-        <div class="results-overlay-section-cont">
-          <div class="public-results-card">
-            <h1 id="verify-email-result-title" class="disposal-result-main-title">
-              RESULT FOR <span>{{PROVIDER}}</span> </h1>
-            <p class="disposal-result-main-stitl">Checked on May 23, 2025 at 10:32 AM UTC</p>
+        <div class="results-overlay-section-padding">
+          <div class="results-overlay-section-cont">
+          <div class="results-overlay-section-wrapper">
+            <div class="public-results-card public-results-card-red">
+              <h1 id="verify-email-result-title" class="disposal-result-main-title">
+               Result: <span>{DOMAIN}</span> is associated with <span>{PROVIDER}.</span> </h1>
+              <p class="disposal-result-main-stitl">Checked on May 23, 2025 at 10:32 AM UTC</p>
 
-            <div class="disposal-results-list-wrapper">
-              <div class="disposal-results-list">
-                <!--MX Record -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">MX Record</p>
-                    <div class="disposal-result-card disposal-result-card-true ">
-                      True
+              <div class="disposal-results-list-wrapper">
+                <div class="disposal-results-list">
+                  <!--MX Record -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">MX Record</p>
+                      <div class="disposal-result-card disposal-result-card-true ">
+                        True
+                      </div>
                     </div>
+                    <p class="disposal-result-card-desc">This domain has an MX record. This means that it has a mail
+                      server
+                      and is able to receive emails.</p>
                   </div>
-                  <p class="disposal-result-card-desc">This domain has an MX record. This means that it has a mail
-                    server
-                    and is able to receive emails.</p>
+
+                  <!--Disposable -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Disposable</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain has an MX record. This means that it has a mail
+                      server
+                      and is able to receive emails.</p>
+                  </div>
+
+                  <!--Public Email Provider -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Public Email Provider</p>
+                      <div class="disposal-result-card disposal-result-card-true">
+                        True
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain is from a public email provider. Anyone can create
+                      an
+                      email address on this domain for free.</p>
+                  </div>
+
+                  <!--Email Alias: Forwarding -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Email Alias: Forwarding</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain does not appear to be a fowarding domain..</p>
+                  </div>
+
+                  <!-- Role-based -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Role-based</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This email does not appear to be a role-based address.</p>
+                  </div>
+
+                  <!-- Email Alias: Native -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Email Alias: Native</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This email is not an alias address.</p>
+                  </div>
+
+                  <!-- Private Domain -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Private Domain</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain is not privately owned by an individual or
+                      business.
+                    </p>
+                  </div>
+
+                  <!-- ISP -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">ISP</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain is not from an Internet Service Provider.</p>
+                  </div>
+
+                  <!-- Edu Domain -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Edu Domain</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain is not an educational institution domain.</p>
+                  </div>
+
+                  <!-- Free subdomain provider -->
+                  <div class="result-card">
+                    <div class="result-card-hd">
+                      <p class="result-card-tle">Free subdomain provider</p>
+                      <div class="disposal-result-card disposal-result-card-false">
+                        False
+                      </div>
+                    </div>
+                    <p class="disposal-result-card-desc">This domain is not a free subdomain provider</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="disposal-results-list-sect-two">
+
+              <div class="disposal-results-list-sect-two-cont">
+                <p class="disposal-results-list-sect-two-con-tle">RECENT DOMAINS FROM <span>{{PROVIDER}}</span></p>
+                <div class="disposal-results-list-sect-two-list">
+                  <p class="disposal-results-list-sect-two-list-item">tempmail.plus</p>
+                  <p class="disposal-results-list-sect-two-list-item">10minutemail.om</p>
+                  <p class="disposal-results-list-sect-two-list-item">guerrillamail.com</p>
+                </div>
+              </div>
+
+              <div class="disposal-results-list-sect-two-cont">
+                <p class="api-acc-tle">API Access</p>
+                <p class="api-acc-desc">Integrate real-time disposable email detection into your application.</p>
+
+
+                <div class="provider-reasons">
+                  <div class="provider-reason">
+                    <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
+                    <span>Real-time results</span>
+                  </div>
+                  <div class="provider-reason">
+                    <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
+                    <span>200+ free requests/month</span>
+                  </div>
+                  <div class="provider-reason">
+                    <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
+                    <span>99.9% uptime</span>
+                  </div>
                 </div>
 
-                <!--Disposable -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Disposable</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This domain has an MX record. This means that it has a mail
-                    server
-                    and is able to receive emails.</p>
-                </div>
-
-                <!--Public Email Provider -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Public Email Provider</p>
-                    <div class="disposal-result-card disposal-result-card-true">
-                      True
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This domain is from a public email provider. Anyone can create an
-                    email address on this domain for free.</p>
-                </div>
-
-                <!--Email Alias: Forwarding -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Email Alias: Forwarding</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This domain does not appear to be a fowarding domain..</p>
-                </div>
-
-                <!-- Role-based -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Role-based</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This email does not appear to be a role-based address.</p>
-                </div>
-
-                <!-- Email Alias: Native -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Email Alias: Native</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This email is not an alias address.</p>
-                </div>
-
-                <!-- Private Domain -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Private Domain</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This domain is not privately owned by an individual or business.
-                  </p>
-                </div>
-
-                <!-- Free subdomain provider -->
-                <div class="result-card">
-                  <div class="result-card-hd">
-                    <p class="result-card-tle">Free subdomain provider</p>
-                    <div class="disposal-result-card disposal-result-card-false">
-                      False
-                    </div>
-                  </div>
-                  <p class="disposal-result-card-desc">This domain is not a free subdomain provider</p>
-                </div>
+                <a href="/documentation.html" target="_blank" class="provider-btn provider-btn-secondary">View API Documentation</a>
 
               </div>
 
-
-
-              <div class="disposal-results-list-sect-two">
-
-                <div class="disposal-results-list-sect-two-cont">
-                  <p class="disposal-results-list-sect-two-con-tle">RECENT DOMAINS FROM <span>{{PROVIDER}}</span></p>
-                  <div class="disposal-results-list-sect-two-list">
-                    <p class="disposal-results-list-sect-two-list-item">tempmail.plus</p>
-                    <p class="disposal-results-list-sect-two-list-item">10minutemail.om</p>
-                    <p class="disposal-results-list-sect-two-list-item">guerrillamail.com</p>
-                  </div>
-                </div>
-
-                <div class="disposal-results-list-sect-two-cont">
-                  <p class="api-acc-tle">API Access</p>
-                  <p class="api-acc-desc">Integrate real-time disposable email detection into your application.</p>
-
-
-                  <div class="provider-reasons">
-                    <div class="provider-reason">
-                      <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
-                      <span>Real-time results</span>
-                    </div>
-                    <div class="provider-reason">
-                      <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
-                      <span>200+ free requests/month</span>
-                    </div>
-                    <div class="provider-reason">
-                      <img src="/assets/icons/check-black.svg" alt="Check" class="provider-reason-icon" />
-                      <span>99.9% uptime</span>
-                    </div>
-                  </div>
-
-                  <a href="/documentation.html" class="provider-btn provider-btn-secondary">View API Documentation</a>
-
-                </div>
-
-              </div>
             </div>
           </div>
 
+        </div>
         </div>
       </section>
 

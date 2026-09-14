@@ -26,6 +26,7 @@
 
 }
 
+
 .verifyEmail-hero h1 {
   font-family: "PlusJakartaSans-ExtraBold", sans-serif;
   color: #252525;
@@ -41,6 +42,18 @@
   font-size: 20px;
   text-align: center;
   text-align: center;
+  line-height: 160%;
+}
+
+.verifyEmail-stitle {
+  font-family: "PlusJakartaSans-Regular", sans-serif;
+  color: #737373;
+  font-size: 20px !important;
+  text-align: center;
+}
+
+.verifyEmail-title-ind {
+  color: #1452CA;
 }
 
 fieldset {
@@ -55,15 +68,22 @@ fieldset {
   margin-bottom: 8px;
 }
 
+.email-container-disp {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
 .email-container input {
   background-color: #ffffff;
   border: 0px;
   width: 100%;
-  height: 44px;
+  height: 50px;
   padding: 12px;
   font-family: "Inter_28pt-Regular";
   border-radius: 8px;
   outline: none;
+  border: 0.3px solid #737373;
 }
 
 .email-container input:focus {
@@ -420,8 +440,10 @@ fieldset {
   align-items: center;
   border: 0px;
   width: 100%;
-  height: 46px;
-  margin-top: 24px;
+  height: 50px;
+  max-width: 191px;
+  width: 100%;
+  /* margin-top: 24px; */
 }
 
 .check-disposal-email {
@@ -520,11 +542,16 @@ tr.bulk-table-inner td {
     gap: 0;
   }
 
+  .email-container-disp {
+    flex-direction: column;
+  }
+
   .verifyEmail-hero h1 {
     font-size: 24px;
   }
 
-  .verifyEmail-hero p {
+  .verifyEmail-hero p,
+  .verifyEmail-stitle {
     font-size: 12px;
   }
 
@@ -532,9 +559,7 @@ tr.bulk-table-inner td {
     background-color: #ffffff;
     border: 0px;
     width: 100%;
-    height: 14px;
-    padding-bottom: 30px;
-    border-radius: 8px;
+    height: 41px;
     outline: none;
     box-sizing: border-box;
   }
@@ -557,6 +582,7 @@ tr.bulk-table-inner td {
     flex-direction: column;
     gap: 32px;
   }
+
 
   /* Ensure image is large enough but fits */
   .content-img img {
@@ -599,6 +625,10 @@ tr.bulk-table-inner td {
     max-height: 600px;
     overflow-y: scroll;
     padding: 12px;
+  }
+
+  .bulk-verify-domain-btn {
+    max-width: 100%;
   }
 
   .bulktitle {
@@ -647,32 +677,66 @@ tr.bulk-table-inner td {
 
 /* Results Overlay Section */
 .results-overlay-section {
-  max-width: var(--max-width);
   /* Constrain width */
   margin: 0 auto;
   position: relative;
   z-index: 10;
-
   margin-top: -140px;
   /* Initial overlap */
   margin-bottom: 60px;
   /* Push following content down */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.results-overlay-section-padding {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 .results-overlay-section-cont {
-  padding-left: 20px;
-  padding-right: 20px;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: auto;
 }
 
 /* Public Results Card Styles */
 .public-results-card {
-  background-color: #FFD6D7;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #E5E7EB;
   border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border: 1px solid #E5E7EB;
+}
+
+.public-results-card-red {
+ background-color: #FFD6D7;
+}
+
+.public-results-card-green {
+ background-color: #D7F4DE;
+}
+
+.public-results-card-yellow {
+ background-color: #FFF4D6;
+}
+
+.public-results-card-yellow {
+ background-color: #FFE4CC;
+}
+
+.results-overlay-section-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .disposal-result-main-title {
@@ -686,8 +750,7 @@ tr.bulk-table-inner td {
   font-size: 14px;
   font-family: 'Inter_28pt-Regular';
   color: #171717;
-  margin-top: 8px;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
 .disposal-results-list-wrapper {
@@ -713,7 +776,7 @@ tr.bulk-table-inner td {
   padding: 16px 12px;
   border-radius: 16px;
   text-align: center;
-  height: 100%;
+  min-height: 205px;
 }
 
 .result-card-hd {
@@ -937,15 +1000,24 @@ tr.bulk-table-inner td {
     /* 2x2 on Tablet */
   }
 
-  .disposal-results-list-wrapper {
+  .results-overlay-section-wrapper {
     flex-direction: column;
 
   }
 
-  .disposal-results-list-sect-two {
-  gap: 16px;
-  max-width: 100%;
+  .results-overlay-section-padding {
+  padding-left: 0;
+  padding-right: 0;
 }
+
+
+
+  .disposal-results-list-sect-two {
+    gap: 16px;
+    max-width: 100%;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
 
 }
 
@@ -955,10 +1027,10 @@ tr.bulk-table-inner td {
     /* Stack on Mobile */
   }
 
-  .results-overlay-section-cont {
+  /* .results-overlay-section-cont {
     padding-left: 16px;
     padding-right: 16px;
-  }
+  } */
 
   .results-overlay-section {
     margin-top: -40px;
@@ -993,4 +1065,19 @@ tr.bulk-table-inner td {
 /* Results overlay hidden state */
 .results-overlay-hidden {
   display: none;
+}
+
+/* Email input wrapper - ensures error messages display below input */
+.email-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.disp-err {
+  color: #FF0000;
+  font-size: 14px;
+  font-family: "Inter_28pt-Regular", sans-serif;
+  margin-top: 4px;
 }

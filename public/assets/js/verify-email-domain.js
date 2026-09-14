@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------------
 
   function showInputError(inputEl, message) {
-    const parent = inputEl.parentElement; // .api-live-demo-row
+    const parent = inputEl.parentElement; // .email-container
     let error;
 
     if (isLandingPage) {
@@ -181,39 +181,36 @@ document.addEventListener("DOMContentLoaded", () => {
             parent.after(error);
         }
     } else {
-        error = parent.querySelector(".custom-input-error");
-        if (!error) {
-            error = document.createElement("div");
-            error.className = "custom-input-error";
-            parent.appendChild(error);
-        }
+        error = parent.querySelector(".disp-err");
     }
 
     // Always update text and ensure visuals
-    if (error.textContent !== message) {
+    if (error && error.textContent !== message) {
         error.textContent = message;
         // Trigger animation reset
         error.style.animation = 'none';
         error.offsetHeight; /* trigger reflow */
         error.style.animation = null;
     }
-    
+
     inputEl.classList.add("input-error-border");
   }
 
   function clearInputError(inputEl) {
     inputEl.classList.remove("input-error-border");
-    
+
     let error;
     if (isLandingPage) {
         error = form.querySelector(".custom-input-error");
+        if (error) {
+            error.remove();
+        }
     } else {
         const parent = inputEl.parentElement;
-        error = parent.querySelector(".custom-input-error");
-    }
-    
-    if (error) {
-        error.remove();
+        error = parent.querySelector(".disp-err");
+        if (error) {
+            error.textContent = "";
+        }
     }
   }
 
@@ -400,6 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const recentDomainsTitle = resultContainer.querySelector(".disposal-results-list-sect-two-con-tle");
 
         const typeLabel = inputVal.includes('@') ? "email" : "domain";
+        const domain = inputVal.includes('@') ? inputVal.split('@')[1] : inputVal;
         const provider = details?.domain?.email_provider || "Unknown Provider";
         const now = new Date().toLocaleString('en-US', {
             year: 'numeric',
@@ -412,7 +410,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }) + ' UTC';
 
         if (resultTitle) {
-            resultTitle.innerHTML = `RESULT FOR <span>${provider}</span>`;
+            if (isDisposable) {
+                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is associated with <span>${provider}.</span>`;
+            } else {
+                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> uses MX from <span>${provider}</span> for email delivery.`;
+            }
         }
 
         if (resultTimestamp) {
@@ -523,6 +525,32 @@ document.addEventListener("DOMContentLoaded", () => {
                         : "This domain was resolved successfully via DNS or Database"}</p>
                 </div>
 
+                <!-- ISP -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">ISP</p>
+                        <div class="disposal-result-card ${details?.classification?.is_isp ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${details?.classification?.is_isp ? 'True' : 'False'}
+                        </div>
+                    </div>
+                    <p class="disposal-result-card-desc">${details?.classification?.is_isp
+                        ? "This domain is from an Internet Service Provider"
+                        : "This domain is not from an Internet Service Provider"}</p>
+                </div>
+
+                <!-- Edu Domain -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Edu Domain</p>
+                        <div class="disposal-result-card ${details?.classification?.is_edu ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${details?.classification?.is_edu ? 'True' : 'False'}
+                        </div>
+                    </div>
+                    <p class="disposal-result-card-desc">${details?.classification?.is_edu
+                        ? "This domain is an educational institution domain"
+                        : "This domain is not an educational institution domain"}</p>
+                </div>
+
                 <!-- Free subdomain provider -->
                 <div class="result-card">
                     <div class="result-card-hd">
@@ -538,13 +566,59 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        if (recentDomainsContainer && details?.recent_domains) {
+        // Only show recent domains if domain is disposable
+        const recentDomainsSection = recentDomainsContainer?.closest('.disposal-results-list-sect-two-cont');
+
+        if (isDisposable && recentDomainsContainer && details?.recent_domains) {
             if (details.recent_domains.length > 0) {
                 recentDomainsContainer.innerHTML = details.recent_domains
                     .map(domain => `<p class="disposal-results-list-sect-two-list-item">${domain}</p>`)
                     .join('');
             } else {
                 recentDomainsContainer.innerHTML = '<p class="disposal-results-list-sect-two-list-item">No recent domains found</p>';
+            }
+            if (recentDomainsSection) recentDomainsSection.style.display = 'block';
+        } else if (recentDomainsSection) {
+            recentDomainsSection.style.display = 'none';
+        }
+
+        // Apply color class based on classification
+        const publicResultsCard = resultContainer.querySelector('.public-results-card');
+        console.log('[Check Page] Classification data:', details?.classification);
+        console.log('[Check Page] Mail server data:', details?.mail_server);
+
+        if (publicResultsCard) {
+            publicResultsCard.classList.remove('public-results-card-red', 'public-results-card-yellow', 'public-results-card-green');
+
+            const classification = details?.classification || {};
+            const isDisp = classification.is_disposable === true;
+            const noMx = details?.mail_server?.mx_found === false;
+            const isAlias = classification.is_alias === true;
+
+            const isRelay = classification.is_relay === true;
+            const isFreeSubdomain = classification.is_free_subdomain === true;
+            const isRoleBased = classification.is_role_based === true;
+
+            const isPublic = classification.is_public === true;
+            const isIsp = classification.is_isp === true;
+            const isEdu = classification.is_edu === true;
+            const isPrivate = classification.is_private === true;
+
+            console.log('[Check Page] Red triggers:', { isDisp, noMx, isAlias });
+            console.log('[Check Page] Yellow triggers:', { isRelay, isFreeSubdomain, isRoleBased });
+            console.log('[Check Page] Green triggers:', { isPublic, isIsp, isEdu, isPrivate });
+
+            if (isDisp || noMx || isAlias) {
+                console.log('[Check Page] Applying RED color');
+                publicResultsCard.classList.add('public-results-card-red');
+            } else if (isRelay || isFreeSubdomain || isRoleBased) {
+                console.log('[Check Page] Applying YELLOW color');
+                publicResultsCard.classList.add('public-results-card-yellow');
+            } else if (isPublic || isIsp || isEdu || isPrivate) {
+                console.log('[Check Page] Applying GREEN color');
+                publicResultsCard.classList.add('public-results-card-green');
+            } else {
+                console.log('[Check Page] No color class matched');
             }
         }
 
