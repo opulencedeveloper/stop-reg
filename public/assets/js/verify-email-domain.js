@@ -307,13 +307,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     try {
+      const payload = {
+        emailDomain: inputValue,
+        turnstileToken
+      };
+
+      if (isCheckPage) {
+        payload.includeRecentDomains = true;
+      }
+
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          emailDomain: inputValue, 
-          turnstileToken 
-        }),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -388,15 +394,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (isCheckPage) {
         const resultTitle = document.getElementById("verify-email-result-title");
+        const resultTimestamp = resultContainer.querySelector(".disposal-result-main-stitl");
         const listContainer = resultContainer.querySelector(".disposal-results-list");
+        const recentDomainsContainer = resultContainer.querySelector(".disposal-results-list-sect-two-list");
+        const recentDomainsTitle = resultContainer.querySelector(".disposal-results-list-sect-two-con-tle");
 
         const typeLabel = inputVal.includes('@') ? "email" : "domain";
-        const headerVerificationText = isDisposable
-            ? `is a verified disposable ${typeLabel}`
-            : `is NOT a verified disposable ${typeLabel}`;
+        const provider = details?.domain?.email_provider || "Unknown Provider";
+        const now = new Date().toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: 'UTC'
+        }) + ' UTC';
 
         if (resultTitle) {
-            resultTitle.innerHTML = `The ${typeLabel} provided <b>${inputVal}</b> ${headerVerificationText}`;
+            resultTitle.innerHTML = `RESULT FOR <span>${provider}</span>`;
+        }
+
+        if (resultTimestamp) {
+            resultTimestamp.innerHTML = `Checked on ${now}`;
+        }
+
+        if (recentDomainsTitle) {
+            recentDomainsTitle.innerHTML = `RECENT DOMAINS FROM <span>${provider}</span>`;
         }
 
         if (listContainer) {
@@ -408,97 +432,120 @@ document.addEventListener("DOMContentLoaded", () => {
             const isPrivate = details?.classification?.is_private === true;
 
             listContainer.innerHTML = `
-                <!-- Mx Record (True/False) -->
-                <div class="result-card ${hasMx ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${hasMx ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Mx Record</h3>
-                        <p class="result-desc">
-                            ${hasMx 
-                                ? "This domain has MX record. This means that it has a mail server and is able to receive emails" 
-                                : "This domain does not have an MX record. It may not be able to receive emails."}
-                        </p>
+                <!--MX Record -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">MX Record</p>
+                        <div class="disposal-result-card ${hasMx ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${hasMx ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${hasMx
+                        ? "This domain has an MX record. This means that it has a mail server and is able to receive emails."
+                        : "This domain does not have an MX record. It may not be able to receive emails."}</p>
                 </div>
 
-                <!-- Disposable (True/False) -->
-                <div class="result-card ${isDisposable ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${isDisposable ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Disposable</h3>
-                        <p class="result-desc">
-                            ${isDisposable 
-                                ? "This domain appears to be from a disposable email provider"
-                                : "This domain does not appear to be from a disposable email provider"}
-                        </p>
+                <!--Disposable -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Disposable</p>
+                        <div class="disposal-result-card ${isDisposable ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isDisposable ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isDisposable
+                        ? "This domain appears to be from a disposable email provider"
+                        : "This domain does not appear to be from a disposable email provider"}</p>
                 </div>
 
-                <!-- Public Email (True/False) -->
-                <div class="result-card ${isPublic ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${isPublic ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Public email provider</h3>
-                        <p class="result-desc">
-                            ${isPublic
-                                ? "This domain is from a public email provider. This means that anyone can generate emails from this domain for free"
-                                : "This domain is not from a public email provider"}
-                        </p>
+                <!--Public Email Provider -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Public Email Provider</p>
+                        <div class="disposal-result-card ${isPublic ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isPublic ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isPublic
+                        ? "This domain is from a public email provider. Anyone can create an email address on this domain for free."
+                        : "This domain is not from a public email provider"}</p>
                 </div>
 
-                <!-- Relay Domain (True/False) -->
-                <div class="result-card ${isRelay ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${isRelay ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Relay domain</h3>
-                        <p class="result-desc">
-                            ${isRelay
-                                ? "This domain is identified as a relay domain service"
-                                : "This domain does not appear to be a relay domain"}
-                        </p>
+                <!--Email Alias: Forwarding -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Email Alias: Forwarding</p>
+                        <div class="disposal-result-card ${isRelay ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isRelay ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isRelay
+                        ? "This domain is identified as a relay domain service"
+                        : "This domain does not appear to be a relay domain"}</p>
                 </div>
 
-                <!-- Role-based (True/False) -->
-                <div class="result-card ${isRole ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${isRole ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Role-based</h3>
-                        <p class="result-desc">
-                            ${isRole
-                                ? "This email is identified as a role-based or generic address (e.g. admin@, support@)"
-                                : "This email does not appear to be a role-based address"}
-                        </p>
+                <!-- Role-based -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Role-based</p>
+                        <div class="disposal-result-card ${isRole ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isRole ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isRole
+                        ? "This email is identified as a role-based or generic address (e.g. admin@, support@)"
+                        : "This email does not appear to be a role-based address"}</p>
                 </div>
 
-                <!-- Alias (True/False) -->
-                <div class="result-card ${isAlias ? 'status-true' : 'status-false'}">
-                    <p class="result-boolean">${isAlias ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Alias Detection</h3>
-                        <p class="result-desc">
-                            ${isAlias
-                                ? "This email is an alias address (contains + or . characters that may be stripped)"
-                                : "This email is not an alias address"}
-                        </p>
+                <!-- Email Alias: Native -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Email Alias: Native</p>
+                        <div class="disposal-result-card ${isAlias ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isAlias ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isAlias
+                        ? "This email is an alias address (contains + or . characters that may be stripped)"
+                        : "This email is not an alias address"}</p>
                 </div>
 
-                <!-- Private (True/False) -->
-                <div class="result-card ${isPrivate ? 'status-true' : 'status-false'}" style="border-bottom: none;">
-                    <p class="result-boolean">${isPrivate ? 'True' : 'False'}</p>
-                    <div class="result-content">
-                        <h3 class="result-head">Private</h3>
-                        <p class="result-desc">
-                            ${isPrivate
-                                ? "This domain could not be resolved or found in our global database. It may be a dead or inactive domain"
-                                : "This domain was resolved successfully via DNS or Database"}
-                        </p>
+                <!-- Private Domain -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Private Domain</p>
+                        <div class="disposal-result-card ${isPrivate ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${isPrivate ? 'True' : 'False'}
+                        </div>
                     </div>
+                    <p class="disposal-result-card-desc">${isPrivate
+                        ? "This domain could not be resolved or found in our global database. It may be a dead or inactive domain."
+                        : "This domain was resolved successfully via DNS or Database"}</p>
+                </div>
+
+                <!-- Free subdomain provider -->
+                <div class="result-card">
+                    <div class="result-card-hd">
+                        <p class="result-card-tle">Free subdomain provider</p>
+                        <div class="disposal-result-card ${details?.classification?.is_free_subdomain ? 'disposal-result-card-true' : 'disposal-result-card-false'}">
+                            ${details?.classification?.is_free_subdomain ? 'True' : 'False'}
+                        </div>
+                    </div>
+                    <p class="disposal-result-card-desc">${details?.classification?.is_free_subdomain
+                        ? "This domain is a free subdomain provider"
+                        : "This domain is not a free subdomain provider"}</p>
                 </div>
             `;
+        }
+
+        if (recentDomainsContainer && details?.recent_domains) {
+            if (details.recent_domains.length > 0) {
+                recentDomainsContainer.innerHTML = details.recent_domains
+                    .map(domain => `<p class="disposal-results-list-sect-two-list-item">${domain}</p>`)
+                    .join('');
+            } else {
+                recentDomainsContainer.innerHTML = '<p class="disposal-results-list-sect-two-list-item">No recent domains found</p>';
+            }
         }
 
         resultContainer.style.display = 'block';

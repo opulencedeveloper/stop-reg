@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function copyJsonToClipboard(evt) {
-  const codeBlock = document.getElementById('jsonCodeBlock');
+  // Always copy the full JSON from modal, not the preview
+  const jsonModal = document.getElementById('jsonModal');
+  const codeBlock = jsonModal?.querySelector('.api-response-code');
+
   if (!codeBlock) return;
 
   // Extract text content without HTML tags

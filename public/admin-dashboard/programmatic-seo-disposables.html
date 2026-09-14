@@ -357,6 +357,7 @@
                       <th>Provider Sitemap</th>
                       <th>Domain Sitemap</th>
                       <th>Domains Per Day</th>
+                      <th>Provider Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -905,6 +906,11 @@
         <div class="form-group">
           <label for="provider-features-domains-per-day-count">Domains Per Day Count</label>
           <input type="number" id="provider-features-domains-per-day-count" placeholder="Enter domains per day (1-1000)" min="1" max="1000" value="10">
+        </div>
+
+        <div class="form-group">
+          <label for="provider-features-provider-status">Provider Status</label>
+          <select id="provider-features-provider-status"></select>
         </div>
 
         <button type="submit" class="provider-features-submit-btn" id="submit-provider-features-btn">Update Record</button>
