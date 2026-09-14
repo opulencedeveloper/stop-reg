@@ -1006,6 +1006,17 @@ body {
   line-height: 24px;
 }
 
+/* .fasi-wrapper-main {
+  width: 100%;
+  padding-left: var(--desktop-padding);
+  padding-left: var(--desktop-padding);
+} */
+.fasi-wrapper-padding {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
 
 .fasi-wrapper {
   max-width: 1280px;
@@ -1017,6 +1028,8 @@ body {
   gap: 96px;
   padding-bottom: 100px;
   padding-top: 100px;
+
+
 }
 
 .fasi-sect-one {
@@ -2659,6 +2672,11 @@ input[type="password"]::-webkit-textfield-decoration-container {
     flex-direction: column;
   }
 
+  .fasi-wrapper-padding {
+    padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding);
+  }
+
   .land-pricing-container {
     top: -1300px;
   }
@@ -3532,7 +3550,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 /* What Stopreg Checks Section */
-#what-stopreg-check {
+#what-stopreg-check,
+#domain-me {
   background-color: #F7F7F7;
   /* Light grey to distinguish */
   padding-top: 100px;
@@ -3541,26 +3560,59 @@ input[type="password"]::-webkit-textfield-decoration-container {
   padding-right: var(--desktop-padding);
 }
 
-.wsc-wrapper {
+#domain-me {
+  padding-bottom: 80px;
+}
+
+.wsc-wrapper,
+.dme-wrapper {
   max-width: 1280px;
   width: 100%;
   margin: auto;
 
 }
 
-.wsc-header {
+.dme-wrapper-items {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.dme-wrapper-item-one,
+.dme-wrapper-item-two {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* .dme-wrapper-item-one>img,
+.dme-wrapper-item-two>img {
+ width: 100%;
+  height: 499px;
+  object-fit: contain;
+  object-position: top;
+} */
+
+.wsc-header,
+.dme-header {
   text-align: center;
   margin-bottom: 80px;
 }
 
-.wsc-header-title {
+.wsc-header-title,
+.dme-header-title {
   font-family: "Inter_18pt-Bold";
   font-size: 40px;
   color: #252525;
   margin-bottom: 12px;
 }
 
-.wsc-header-subtitle {
+.wsc-header-subtitle,
+.dme-header-subtitle {
   font-family: "Inter_28pt-Regular";
   font-size: 16px;
   color: #717171;
@@ -3617,7 +3669,9 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 /* Responsive Styles for What Stopreg Checks */
 @media only screen and (max-width: 1024px) {
-  .wsc-header-title {
+
+  .wsc-header-title,
+  .dme-header-title {
     font-size: 32px;
   }
 
@@ -4134,22 +4188,26 @@ input[type="password"]::-webkit-textfield-decoration-container {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  #what-stopreg-check {
+  #what-stopreg-check,
+  #domain-me {
     padding-top: 64px;
     padding-bottom: 64px;
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
   }
 
-  .wsc-header {
+  .wsc-header,
+  .dme-header {
     margin-bottom: 15px;
   }
 
-  .wsc-header-title {
+  .wsc-header-title,
+  .dme-header-title {
     font-size: 20px;
   }
 
-  .wsc-header-subtitle {
+  .wsc-header-subtitle,
+  .dme-header-subtitle {
     font-size: 12px;
   }
 
@@ -4243,6 +4301,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
   .fasi-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 
   .fasi-sect-one-hd {
@@ -5138,6 +5198,18 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 
 @media only screen and (max-width: 768px) {
+
+  .dme-wrapper-items {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .dme-wrapper-item-one,
+  .dme-wrapper-item-two {
+    width: 100%;
+    height: 510px;
+  }
+
   .privacy-section {
     margin-bottom: 40px;
   }
