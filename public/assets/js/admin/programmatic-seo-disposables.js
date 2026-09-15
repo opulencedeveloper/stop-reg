@@ -9,6 +9,7 @@ const ProviderFeaturesEnum = {
   publishProviderSitemap: { yes: "Yes", no: "No" },
   publishDomainSitemap: { yes: "Yes", no: "No" },
   providerStatus: { active: "Active", inactive: "Inactive", unknown: "Unknown" },
+  allowForwarding: { yes: "Yes", no: "No" },
 };
 
 function getEnumLabel(field, value) {
@@ -836,6 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
         populateSelectOptions("provider-features-provider-sitemap", "publishProviderSitemap");
         populateSelectOptions("provider-features-domain-sitemap", "publishDomainSitemap");
         populateSelectOptions("provider-features-provider-status", "providerStatus");
+        populateSelectOptions("provider-features-allow-forwarding", "allowForwarding");
     }
 
     async function loadProviderFeatures(page = 1, search = "") {
@@ -858,11 +860,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (features.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="13" style="text-align: center !important; padding: 40px; color: #737373;">No provider features found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="14" style="text-align: center !important; padding: 40px; color: #737373;">No provider features found.</td></tr>`;
             return;
         }
 
-        tbody.innerHTML = features.map(f => `<tr><td>${f.provider || '-'}</td><td>${getEnumLabel("registrationRequired", f.registrationRequired)}</td><td>${getEnumLabel("publicInbox", f.publicInbox)}</td><td>${getEnumLabel("emailRetention", f.emailRetention)}</td><td>${getEnumLabel("paidPlans", f.paidPlans)}</td><td>${getEnumLabel("domainRotation", f.domainRotation)}</td><td>${getEnumLabel("apiAvailable", f.apiAvailable)}</td><td>${getEnumLabel("mobileApp", f.mobileApp)}</td><td>${getEnumLabel("publishProviderSitemap", f.publishProviderSitemap)}</td><td>${getEnumLabel("publishDomainSitemap", f.publishDomainSitemap)}</td><td>${f.domainsPerDayCount || '-'}</td><td>${getEnumLabel("providerStatus", f.providerStatus)}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-provider="${f.provider}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="pf-dropdown-${f.provider}"><button class="dropdown-item-edit" data-provider="${f.provider}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-provider="${f.provider}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
+        tbody.innerHTML = features.map(f => `<tr><td>${f.provider || '-'}</td><td>${getEnumLabel("registrationRequired", f.registrationRequired)}</td><td>${getEnumLabel("publicInbox", f.publicInbox)}</td><td>${getEnumLabel("emailRetention", f.emailRetention)}</td><td>${getEnumLabel("paidPlans", f.paidPlans)}</td><td>${getEnumLabel("domainRotation", f.domainRotation)}</td><td>${getEnumLabel("allowForwarding", f.allowForwarding)}</td><td>${getEnumLabel("apiAvailable", f.apiAvailable)}</td><td>${getEnumLabel("mobileApp", f.mobileApp)}</td><td>${getEnumLabel("publishProviderSitemap", f.publishProviderSitemap)}</td><td>${getEnumLabel("publishDomainSitemap", f.publishDomainSitemap)}</td><td>${f.domainsPerDayCount || '-'}</td><td>${getEnumLabel("providerStatus", f.providerStatus)}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-provider="${f.provider}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="pf-dropdown-${f.provider}"><button class="dropdown-item-edit" data-provider="${f.provider}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-provider="${f.provider}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
         document.querySelectorAll("#provider-features-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleProviderFeaturesEdit(btn.dataset.provider); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#provider-features-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleProviderFeaturesDelete(btn.dataset.provider); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#provider-features-content .action-btn").forEach(btn => {btn.onclick = (e) => {e.stopPropagation(); const provider = btn.dataset.provider; const dropdown = document.getElementById(`pf-dropdown-${provider}`); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show")); if (dropdown) dropdown.classList.add("show");};});
@@ -887,6 +889,7 @@ document.addEventListener("DOMContentLoaded", () => {
         getEl("provider-features-publish-domain-sitemap").value = record.publishDomainSitemap || "";
         getEl("provider-features-domains-per-day-count").value = record.domainsPerDayCount || "";
         getEl("provider-features-provider-status").value = record.providerStatus || "";
+        getEl("provider-features-allow-forwarding").value = record.allowForwarding || "";
         getEl("provider-features-id").value = provider;
 
         if (providerFeaturesModal) providerFeaturesModal.classList.add("active");
@@ -2063,6 +2066,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const domainsPerDayCountValue = getEl("provider-features-domains-per-day-count").value;
             const domainsPerDayCount = domainsPerDayCountValue ? parseInt(domainsPerDayCountValue) : null;
             const providerStatus = getEl("provider-features-provider-status").value;
+            const allowForwarding = getEl("provider-features-allow-forwarding").value;
 
             const originalBtnHTML = submitProviderFeaturesBtn.innerHTML;
             submitProviderFeaturesBtn.disabled = true;
@@ -2082,6 +2086,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (publishDomainSitemap) payload.publishDomainSitemap = publishDomainSitemap;
                 if (domainsPerDayCount) payload.domainsPerDayCount = domainsPerDayCount;
                 if (providerStatus) payload.providerStatus = providerStatus;
+                if (allowForwarding) payload.allowForwarding = allowForwarding;
 
                 const result = await apiFetch(`/programmatic-seo/provider-features/${currentEditingId}`, {
                     method: "PUT",
