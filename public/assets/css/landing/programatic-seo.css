@@ -690,12 +690,6 @@
   font-weight: 400;
 }
 
-.provider-value {
-  font-family: "Inter_28pt-SemiBold";
-  font-size: 14px;
-  font-weight: 600;
-  color: #252525;
-}
 
 .provider-badge {
   background-color: #FFEBEB;
@@ -705,13 +699,21 @@
   font-size: 13px;
 }
 
-.provider-status-active {
-  color: #34C759;
+.provider-value {
   font-weight: 700;
-  background: #EFFBF2;
   font-family: "Inter_28pt-SemiBold" !important;
   padding: 4px 8px;
   border-radius: 8px;
+}
+
+.provider-status-active {
+  color: #34C759;
+  background: #EFFBF2;
+}
+
+.provider-status-inactive {
+  background-color: #FFEBEB;
+  color: #FF383C;
 }
 
 .provider-note {
@@ -2470,13 +2472,23 @@
 }
 
 @keyframes dnsOverlayFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes dnsOverlayFadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .dns-modal-container {
@@ -2497,13 +2509,27 @@
 }
 
 @keyframes dnsContainerSlideIn {
-  from { transform: translateY(40px) scale(0.95); opacity: 0; }
-  to { transform: translateY(0) scale(1); opacity: 1; }
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes dnsContainerSlideOut {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(-30px) scale(0.95); opacity: 0; }
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-30px) scale(0.95);
+    opacity: 0;
+  }
 }
 
 .dns-modal-header {

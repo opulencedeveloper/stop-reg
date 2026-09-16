@@ -315,10 +315,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DATA LOADING & RENDERING ---
     async function loadDisposables(page = 1, search = "", isSilent = false) {
-        if (isApiLoading) return;
+        console.log("loadDisposables called - page:", page, "search:", search, "isSilent:", isSilent);
+        if (isApiLoading) {
+            console.log("API already loading, returning early");
+            return;
+        }
 
         isApiLoading = true;
-        if (!isSilent) showLoading();
+        if (!isSilent) {
+            console.log("Calling showLoading() because isSilent is false");
+            showLoading();
+        } else {
+            console.log("NOT calling showLoading() because isSilent is TRUE");
+        }
         try {
             const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
             const result = await apiFetch(`/programmatic-seo/disposables?page=${page}&limit=${currentLimit}${searchParam}`);
@@ -1195,12 +1204,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) {
         let searchTimeout;
         searchInput.oninput = () => {
+            console.log("Search input changed:", searchInput.value);
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 currentSearch = searchInput.value.trim();
                 currentPage = 1;
-                const isSilent = currentSearch !== ""; // Silent mode for searches to keep count card visible
+                const isSilent = false; // Always show loading spinner during search
+                console.log("Search triggered - currentTab:", currentTab, "search:", currentSearch, "isSilent:", isSilent);
                 if (currentTab === "disposables") {
+                    console.log("Calling loadDisposables with isSilent:", isSilent);
                     loadDisposables(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "provider-features") {
                     loadProviderFeatures(currentPage, currentSearch, isSilent);

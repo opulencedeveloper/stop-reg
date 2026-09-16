@@ -1629,6 +1629,11 @@ body {
   padding: 20px 30px;
 }
 
+.faq-answer-inner-link {
+  color: var(--color-one);
+  text-decoration: none;
+}
+
 .accordion-content p {
   margin: 0;
   padding: 0;
