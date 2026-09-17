@@ -1,4 +1,4 @@
-class SeoPageLoader {
+class ProviderPageLoader {
   constructor() {
     const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     this.apiBaseUrl = isDev
@@ -8,132 +8,22 @@ class SeoPageLoader {
   }
 
   init() {
-    this.handleNavigation();
-    window.addEventListener("popstate", () => this.handleNavigation());
+    this.loadProviderData();
   }
 
-  handleNavigation() {
-    const path = window.location.pathname;
-
-    const providerMatch = path.match(/^\/provider\/([^/]+)$/);
-    if (providerMatch) {
-      const provider = decodeURIComponent(providerMatch[1]);
-      this.loadProviderPage(provider);
-      return;
-    }
-
-    const domainMatch = path.match(/^\/domain\/([^/]+)$/);
-    if (domainMatch) {
-      const domain = decodeURIComponent(domainMatch[1]);
-      this.loadDomainPage(domain);
-      return;
-    }
-
-  }
-
-  async loadProviderPage(provider) {
-    try {
-      const url = `${this.apiBaseUrl}/page/provider/${encodeURIComponent(provider)}`;
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const html = await response.text();
-      this.displayPage(html);
-    } catch (error) {
-      this.showError(`Failed to load provider page: ${error.message}`);
-    }
-  }
-
-  async loadDomainPage(domain) {
-    try {
-      const url = `${this.apiBaseUrl}/page/domain/${encodeURIComponent(domain)}`;
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const html = await response.text();
-      this.displayPage(html);
-    } catch (error) {
-      this.showError(`Failed to load domain page: ${error.message}`);
-    }
-  }
-
-  displayPage(html) {
-    const startTime = performance.now();
-
-    // Check if spinner exists before replacement
-    const spinnerBefore = document.getElementById('spinner-body');
-    if (spinnerBefore) {
-    }
-
-    // Clear global variables that might conflict with backend scripts
-    delete window.FAQ_DATA;
-    delete window.userPlanPromise;
-
-    const writeStartTime = performance.now();
-    document.open();
-    document.write(html);
-    document.close();
-    const writeTime = performance.now() - writeStartTime;
-
-    // Check if spinner exists after replacement
-    const spinnerAfter = document.getElementById('spinner-body');
-    if (spinnerAfter) {
-    }
-
-
-    // Wait for load event (all resources loaded) + CSS rendering
-    window.addEventListener('load', () => {
-      const loadTime = performance.now() - startTime;
-
-      // Check spinner before requestAnimationFrame
-      const spinnerOnLoad = document.getElementById('spinner-body');
-      if (spinnerOnLoad) {
-      }
-
-      // Ensure CSS is applied before hiding spinner (requestAnimationFrame waits for paint)
-      requestAnimationFrame(() => {
-        const rafTime = performance.now() - startTime;
-
-        // Hide the loading spinner
-        const spinner = document.getElementById('spinner-body');
-
-        if (spinner) {
-          spinner.classList.add('spinner-hidden');
-        } else {
-        }
-
-        const event = new Event('DOMContentLoaded', {
-          bubbles: true,
-          cancelable: true
-        });
-        document.dispatchEvent(event);
-
-        // Fetch DNS data after page renders
-        this.fetchDnsData();
-
-        const totalTime = performance.now() - startTime;
-      });
-    }, { once: true });
-  }
-
-  async fetchDnsData() {
+  async loadProviderData() {
     try {
       const path = window.location.pathname;
-
       const providerMatch = path.match(/^\/provider\/([^/]+)$/);
-      if (providerMatch) {
-        const provider = decodeURIComponent(providerMatch[1]);
-        await this.fetchProviderDnsData(provider);
+
+      if (!providerMatch) {
+        return;
       }
+
+      const provider = decodeURIComponent(providerMatch[1]);
+      await this.fetchProviderDnsData(provider);
     } catch (error) {
+      console.error('Error loading provider data:', error);
     }
   }
 
@@ -165,12 +55,12 @@ class SeoPageLoader {
 
       this.markAllDnsCardsAsLoaded();
     } catch (error) {
+      console.error('Error fetching provider DNS data:', error);
       this.markAllDnsCardsAsLoaded();
     }
   }
 
   populateMxRecords(dnsData) {
-
     const tbody = document.getElementById('dns-mx-tbody');
     if (!tbody) return;
 
@@ -186,7 +76,6 @@ class SeoPageLoader {
         tr.innerHTML = `<td>${this.escapeHtml(String(priority))}</td><td>${this.escapeHtml(host)}</td><td class="dns-mail-ttl">300</td>`;
         tbody.appendChild(tr);
       });
-    } else {
     }
   }
 
@@ -198,14 +87,10 @@ class SeoPageLoader {
     if (!container || !titleEl || !badgeEl) return;
 
     if (dnsData.spfRecords && dnsData.spfRecords.length > 0) {
-      // Update title with plural S if needed
       titleEl.textContent = `SPF RECORD${dnsData.spfRecords.length > 1 ? 'S' : ''}`;
-
-      // Show badge
       badgeEl.textContent = 'Found';
       badgeEl.style.display = 'inline-block';
 
-      // Populate content
       let html = '';
       dnsData.spfRecords.forEach((record) => {
         html += `<p class="dns-mail-record-text">${this.escapeHtml(record)}</p>`;
@@ -373,13 +258,9 @@ class SeoPageLoader {
     if (!modalContent) return;
 
     let html = '';
-    const sectionsCreated = [];
-
-    // Only add sections that have data
 
     // MX Records Section
     if (dnsData.mxRecords && dnsData.mxRecords.length > 0) {
-      sectionsCreated.push('mx');
       html += `<div class="dns-modal-section" data-section-type="mx"><h3 class="dns-modal-section-title">MX Records</h3>`;
       dnsData.mxRecords.forEach(record => {
         html += `<div class="dns-record-full"><code>${this.escapeHtml(record.priority)} ${this.escapeHtml(record.exchange)}</code></div>`;
@@ -387,9 +268,8 @@ class SeoPageLoader {
       html += `</div>`;
     }
 
-    // SPF Records Section - only if has data
+    // SPF Records Section
     if (dnsData.spfRecords && dnsData.spfRecords.length > 0) {
-      sectionsCreated.push('spf');
       html += `<div class="dns-modal-section" data-section-type="spf"><h3 class="dns-modal-section-title">SPF Record</h3>`;
       dnsData.spfRecords.forEach(record => {
         html += `<div class="dns-record-full"><code>${this.escapeHtml(record)}</code></div>`;
@@ -397,7 +277,7 @@ class SeoPageLoader {
       html += `</div>`;
     }
 
-    // DMARC Records Section - only if has data
+    // DMARC Records Section
     if (dnsData.dmarcRecords && dnsData.dmarcRecords.length > 0) {
       html += `<div class="dns-modal-section" data-section-type="dmarc"><h3 class="dns-modal-section-title">DMARC Record</h3>`;
       dnsData.dmarcRecords.forEach(record => {
@@ -406,7 +286,7 @@ class SeoPageLoader {
       html += `</div>`;
     }
 
-    // DKIM Records Section - only if has data
+    // DKIM Records Section
     if (dnsData.dkimRecords && dnsData.dkimRecords.length > 0) {
       html += `<div class="dns-modal-section" data-section-type="dkim"><h3 class="dns-modal-section-title">DKIM Records</h3>`;
       dnsData.dkimRecords.forEach(record => {
@@ -415,7 +295,7 @@ class SeoPageLoader {
       html += `</div>`;
     }
 
-    // NS Records Section - only if has data
+    // NS Records Section
     if (dnsData.dnsRecordsForDisplay) {
       const nsRecords = dnsData.dnsRecordsForDisplay.filter(r => r.type === 'NS');
       if (nsRecords.length > 0) {
@@ -427,7 +307,7 @@ class SeoPageLoader {
       }
     }
 
-    // IP Addresses Section - only if has data
+    // IP Addresses Section
     const allIps = (dnsData.ipv4 || []).concat(dnsData.ipv6 || []);
     if (allIps.length > 0) {
       html += `<div class="dns-modal-section" data-section-type="ips"><h3 class="dns-modal-section-title">IP Addresses</h3>`;
@@ -437,7 +317,7 @@ class SeoPageLoader {
       html += `</div>`;
     }
 
-    // PTR Records Section - only if has data
+    // PTR Records Section
     if (dnsData.ptrRecords && allIps.length > 0) {
       html += `<div class="dns-modal-section" data-section-type="ptr"><h3 class="dns-modal-section-title">Reverse DNS (PTR)</h3>`;
       allIps.forEach(ip => {
@@ -468,57 +348,12 @@ class SeoPageLoader {
     const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
     return String(text).replace(/[&<>"']/g, (m) => map[m]);
   }
-
-  showError(message) {
-    document.open();
-    document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Error</title>
-        <style>
-          body { font-family: system-ui, -apple-system, sans-serif; }
-          .error-container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 40px 20px;
-            text-align: center;
-            background: #fee;
-            border-radius: 8px;
-            border: 1px solid #fcc;
-          }
-          h2 { color: #c33; margin-bottom: 10px; }
-          p { color: #666; }
-          a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #1452CA;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="error-container">
-          <h2>Error</h2>
-          <p>${message}</p>
-          <a href="/">Go Home</a>
-        </div>
-      </body>
-      </html>
-    `);
-    document.close();
-  }
 }
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
-    new SeoPageLoader();
+    new ProviderPageLoader();
   });
 } else {
-  new SeoPageLoader();
+  new ProviderPageLoader();
 }

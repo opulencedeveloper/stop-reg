@@ -3,24 +3,34 @@ document.addEventListener('DOMContentLoaded', function() {
   const dnsModalClose = document.getElementById('dnsModalClose');
   const dnsModalCloseBtn = document.getElementById('dnsModalCloseBtn');
   const dnsModalOverlay = document.querySelector('.dns-modal-overlay');
-  const modalSections = document.querySelectorAll('.dns-modal-section');
 
   if (!dnsModal) return;
 
   function openModal(sectionType) {
+    // Query sections dynamically since they're added after page load
+    const modalSections = document.querySelectorAll('.dns-modal-section');
+
+    console.log('[Modal] openModal called with sectionType:', sectionType);
+    console.log('[Modal] Total sections found:', modalSections.length);
+
     // Hide all sections first
     modalSections.forEach(section => {
+      console.log('[Modal] Hiding section:', section.getAttribute('data-section-type'));
       section.style.display = 'none';
     });
 
     // Show only the matching section
     if (sectionType) {
       const targetSection = document.querySelector(`[data-section-type="${sectionType}"]`);
+      console.log('[Modal] Looking for section with type:', sectionType);
+      console.log('[Modal] Found target section:', !!targetSection);
       if (targetSection) {
+        console.log('[Modal] Showing section:', sectionType);
         targetSection.style.display = 'block';
       }
     } else {
       // If no section specified, show all (default behavior)
+      console.log('[Modal] No sectionType specified, showing all sections');
       modalSections.forEach(section => {
         section.style.display = 'block';
       });

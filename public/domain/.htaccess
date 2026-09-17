@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /domain/
+
+  # Serve pre-rendered pages for specific domains
+  # If file/directory doesn't exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # And it's not the root index.html
+  RewriteCond %{REQUEST_URI} !^/domain/index\.html$
+
+  # Rewrite /domain/example.com to /domain/example.com/index.html
+  RewriteRule ^([^/]+)/?$ $1/index.html [L]
+</IfModule>

@@ -100,14 +100,21 @@
   display: flex;
 }
 
+.sitemap-count-card-cont {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
 .sitemap-count-card {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 20px;
+  padding: 10px;
   background: #F9F9F9;
   border-radius: 8px;
-  margin-bottom: 16px;
   border: 1px solid #EDEDED;
 }
 

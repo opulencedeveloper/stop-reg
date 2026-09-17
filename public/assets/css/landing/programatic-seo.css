@@ -1630,7 +1630,8 @@
   background-color: #FFFFFF;
   border: 1px solid #EDEDED;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   display: block;
 }
 
@@ -2727,4 +2728,79 @@ button.dns-mail-link {
 
 .dns-mail-link:hover .dns-mail-link-icon {
   transform: translateX(2px);
+}
+
+/* Shimmer Placeholder Styles */
+.rdap-placeholder-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.rdap-placeholder {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 50%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.rdap-placeholder.large {
+  height: 200px;
+  margin: 16px 0;
+}
+
+.rdap-placeholder.medium {
+  height: 100px;
+  margin: 12px 0;
+}
+
+.rdap-placeholder.small {
+  height: 50px;
+  margin: 8px 0;
+}
+
+.rdap-placeholder-table {
+  height: 150px;
+  margin: 16px 0;
+}
+
+.rdap-placeholder-text {
+  height: 80px;
+  margin: 12px 0;
+}
+
+.rdap-placeholder-inline {
+  height: 9px;
+  margin: 4px 0;
+  max-width: 80px;
+}
+
+.dns-mail-card-loading .rdap-placeholder-wrapper {
+  display: block;
+}
+
+.dns-mail-card-loading .rdap-content {
+  display: none;
+}
+
+.dns-mail-card-loading .rdap-placeholder {
+  display: block;
+}
+
+.rdap-content {
+  display: block;
 }

@@ -200,17 +200,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 spinner.style.cssText = "display: flex; align-items: center; justify-content: center; padding: 60px 0;";
                 spinner.innerHTML = `<div class="chart-spinner"></div>`;
 
-                // For sitemap tabs, insert after count card; otherwise insert at beginning
+                // For sitemap tabs, insert after count card container; otherwise insert at beginning
                 const isSitemapTab = currentTab === "provider-sitemaps" || currentTab === "domain-sitemaps";
                 if (isSitemapTab) {
-                    const countCard = activeTabContent.querySelector(".sitemap-count-card");
-                    if (countCard) {
-                        // Insert spinner right after count card
-                        if (countCard.nextSibling) {
-                            activeTabContent.insertBefore(spinner, countCard.nextSibling);
-                        } else {
-                            activeTabContent.appendChild(spinner);
-                        }
+                    const countCardCont = activeTabContent.querySelector(".sitemap-count-card-cont");
+                    if (countCardCont && countCardCont.nextSibling) {
+                        activeTabContent.insertBefore(spinner, countCardCont.nextSibling);
+                    } else if (countCardCont) {
+                        activeTabContent.appendChild(spinner);
                     } else {
                         activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
                     }
@@ -223,14 +220,14 @@ document.addEventListener("DOMContentLoaded", () => {
             spinner.style.display = "flex";
             console.log("Showing spinner for", currentTab);
 
-            // Hide count cards (keep visible only for sitemap tabs during search)
-            const countCard = activeTabContent.querySelector(".sitemap-count-card");
-            if (countCard) {
+            // Hide count card container (keep visible only for sitemap tabs during search)
+            const countCardCont = activeTabContent.querySelector(".sitemap-count-card-cont");
+            if (countCardCont) {
                 const isSearch = currentSearch !== ""; // Only keep visible during search
                 const isSitemapTab = currentTab === "provider-sitemaps" || currentTab === "domain-sitemaps";
                 if (!isSearch || !isSitemapTab) {
-                    countCard.style.display = "none";
-                    console.log("Hiding count card");
+                    countCardCont.style.display = "none";
+                    console.log("Hiding count card container");
                 }
             }
 
@@ -265,11 +262,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Hiding spinner for", currentTab);
             }
 
-            // Show count cards
-            const countCard = activeTabContent.querySelector(".sitemap-count-card");
-            if (countCard) {
-                countCard.style.display = "";
-                console.log("Showing count card");
+            // Show count card container
+            const countCardCont = activeTabContent.querySelector(".sitemap-count-card-cont");
+            if (countCardCont) {
+                countCardCont.style.display = "";
+                console.log("Showing count card container");
             }
 
             // Show tables and wrappers
@@ -429,6 +426,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         loadProviderSitemaps(currentPage);
                     } else if (currentTab === "domain-sitemaps") {
                         loadDomainSitemaps(currentPage);
+                    } else if (currentTab === "unpublished-providers") {
+                        loadUnpublishedProviders(currentPage, currentSearch);
                     }
                 }
             };
@@ -925,26 +924,31 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
             if (!isSilent) hideLoading();
             loadedProviderSitemaps = result.data.data || [];
-            console.log('[loadProviderSitemaps] result.data.count:', result.data.count);
-            renderProviderSitemapsTable(loadedProviderSitemaps, result.data.count);
+            console.log('[loadProviderSitemaps] result.data.count:', result.data.count, 'publishedToday:', result.data.publishedToday);
+            renderProviderSitemapsTable(loadedProviderSitemaps, result.data.count, result.data.publishedToday);
             renderPagination(result.data.pagination);
             showTab("provider-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
         } catch (error) { renderSectionError(error.message, () => loadProviderSitemaps(page, search)); }
     }
 
-    function renderProviderSitemapsTable(sitemaps, count) {
-        console.log('[renderProviderSitemapsTable] sitemaps:', sitemaps, 'count:', count);
+    function renderProviderSitemapsTable(sitemaps, count, publishedToday) {
+        console.log('[renderProviderSitemapsTable] sitemaps:', sitemaps, 'count:', count, 'publishedToday:', publishedToday);
         const tbody = getEl("provider-sitemaps-tbody");
         if (!tbody) return;
 
         const countEl = getEl("provider-sitemaps-count");
-        console.log('[renderProviderSitemapsTable] countEl:', countEl);
+        const todayEl = getEl("provider-sitemaps-today-count");
+        console.log('[renderProviderSitemapsTable] countEl:', countEl, 'todayEl:', todayEl);
         if (countEl && count !== undefined) {
             console.log('[renderProviderSitemapsTable] Setting count to:', count);
             countEl.textContent = count;
         } else {
             console.log('[renderProviderSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
+        }
+        if (todayEl && publishedToday !== undefined && publishedToday !== null) {
+            console.log('[renderProviderSitemapsTable] Setting publishedToday to:', publishedToday);
+            todayEl.textContent = publishedToday;
         }
 
         if (sitemaps.length === 0) {
@@ -1136,6 +1140,55 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function loadUnpublishedProviders(page = 1, search = "", isSilent = false) {
+        console.log("loadUnpublishedProviders called - page:", page, "search:", search);
+        if (isApiLoading) {
+            console.log("API already loading, returning early");
+            return;
+        }
+
+        isApiLoading = true;
+        if (!isSilent) {
+            showLoading();
+        }
+        try {
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/disposables/unpublished-providers?page=${page}&limit=${currentLimit}${searchParam}`);
+            if (!result || result.message === "error") {
+                throw new Error(result?.description || "Failed to fetch unpublished providers.");
+            }
+
+            if (!isSilent) hideLoading();
+            renderUnpublishedProvidersTable(result.data.data);
+            renderPagination(result.data.pagination);
+            showTab("unpublished-providers-content");
+            if (paginationContainer) paginationContainer.style.display = "flex";
+
+        } catch (error) {
+            renderSectionError(error.message, () => loadUnpublishedProviders(page, search));
+        } finally {
+            isApiLoading = false;
+        }
+    }
+
+    function renderUnpublishedProvidersTable(providers) {
+        const tbody = getEl("unpublished-providers-tbody");
+        if (!tbody) return;
+
+        if (providers.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="1" style="text-align: center !important; padding: 40px; color: #737373;">No unpublished providers found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = providers.map(p => {
+            return `
+                <tr>
+                    <td>${p || '-'}</td>
+                </tr>
+            `;
+        }).join("");
+    }
+
     // --- TAB SWITCHING ---
     function hideAllTabs() {
         document.querySelectorAll(".tab-content").forEach(c => {
@@ -1166,8 +1219,8 @@ document.addEventListener("DOMContentLoaded", () => {
             currentSearch = "";
             if (searchInput) {
                 searchInput.value = "";
-                // Show search input for disposables, provider-features, and sitemap tabs
-                if (tab === "disposables" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps") {
+                // Show search input for disposables, provider-features, sitemap tabs, and unpublished-providers
+                if (tab === "disposables" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "unpublished-providers") {
                     searchInput.parentElement.style.display = "flex";
                     console.log("Showing search input");
                 } else {
@@ -1195,7 +1248,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadProviderSitemaps(currentPage);
             }
             else if (tab === "domain-sitemaps") {
-                loadDomainSitemaps(currentPage);
+                loadDomainSitemaps(currentPage, currentSearch);
+            }
+            else if (tab === "unpublished-providers") {
+                loadUnpublishedProviders(currentPage, currentSearch);
             }
         };
     });
@@ -1220,6 +1276,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     loadProviderSitemaps(currentPage, currentSearch, false); // Always show loading spinner
                 } else if (currentTab === "domain-sitemaps") {
                     loadDomainSitemaps(currentPage, currentSearch, false); // Always show loading spinner
+                } else if (currentTab === "unpublished-providers") {
+                    loadUnpublishedProviders(currentPage, currentSearch, false); // Always show loading spinner
                 }
             }, 300);
         };

@@ -227,6 +227,7 @@
               <button class="seo-tab-btn" data-tab="provider-features">Provider Features</button>
               <button class="seo-tab-btn" data-tab="provider-sitemaps">Provider Site Maps</button>
               <button class="seo-tab-btn" data-tab="domain-sitemaps">Domain Site Maps</button>
+              <button class="seo-tab-btn" data-tab="unpublished-providers">Unpublished Providers</button>
             </div>
           </div>
 
@@ -300,7 +301,8 @@
             <!-- Provider Descriptions Tab Content -->
             <div class="tab-content" id="provider-descriptions-content">
               <div class="provider-descriptions-header">
-                <button class="add-provider-description-btn" id="add-provider-description-btn">Add Provider Description</button>
+                <button class="add-provider-description-btn" id="add-provider-description-btn">Add Provider
+                  Description</button>
               </div>
               <div class="provider-descriptions-table-wrapper">
                 <table class="admin-table">
@@ -321,7 +323,8 @@
             <!-- Domain Descriptions Tab Content -->
             <div class="tab-content" id="domain-descriptions-content">
               <div class="provider-descriptions-header">
-                <button class="add-domain-description-btn" id="add-domain-description-btn">Add Domain Description</button>
+                <button class="add-domain-description-btn" id="add-domain-description-btn">Add Domain
+                  Description</button>
               </div>
               <div class="provider-descriptions-table-wrapper">
                 <table class="admin-table">
@@ -371,10 +374,16 @@
 
             <!-- Provider Site Maps Tab Content -->
             <div class="tab-content" id="provider-sitemaps-content">
-              <!-- Provider Sitemaps Count Card -->
-              <div class="sitemap-count-card">
-                <span class="count-label">Published Providers</span>
-                <span class="count-value" id="provider-sitemaps-count">-</span>
+              <!-- Provider Sitemaps Count Cards -->
+              <div class="sitemap-count-card-cont">
+                <div class="sitemap-count-card">
+                  <span class="count-label">Published Providers</span>
+                  <span class="count-value" id="provider-sitemaps-count">-</span>
+                </div>
+                <div class="sitemap-count-card">
+                  <span class="count-label">Today's Published</span>
+                  <span class="count-value" id="provider-sitemaps-today-count">-</span>
+                </div>
               </div>
 
               <div class="provider-sitemaps-table-wrapper">
@@ -401,9 +410,11 @@
             <!-- Domain Site Maps Tab Content -->
             <div class="tab-content" id="domain-sitemaps-content">
               <!-- Domain Sitemaps Count Card -->
-              <div class="sitemap-count-card">
-                <span class="count-label">Published Domains</span>
-                <span class="count-value" id="domain-sitemaps-count">-</span>
+              <div class="sitemap-count-card-cont">
+                <div class="sitemap-count-card">
+                  <span class="count-label">Published Domains</span>
+                  <span class="count-value" id="domain-sitemaps-count">-</span>
+                </div>
               </div>
 
               <div class="domain-sitemaps-table-wrapper">
@@ -423,6 +434,22 @@
                     </tr>
                   </thead>
                   <tbody id="domain-sitemaps-tbody">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Unpublished Providers Tab Content -->
+            <div class="tab-content" id="unpublished-providers-content">
+              <div class="unpublished-providers-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Provider</th>
+                    </tr>
+                  </thead>
+                  <tbody id="unpublished-providers-tbody">
                     <!-- Dynamic Rows -->
                   </tbody>
                 </table>
@@ -456,13 +483,15 @@
 
         <div class="form-group">
           <label for="meta-page-title">Page Title</label>
-          <input type="text" id="meta-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160" required>
+          <input type="text" id="meta-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160"
+            required>
           <span class="char-count"><span id="title-char-count">0</span>/160</span>
         </div>
 
         <div class="form-group">
           <label for="meta-page-description">Page Description</label>
-          <textarea id="meta-page-description" placeholder="Enter page description (max 160 chars)" maxlength="160" rows="3" required></textarea>
+          <textarea id="meta-page-description" placeholder="Enter page description (max 160 chars)" maxlength="160"
+            rows="3" required></textarea>
           <span class="char-count"><span id="desc-char-count">0</span>/160</span>
         </div>
 
@@ -484,7 +513,8 @@
       </div>
       <div class="meta-provider-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="meta-provider-delete-modal-text">Are you sure you want to remove this meta provider record? This action cannot be undone.</p>
+        <p id="meta-provider-delete-modal-text">Are you sure you want to remove this meta provider record? This action
+          cannot be undone.</p>
       </div>
       <div class="meta-provider-delete-modal-actions">
         <button class="btn-cancel" id="cancel-meta-provider-delete-btn">Cancel</button>
@@ -508,13 +538,15 @@
 
         <div class="form-group">
           <label for="meta-domains-page-title">Page Title</label>
-          <input type="text" id="meta-domains-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160" required>
+          <input type="text" id="meta-domains-page-title" placeholder="Enter page title (max 160 chars)" maxlength="160"
+            required>
           <span class="char-count"><span id="domains-title-char-count">0</span>/160</span>
         </div>
 
         <div class="form-group">
           <label for="meta-domains-page-description">Page Description</label>
-          <textarea id="meta-domains-page-description" placeholder="Enter page description (max 160 chars)" maxlength="160" rows="3" required></textarea>
+          <textarea id="meta-domains-page-description" placeholder="Enter page description (max 160 chars)"
+            maxlength="160" rows="3" required></textarea>
           <span class="char-count"><span id="domains-desc-char-count">0</span>/160</span>
         </div>
 
@@ -536,7 +568,8 @@
       </div>
       <div class="meta-domains-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="meta-domains-delete-modal-text">Are you sure you want to remove this meta domain record? This action cannot be undone.</p>
+        <p id="meta-domains-delete-modal-text">Are you sure you want to remove this meta domain record? This action
+          cannot be undone.</p>
       </div>
       <div class="meta-domains-delete-modal-actions">
         <button class="btn-cancel" id="cancel-meta-domains-delete-btn">Cancel</button>
@@ -560,7 +593,8 @@
 
         <div class="form-group">
           <label for="provider-descriptions-description">Description</label>
-          <textarea id="provider-descriptions-description" placeholder="Enter provider description" rows="4" required></textarea>
+          <textarea id="provider-descriptions-description" placeholder="Enter provider description" rows="4"
+            required></textarea>
         </div>
 
         <div class="form-group">
@@ -568,7 +602,8 @@
           <textarea id="provider-descriptions-about" placeholder="Enter about provider" rows="4" required></textarea>
         </div>
 
-        <button type="submit" class="provider-descriptions-submit-btn" id="submit-provider-descriptions-btn">Continue</button>
+        <button type="submit" class="provider-descriptions-submit-btn"
+          id="submit-provider-descriptions-btn">Continue</button>
       </form>
     </div>
   </div>
@@ -586,7 +621,8 @@
       </div>
       <div class="provider-descriptions-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="provider-descriptions-delete-modal-text">Are you sure you want to remove this provider description record? This action cannot be undone.</p>
+        <p id="provider-descriptions-delete-modal-text">Are you sure you want to remove this provider description
+          record? This action cannot be undone.</p>
       </div>
       <div class="provider-descriptions-delete-modal-actions">
         <button class="btn-cancel" id="cancel-provider-descriptions-delete-btn">Cancel</button>
@@ -615,20 +651,24 @@
 
         <div class="form-group">
           <label for="disposable-domain-descriptions-overview">DEA Overview</label>
-          <textarea id="disposable-domain-descriptions-overview" placeholder="Enter DEA overview" rows="4" required></textarea>
+          <textarea id="disposable-domain-descriptions-overview" placeholder="Enter DEA overview" rows="4"
+            required></textarea>
         </div>
 
         <div class="form-group">
           <label for="disposable-domain-descriptions-about">About DEA</label>
-          <textarea id="disposable-domain-descriptions-about" placeholder="Enter about DEA" rows="4" required></textarea>
+          <textarea id="disposable-domain-descriptions-about" placeholder="Enter about DEA" rows="4"
+            required></textarea>
         </div>
 
         <div class="form-group">
           <label for="disposable-domain-descriptions-discovered">How DEA Discovered</label>
-          <textarea id="disposable-domain-descriptions-discovered" placeholder="Enter how DEA was discovered" rows="4" required></textarea>
+          <textarea id="disposable-domain-descriptions-discovered" placeholder="Enter how DEA was discovered" rows="4"
+            required></textarea>
         </div>
 
-        <button type="submit" class="disposable-domain-descriptions-submit-btn" id="submit-disposable-domain-descriptions-btn">Continue</button>
+        <button type="submit" class="disposable-domain-descriptions-submit-btn"
+          id="submit-disposable-domain-descriptions-btn">Continue</button>
       </form>
     </div>
   </div>
@@ -640,17 +680,20 @@
         <div class="delete-icon-wrapper">
           <img src="/assets/icons/delete.svg" alt="Delete" />
         </div>
-        <button class="disposable-domain-descriptions-delete-modal-close" id="close-disposable-domain-descriptions-delete-modal">
+        <button class="disposable-domain-descriptions-delete-modal-close"
+          id="close-disposable-domain-descriptions-delete-modal">
           <img src="/assets/icons/close.svg" alt="Close" />
         </button>
       </div>
       <div class="disposable-domain-descriptions-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="disposable-domain-descriptions-delete-modal-text">Are you sure you want to remove this disposable domain description record? This action cannot be undone.</p>
+        <p id="disposable-domain-descriptions-delete-modal-text">Are you sure you want to remove this disposable domain
+          description record? This action cannot be undone.</p>
       </div>
       <div class="disposable-domain-descriptions-delete-modal-actions">
         <button class="btn-cancel" id="cancel-disposable-domain-descriptions-delete-btn">Cancel</button>
-        <button class="btn-confirm-remove" id="confirm-disposable-domain-descriptions-delete-btn">Remove this record</button>
+        <button class="btn-confirm-remove" id="confirm-disposable-domain-descriptions-delete-btn">Remove this
+          record</button>
       </div>
     </div>
   </div>
@@ -680,10 +723,12 @@
 
         <div class="form-group">
           <label for="domain-descriptions-discovered">How DEA Was Discovered</label>
-          <textarea id="domain-descriptions-discovered" placeholder="Enter how it was discovered" rows="4" required></textarea>
+          <textarea id="domain-descriptions-discovered" placeholder="Enter how it was discovered" rows="4"
+            required></textarea>
         </div>
 
-        <button type="submit" class="domain-descriptions-submit-btn" id="submit-domain-descriptions-btn">Continue</button>
+        <button type="submit" class="domain-descriptions-submit-btn"
+          id="submit-domain-descriptions-btn">Continue</button>
       </form>
     </div>
   </div>
@@ -720,7 +765,8 @@
 
         <div class="form-group">
           <label for="domain-sitemaps-meta-description">Meta Description</label>
-          <textarea id="domain-sitemaps-meta-description" placeholder="Enter meta description" maxlength="160" rows="3" required></textarea>
+          <textarea id="domain-sitemaps-meta-description" placeholder="Enter meta description" maxlength="160" rows="3"
+            required></textarea>
           <div class="char-count"><span id="domain-sitemaps-meta-description-count">0</span>/160</div>
         </div>
 
@@ -736,7 +782,8 @@
 
         <div class="form-group">
           <label for="domain-sitemaps-discovered">How DEA Was Discovered</label>
-          <textarea id="domain-sitemaps-discovered" placeholder="Enter how DEA was discovered" rows="4" required></textarea>
+          <textarea id="domain-sitemaps-discovered" placeholder="Enter how DEA was discovered" rows="4"
+            required></textarea>
         </div>
 
         <div class="form-group">
@@ -762,7 +809,8 @@
       </div>
       <div class="domain-sitemaps-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="domain-sitemaps-delete-modal-text">Are you sure you want to remove this domain site map record? This action cannot be undone.</p>
+        <p id="domain-sitemaps-delete-modal-text">Are you sure you want to remove this domain site map record? This
+          action cannot be undone.</p>
       </div>
       <div class="domain-sitemaps-delete-modal-actions">
         <button class="btn-cancel" id="cancel-domain-sitemaps-delete-btn">Cancel</button>
@@ -797,7 +845,8 @@
 
         <div class="form-group">
           <label for="provider-sitemaps-meta-description">Meta Description</label>
-          <textarea id="provider-sitemaps-meta-description" placeholder="Enter meta description" maxlength="160" rows="3" required></textarea>
+          <textarea id="provider-sitemaps-meta-description" placeholder="Enter meta description" maxlength="160"
+            rows="3" required></textarea>
           <div class="char-count"><span id="provider-sitemaps-meta-description-count">0</span>/160</div>
         </div>
 
@@ -816,7 +865,8 @@
           <input type="text" id="provider-sitemaps-url" placeholder="Enter published URL" required>
         </div>
 
-        <button type="submit" class="provider-sitemaps-submit-btn" id="submit-provider-sitemaps-btn">Update Record</button>
+        <button type="submit" class="provider-sitemaps-submit-btn" id="submit-provider-sitemaps-btn">Update
+          Record</button>
       </form>
     </div>
   </div>
@@ -834,7 +884,8 @@
       </div>
       <div class="provider-sitemaps-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="provider-sitemaps-delete-modal-text">Are you sure you want to remove this provider site map record? This action cannot be undone.</p>
+        <p id="provider-sitemaps-delete-modal-text">Are you sure you want to remove this provider site map record? This
+          action cannot be undone.</p>
       </div>
       <div class="provider-sitemaps-delete-modal-actions">
         <button class="btn-cancel" id="cancel-provider-sitemaps-delete-btn">Cancel</button>
@@ -908,7 +959,8 @@
 
         <div class="form-group">
           <label for="provider-features-domains-per-day-count">Domains Per Day Count</label>
-          <input type="number" id="provider-features-domains-per-day-count" placeholder="Enter domains per day (1-1000)" min="1" max="1000" value="10">
+          <input type="number" id="provider-features-domains-per-day-count" placeholder="Enter domains per day (1-1000)"
+            min="1" max="1000" value="10">
         </div>
 
         <div class="form-group">
@@ -921,7 +973,8 @@
           <select id="provider-features-allow-forwarding"></select>
         </div>
 
-        <button type="submit" class="provider-features-submit-btn" id="submit-provider-features-btn">Update Record</button>
+        <button type="submit" class="provider-features-submit-btn" id="submit-provider-features-btn">Update
+          Record</button>
       </form>
     </div>
   </div>
@@ -939,7 +992,8 @@
       </div>
       <div class="provider-features-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="provider-features-delete-modal-text">Are you sure you want to remove this provider features record? This action cannot be undone.</p>
+        <p id="provider-features-delete-modal-text">Are you sure you want to remove this provider features record? This
+          action cannot be undone.</p>
       </div>
       <div class="provider-features-delete-modal-actions">
         <button class="btn-cancel" id="cancel-provider-features-delete-btn">Cancel</button>
@@ -961,7 +1015,8 @@
       </div>
       <div class="domain-descriptions-delete-modal-content">
         <h3>Remove this record?</h3>
-        <p id="domain-descriptions-delete-modal-text">Are you sure you want to remove this domain description record? This action cannot be undone.</p>
+        <p id="domain-descriptions-delete-modal-text">Are you sure you want to remove this domain description record?
+          This action cannot be undone.</p>
       </div>
       <div class="domain-descriptions-delete-modal-actions">
         <button class="btn-cancel" id="cancel-domain-descriptions-delete-btn">Cancel</button>

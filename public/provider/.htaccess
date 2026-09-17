@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /provider/
+
+  # Serve pre-rendered pages for specific providers
+  # If file/directory doesn't exist
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  # And it's not the root index.html
+  RewriteCond %{REQUEST_URI} !^/provider/index\.html$
+
+  # Rewrite /provider/mailinator to /provider/mailinator/index.html
+  RewriteRule ^([^/]+)/?$ $1/index.html [L]
+</IfModule>

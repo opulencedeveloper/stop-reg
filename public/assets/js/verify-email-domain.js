@@ -411,9 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (resultTitle) {
             if (isDisposable) {
-                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is associated with <span>${provider}.</span>`;
+                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is classified as a disposable email domain associated with <span>${provider}.</span>`;
             } else {
-                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> uses MX from <span>${provider}</span> for email delivery.`;
+                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is not classified as a disposable email domain.`;
             }
         }
 

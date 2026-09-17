@@ -264,9 +264,9 @@
 }
 
 .provider-status-active {
-  color: #34C759;
+  color: #34C759 !important;
   font-weight: 700;
-  background: #EFFBF2;
+  background: #EFFBF2 !important;
   font-family: "Inter_28pt-SemiBold" !important;
   padding: 4px 8px;
   border-radius: 8px;
