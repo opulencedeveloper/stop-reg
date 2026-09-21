@@ -306,7 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const payload = {
         emailDomain: inputValue,
-        turnstileToken
+        turnstileToken,
+        checkDomainPage: true
       };
 
       if (isCheckPage) {
@@ -410,10 +411,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }) + ' UTC';
 
         if (resultTitle) {
+            const domainPageUrl = fullResponse?.data?.domainPageUrl;
+            const domainDisplay = domainPageUrl
+                ? `<a href="${domainPageUrl}" target="_blank">${domain}</a>`
+                : domain;
+
             if (isDisposable) {
-                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is classified as a disposable email domain associated with <span>${provider}.</span>`;
+                resultTitle.innerHTML = `Result: <span>${domainDisplay}</span> is classified as a disposable email domain associated with <span>${provider}.</span>`;
             } else {
-                resultTitle.innerHTML = `Result: <span><a href="http://${domain}" target="_blank">${domain}</a></span> is not classified as a disposable email domain.`;
+                resultTitle.innerHTML = `Result: <span>${domainDisplay}</span> is not classified as a disposable email domain.`;
             }
         }
 

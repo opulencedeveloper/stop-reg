@@ -1013,14 +1013,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isSilent) hideLoading();
             loadedDomainSitemaps = result.data.data || [];
             console.log('[loadDomainSitemaps] result.data.count:', result.data.count);
-            renderDomainSitemapsTable(loadedDomainSitemaps, result.data.count);
+            renderDomainSitemapsTable(loadedDomainSitemaps, result.data.count, result.data.publishedToday);
             renderPagination(result.data.pagination);
             showTab("domain-sitemaps-content");
             if (paginationContainer) paginationContainer.style.display = "flex";
         } catch (error) { renderSectionError(error.message, () => loadDomainSitemaps(page, search)); }
     }
 
-    function renderDomainSitemapsTable(sitemaps, count) {
+    function renderDomainSitemapsTable(sitemaps, count, publishedToday) {
         console.log('[renderDomainSitemapsTable] sitemaps:', sitemaps, 'count:', count);
         const tbody = getEl("domain-sitemaps-tbody");
         if (!tbody) return;
@@ -1032,6 +1032,11 @@ document.addEventListener("DOMContentLoaded", () => {
             countEl.textContent = count;
         } else {
             console.log('[renderDomainSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
+        }
+
+        const todayEl = getEl("domain-sitemaps-today-count");
+        if (todayEl && publishedToday !== undefined && publishedToday !== null) {
+            todayEl.textContent = publishedToday;
         }
 
         if (sitemaps.length === 0) { tbody.innerHTML = `<tr><td colspan="10" style="text-align: center !important; padding: 40px; color: #737373;">No records found.</td></tr>`; return; }

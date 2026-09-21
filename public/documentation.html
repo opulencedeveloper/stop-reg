@@ -462,7 +462,7 @@
               </div>
               <h3>Response Format</h3>
               <p>
-                The API returns a JSON response with the following structure:
+                The API returns a JSON response with the following structure (shown here for authenticated requests):
               </p>
               <div class="code-snippet-container">
                 <div class="code-snippet-content">
@@ -510,8 +510,10 @@
       <span class="string">"is_alias"</span>: <span class="keyword">false</span>
     },
     <span class="string">"policy"</span>: {
-      <span class="string">"blocklisted"</span>: <span class="string">"Login to configure the blocklist"</span>,
-      <span class="string">"allowlisted"</span>: <span class="string">"Login to configure the allowlist"</span>
+      <span class="string">"action"</span>: <span class="string">"allow"</span>,
+      <span class="string">"reason_code"</span>: <span class="string">"UNKNOWN"</span>,
+      <span class="string">"reason"</span>: <span class="string">"Email classification is pending determination."</span>,
+      <span class="string">"risk"</span>: <span class="string">"low"</span>
     }
   }
 }</code></pre>
@@ -613,18 +615,22 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">email | domain</span> <span
+                      <td><span class="field-name">email</span> <span
                           class="type-badge type-string">String</span></td>
                       <td>Raw Value</td>
-                      <td>The original input provided in your request. Use this to map the response back to your local
-                        records.</td>
+                      <td><strong>Authenticated requests only.</strong> The original email address provided in your request. Use this to map the response back to your local records.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">domain</span> <span
+                          class="type-badge type-string">String</span></td>
+                      <td>Domain</td>
+                      <td>The domain extracted from the email or provided directly. Present in all responses.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">normalized</span> <span class="type-badge type-string">String</span>
                       </td>
                       <td>Canonical</td>
-                      <td>The standardized version of your input. This value is lowercased, trimmed, and stripped of
-                        sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
+                      <td><strong>Authenticated requests only.</strong> The standardized version of your input. This value is lowercased, trimmed, and stripped of sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">suggestion</span> <span class="type-badge type-string">String</span>
@@ -744,7 +750,7 @@
                 </table>
               </div>
 
-              <h4>Custom Policy Logic (data.policy)</h4>
+              <h4>Enforcement & Policy (data.policy)</h4>
               <div class="docs-table-wrapper">
                 <table class="docs-table">
                   <thead>
@@ -756,22 +762,35 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">blocklisted</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td>Custom</td>
-                      <td><code>true</code> if the input matches a domain or email explicitly blocked in your StopReg
-                        Dashboard.</td>
+                      <td><span class="field-name">action</span> <span
+                          class="type-badge type-string">String</span></td>
+                      <td>Policy</td>
+                      <td><strong>Enforcement action based on your policies.</strong> One of: <code>"allow"</code>, <code>"warn"</code>, or <code>"block"</code>. Determined by your custom allowlist/blocklist settings and domain classification. Requires API token authentication.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">allowlisted</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td>Custom</td>
-                      <td><code>true</code> if the input matches a trusted domain in your Dashboard, bypassing all
-                        disposable checks.</td>
+                      <td><span class="field-name">reason_code</span> <span
+                          class="type-badge type-string">String</span></td>
+                      <td>Code</td>
+                      <td><strong>Machine-readable reason for the action.</strong> Examples: <code>"ALLOWLISTED_DOMAIN"</code>, <code>"BLOCKLISTED_DOMAIN"</code>, <code>"IS_DISPOSABLE"</code>, <code>"UNKNOWN"</code>. Useful for logging and analytics.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">reason</span> <span
+                          class="type-badge type-string">String</span></td>
+                      <td>Message</td>
+                      <td><strong>Human-readable explanation</strong> of why the action was taken (e.g., "Domain is on your allowlist." or "This email uses a disposable domain provider.").</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">risk</span> <span
+                          class="type-badge type-string">String</span></td>
+                      <td>Risk Level</td>
+                      <td><strong>Risk assessment.</strong> One of: <code>"low"</code>, <code>"medium"</code>, or <code>"high"</code>. Reflects the trustworthiness of the email domain.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+              <p style="margin-top: 16px; font-style: italic; color: #666;">
+                <strong>Note:</strong> The <code>policy</code> object is only fully populated for authenticated requests (with a valid <code>x-api-token</code> header). Anonymous requests receive a simplified response with a default message.
+              </p>
 
               <h3>Error Responses</h3>
               <p>
