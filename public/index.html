@@ -15,7 +15,7 @@
   <meta name="robots" content="index, follow" />
   <meta name="author" content="StopReg" />
   <meta name="language" content="English" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
@@ -233,7 +233,7 @@
   <!-- <script src="/assets/js/entrance-overlay.js"></script> -->
 
   <!-- Loading Spinner Start -->
-<!--
+  <!--
 <div id="spinner-body" class="spinner-body">
     <div class="stopreg-spinner"></div>
   </div>
@@ -335,7 +335,7 @@
       <div class="hero-container">
         <div class="hero-sect-one">
           <h1 class="hero-header">
-            Block fake signups. Grow with real users.
+            Stop Signup Abuse
             <!-- Validate Emails.
             <br>
             Stop Abuse.
@@ -343,7 +343,8 @@
             Improve Sign-Ups. -->
           </h1>
           <p class="hero-title">
-            Real-time email intelligence API to block disposable, fake, and risky emails addresses in a single request
+            Real-time email intelligence API to detect disposable, fake, and risky email addresses and enforce your
+            signup policies in a single request
           </p>
           <div class="hero-btn-wrapper">
             <a href="/sign-up.html" class="hero-btn-link">Sign up for free</a>
@@ -395,7 +396,7 @@
             </div>
             <div class="hiw-step-content">
               <h3 class="hiw-step-title">Sign up</h3>
-              <p class="hiw-step-desc">Create an account on <a href="/">StopReg.com</a>. After registration, you get
+              <p class="hiw-step-desc">Create an account on StopReg.com. After registration, you get
                 access to the dashboard.
               </p>
             </div>
@@ -509,8 +510,8 @@
             </div>
             <h3 class="wsc-card-title">Public Email Provider Detection</h3>
             <p class="wsc-card-desc">
-           Detect public email providers like Gmail, Yahoo, Outlook, and more to improve user segmentation.
-           </p>
+              Detect public email providers like Gmail, Yahoo, Outlook, and more to improve user segmentation.
+            </p>
           </div>
           <!-- Card 4 -->
           <div class="wsc-card">
@@ -546,17 +547,18 @@
 
 
 
-     <!-- Domain Management & Enforcement Start -->
+    <!-- Domain Management & Enforcement Start -->
     <section id="domain-me">
       <div class="dme-wrapper">
         <div class="dme-header">
           <h2 class="dme-header-title">Domain Management & Enforcement</h2>
-          <p class="dme-header-subtitle">Manage allowed and blocked domains and define how Stopreg handles different email risks.</p>
+          <p class="dme-header-subtitle">Manage allowed and blocked domains and define how Stopreg handles different
+            email risks.</p>
         </div>
 
         <div class="dme-wrapper-items">
-            <img class="dme-wrapper-item-one" src="/assets/images/landing/index/enforcement-policy.png" />
-            <img class="dme-wrapper-item-two" src="/assets/images/landing/index/domain-management.png" />
+          <img class="dme-wrapper-item-one" src="/assets/images/landing/index/enforcement-policy.png" />
+          <img class="dme-wrapper-item-two" src="/assets/images/landing/index/domain-management.png" />
         </div>
       </div>
     </section>
@@ -585,8 +587,8 @@
               <p class="why-stopreg-grid-stle">Full email or domain-only validation options</p>
             </div>
             <div class="why-stopreg-grid-item">
-              <p class="why-stopreg-grid-tle">Lightning Fast</p>
-              <p class="why-stopreg-grid-stle">Developer-friendly REST API with millisecond responses</p>
+              <p class="why-stopreg-grid-tle">Built for Speed</p>
+              <p class="why-stopreg-grid-stle">Developer-friendly REST API with sub-300ms response times</p>
             </div>
             <div class="why-stopreg-grid-item">
               <p class="why-stopreg-grid-tle">Reduce Fake & Low Quality Signups</p>
@@ -668,48 +670,49 @@
     <section id="api" class="fasi-wrapper-main">
       <div class="fasi-wrapper-padding">
         <div class="fasi-wrapper">
-        <div class="fasi-sect-one">
-          <h2 class="fasi-sect-one-hd">Two Flexible API Endpoints</h2>
+          <div class="fasi-sect-one">
+            <h2 class="fasi-sect-one-hd">Two Flexible API Endpoints</h2>
 
-          <div class="fasi-items-wrapper">
-            <div class="fasi-api-item">
-              <h3 class="fasi-api-title">Full Email Validation API</h3>
-              <p class="fasi-api-desc">
-                Complete validation with disposable detection, role-based checks, public provider identification, syntax
-                validation, and MX verification. Perfect for user registrations and lead forms.
-              </p>
+            <div class="fasi-items-wrapper">
+              <div class="fasi-api-item">
+                <h3 class="fasi-api-title">Full Email Validation API</h3>
+                <p class="fasi-api-desc">
+                  Complete validation with disposable detection, role-based checks, public provider identification,
+                  syntax
+                  validation, and MX verification. Perfect for user registrations and lead forms.
+                </p>
+              </div>
+
+              <div class="fasi-api-item fasi-api-item-last">
+                <h3 class="fasi-api-title">Domain-Only API (Privacy-First)</h3>
+                <p class="fasi-api-desc">
+                  Validate without transmitting full email addresses. Ideal for privacy-focused platforms and regulated
+                  environments. Performs disposable detection, public provider identification, and MX verification.
+                </p>
+              </div>
             </div>
-
-            <div class="fasi-api-item fasi-api-item-last">
-              <h3 class="fasi-api-title">Domain-Only API (Privacy-First)</h3>
-              <p class="fasi-api-desc">
-                Validate without transmitting full email addresses. Ideal for privacy-focused platforms and regulated
-                environments. Performs disposable detection, public provider identification, and MX verification.
-              </p>
+          </div>
+          <div class="fasi-sect-two">
+            <div class="code-snippet-container">
+              <div class="code-snippet-content">
+                <div class="code-block" id="code-content"></div>
+              </div>
+              <button class="code-copy-btn" aria-label="Copy code">
+                <img src="/assets/icons/white-copy.svg" alt="Copy" />
+                <span>Copy</span>
+              </button>
+              <div class="code-snippet-tabs">
+                <button class="code-tab active" data-lang="nodejs">Node.js</button>
+                <button class="code-tab" data-lang="curl">cURL</button>
+                <button class="code-tab" data-lang="python">Python</button>
+                <button class="code-tab" data-lang="php">PHP</button>
+                <button class="code-tab" data-lang="go">GO</button>
+                <button class="code-tab" data-lang="java">Java</button>
+                <button class="code-tab" data-lang="csharp">C#</button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="fasi-sect-two">
-          <div class="code-snippet-container">
-            <div class="code-snippet-content">
-              <div class="code-block" id="code-content"></div>
-            </div>
-            <button class="code-copy-btn" aria-label="Copy code">
-              <img src="/assets/icons/white-copy.svg" alt="Copy" />
-              <span>Copy</span>
-            </button>
-            <div class="code-snippet-tabs">
-              <button class="code-tab active" data-lang="nodejs">Node.js</button>
-              <button class="code-tab" data-lang="curl">cURL</button>
-              <button class="code-tab" data-lang="python">Python</button>
-              <button class="code-tab" data-lang="php">PHP</button>
-              <button class="code-tab" data-lang="go">GO</button>
-              <button class="code-tab" data-lang="java">Java</button>
-              <button class="code-tab" data-lang="csharp">C#</button>
-            </div>
-          </div>
-        </div>
-      </div>
       </div>
     </section>
     <!-- Fast and simple integration End -->
@@ -734,10 +737,9 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 1 user seat</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 1 API key</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
-<li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
             <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a1729f">Get
@@ -758,10 +760,11 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 2 user seats</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 3 API keys</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allowlist</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
-<li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
             <a href="/sign-up.html" class="pricing-btn btn-pricing-filled" data-plan-id="6984c3f3c3a2b4bb21a172a0">Get
@@ -781,10 +784,11 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 4 user seats</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 5 API keys</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allowlist</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
-<li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
             <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a1">Get
@@ -804,10 +808,11 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 6 user seats</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 8 API keys</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allowlist</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
-<li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
             <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a2">Get
@@ -827,10 +832,11 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 8 user seats</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 10 API keys</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allowlist</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
-<li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Standard support</li>
             </ul>
             <a href="/sign-up.html" class="pricing-btn btn-pricing-outline" data-plan-id="6984c3f3c3a2b4bb21a172a3">Get
@@ -850,8 +856,9 @@
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Unlimited user seats</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Multiple API Keys</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Bulk email & domain validation</li>
-              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allow list</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom blocklist/allowlist</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Provider information</li>
+              <li><img src="/assets/icons/check-circle.svg" alt="check"> Custom Enforcement Policies</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Form abuse shield</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> 60 days API log</li>
               <li><img src="/assets/icons/check-circle.svg" alt="check"> Priority support</li>
@@ -988,7 +995,8 @@
             <div class="foot-col">
               <h4 class="foot-hd">Support</h4>
               <div class="foot-links">
-                <a href="https://status.stopreg.com/" target="_blank" class="foot-api-status">Status<span class="foot-api-status-dot"></span></a>
+                <a href="https://status.stopreg.com/" target="_blank" class="foot-api-status">Status<span
+                    class="foot-api-status-dot"></span></a>
                 <a href="/contact.html" class="foot-link">Contact Us</a>
                 <a href="/documentation.html" class="foot-link">API Documentation</a>
                 <a href="/libraries.html" class="foot-link">Official Libraries</a>

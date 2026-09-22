@@ -238,90 +238,129 @@
             <button policy-data-target="docume-item5" class="docsScrollButton">
               Best Practices
             </button>
-            <button policy-data-target="docume-item-validation" class="docsScrollButton">
-              Validation Configurations
-            </button>
-            <button policy-data-target="docume-item-abuse-shield" class="docsScrollButton">
-              Form Abuse Shield
+            <button policy-data-target="docume-item-domain-management" class="docsScrollButton">
+              Domain Management
             </button>
           </div>
           <div class="docs-content-list">
             <article id="docume-item1" class="documen-content-item doc-animate-init">
               <h2>Getting Started with StopReg</h2>
+              <h3>Email Intelligence for Signup, Fraud, and Abuse Prevention</h3>
               <p>
-                StopReg is a powerful email validation API that helps you
-                detect and block disposable, temporary, and fake email
-                addresses in real-time. This documentation will guide you
-                through integrating StopReg into your application to protect
-                your platform from spam, fraud, and abuse.
+                StopReg is an email intelligence API designed to help applications identify disposable, temporary, relay, alias, role-based, public email, edu, isp and private email addresses before they enter your system.
               </p>
-              <h3>What is StopReg?</h3>
               <p>
-                StopReg provides businesses and individuals with tools and
-                resources for detecting and blocking disposable email
-                providers. Our API validates email addresses instantly
-                (typically within milliseconds), allowing you to block
-                disposable emails during signup, checkout, or form submission.
+                Use StopReg to evaluate email addresses and domains in real time, enforce your signup policies, and reduce unwanted registrations, trial abuse, and low-quality user data.
               </p>
+              <p>
+                The API returns structured classification and mail infrastructure data, allowing you to decide exactly how your application should handle each address.
+              </p>
+
+              <h3>What You Can Detect</h3>
+              <p>StopReg goes beyond basic email syntax validation. Depending on the address and domain, the API can identify:</p>
+              <ul>
+                <li>Disposable and temporary emails used for short-lived registrations</li>
+                <li>Relay addresses that forward messages through another service</li>
+                <li>Email aliases and sub-addressing patterns</li>
+                <li>Role-based addresses such as admin@ and support@</li>
+                <li>Public email providers such as Gmail, Outlook, and Yahoo</li>
+                <li>ISP email addresses associated with internet service providers</li>
+                <li>Educational (EDU) email addresses associated with educational institutions</li>
+                <li>Private and custom domains</li>
+                <li>Mail server and MX information</li>
+                <li>Email provider and infrastructure information</li>
+                <li>Domain and email classification signals</li>
+                <li>Policy-based allow, warn, or block decisions</li>
+              </ul>
+
+              <h3>Built for Real-Time Validation</h3>
+              <p>
+                StopReg is designed for applications that need to make an email decision during a signup, checkout, free-trial registration, newsletter subscription, or other form submission.
+              </p>
+              <p>
+                A simple API request returns structured JSON that your application can use to determine whether an address should be accepted, flagged, or blocked.
+              </p>
+
+              <h3>Flexible Enforcement</h3>
+              <p>
+                StopReg does not force you to use a single blocking rule. You can build your own flexible enforcement policy around the classification data returned by the API.
+              </p>
+              <p>
+                For example, you can block disposable addresses while continuing to accept relay, private, public, ISP, EDU, and role-based addresses. You can also combine multiple signals when your application requires stricter validation, such as blocking disposable, relay, and alias addresses while requiring the domain to have valid MX records.
+              </p>
+              <p>
+                This allows you to define validation rules based on your application's specific requirements rather than applying the same policy to every email address.
+              </p>
+
+              <h3>Simple Integration</h3>
+              <p>
+                StopReg uses a REST API over HTTPS and supports API-token authentication. You can integrate it into virtually any backend or application stack using standard HTTP requests.
+              </p>
+              <p>
+                Official libraries and examples are available for popular development environments, including Node.js and Laravel, with additional examples for JavaScript, Python, PHP, and cURL.
+              </p>
+
+              <h3>Get Started</h3>
+              <p>Start validating email addresses with StopReg in just a few steps:</p>
+              <ol>
+                <li>
+                  <strong>Create your account:</strong> Sign up for a StopReg account and access your API dashboard.
+                </li>
+                <li>
+                  <strong>Get your API token:</strong> Generate an API token from your dashboard and keep it securely stored on your server.
+                </li>
+                <li>
+                  <strong>Choose an API endpoint:</strong> Use the Email Validation API to analyze individual email addresses or the Domain Validation API when you only need to evaluate a domain.
+                </li>
+                <li>
+                  <strong>Send your request:</strong> Include your API token and the email address or domain you want to validate. StopReg returns a structured JSON response containing the available classification and validation signals.
+                </li>
+                <li>
+                  <strong>Apply your enforcement policy:</strong> Use the returned results to determine whether to allow, warn, or block an address based on your application's requirements.
+                </li>
+              </ol>
+
+              <h3>Example Use Case</h3>
+              <p>
+                For a signup form, you can validate an email address before creating the account. Your application can then use StopReg's response to identify disposable, temporary, relay, alias, role-based, ISP, EDU, public, or other email classifications and apply your own validation rules.
+              </p>
+
               <h3>Key Features</h3>
               <ul>
                 <li>
-                  <strong>Real-time Validation:</strong> Instant email
-                  checking with millisecond response times
+                  <strong>Real-time Validation:</strong> Instant email checking with millisecond response times
                 </li>
                 <li>
-                  <strong>Extensive DEA Coverage</strong>: Detect disposable emails using our large and constantly
-                  growing domain database
+                  <strong>Extensive DEA Coverage:</strong> Detect disposable emails using our large and constantly growing domain database
                 </li>
                 <li>
-                  <strong>Privacy-Focused:</strong> We don't store full email
-                  addresses - only check the domain part
+                  <strong>Privacy-Focused:</strong> We don't store full email addresses - only check the domain part
                 </li>
                 <li>
-                  <strong>Easy Integration:</strong> Simple REST API that
-                  works with any programming language
+                  <strong>Easy Integration:</strong> Simple REST API that works with any programming language
                 </li>
                 <li>
-                  <strong>Whitelisting Support:</strong> Whitelist trusted
-                  domains to ensure legitimate users are never blocked
+                  <strong>Whitelisting Support:</strong> Whitelist trusted domains to ensure legitimate users are never blocked
                 </li>
                 <li>
-                  <strong>Blacklisting Support:</strong> Blacklist unwanted domains to prevent fake signups and
-                  low-quality registrations.
+                  <strong>Blacklisting Support:</strong> Blacklist unwanted domains to prevent fake signups and low-quality registrations
                 </li>
                 <li>
-                  <strong>Role, Alias & Relay Detection:</strong> Identify role-based, alias, and relay email addresses
-                  for cleaner user data.
+                  <strong>Role, Alias & Relay Detection:</strong> Identify role-based, alias, and relay email addresses for cleaner user data
                 </li>
                 <li>
-                  <strong>Free, ISP & EDU Detection:</strong> Identify free, ISP, and educational email providers for better email classification.
+                  <strong>Free, ISP & EDU Detection:</strong> Identify free, ISP, and educational email providers for better email classification
                 </li>
                 <li>
-                  <strong>Domain Abuse Shield:</strong> Automatically detect custom or relay domains used for repeated or abusive submissions.
+                  <strong>Domain Abuse Shield:</strong> Automatically detect custom or relay domains used for repeated or abusive submissions
                 </li>
                 <li>
-                  <strong>Enforcement Policies:</strong> Choose whether to allow, warn, or block domains based on their classification.
+                  <strong>Enforcement Policies:</strong> Choose whether to allow, warn, or block domains based on their classification
                 </li>
               </ul>
-              <h3>Quick Start</h3>
-              <p>To get started with StopReg, you'll need:</p>
-              <ol>
-                <li>
-                  Create an account at
-                  <a href="/" style="color: #1452ca">stopreg.com</a>
-                </li>
-                <li>
-                  Get your API token from your
-                  <a href="/dashboard/index.html" style="color: #1452ca">dashboard</a>
-                </li>
-                <li>Make your first API call to validate an email address</li>
-              </ol>
-              <p>
-                The API endpoint is simple and secure. You'll use a
-                GET request with your API token in the header and the email/domain in the query string. Continue reading
-                the
-                next sections to learn about
-                authentication, endpoints, and code examples.
+
+              <p style="margin-top: 24px;">
+                The sections below cover authentication, endpoints, response fields, SDKs, code examples, validation configurations, best practices, and troubleshooting.
               </p>
             </article>
             <article id="docume-item2" class="documen-content-item doc-animate-init">
@@ -509,6 +548,11 @@
       <span class="string">"is_role_based"</span>: <span class="keyword">false</span>,
       <span class="string">"is_alias"</span>: <span class="keyword">false</span>
     },
+    <span class="string">"list_match"</span>: {
+      <span class="string">"blocklisted"</span>: <span class="keyword">false</span>,
+      <span class="string">"block_source"</span>: <span class="keyword">null</span>,
+      <span class="string">"allowlisted"</span>: <span class="keyword">false</span>
+    },
     <span class="string">"policy"</span>: {
       <span class="string">"action"</span>: <span class="string">"allow"</span>,
       <span class="string">"reason_code"</span>: <span class="string">"UNKNOWN"</span>,
@@ -539,27 +583,23 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">status</span> <span class="type-badge type-integer">Integer</span>
-                      </td>
-                      <td>200, 400, 401, etc.</td>
+                      <td><span class="field-name">status</span></td>
+                      <td>Integer</td>
                       <td>The HTTP status code. Indicates the overall success or failure of the request.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">message</span> <span class="type-badge type-string">String</span>
-                      </td>
-                      <td>"success" | "error"</td>
+                      <td><span class="field-name">message</span></td>
+                      <td>String</td>
                       <td>A short string indicating the result state of the API operation.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">description</span> <span class="type-badge type-string">String</span>
-                      </td>
-                      <td>Text</td>
+                      <td><span class="field-name">description</span></td>
+                      <td>String</td>
                       <td>A human-readable summary of the verification result or the specific reason for an error.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">data</span> <span class="type-badge type-object">Object</span>
-                      </td>
-                      <td>Payload</td>
+                      <td><span class="field-name">data</span></td>
+                      <td>Object</td>
                       <td>The container for all verification intelligence. Details are broken down in the sections
                         below.</td>
                     </tr>
@@ -579,22 +619,19 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">root</span> <span class="type-badge type-string">String</span></td>
-                      <td>Value</td>
+                      <td><span class="field-name">root</span></td>
+                      <td>String</td>
                       <td>The root domain extracted from your input (e.g., <code>google.com</code>).</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_subdomain</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td>true / false</td>
+                      <td><span class="field-name">is_subdomain</span></td>
+                      <td>Boolean</td>
                       <td><code>true</code> if the input contained a subdomain prefix (e.g.,
                         <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">email_provider</span> <span class="type-badge type-string">String |
-                          null</span>
-                      </td>
-                      <td>Host</td>
+                      <td><span class="field-name">email_provider</span></td>
+                      <td>String | Null</td>
                       <td>The identified email provider for this domain if a match is found in either the Email Domains
                         table or MX Matching table. Returns <code>null</code> if no provider match is found or provider
                         is "Unknown" (e.g., <code>"Google"</code>, <code>"Mailinator"</code>, <code>"Zoho"</code>).</td>
@@ -615,27 +652,23 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">email</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Raw Value</td>
+                      <td><span class="field-name">email</span></td>
+                      <td>String</td>
                       <td><strong>Authenticated requests only.</strong> The original email address provided in your request. Use this to map the response back to your local records.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">domain</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Domain</td>
+                      <td><span class="field-name">domain</span></td>
+                      <td>String</td>
                       <td>The domain extracted from the email or provided directly. Present in all responses.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">normalized</span> <span class="type-badge type-string">String</span>
-                      </td>
-                      <td>Canonical</td>
+                      <td><span class="field-name">normalized</span></td>
+                      <td>String</td>
                       <td><strong>Authenticated requests only.</strong> The standardized version of your input. This value is lowercased, trimmed, and stripped of sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">suggestion</span> <span class="type-badge type-string">String</span>
-                      </td>
-                      <td>Correction</td>
+                      <td><span class="field-name">suggestion</span></td>
+                      <td>String | Null</td>
                       <td>If a common typo is detected (e.g., <i>gnail.com</i>), this provides the corrected domain
                         (<i>gmail.com</i>). Returns <code>null</code> if no correction is needed.</td>
                     </tr>
@@ -655,17 +688,15 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">mx_found</span> <span class="type-badge type-boolean">Boolean</span>
-                      </td>
-                      <td>Status</td>
+                      <td><span class="field-name">mx_found</span></td>
+                      <td>Boolean</td>
                       <td><code>true</code> if valid Mail Exchange (MX) records were found for the domain. If
                         <code>false</code>, the email is likely undeliverable.
                       </td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">mx_records</span> <span class="type-badge type-array">Array</span>
-                      </td>
-                      <td>List</td>
+                      <td><span class="field-name">mx_records</span></td>
+                      <td>Array</td>
                       <td>An ordered array of MX records resolved from the domain's DNS settings, sorted by priority
                         (lowest number = highest precedence). Each entry contains:
                         <ul class="field-desc">
@@ -676,9 +707,8 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">mx_provider</span> <span class="type-badge type-array">Array</span>
-                      </td>
-                      <td>Providers</td>
+                      <td><span class="field-name">mx_provider</span></td>
+                      <td>Array</td>
                       <td><strong>Multi-Provider Intelligence.</strong> A prioritized list of all infrastructure
                         providers detected behind the email (e.g., Zoho + Namecheap). Contains:
                         <ul class="field-desc">
@@ -706,45 +736,44 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">is_disposable</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td class="risk-high">High Risk</td>
-                      <td><strong>Critical Flag.</strong> <code>true</code> if the domain belongs to a temporary,
-                        throwaway, or 10-minute mail provider. High correlation with fraud.</td>
+                      <td><span class="field-name">is_disposable</span></td>
+                      <td>Boolean</td>
+                      <td><strong>High Risk:</strong> <code>true</code> if the domain belongs to a temporary, throwaway, or 10-minute email provider. Disposable email addresses can be associated with increased signup abuse and fraud risk.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_relay</span> <span class="type-badge type-boolean">Boolean</span>
-                      </td>
-                      <td class="risk-low">Low Risk</td>
-                      <td><code>true</code> if the provider is a forwarding service or alias system (e.g., iCloud Hide
-                        My Email). Common among privacy-conscious users.</td>
+                      <td><span class="field-name">is_relay</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Low Risk:</strong> <code>true</code> if the provider is a forwarding or relay service, such as iCloud Hide My Email. Relay addresses are commonly used by privacy-conscious users.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_private</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td>Neutral</td>
-                      <td><code>true</code> if the email domain is a private or custom domain owned and managed by an individual, business, organization, or institution. Not associated with major public email providers.</td>
+                      <td><span class="field-name">is_private</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is a private or custom domain owned and managed by an individual, business, organization, or institution. It is not associated with a major public email provider.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_public</span> <span class="type-badge type-boolean">Boolean</span>
-                      </td>
-                      <td>Neutral</td>
-                      <td><code>true</code> for common free consumers providers (Gmail, Outlook, Yahoo). Generally safe
-                        for B2C registrations.</td>
+                      <td><span class="field-name">is_public</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Neutral:</strong> <code>true</code> for common free consumer email providers such as Gmail, Outlook, and Yahoo. These addresses are commonly used for personal and B2C registrations.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_role_based</span> <span
-                          class="type-badge type-boolean">Boolean</span></td>
-                      <td class="risk-caution">Caution</td>
-                      <td><code>true</code> for address intended for groups (e.g., <i>admin@</i>, <i>support@</i>). Not
-                        ideal for personal account signups.</td>
+                      <td><span class="field-name">is_isp</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an internet service provider (ISP), such as an ISP-provided email service.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">is_alias</span> <span class="type-badge type-boolean">Boolean</span>
-                      </td>
-                      <td class="risk-high">High Risk</td>
-                      <td><code>true</code> if sub-addressing was detected (e.g., <i>user+tag@gmail.com</i>). Often used
-                        to track source of signups.</td>
+                      <td><span class="field-name">is_edu</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an educational institution, such as a university, college, or school.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_role_based</span></td>
+                      <td>Boolean</td>
+                      <td><strong>Caution:</strong> <code>true</code> for addresses intended for groups or departments, such as <i>admin@</i> or <i>support@</i>. These addresses may not represent an individual user and may be unsuitable for personal account registrations.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">is_alias</span></td>
+                      <td>Boolean</td>
+                      <td><strong>High Risk:</strong> <code>true</code> if an email alias or sub-addressing pattern is detected, such as <i>user+tag@gmail.com</i>. Aliases can allow multiple addresses to point to the same mailbox and may be used to bypass registration limits or create multiple accounts.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -762,32 +791,59 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="field-name">action</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Policy</td>
-                      <td><strong>Enforcement action based on your policies.</strong> One of: <code>"allow"</code>, <code>"warn"</code>, or <code>"block"</code>. Determined by your custom allowlist/blocklist settings and domain classification. Requires API token authentication.</td>
+                      <td><span class="field-name">action</span></td>
+                      <td>String</td>
+                      <td><strong>Policy:</strong> Enforcement action based on your configured policies. One of: <code>"allow"</code>, <code>"warn"</code>, or <code>"block"</code>. Determined by the domain's classification and your configured enforcement policy. Requires API token authentication.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">reason_code</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Code</td>
-                      <td><strong>Machine-readable reason for the action.</strong> Examples: <code>"ALLOWLISTED_DOMAIN"</code>, <code>"BLOCKLISTED_DOMAIN"</code>, <code>"IS_DISPOSABLE"</code>, <code>"UNKNOWN"</code>. Useful for logging and analytics.</td>
+                      <td><span class="field-name">reason_code</span></td>
+                      <td>String</td>
+                      <td><strong>Code:</strong> Machine-readable reason for the action. Examples: <code>"IS_DISPOSABLE"</code>, <code>"IS_RELAY"</code>, <code>"IS_ALIAS"</code>, <code>"IS_ROLE_BASED"</code>, <code>"UNKNOWN"</code>. Useful for logging and analytics.</td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">reason</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Message</td>
-                      <td><strong>Human-readable explanation</strong> of why the action was taken (e.g., "Domain is on your allowlist." or "This email uses a disposable domain provider.").</td>
+                      <td><span class="field-name">reason</span></td>
+                      <td>String</td>
+                      <td><strong>Message:</strong> Human-readable explanation of why the action was taken, such as <code>"This email uses a disposable domain provider."</code></td>
                     </tr>
                     <tr>
-                      <td><span class="field-name">risk</span> <span
-                          class="type-badge type-string">String</span></td>
-                      <td>Risk Level</td>
-                      <td><strong>Risk assessment.</strong> One of: <code>"low"</code>, <code>"medium"</code>, or <code>"high"</code>. Reflects the trustworthiness of the email domain.</td>
+                      <td><span class="field-name">risk</span></td>
+                      <td>String</td>
+                      <td><strong>Risk Level:</strong> Risk assessment for the email or domain. One of: <code>"low"</code>, <code>"medium"</code>, or <code>"high"</code>. Reflects the risk level determined by the detected email and domain characteristics.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <h4>List Match (data.list_match)</h4>
+              <div class="docs-table-wrapper">
+                <table class="docs-table">
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="field-name">blocklisted</span></td>
+                      <td>Boolean | String</td>
+                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured blocklist, <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message. Useful for enforcing custom domain policies.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">block_source</span></td>
+                      <td>String | Null</td>
+                      <td><strong>Source:</strong> Indicates the source of the blocklist entry, such as <code>"user"</code> (manually added), <code>"system"</code> (StopReg system list), or <code>null</code> if not blocklisted. Helps track where blocking decisions originated.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="field-name">allowlisted</span></td>
+                      <td>Boolean | String</td>
+                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured allowlist, <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message. Allowlisted domains bypass policy restrictions.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
               <p style="margin-top: 16px; font-style: italic; color: #666;">
                 <strong>Note:</strong> The <code>policy</code> object is only fully populated for authenticated requests (with a valid <code>x-api-token</code> header). Anonymous requests receive a simplified response with a default message.
               </p>
@@ -867,10 +923,14 @@
   <span class="comment">// View the full intelligence payload</span>
   <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">response</span>);
 
-  <span class="keyword">const</span> <span class="variable">isBlocked</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>.<span class="variable">blocklisted</span> === <span class="keyword">true</span>;
+  <span class="keyword">const</span> <span class="variable">policy</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>;
 
-  <span class="keyword">if</span> (<span class="variable">isBlocked</span>) {
-    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'This email is blocked.'</span>);
+  <span class="keyword">if</span> (<span class="variable">policy</span>?.<span class="variable">action</span> === <span class="string">'block'</span>) {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Email blocked:'</span>, <span class="variable">policy</span>.<span class="variable">reason</span>);
+  } <span class="keyword">else if</span> (<span class="variable">policy</span>?.<span class="variable">action</span> === <span class="string">'warn'</span>) {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Email flagged:'</span>, <span class="variable">policy</span>.<span class="variable">reason</span>);
+  } <span class="keyword">else</span> {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Email allowed'</span>);
   }
 } <span class="keyword">catch</span> (<span class="variable">error</span>) {
   <span class="variable">console</span>.<span class="function">error</span>(<span class="variable">error</span>.<span class="variable">message</span>);
@@ -891,14 +951,16 @@
 
 <span class="keyword">try</span> {
   <span class="keyword">const</span> <span class="variable">response</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkDomain</span>(<span class="string">'test.com'</span>);
-  
-  <span class="comment">// View the full intelligence payload</span>
-  <span class="variable">console</span>.<span class="function">log</span>(<span class="variable">response</span>);
 
-  <span class="keyword">const</span> <span class="variable">isBlocked</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>.<span class="variable">blocklisted</span> === <span class="keyword">true</span>;
+  <span class="comment">// Check policy decision from enforcement rules</span>
+  <span class="keyword">const</span> <span class="variable">policy</span> = <span class="variable">response</span>.<span class="variable">data</span>.<span class="variable">policy</span>;
 
-  <span class="keyword">if</span> (<span class="variable">isBlocked</span>) {
-    <span class="variable">console</span>.<span class="log">log</span>(<span class="string">'This domain is blocked.'</span>);
+  <span class="keyword">if</span> (<span class="variable">policy</span>?.<span class="variable">action</span> === <span class="string">'block'</span>) {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Domain blocked:'</span>, <span class="variable">policy</span>.<span class="variable">reason</span>);
+  } <span class="keyword">else if</span> (<span class="variable">policy</span>?.<span class="variable">action</span> === <span class="string">'warn'</span>) {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Domain flagged:'</span>, <span class="variable">policy</span>.<span class="variable">reason</span>);
+  } <span class="keyword">else</span> {
+    <span class="variable">console</span>.<span class="function">log</span>(<span class="string">'Domain allowed'</span>);
   }
 } <span class="keyword">catch</span> (<span class="variable">error</span>) {
   <span class="variable">console</span>.<span class="function">error</span>(<span class="variable">error</span>.<span class="variable">message</span>);
@@ -932,14 +994,14 @@
 
 <span class="keyword">try</span> {
     <span class="variable">$result</span> = StopReg::<span class="function">checkEmail</span>(<span class="string">'user@test.com'</span>);
-    
-    <span class="comment">// Dump the result to see full intelligence data</span>
-    <span class="function">dd</span>(<span class="variable">$result</span>);
 
-    <span class="variable">$isBlocked</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>] || (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>][<span class="string">'blocklisted'</span>] ?? <span class="keyword">false</span>) === <span class="keyword">true</span>;
+    <span class="comment">// Check policy decision from enforcement rules</span>
+    <span class="variable">$policy</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>] ?? <span class="keyword">null</span>;
 
-    <span class="keyword">if</span> (<span class="variable">$isBlocked</span>) {
-        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'email'</span> => <span class="string">'This email is not allowed.'</span>]);
+    <span class="keyword">if</span> (<span class="variable">$policy</span> && <span class="variable">$policy</span>[<span class="string">'action'</span>] === <span class="string">'block'</span>) {
+        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'email'</span> => <span class="variable">$policy</span>[<span class="string">'reason'</span>] ?? <span class="string">'This email is not allowed.'</span>]);
+    } <span class="keyword">elseif</span> (<span class="variable">$policy</span> && <span class="variable">$policy</span>[<span class="string">'action'</span>] === <span class="string">'warn'</span>) {
+        <span class="variable">session</span>()-><span class="function">flash</span>(<span class="string">'warning'</span>, <span class="variable">$policy</span>[<span class="string">'reason'</span>] ?? <span class="string">'This email is flagged.'</span>);
     }
 } <span class="keyword">catch</span> (StopRegException <span class="variable">$e</span>) {
     <span class="comment">// Handle error</span>
@@ -959,13 +1021,13 @@
 <span class="keyword">try</span> {
     <span class="variable">$result</span> = StopReg::<span class="function">checkDomain</span>(<span class="string">'test.com'</span>);
 
-    <span class="comment">// Dump the result to see full intelligence data</span>
-    <span class="function">dd</span>(<span class="variable">$result</span>);
+    <span class="comment">// Check policy decision from enforcement rules</span>
+    <span class="variable">$policy</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>] ?? <span class="keyword">null</span>;
 
-    <span class="variable">$isBlocked</span> = <span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>][<span class="string">'is_disposable'</span>] || (<span class="variable">$result</span>[<span class="string">'data'</span>][<span class="string">'policy'</span>][<span class="string">'blocklisted'</span>] ?? <span class="keyword">false</span>) === <span class="keyword">true</span>;
-
-    <span class="keyword">if</span> (<span class="variable">$isBlocked</span>) {
-        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'domain'</span> => <span class="string">'This domain is not allowed.'</span>]);
+    <span class="keyword">if</span> (<span class="variable">$policy</span> && <span class="variable">$policy</span>[<span class="string">'action'</span>] === <span class="string">'block'</span>) {
+        <span class="keyword">return</span> <span class="function">back</span>()-><span class="function">withErrors</span>([<span class="string">'domain'</span> => <span class="variable">$policy</span>[<span class="string">'reason'</span>] ?? <span class="string">'This domain is not allowed.'</span>]);
+    } <span class="keyword">elseif</span> (<span class="variable">$policy</span> && <span class="variable">$policy</span>[<span class="string">'action'</span>] === <span class="string">'warn'</span>) {
+        <span class="variable">session</span>()-><span class="function">flash</span>(<span class="string">'warning'</span>, <span class="variable">$policy</span>[<span class="string">'reason'</span>] ?? <span class="string">'This domain is flagged.'</span>);
     }
 } <span class="keyword">catch</span> (StopRegException <span class="variable">$e</span>) {
     <span class="comment">// Handle error</span>
@@ -1114,11 +1176,6 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                   errors. Provide user-friendly error messages.
                 </li>
                 <li>
-                  <strong>Cache Results When Appropriate:</strong> For
-                  frequently checked domains, consider caching results to
-                  reduce API calls and improve performance.
-                </li>
-                <li>
                   <strong>Use Whitelisting:</strong> Whitelist trusted
                   corporate domains to prevent false positives and ensure
                   legitimate users are never blocked.
@@ -1172,927 +1229,63 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 <li>Verify you're using HTTPS (not HTTP)</li>
                 <li>Consider implementing request timeouts and retries</li>
               </ul>
-              <h4>False Positives</h4>
-              <ul>
-                <li>Use the whitelist feature for trusted domains</li>
-                <li>Report false positives through your dashboard</li>
-                <li>
-                  Check if the domain is actually disposable before blocking
-                </li>
-              </ul>
             </article>
-            <article id="docume-item-validation" class="documen-content-item doc-animate-init">
-              <h2>Recommended Validation Configurations</h2>
+            <article id="docume-item-domain-management" class="documen-content-item doc-animate-init">
+              <h2>Domain Management</h2>
               <p>
-                Below are common StopReg validation configurations that can be used depending on your registration
-                requirements.
-                Each configuration uses fields from the <code>data.classification</code> and
-                <code>data.mail_server</code> objects in the API response.
+                <strong>Form Abuse Shield</strong> is a premium feature that automatically detects suspicious activity from private and relay email domains and helps prevent repeated registrations from abusive domains.
+                It works alongside email validation to provide an additional layer of protection against form abuse, spam registrations, and fraudulent activity.
               </p>
 
-              <h3>1. Block Disposable Email Domains Only</h3>
-              <p>Recommended if you want to block temporary and disposable email providers while allowing most
-                legitimate users.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block disposable domains</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-
-</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block disposable domains</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
-
-<span class="comment"># Allow relay emails           ✓</span>
-<span class="comment"># Allow private domains      ✓</span>
-<span class="comment"># Allow public email providers  ✓</span>
-<span class="comment"># Allow role-based emails       ✓</span>
-<span class="comment"># Allow alias emails            ✓</span></code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block disposable domains</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-
-<span class="comment">// Allow relay emails           ✓</span>
-<span class="comment">// Allow private domains      ✓</span>
-<span class="comment">// Allow public email providers  ✓</span>
-<span class="comment">// Allow role-based emails       ✓</span>
-<span class="comment">// Allow alias emails            ✓</span></code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>2. Allow Public &amp; Custom Domains</h3>
-              <p>Recommended if you want to allow Gmail, Yahoo, Outlook, and custom business domains while blocking
-                risky email types.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Allow public email providers and custom domains</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Allow public email providers and custom domains</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Allow public email providers and custom domains</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-              <p><strong>Alternative configuration:</strong></p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block role and alias emails together</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'This email type is not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Block role and alias emails together</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'This email type is not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="comment">// Assumes $body already fetched from API</span>
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Block role and alias emails together</span>
-<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'This email type is not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>3. Allow Business Domains Only</h3>
-              <p>Recommended for B2B platforms that only accept company or business email addresses.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Allow only business/custom domains</span>
-<span class="comment">// Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use your company email address.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Allow only business/custom domains</span>
-<span class="comment"># Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use your company email address.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Allow only business/custom domains</span>
-<span class="comment">// Block public email providers (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use your company email address.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-              <p><strong>Alternative configuration:</strong></p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Allow only business domains</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span> || <span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use a business email address.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Allow only business domains</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use a business email address.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="comment">// Assumes $body already fetched from API</span>
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Allow only business domains</span>
-<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use a business email address.'</span>);
-}
-<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>4. Allow Public Email Providers Only</h3>
-              <p>Recommended if you only want to allow Gmail, Yahoo, Outlook, and other free public email providers.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="comment">// Block business/custom domains</span>
-<span class="keyword">if</span> (!<span class="variable">classification</span>.<span class="variable">is_public</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_disposable</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">data</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>]
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="comment"># Block business/custom domains</span>
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Disposable email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Allow public email providers only (Gmail, Yahoo, Outlook, etc.)</span>
-<span class="comment">// Block business/custom domains</span>
-<span class="keyword">if</span> (!(<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Only public email providers (Gmail, Yahoo, Outlook) are accepted.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Disposable email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-              <p><strong>Alternative configuration:</strong></p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> { <span class="variable">classification</span>, <span class="variable">mail_server</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Allow public email providers</span>
-<span class="keyword">if</span> (!<span class="variable">classification</span>.<span class="variable">is_public</span> || <span class="variable">classification</span>.<span class="variable">is_disposable</span> || <span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Only public email providers are accepted.'</span>);
-}
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span> || <span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!<span class="variable">mail_server</span>.<span class="variable">mx_found</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="comment"># Assumes data already fetched from API</span>
-<span class="variable">classification</span> = <span class="variable">data</span>[<span class="string">'classification'</span>]
-<span class="variable">mail_server</span> = <span class="variable">data</span>[<span class="string">'mail_server'</span>]
-
-<span class="comment"># Allow public email providers</span>
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_disposable'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Only public email providers are accepted.'</span>)
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>) <span class="keyword">or</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>)
-<span class="keyword">if</span> <span class="keyword">not</span> <span class="variable">mail_server</span>.<span class="function">get</span>(<span class="string">'mx_found'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email domain has no mail server.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="comment">// Assumes $body already fetched from API</span>
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-<span class="variable">$mailServer</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'mail_server'</span>] ?? [];
-
-<span class="comment">// Allow public email providers</span>
-<span class="keyword">if</span> (!(<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_disposable'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Only public email providers are accepted.'</span>);
-}
-<span class="keyword">if</span> ((<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) || (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based or alias email addresses are not allowed.'</span>);
-}
-<span class="keyword">if</span> (!(<span class="variable">$mailServer</span>[<span class="string">'mx_found'</span>] ?? <span class="keyword">false</span>)) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email domain has no mail server.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>5. Block Relay Emails</h3>
-              <p>Use this check to reject email addresses routed through relay or privacy-forwarding services such as
-                Apple Hide My Email, SimpleLogin, or AnonAddy.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block relay emails</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_relay</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block relay emails</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_relay'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Relay email addresses are not allowed.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block relay emails</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_relay'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Relay email addresses are not allowed.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>6. Block Private Domains</h3>
-              <p>Blocks email addresses that use private or custom domains owned by individuals, businesses, organizations, or institutions.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block private domains</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_private</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Private or custom domain name blocked.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block private domains</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_private'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Private or custom domain name blocked.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block private domains</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_private'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Private or custom domain name blocked.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>7. Block Public Email Providers</h3>
-              <p>Use this check to reject free public email providers such as Gmail, Yahoo, and Outlook. Useful for B2B
-                sign-up forms that require a company email address.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block public email providers</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_public</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Please use your company email address.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block public email providers</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_public'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Please use your company email address.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block public email providers</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_public'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Please use your company email address.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>8. Block Role-Based Emails</h3>
-              <p>Use this check to reject role-based addresses such as <code>admin@</code>, <code>support@</code>,
-                <code>info@</code>, and <code>noreply@</code> that are shared across teams and not tied to an individual
-                user.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block role-based emails</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_role_based</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block role-based emails</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_role_based'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block role-based emails</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_role_based'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Role-based email addresses are not allowed. Please use a personal email.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>9. Block Alias Emails</h3>
-              <p>Use this check to reject email aliases — addresses containing a <code>+</code> suffix (e.g.
-                <code>user+tag@gmail.com</code>) that could be used to bypass uniqueness checks or track your signup
-                form.</p>
-              <div class="code-snippet-container" data-lang-group>
-                <div class="code-snippet-content val-lang-panel active" data-lang="javascript">
-                  <pre class="code-block"><code><span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="variable">verification</span>.<span class="function">checkEmail</span>(<span class="variable">email</span>);
-<span class="keyword">const</span> { <span class="variable">classification</span> } = <span class="variable">result</span>.<span class="variable">data</span>;
-
-<span class="comment">// Block alias emails</span>
-<span class="keyword">if</span> (<span class="variable">classification</span>.<span class="variable">is_alias</span>) {
-  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Error</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>);
-}</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="python">
-                  <pre
-                    class="code-block"><code><span class="keyword">import</span> requests
-
-<span class="variable">response</span> = <span class="variable">requests</span>.<span class="function">get</span>(
-    <span class="string">f'https://api.stopreg.com/api/v1/verify/email/{email}'</span>,
-    headers={<span class="string">'x-api-token'</span>: <span class="variable">api_token</span>}
-)
-<span class="variable">classification</span> = <span class="variable">response</span>.<span class="function">json</span>()[<span class="string">'data'</span>][<span class="string">'classification'</span>]
-
-<span class="comment"># Block alias emails</span>
-<span class="keyword">if</span> <span class="variable">classification</span>.<span class="function">get</span>(<span class="string">'is_alias'</span>):
-    <span class="keyword">raise</span> <span class="function">ValueError</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>)</code></pre>
-                </div>
-                <div class="code-snippet-content val-lang-panel" data-lang="php">
-                  <pre class="code-block"><code><span class="keyword">&lt;?php</span>
-<span class="variable">$ch</span> = <span class="function">curl_init</span>(<span class="string">'https://api.stopreg.com/api/v1/verify/email/'</span> . <span class="function">urlencode</span>(<span class="variable">$email</span>));
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_RETURNTRANSFER, <span class="keyword">true</span>);
-<span class="function">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, [<span class="string">'x-api-token: '</span> . <span class="variable">$apiToken</span>]);
-<span class="variable">$body</span> = <span class="function">json_decode</span>(<span class="function">curl_exec</span>(<span class="variable">$ch</span>), <span class="keyword">true</span>);
-<span class="function">curl_close</span>(<span class="variable">$ch</span>);
-
-<span class="variable">$classification</span> = <span class="variable">$body</span>[<span class="string">'data'</span>][<span class="string">'classification'</span>] ?? [];
-
-<span class="comment">// Block alias emails</span>
-<span class="keyword">if</span> (<span class="variable">$classification</span>[<span class="string">'is_alias'</span>] ?? <span class="keyword">false</span>) {
-    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="function">Exception</span>(<span class="string">'Email aliases are not allowed. Please use your primary email address.'</span>);
-}</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-                <div class="code-snippet-tabs">
-                  <button class="code-tab active" data-lang="javascript">JavaScript</button>
-                  <button class="code-tab" data-lang="python">Python</button>
-                  <button class="code-tab" data-lang="php">PHP</button>
-                </div>
-              </div>
-
-              <h3>Allowing Trusted Domains</h3>
+              <h3>What Is Form Abuse Shield?</h3>
               <p>
-                To allow specific domain names regardless of their classification, add them to the <strong>Allow
-                  List</strong> from the
-                <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
-              </p>
-              <p>
-                Domains added to the allow list will bypass validation restrictions and Form Abuse Shield checks
-                entirely. This is useful for internal tools, partner organisations, or known corporate domains that may
-                be flagged by classification rules.
-              </p>
-              <p><strong>Example trusted domains:</strong></p>
-              <div class="code-snippet-container">
-                <div class="code-snippet-content">
-                  <pre class="code-block"><code>example.com
-company.org
-business.net</code></pre>
-                </div>
-                <button class="code-copy-btn" aria-label="Copy code">
-                  <img src="/assets/icons/white-copy.svg" alt="Copy" />
-                  <span>Copy</span>
-                </button>
-              </div>
-
-              <h3>Form Abuse Shield</h3>
-              <p>
-                To prevent abuse from private or custom domains, configure <strong>Form Abuse
-                  Shield</strong> from the
-                <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page.
+                Form Abuse Shield monitors registration activity from private and relay domains. When a domain reaches your configured registration threshold within the selected time window, StopReg can automatically notify you or block further registrations from that domain.
+                When the threshold is reached, the system can:
               </p>
               <ul>
-                <li>The Abuse Shield system works based on your selected validation configuration and detection rules.
-                </li>
-                <li>The system monitors private custom domains and automatically performs the configured action —
-                  <strong>block</strong> or <strong>notify</strong> — once the detection threshold is reached.</li>
-                <li>Domains added to the allow list are excluded from Abuse Shield monitoring.</li>
-              </ul>
-
-              <h3>Support</h3>
-              <p>
-                If you need additional help or have questions, contact our
-                support team at
-                <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a>
-                or visit your dashboard for more resources.
-              </p>
-            </article>
-            <article id="docume-item-abuse-shield" class="documen-content-item doc-animate-init">
-              <h2>Form Abuse Shield</h2>
-              <p>
-                <strong>Form Abuse Shield</strong> is a premium feature that automatically detects and blocks suspicious email domains from registering on your platform. It works alongside email validation to provide an additional layer of protection against form abuse, spam registrations, and fraudulent activity.
-              </p>
-
-              <h3>What is Form Abuse Shield?</h3>
-              <p>
-                Form Abuse Shield monitors private and suspicious domains that reach your configured threshold. When a domain exceeds the threshold, the system automatically:
-              </p>
-              <ul>
-                <li><strong>Notify mode:</strong> Automatically adds the domain to your allowlist and sends you an alert</li>
-                <li><strong>Block mode:</strong> Automatically blocks the domain from further registrations</li>
+                <li><strong>Notify Mode:</strong> Automatically send you an email alert with the domain details and threshold information.</li>
+                <li><strong>Block Mode:</strong> Automatically block the domain from making further registrations.</li>
               </ul>
 
               <h3>Key Features</h3>
               <ul>
-                <li>
-                  <strong>Automatic Detection:</strong> Monitors private domains and suspicious registration patterns
-                </li>
-                <li>
-                  <strong>Configurable Threshold:</strong> Set the number of private requests before action is triggered (2-50 requests)
-                </li>
-                <li>
-                  <strong>Flexible Time Window:</strong> Choose your monitoring period (1, 3, or 7 days)
-                </li>
-                <li>
-                  <strong>Two Action Modes:</strong> Notify (alert + allowlist) or Block (automatic blocking)
-                </li>
-                <li>
-                  <strong>Manual Override Protection:</strong> Manually allowlisted domains are never auto-blocked, permanently protected
-                </li>
-                <li>
-                  <strong>Dashboard Control:</strong> Manage, review, and adjust abuse shield settings anytime
-                </li>
+                <li><strong>Automatic Detection:</strong> Monitors multiple registrations from the same private or relay domain.</li>
+                <li><strong>Configurable Threshold:</strong> Set the number of requests from a private or relay domain before an action is triggered, from 2 to 50 requests.</li>
+                <li><strong>Flexible Time Window:</strong> Choose a monitoring period of 1, 3, or 7 days.</li>
+                <li><strong>Two Action Modes:</strong> Choose Notify for email alerts or Block for automatic blocking.</li>
+                <li><strong>Dashboard Control:</strong> Manage, review, and adjust your Form Abuse Shield settings at any time.</li>
               </ul>
 
               <h3>How Form Abuse Shield Works</h3>
 
               <h4>Step 1: Enable and Configure</h4>
               <p>
-                Navigate to <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> and configure your abuse shield settings:
+                Navigate to Manage Domains and configure your Form Abuse Shield settings.
               </p>
               <ul>
-                <li><strong>Detection Rule:</strong> Set the threshold (e.g., block after 5 requests)</li>
-                <li><strong>Time Window:</strong> Choose your lookback period (1, 3, or 7 days)</li>
-                <li><strong>Action:</strong> Select Notify (alert only) or Block (automatic blocking)</li>
+                <li><strong>Detection Rule:</strong> Set the registration threshold, such as blocking after 5 requests.</li>
+                <li><strong>Time Window:</strong> Choose your monitoring period: 1, 3, or 7 days.</li>
+                <li><strong>Action:</strong> Select Notify for alerts or Block for automatic blocking.</li>
+                <li><strong>Take No Action:</strong> The system will not monitor or take action on domain registrations, regardless of the configured threshold.</li>
               </ul>
 
               <h4>Step 2: Monitoring Begins</h4>
               <p>
-                Once configured, Form Abuse Shield continuously monitors incoming domain registrations:
+                Once configured, Form Abuse Shield continuously monitors incoming registration activity.
               </p>
               <ul>
-                <li>Counts private requests for each domain within your specified time window</li>
-                <li>Tracks suspicious patterns and registration velocity</li>
-                <li>Compares metrics against your configured threshold</li>
+                <li><strong>Automatic Counting:</strong> Counts requests from private or relay domains for each domain within your specified time window.</li>
+                <li><strong>Tracks Registration Activity:</strong> Monitors the number of registrations associated with each domain.</li>
+                <li><strong>Compares Against Threshold:</strong> Compares registration activity with your configured threshold.</li>
               </ul>
 
-              <h4>Step 3: Automatic Action Triggered</h4>
+              <h4>Step 3: Automatic Action Is Triggered</h4>
               <p>
-                When a domain reaches your threshold:
+                When a domain reaches your configured threshold:
               </p>
               <ul>
-                <li>
-                  <strong>Notify Mode:</strong> Domain is automatically added to your allowlist and you receive an email alert with domain details and threshold information
-                </li>
-                <li>
-                  <strong>Block Mode:</strong> Domain is automatically added to your blocklist and further registrations from that domain are rejected
-                </li>
+                <li><strong>Notify Mode:</strong> Sends you an email alert containing the domain details and threshold information.</li>
+                <li><strong>Block Mode:</strong> Automatically adds the domain to your blocklist and rejects further registrations from that domain.</li>
               </ul>
 
               <h3>Notify Mode vs. Block Mode</h3>
@@ -2107,53 +1300,58 @@ business.net</code></pre>
                 <tbody>
                   <tr>
                     <td><strong>Action</strong></td>
-                    <td>Auto-adds domain to allowlist</td>
-                    <td>Auto-blocks domain from registering</td>
+                    <td>Sends an email alert</td>
+                    <td>Automatically blocks the domain</td>
                   </tr>
                   <tr>
                     <td><strong>Email Alert</strong></td>
-                    <td>✓ You receive notification</td>
-                    <td>✓ You receive notification</td>
+                    <td>You receive a notification</td>
+                    <td>You receive a notification</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Registration</strong></td>
+                    <td>Domain remains allowed</td>
+                    <td>Further registrations from the domain are rejected</td>
                   </tr>
                   <tr>
                     <td><strong>Use Case</strong></td>
-                    <td>Review suspicious domains before making decisions</td>
-                    <td>Automatically reject high-risk domains</td>
+                    <td>Review suspicious domains before taking action</td>
+                    <td>Automatically block repeated registrations</td>
                   </tr>
                   <tr>
                     <td><strong>Flexibility</strong></td>
-                    <td>Domain allowed; you can adjust later</td>
-                    <td>Domain blocked; manually unblock if needed</td>
+                    <td>You can review and adjust your settings before blocking</td>
+                    <td>You can manually unblock the domain if needed</td>
                   </tr>
                 </tbody>
               </table>
 
               <h3>Manual Allowlist Protection</h3>
               <p>
-                <strong>Critical Protection:</strong> Domains that you manually allowlist are permanently protected and will <strong>never</strong> be automatically blocked by Form Abuse Shield, regardless of:
+                <strong>Critical Protection:</strong> Domains that you manually add to your allowlist are protected from automatic blocking by Form Abuse Shield, regardless of:
               </p>
               <ul>
-                <li>How many requests they receive</li>
+                <li>How many requests the domain receives</li>
                 <li>Whether you switch from Notify to Block mode</li>
-                <li>How high your threshold is configured</li>
+                <li>How high or low your threshold is configured</li>
               </ul>
               <p>
-              This ensures that manually allowlisted domains remain permanently trusted and are never blocked by any request made through your account.
+              This ensures that manually allowlisted domains remain trusted and are never automatically blocked by Form Abuse Shield.
               </p>
 
               <h3>Manual Blocklist Protection</h3>
               <p>
-                Similarly, domains that you manually block will remain blocked permanently and cannot be unblocked by any automatic process.
+                Similarly, domains that you manually add to your blocklist remain blocked and cannot be unblocked by Form Abuse Shield's automatic processes.
               </p>
 
               <h3>Configuration Examples</h3>
 
-              <h4>Balanced Setup (Recommended)</h4>
+              <h4>Balanced Setup</h4>
               <ul>
                 <li><strong>Threshold:</strong> 5 requests</li>
-                <li><strong>Window:</strong> 3 days</li>
+                <li><strong>Time Window:</strong> 3 days</li>
                 <li><strong>Action:</strong> Notify</li>
-                <li><strong>Result:</strong> Good balance between security and false positive reduction</li>
+                <li><strong>Result:</strong> Helps identify suspicious registration activity while allowing you to review domains before blocking them.</li>
               </ul>
 
               <h3>FAQ</h3>
@@ -2164,7 +1362,7 @@ business.net</code></pre>
 
               <p><strong>Q: What happens if I switch from Notify to Block mode?</strong></p>
               <p>
-                A: Domains previously auto-added to the allowlist in Notify mode may be auto-blocked if they continue to receive requests and reach your threshold. However, manually allowlisted domains will remain protected.
+                A: Domains previously in Notify mode will be auto-blocked if they continue to receive requests and reach your threshold. However, manually allowlisted domains will remain protected.
               </p>
 
               <p><strong>Q: Can I unblock an automatically blocked domain?</strong></p>
@@ -2174,14 +1372,12 @@ business.net</code></pre>
 
               <p><strong>Q: Is Form Abuse Shield available on all plans?</strong></p>
               <p>
-                A: Form Abuse Shield is a premium feature available to paid plan subscribers. Free accounts do not have access to automatic abuse detection.
+                A: Form Abuse Shield is a premium feature available on the Scale plan and above.
               </p>
 
               <h3>Support</h3>
               <p>
-                If you have questions about Form Abuse Shield or need help configuring it, contact our support team at
-                <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a>
-                or visit the <a href="/dashboard/manage-domains.html" style="color: #1452ca">Manage Domains</a> page to get started.
+                If you have questions about Form Abuse Shield or need help configuring it, contact our support team at <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a> or visit the Manage Domains page to get started.
               </p>
             </article>
           </div>

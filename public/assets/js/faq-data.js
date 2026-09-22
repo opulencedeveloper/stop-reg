@@ -37,7 +37,7 @@ const FAQ_DATA = [
     },
     {
         question: "How fast is the API response?",
-        answer: "Our API is optimized for speed and typically responds in under 500ms, making it suitable for real-time applications."
+        answer: "Our API is optimized for speed and typically responds in under 300ms, making it suitable for real-time applications."
     },
     {
         question: "Do I need technical skills to integrate?",
