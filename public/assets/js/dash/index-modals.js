@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     let isFreePlan = false;
     try {
         const planName = await window.getUserPlan();
-        if (planName && planName.trim().toLowerCase() === "free") {
+        const planLower = planName?.trim().toLowerCase() || '';
+        if (planLower === "free" || planLower === "launch") {
             isFreePlan = true;
             // Add class to body to visually hide premium actions across both static and dynamic tables
             document.body.classList.add('free-tier-user');
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (typeof iziToast !== 'undefined') {
             iziToast.info({
                 title: 'Upgrade Required',
-                message: 'Custom blocklists and allowlists are available on Paid plans. You can still Report domains.',
+                message: 'Domain management features are available on Scale plan or higher.',
                 position: 'topRight',
                 timeout: 5000
             });
