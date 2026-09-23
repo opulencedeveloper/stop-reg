@@ -371,10 +371,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderPagination(pagination) {
-        if (!paginationContainer) return;
+        console.log('[renderPagination] paginationContainer:', paginationContainer);
+        console.log('[renderPagination] pagination data:', pagination);
+
+        if (!paginationContainer) {
+            console.error('[renderPagination] paginationContainer is null or undefined!');
+            return;
+        }
 
         const { page, pages } = pagination;
+        console.log('[renderPagination] page:', page, 'pages:', pages);
+
         if (pages <= 1) {
+            console.log('[renderPagination] Only 1 page, clearing pagination');
             paginationContainer.innerHTML = "";
             return;
         }
@@ -1233,6 +1242,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("Hiding search input");
                 }
             }
+
+            // Show pagination select ONLY for provider-sitemaps, domain-sitemaps, and provider-features tabs
+            const paginationSelectContainer = document.querySelector(".pagination-select-container");
+            if (paginationSelectContainer) {
+                if (tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "provider-features") {
+                    paginationSelectContainer.style.display = "inline-block";
+                    console.log("Showing pagination select for:", tab);
+                } else {
+                    paginationSelectContainer.style.display = "none";
+                    console.log("Hiding pagination select");
+                }
+            }
             console.log("About to load tab data for:", tab);
             if (tab === "disposables") {
                 console.log("Loading disposables");
@@ -1286,6 +1307,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }, 300);
         };
+    }
+
+    // --- PAGINATION SELECT LISTENER ---
+    const paginationSelect = getEl("seo-pagination-select");
+    if (paginationSelect) {
+        paginationSelect.addEventListener("change", (e) => {
+            const selectedValue = e.target.value;
+            const pageSize = parseInt(selectedValue) || 10;
+            currentLimit = pageSize;
+            currentPage = 1;
+
+            // Reload current tab data with new page size
+            if (currentTab === "disposables") {
+                loadDisposables(currentPage, currentSearch);
+            } else if (currentTab === "meta-provider") {
+                loadMetaProviders(currentPage);
+            } else if (currentTab === "meta-domains") {
+                loadMetaDomains(currentPage);
+            } else if (currentTab === "provider-descriptions") {
+                loadProviderDescriptions(currentPage);
+            } else if (currentTab === "domain-descriptions") {
+                loadDomainDescriptions(currentPage);
+            } else if (currentTab === "provider-features") {
+                loadProviderFeatures(currentPage, currentSearch);
+            } else if (currentTab === "provider-sitemaps") {
+                loadProviderSitemaps(currentPage);
+            } else if (currentTab === "domain-sitemaps") {
+                loadDomainSitemaps(currentPage, currentSearch);
+            } else if (currentTab === "unpublished-providers") {
+                loadUnpublishedProviders(currentPage, currentSearch);
+            }
+        });
     }
 
     // --- META PROVIDER MODAL LISTENERS ---
