@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     let isFreePlan = false;
     try {
         const planName = await window.getUserPlan();
-        if (planName && planName.trim().toLowerCase() === "free") {
+        const planLower = planName?.trim().toLowerCase() || '';
+        if (planLower === "free" || planLower === "launch") {
             isFreePlan = true;
             document.body.classList.add('free-tier-user');
-        
+
             const style = document.createElement('style');
             style.innerHTML = `
                 body.free-tier-user .btn-block,
@@ -46,7 +47,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (isFreePlan) {
         [openBlockBtn, openAllowBtn].forEach(btn => {
-            if (btn) btn.style.opacity = "0.6";
+            if (btn) {
+                btn.style.opacity = "0.4";
+                btn.style.cursor = "not-allowed";
+            }
         });
     }
 
@@ -78,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (typeof iziToast !== 'undefined') {
             iziToast.info({
                 title: 'Upgrade Required',
-                message: 'Domain management features are available on Launch plan or higher.',
+                message: 'Domain management features are available on Scale plan or higher.',
                 position: 'topRight',
                 timeout: 5000
             });

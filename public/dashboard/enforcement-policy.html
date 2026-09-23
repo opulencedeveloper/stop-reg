@@ -316,12 +316,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Temporary Email Services</p>
-                                                    <p class="tooltiptextsubtle">Throwaway email providers (10minutemail, tempmail, etc). High fraud risk. Accounts are typically abandoned quickly.</p>
+                                                    <p class="tooltiptexttle">Disposable Address</p>
+                                                    <p class="tooltiptextsubtle">Identifies email addresses associated with temporary, throwaway, or disposable email services. Example: user@mailinator.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Temporary email services.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Temporary email from a disposable service.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -347,12 +347,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">No Mail Server Found</p>
-                                                    <p class="tooltiptextsubtle">Domain has no valid MX records. Emails cannot be delivered. Likely a typo, fake domain, or expired registration.</p>
+                                                    <p class="tooltiptexttle">Undeliverable Domain</p>
+                                                    <p class="tooltiptextsubtle">Identifies domains where email delivery is not expected to work reliably, such as domains without valid MX records. Example: a domain with no valid MX record.</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">No valid MX records</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Domain unable to receive email.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -379,13 +379,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Native Email Alias</p>
-                                                    <p class="tooltiptextsubtle">Alternate email address at same domain that delivers to same mailbox. Hard to audit who owns the account.</p>
+                                                    <p class="tooltiptexttle">Email Alias: Native</p>
+                                                    <p class="tooltiptextsubtle">Identifies aliases created and managed by an email provider. Multiple addresses point to the same underlying mailbox. Example: st.op.r+eg@gmail.com forwarding to stopreg.com@gmail.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Delivers directly to the same
-                                            mailbox.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Provider-created alias for another mailbox.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -429,12 +428,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Forwarding Email Alias</p>
-                                                    <p class="tooltiptextsubtle">Email forwards to a different address/mailbox. Adds layer of indirection. Harder to track true account owner. Medium risk.</p>
+                                                    <p class="tooltiptexttle">Email Alias: Forwarding</p>
+                                                    <p class="tooltiptextsubtle">Identifies forwarding-based aliases that redirect incoming messages to another email address. Example: alias@silomails.com forwarding to user@gmail.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Forwards emails to another mailbox.
+                                        <p class="risk-type-tile-sect-one-row-stle">Alias that forwards email elsewhere.
                                         </p>
                                     </div>
 
@@ -461,12 +460,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Generic Role/Department Email</p>
-                                                    <p class="tooltiptextsubtle">Generic addresses like 'admin@', 'support@', 'info@'. Not linked to specific person. May indicate automated/bot usage. Medium risk.</p>
+                                                    <p class="tooltiptexttle">Role Account</p>
+                                                    <p class="tooltiptextsubtle">Identifies addresses that represent a role, team, or department rather than an individual user. Example: support@example.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Generic role or department email.
+                                        <p class="risk-type-tile-sect-one-row-stle">Email for a team or department.
                                         </p>
                                     </div>
 
@@ -494,12 +493,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Free Subdomain Service</p>
-                                                    <p class="tooltiptextsubtle">Services offering free subdomains (xyz.freehostname.com). Low barrier to entry. Can be easily abandoned or abused. Medium risk.</p>
+                                                    <p class="tooltiptexttle">Free Subdomain Provider</p>
+                                                    <p class="tooltiptextsubtle">Identifies subdomains created through free subdomain services. Examples: biz.ryzedns.org, created from ryzedns.org; test.sryze.cc, created from sryze.cc; and shop.ooguy.com, created from ooguy.com.</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Provides free subdomains to users.
+                                        <p class="risk-type-tile-sect-one-row-stle">Service providing free user-created subdomains.
                                         </p>
                                     </div>
 
@@ -526,12 +525,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Email Routing Service</p>
-                                                    <p class="tooltiptextsubtle">Email forwarding or routing services. Can add layer of indirection. May be used for privacy or anonymity. Medium risk.</p>
+                                                    <p class="tooltiptexttle">Email Routing</p>
+                                                    <p class="tooltiptextsubtle">Identifies domains using email routing or forwarding infrastructure, such as Cloudflare, to deliver messages to another mail service. Example: example.com routing email to another mail provider via Cloudflare.</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Routes or forwards email to another mailbox.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Domain that routes email elsewhere.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -572,13 +571,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Custom Owned Domain</p>
-                                                    <p class="tooltiptextsubtle">Custom domain registered and owned by user/business. Shows investment and legitimacy. Trusted indicator of genuine accounts.</p>
+                                                    <p class="tooltiptexttle">Private Domain</p>
+                                                    <p class="tooltiptextsubtle">Identifies domains managed by an individual, business, organization, or institution rather than a major public mailbox provider. Example: user@acme.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Custom domain owned by a user or
-                                            business.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Custom domain privately managed.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -605,12 +603,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Major Email Providers</p>
-                                                    <p class="tooltiptextsubtle">Gmail, Outlook, Yahoo, etc. Most trustworthy. Shows account created with legitimate provider. Very low fraud risk.</p>
+                                                    <p class="tooltiptexttle">Public Mailbox Provider</p>
+                                                    <p class="tooltiptextsubtle">Identifies widely available consumer email providers where users can generally create an account without owning a private domain. Example: gmail.com,yahoomail.com protonmail.com etc</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Well-known public email providers.
+                                        <p class="risk-type-tile-sect-one-row-stle">Public email service for general users.
                                         </p>
                                     </div>
 
@@ -637,12 +635,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Educational Institution Domain</p>
-                                                    <p class="tooltiptextsubtle">Use this rule to identify or control email addresses associated with schools, colleges, and universities.</p>
+                                                    <p class="tooltiptexttle">Edu Domain</p>
+                                                    <p class="tooltiptextsubtle">Identifies domains associated with universities, colleges, schools, and other educational institutions. Example: student@university.edu</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Domains associated with educational institutions.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Email domain for an educational institution.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
@@ -668,12 +666,12 @@
                                             <div class="card-tooltip-wrapper tooltip">
                                                 <img src="/assets/icons/tooltip.svg" alt="Info" />
                                                 <span class="tooltiptext">
-                                                    <p class="tooltiptexttle">Internet Service Provider Domain</p>
-                                                    <p class="tooltiptextsubtle">Use this rule to identify or control email addresses provided by internet service providers.</p>
+                                                    <p class="tooltiptexttle">ISP Domain</p>
+                                                    <p class="tooltiptextsubtle">Identifies email addresses associated with mailbox services provided by internet service providers. Example: user@isp-provider.com</p>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p class="risk-type-tile-sect-one-row-stle">Email domains provided by ISPs.</p>
+                                        <p class="risk-type-tile-sect-one-row-stle">Email domain provided by an ISP.</p>
                                     </div>
 
                                     <div class="action-btn-cont">
