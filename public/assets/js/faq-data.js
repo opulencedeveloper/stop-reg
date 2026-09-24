@@ -6,12 +6,16 @@ const FAQ_DATA = [
     },
     {
         question: "What types of emails can StopReg detect?",
-        answer: `StopReg identifies:
+        answer: `StopReg analyzes email addresses and domains to identify several types of email addresses, including:
         <ul>
-            <li>Disposable email addresses</li>
-            <li>Relay/alias emails (like Apple Hide My Email, Firefox Relay)</li>
-            <li>Role-based emails (e.g. admin@, support@)</li>
-            <li>High-risk or suspicious domains</li>
+            <li>Disposable email addresses: Temporary email addresses created for short-term or one-time use.</li>
+            <li>Relay email addresses: Addresses that forward or relay messages through an intermediary service.</li>
+            <li>Alias and forwarding addresses: Including native aliases and forwarding services such as Apple Hide My Email, Firefox Relay, and public aliases such as user.dhk+jk@gmail.com.</li>
+            <li>Role-based addresses: Addresses associated with roles or departments, such as admin@, support@, and sales@.</li>
+            <li>Public email addresses: Addresses from commonly used providers such as Gmail, Yahoo, and Outlook.</li>
+            <li>Educational email addresses: Addresses associated with educational institutions.</li>
+            <li>ISP email addresses: Addresses provided by internet service providers.</li>
+            <li>Subdomain-based email addresses: Addresses created through subdomain names associated with free subdomains provider eg domains from stackryze.com, afraid.org etc.</li>
         </ul>`
     },
     {
@@ -19,21 +23,26 @@ const FAQ_DATA = [
         answer: "No. StopReg is designed to minimize false positives. Legitimate users can still sign up without friction while suspicious emails are filtered out."
     },
     {
-        question: "Can StopReg block fake signups in real time?",
+        question: "What types of email addresses does the StopReg API detect?",
         answer: `Yes. Our API analyzes emails instantly during signup and classifies them into clear categories, including:
         <ul>
-            <li>Disposable</li>
-            <li>Relay</li>
+            <li>Disposable email</li>
+            <li>Relay email</li>
             <li>Free email provider</li>
-            <li>Alias</li>
-            <li>Role-based email address</li>
+            <li>Alias email</li>
+            <li>Role-based email</li>
+            <li>Native and forwarding aliases</li>
+            <li>ISP email</li>
+            <li>EDU email</li>
+            <li>Free subdomain-based email</li>
         </ul>
-        Based on this classification, you can:
+        Based on these classifications, you can apply your own enforcement policies to:
         <ul>
-            <li>Block</li>
-            <li>Allow</li>
-            <li>Or flag for review</li>
-        </ul>`
+            <li>Block unwanted email types</li>
+            <li>Allow trusted email types</li>
+            <li>Flag addresses for manual review</li>
+        </ul>
+        This gives you control over how different email classifications are handled during signup, registration, and lead collection.`
     },
     {
         question: "How fast is the API response?",
