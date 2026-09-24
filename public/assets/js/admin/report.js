@@ -194,16 +194,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalEl = getEl("report-total-requests");
             const successEl = getEl("report-success-requests");
             const blockedEl = getEl("report-blocked-requests");
+            const warnEl = getEl("report-warn-requests");
             const dailyTotalEl = getEl("report-24h-total-requests");
             const dailySuccessEl = getEl("report-24h-success-requests");
             const dailyBlockedEl = getEl("report-24h-blocked-requests");
+            const dailyWarnEl = getEl("report-24h-warn-requests");
 
             if (totalEl) totalEl.textContent = data.total.value.toLocaleString();
             if (successEl) successEl.textContent = data.success.value.toLocaleString();
             if (blockedEl) blockedEl.textContent = data.blocked.value.toLocaleString();
+            if (warnEl) warnEl.textContent = data.warn.value.toLocaleString();
             if (dailyTotalEl) dailyTotalEl.textContent = data.dailyTotal.value.toLocaleString();
             if (dailySuccessEl) dailySuccessEl.textContent = data.dailySuccess.value.toLocaleString();
             if (dailyBlockedEl) dailyBlockedEl.textContent = data.dailyBlocked.value.toLocaleString();
+            if (dailyWarnEl) dailyWarnEl.textContent = data.dailyWarn.value.toLocaleString();
 
             // Trends
             renderTrend({ container: getEl("report-trend-container-1"), value: getEl("report-trend-value-1") }, data.total.trend);
@@ -212,6 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
             renderTrend({ container: getEl("report-trend-container-4"), value: getEl("report-trend-value-4") }, data.dailyTotal.trend);
             renderTrend({ container: getEl("report-trend-container-5"), value: getEl("report-trend-value-5") }, data.dailySuccess.trend);
             renderTrend({ container: getEl("report-trend-container-6"), value: getEl("report-trend-value-6") }, data.dailyBlocked.trend);
+            renderTrend({ container: getEl("report-trend-container-7"), value: getEl("report-trend-value-7") }, data.warn.trend);
+            renderTrend({ container: getEl("report-trend-container-8"), value: getEl("report-trend-value-8") }, data.dailyWarn.trend);
         } catch (error) {
             console.error("Report stats error:", error);
             renderSectionError("report-stats-container", loadReportStats, error.message || "Failed to load report statistics.");
@@ -262,18 +268,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 labels: data.map(d => d.month.substring(0, 3)),
                 datasets: [
                     {
-                        label: 'Public Provider',
-                        data: data.map(d => d.public),
+                        label: 'Relay',
+                        data: data.map(d => d.relay),
                         borderColor: '#1452CA',
                         backgroundColor: 'rgba(20, 82, 202, 0.03)',
-                        borderWidth: 3,
+                        borderWidth: 2,
                         tension: 0.4,
-                        fill: true,
+                        fill: false,
                         pointRadius: 0,
                         pointHoverRadius: 0
                     },
                     {
-                        label: 'Disposable Domains',
+                        label: 'Disposable',
                         data: data.map(d => d.disposable),
                         borderColor: '#CC0000',
                         backgroundColor: 'rgba(204, 0, 0, 0.01)',
@@ -284,10 +290,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         pointHoverRadius: 0
                     },
                     {
-                        label: 'Email forwarding/alias',
-                        data: data.map(d => d.alias),
-                        borderColor: '#737373',
-                        backgroundColor: 'rgba(115, 115, 115, 0.01)',
+                        label: 'Private',
+                        data: data.map(d => d.private),
+                        borderColor: '#049286',
+                        backgroundColor: 'rgba(4, 146, 134, 0.01)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: false,
@@ -295,10 +301,54 @@ document.addEventListener("DOMContentLoaded", () => {
                         pointHoverRadius: 0
                     },
                     {
-                        label: 'Private',
-                        data: data.map(d => d.unresolved),
-                        borderColor: '#049286',
-                        backgroundColor: 'rgba(4, 146, 134, 0.01)',
+                        label: 'Role-Based',
+                        data: data.map(d => d.roleBase),
+                        borderColor: '#8B5CF6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.01)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0
+                    },
+                    {
+                        label: 'Alias',
+                        data: data.map(d => d.aliasNative),
+                        borderColor: '#F59E0B',
+                        backgroundColor: 'rgba(245, 158, 11, 0.01)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0
+                    },
+                    {
+                        label: 'Edu',
+                        data: data.map(d => d.edu),
+                        borderColor: '#06B6D4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.01)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0
+                    },
+                    {
+                        label: 'ISP',
+                        data: data.map(d => d.isp),
+                        borderColor: '#EC4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.01)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0
+                    },
+                    {
+                        label: 'Free Subdomain',
+                        data: data.map(d => d.freeSubdomain),
+                        borderColor: '#6366F1',
+                        backgroundColor: 'rgba(99, 102, 241, 0.01)',
                         borderWidth: 2,
                         tension: 0.4,
                         fill: false,
@@ -328,10 +378,16 @@ document.addEventListener("DOMContentLoaded", () => {
                                 const dataPoints = tooltip.dataPoints || [];
                                 const title = tooltip.title || [];
                                 if (dataPoints.length > 0) {
-                                    // Match portal: strong = value, span = month
-                                    chartTooltipEl.querySelector("strong").textContent = dataPoints[0].raw.toLocaleString();
-                                    const fullMonth = data.find(d => d.month.startsWith(title[0]))?.month || title[0];
-                                    chartTooltipEl.querySelector("span").textContent = fullMonth;
+                                    // Get classification label from dataset
+                                    const label = dataPoints[0].dataset.label || 'Unknown';
+                                    chartTooltipEl.querySelector("#tooltip-label").textContent = label;
+
+                                    // Get value
+                                    chartTooltipEl.querySelector("#tooltip-value").textContent = dataPoints[0].raw.toLocaleString();
+
+                                    // Get month
+                                    // const fullMonth = data.find(d => d.month.startsWith(title[0]))?.month || title[0];
+                                    // chartTooltipEl.querySelector("#tooltip-month").textContent = fullMonth;
                                 }
                             }
 

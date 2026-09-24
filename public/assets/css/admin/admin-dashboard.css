@@ -714,7 +714,7 @@ body {
 /* Custom tooltip bubble */
 .custom-tooltip {
   width: 125.6px;
-  height: 62px;
+  height: 70px;
   position: absolute;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -731,12 +731,27 @@ body {
   justify-content: center;
 }
 
+#tooltip-label {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
 .custom-tooltip strong {
   display: block;
   font-size: 16px;
   font-weight: 600;
   color: #000;
-  margin-top: 10px;
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+#tooltip-month {
+  font-size: 12px;
+  color: #696974;
+  margin-top: 2px;
+  line-height: 1.2;
 }
 
 .custom-tooltip span {

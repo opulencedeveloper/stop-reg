@@ -257,7 +257,27 @@
               <span class="stat-label">Total Blocked Request</span>
             </div>
           </div>
-          <!-- Card 4 -->
+
+           <!-- Card 4 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-7">
+              <span class="trend-up" id="report-trend-value-7"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">Total Warn Requests</p>
+                  <p class="tooltiptextsubtle">Total number of requests that were warned.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value color-orange" id="report-warn-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">Total Warn Request</span>
+            </div>
+          </div>
+          <!-- Card 5 -->
           <div class="report-stat-card">
             <div class="card-top" id="report-trend-container-4">
               <span class="trend-up" id="report-trend-value-4"></span>
@@ -276,7 +296,7 @@
               <span class="stat-label">24 hrs total request</span>
             </div>
           </div>
-          <!-- Card 5 -->
+          <!-- Card 6 -->
           <div class="report-stat-card">
             <div class="card-top" id="report-trend-container-5">
               <span class="trend-up" id="report-trend-value-5"></span>
@@ -295,7 +315,7 @@
               <span class="stat-label">24 hrs successful request</span>
             </div>
           </div>
-          <!-- Card 6 -->
+          <!-- Card 7 -->
           <div class="report-stat-card">
             <div class="card-top" id="report-trend-container-6">
               <span class="trend-up" id="report-trend-value-6"></span>
@@ -314,6 +334,26 @@
               <span class="stat-label">24 hrs block request</span>
             </div>
           </div>
+         
+          <!-- Card 8 -->
+          <div class="report-stat-card">
+            <div class="card-top" id="report-trend-container-8">
+              <span class="trend-up" id="report-trend-value-8"></span>
+              <div class="card-tooltip-wrapper tooltip">
+                <img src="/assets/icons/question.svg" alt="Info" />
+                <span class="tooltiptext">
+                  <p class="tooltiptexttle">24h Warn Requests</p>
+                  <p class="tooltiptextsubtle">Warn requests received in the last 24 hours.</p>
+                </span>
+              </div>
+            </div>
+            <div class="card-middle">
+              <span class="stat-value color-orange" id="report-24h-warn-requests">0</span>
+            </div>
+            <div class="card-bottom">
+              <span class="stat-label">24 hrs warn request</span>
+            </div>
+          </div>
         </div>
 
         <!-- Chart Section -->
@@ -330,10 +370,14 @@
               </div>
             </div>
             <div class="admin-chart-legend">
-              <div class="legend-item"><span class="dot dot-blue"></span>Public Provider</div>
-              <div class="legend-item"><span class="dot dot-red"></span>Disposable Domains</div>
-              <div class="legend-item"><span class="dot dot-grey"></span>Email forwarding/alias</div>
+              <div class="legend-item"><span class="dot dot-blue"></span>Relay</div>
+              <div class="legend-item"><span class="dot dot-red"></span>Disposable</div>
               <div class="legend-item"><span class="dot dot-teal"></span>Private</div>
+              <div class="legend-item"><span class="dot dot-purple"></span>Role-Based</div>
+              <div class="legend-item"><span class="dot dot-orange"></span>Alias</div>
+              <div class="legend-item"><span class="dot dot-cyan"></span>Edu</div>
+              <div class="legend-item"><span class="dot dot-pink"></span>ISP</div>
+              <div class="legend-item"><span class="dot dot-indigo"></span>Free Subdomain</div>
             </div>
           </div>
           <div class="graph-container">
@@ -344,8 +388,9 @@
               </div>
               <canvas id="usageStatsChart" style="display: none;"></canvas>
               <div id="chart-tooltip" class="custom-tooltip">
-                <strong>0</strong>
-                <span></span>
+                <div id="tooltip-label" style="font-size: 12px; color: #666; margin-bottom: 4px;"></div>
+                <strong id="tooltip-value">0</strong>
+                <!-- <span id="tooltip-month"></span> -->
               </div>
             </div>
           </div>

@@ -81,6 +81,10 @@
   color: #CC0000;
 }
 
+.stat-value.color-orange {
+  color: #FF8C00;
+}
+
 .report-stat-card .card-bottom {
   margin-top: auto;
 }
@@ -135,6 +139,26 @@
 
 .dot-teal {
   background-color: #049286;
+}
+
+.dot-purple {
+  background-color: #8B5CF6;
+}
+
+.dot-orange {
+  background-color: #F59E0B;
+}
+
+.dot-cyan {
+  background-color: #06B6D4;
+}
+
+.dot-pink {
+  background-color: #EC4899;
+}
+
+.dot-indigo {
+  background-color: #6366F1;
 }
 
 .card-tooltip-wrapper {
