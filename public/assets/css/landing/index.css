@@ -26,7 +26,8 @@ header {
   height: max-content;
   padding-bottom: 121px;
   padding-top: 121px;
-  /* Add consistent bottom padding */
+  padding-right: var(--desktop-padding);
+  padding-left: var(--desktop-padding);
 }
 
 .hero-sect-one {
