@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const lineChartContainer = document.querySelector(".chart-container");
     
     if (tableBody) {
-       tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 40px;"><div class="stopreg-btn-spinner" style="border-width: 3px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 30px; height: 30px; margin: 0 auto;"></div></td></tr>`;
+       tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px;"><div class="stopreg-btn-spinner" style="border-width: 3px !important; border-color: rgba(0,0,0,0.1) !important; border-top-color: #1452CA !important; width: 30px; height: 30px; margin: 0 auto;"></div></td></tr>`;
     }
 
     try {
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (tableBody) {
              tableBody.innerHTML = `
                 <tr>
-                  <td colspan="8" style="padding: 0; border: none; height: 300px;">
+                  <td colspan="9" style="padding: 0; border: none; height: 300px;">
                      <div class="fetch-error-state">
                         <div class="error-icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           // Mind blowing empty state animation
           tableBody.innerHTML = `
             <tr>
-              <td colspan="8" style="padding: 0; border: none;">
+              <td colspan="9" style="padding: 0; border: none;">
                 <div class="empty-state-container">
                   <img src="/assets/icons/empty.svg" alt="No Data" class="empty-state-svg" />
                   <h4 class="empty-state-title">No Requests Yet</h4>
@@ -480,9 +480,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const providerHtml = req.provider || '-';
 
+          // Determine Value column: show email if apiEndpoint is "email", otherwise show domain
+          const valueDisplay = req.apiEndpoint === "email" ? (req.email || "Unknown") : (req.domain || "Unknown");
+
+          // Determine API Endpoint column: show "email" or "domain", default to "domain" if not "email"
+          const apiEndpointDisplay = req.apiEndpoint === "email" ? "email" : "domain";
+
           return `
             <tr>
-              <td>${req.domain || "Unknown"}</td>
+              <td>${valueDisplay}</td>
+              <td class="table-center">/${apiEndpointDisplay}</td>
               <td class="table-center">${providerHtml}</td>
               <td class="table-center">${classificationHtml}</td>
               <td class="table-center">${mxFoundHtml}</td>

@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show Spinner
         tableBody.innerHTML = `
             <tr>
-                <td colspan="8" style="text-align: center; padding: 40px;">
+                <td colspan="9" style="text-align: center; padding: 40px;">
                     <div class="stopreg-spinner" style="border-top-color: #1452CA; border-right-color: #1452CA; margin: 0 auto;"></div>
                 </td>
             </tr>
@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Fetch error:', error);
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="8" style="text-align: center; color: var(--error-color);">
+                    <td colspan="9" style="text-align: center; color: var(--error-color);">
                         Failed to load data. <button onclick="window.fetchRequests()" style="text-decoration: underline; background: none; border: none; cursor: pointer; color: inherit;">Retry</button>
                     </td>
                 </tr>
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (requests.length === 0) {
             tableBody.innerHTML = `
                 <tr>
-                    <td colspan="8" style="text-align: center; padding: 20px;">No requests found.</td>
+                    <td colspan="9" style="text-align: center; padding: 20px;">No requests found.</td>
                 </tr>
             `;
             return;
@@ -272,8 +272,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const roleAccClass = req.isRoleDomain ? 'role-acc-yes' : 'status-no';
             const roleAccHtml = `<div class="status-badge ${roleAccClass}"><span>${roleAccText}</span></div>`;
 
+            // Determine Value column: show email if apiEndpoint is "email", otherwise show domain
+            const valueDisplay = req.apiEndpoint === "email" ? (req.email || "Unknown") : (req.domain || "Unknown");
+
+            // Determine API Endpoint column: show "email" or "domain", default to "domain" if not "email"
+            const apiEndpointDisplay = req.apiEndpoint === "email" ? "email" : "domain";
+
             row.innerHTML = `
-                <td>${domainName}</td>
+                <td>${valueDisplay}</td>
+                <td class="table-center">/${apiEndpointDisplay}</td>
                 <td class="table-center">${req.provider || '-'}</td>
                 <td class="table-center">${classificationHtml}</td>
                 <td class="table-center">${mxFoundHtml}</td>

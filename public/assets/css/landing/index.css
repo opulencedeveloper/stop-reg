@@ -2205,6 +2205,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   margin: 0 auto;
   padding: 0 20px;
   text-align: center;
+  overflow: hidden;
 }
 
 .pricing-header {
@@ -2227,7 +2228,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   justify-content: center;
-  overflow: hidden;
 }
 
 .pricing-card {
