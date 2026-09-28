@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let limit = 10;
     let totalPages = 1;
     let currentSearchFilter = '';
+    let currentDomainSearch = '';
     let allRequests = [];
+    let domainSearchTimeout;
 
     // --- Search Handler with Dropdown (Read-only) ---
     const searchInput = document.getElementById('api-stats-search-input');
@@ -46,6 +48,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
                 dropdown.classList.remove('active');
             }
+        });
+    }
+
+    // --- Domain/Provider Search Handler with Debouncing ---
+    const domainSearchInput = document.getElementById('api-stats-domain-search-input');
+    if (domainSearchInput) {
+        domainSearchInput.addEventListener('input', (e) => {
+            currentDomainSearch = e.target.value.toLowerCase();
+            currentPage = 1;
+
+            // Debounce API call (500ms delay)
+            clearTimeout(domainSearchTimeout);
+            domainSearchTimeout = setTimeout(() => {
+                fetchApiStats(1);
+            }, 500);
         });
     }
 
@@ -162,8 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('authToken');
         try {
             let url = `https://api.stopreg.com/api/v1/user/info/requests?page=${page}&limit=${limit}&last30Days=true&requestType=single`;
+            // Send both classification and domain searches together
             if (currentSearchFilter) {
                 url += `&search=${encodeURIComponent(currentSearchFilter)}`;
+            }
+            if (currentDomainSearch) {
+                url += `&domainSearch=${encodeURIComponent(currentDomainSearch)}`;
             }
             const response = await fetch(url, {
                 headers: {

@@ -582,6 +582,9 @@
 /* Domain Management Search Styles */
 .domain-mgmt-search-wrapper {
   flex: 0 0 auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
   min-width: 280px;
 }
 
@@ -594,7 +597,7 @@
   border-radius: 8px;
   height: 42px;
   padding: 0px 12px;
-  width: 280px;
+  width: 240px;
   gap: 8px;
 }
 
@@ -686,6 +689,8 @@
   .domain-mgmt-search-wrapper {
     min-width: auto;
     width: 100%;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .domain-mgmt-search-box {

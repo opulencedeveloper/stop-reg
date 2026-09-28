@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let totalPages = 1;
   let totalDocs = 0;
   let currentSearchFilter = '';
+  let currentDomainSearch = '';
+  let domainSearchTimeout;
   let filteredResults = [];
 
   // --- Search Handler with Dropdown (Read-only) ---
@@ -54,6 +56,21 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
         dropdown.classList.remove('active');
       }
+    });
+  }
+
+  // --- Domain/Provider Search Handler with Debouncing ---
+  const domainSearchInput = document.getElementById('bulk-verification-domain-search-input');
+  if (domainSearchInput) {
+    domainSearchInput.addEventListener('input', (e) => {
+      currentDomainSearch = e.target.value.toLowerCase();
+      currentPage = 1;
+
+      // Debounce rendering (500ms delay)
+      clearTimeout(domainSearchTimeout);
+      domainSearchTimeout = setTimeout(() => {
+        renderTablePage();
+      }, 500);
     });
   }
 
@@ -231,12 +248,21 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Filter by classification if search filter is set
+    // Filter by classification and/or domain/provider
     filteredResults = storedResponseData;
+
     if (currentSearchFilter) {
-      filteredResults = storedResponseData.filter(item => {
+      filteredResults = filteredResults.filter(item => {
         const classification = mapClassificationToDisplay(getClassification(item)).toLowerCase();
         return classification.includes(currentSearchFilter);
+      });
+    }
+
+    if (currentDomainSearch) {
+      filteredResults = filteredResults.filter(item => {
+        const domain = (item.domain || '').toLowerCase();
+        const provider = (item.provider || '').toLowerCase();
+        return domain.includes(currentDomainSearch) || provider.includes(currentDomainSearch);
       });
     }
 

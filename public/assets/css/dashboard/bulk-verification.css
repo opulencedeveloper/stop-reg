@@ -570,6 +570,9 @@
 /* Domain Management Search Styles */
 .domain-mgmt-search-wrapper {
   flex: 0 0 auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
   min-width: 280px;
 }
 
@@ -660,6 +663,28 @@
 }
 
 /* Mobile Responsive */
+@media (max-width: 800px) {
+  .req-table-header-row {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .req-table-header-row .req-table-title {
+    flex: 1;
+  }
+
+  .domain-mgmt-search-wrapper {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .domain-mgmt-search-box {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .req-table-header-row {
     flex-direction: column;
