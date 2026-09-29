@@ -488,8 +488,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           return `
             <tr>
-              <td>${valueDisplay}</td>
               <td class="table-center">/${apiEndpointDisplay}</td>
+              <td>${valueDisplay}</td>
               <td class="table-center">${providerHtml}</td>
               <td class="table-center">${classificationHtml}</td>
               <td class="table-center">${mxFoundHtml}</td>

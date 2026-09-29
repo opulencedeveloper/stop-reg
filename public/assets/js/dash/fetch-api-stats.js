@@ -279,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const apiEndpointDisplay = req.apiEndpoint === "email" ? "email" : "domain";
 
             row.innerHTML = `
-                <td>${valueDisplay}</td>
                 <td class="table-center">/${apiEndpointDisplay}</td>
+                <td>${valueDisplay}</td>
                 <td class="table-center">${req.provider || '-'}</td>
                 <td class="table-center">${classificationHtml}</td>
                 <td class="table-center">${mxFoundHtml}</td>
