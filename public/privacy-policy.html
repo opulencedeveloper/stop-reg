@@ -191,140 +191,224 @@
     <main>
       <section class="privacy-hero animation3">
         <h1>Privacy Policy</h1>
-        <p>Last Updated: 16 December, 2025.</p>
+        <p>Last Updated: September 29, 2026</p>
         <p>The Privacy Statement that follows describes the collection, use and disclosure of information practices pertaining to StopReg.com (the "Site"), which is owned and operated by NETBOOSTERS LAB (collectively "StopReg", "we", "us" or "our"). By accessing, using or registering on the Site, you accept and agree to this Privacy Statement. StopReg provides services related to email verification and signup fraud prevention services.</p>
       </section>
       <section class="privecy-contents">
         <div class="privacy-section animation4">
-          <h1>Information We Collect</h1>
+          <h1>1. How We Use Your Data</h1>
           <div class="contents animation6">
-            <p>Stopreg.com is built with data minimization at its core. We collect only what is strictly necessary to
-              provide email validation services.</p>
-            <br>
-            <p>
-              <strong>Data We Process</strong><br>
-              Email addresses submitted for validation (Full Email API)<br>
-              Email domains submitted for validation (Domain-Only API)<br>
-              Account information such as name, email, and payment details for account management
-            </p>
-            <br>
-            <p>
-              <strong>Data We Do Not Collect</strong><br>
-              Any personal data not required for validation<br>
-              Unnecessary user identifiers
-            </p>
+            <p>StopReg processes information submitted through our services to provide email and domain validation, classification, analytics, security, abuse prevention, and account management. Depending on the service being used, StopReg may process information to:</p>
+            <ul>
+              <li>Validate email addresses and domains</li>
+              <li>Classify email addresses and domains</li>
+              <li>Identify disposable, relay, private, public, role-based, and alias email sources</li>
+              <li>Identify EDU, ISP, and free subdomain sources</li>
+              <li>Maintain and improve detection data</li>
+              <li>Analyze service usage</li>
+              <li>Provide domain management and enforcement features</li>
+              <li>Protect the security and integrity of our services</li>
+              <li>Provide billing, account management, and customer support</li>
+            </ul>
           </div>
         </div>
 
         <div class="privacy-section animation4">
-          <h1>How We Use Your Data</h1>
+          <h1>2. Email API</h1>
           <div class="contents animation6">
-            <p>Email addresses and domains submitted to Stopreg.com are used exclusively for validation purposes:</p>
-            <br>
-            <p>
-              <strong>Full Email API:</strong> Performs disposable email detection, role-based checks, public provider
-              identification, domain syntax validation, MX record verification, alias and relay domain identification.<br>
-              <strong>Domain-Only API:</strong> Performs disposable email detection, domain syntax validation,
-              MX record verification and relay domain identification without processing the full email.
-            </p>
-            <br>
-            <p><strong>Important:</strong> The username portion of the email address is deleted immediately after validation.</p>
+            <p>When the Email API is used, the submitted email address may be stored for analytical and operational purposes, including maintaining detection data, monitoring service usage, security, abuse prevention, and improving StopReg's classification systems.</p>
+            <p><strong>The Email API may analyze characteristics including:</strong></p>
+            <ul>
+              <li>Disposable (is_disposable)</li>
+              <li>Relay (is_relay)</li>
+              <li>Private (is_private)</li>
+              <li>Public (is_public)</li>
+              <li>Role-based (is_role_based)</li>
+              <li>Alias (is_alias)</li>
+              <li>Alias method (alias_method)</li>
+              <li>EDU (is_edu)</li>
+              <li>ISP (is_isp)</li>
+              <li>Free subdomain (is_free_subdomain)</li>
+            </ul>
+            <p>The Email API may also perform domain syntax validation, MX record verification, mail provider identification, and mail infrastructure analysis.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Data Retention</h1>
+          <h1>3. Domain API</h1>
           <div class="contents">
-            <p><strong>Email API</strong><br>
-              <strong>Email addresses:</strong> The username portion of the email address is deleted immediately after validation while the domain name of the email address is stored for analytical purpose<br>
-              <br>
-              <strong>Domain API</strong><br>
-              <strong>Domains:</strong> The domain name is stored for analytical purposes.<br>
-              <strong>Account information:</strong> Retained only as necessary for billing, support, and account
-              management
-            </p>
-            <br>
-            <p>Requests for deletion of account information can be submitted at any time by contacting <a
-                href="mailto:support@stopreg.com">support@stopreg.com</a></p>
+            <p>When the Domain API is used, the submitted domain may be stored for analytical and operational purposes, including maintaining domain detection data, monitoring service usage, security, abuse prevention, and improving StopReg's classification systems.</p>
+            <p>The Domain API does not require the complete email address.</p>
+            <p><strong>The Domain API may perform:</strong></p>
+            <ul>
+              <li>Disposable domain detection</li>
+              <li>Relay domain detection</li>
+              <li>Private and public domain classification</li>
+              <li>EDU domain identification</li>
+              <li>ISP domain identification</li>
+              <li>Free subdomain identification</li>
+              <li>Domain syntax validation</li>
+              <li>MX record verification</li>
+              <li>Mail provider identification</li>
+              <li>Domain infrastructure analysis</li>
+            </ul>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>GDPR & Data Protection Compliance</h1>
+          <h1>4. StopReg Classification</h1>
           <div class="contents">
-            <p>Stopreg.com complies with GDPR by:<br>
-              Minimizing data collection: Only what is necessary for validation<br>
-              Providing a domain-only API: For clients who prefer not to transmit full email addresses<br>
-Processing data securely: Using encryption, secure API access, and strict access controls</p>
+            <p>StopReg analyzes submitted email addresses and domains using multiple validation and classification signals. Depending on the endpoint and information available, classification results may include:</p>
+            <ul>
+              <li>Disposable (is_disposable)</li>
+              <li>Relay (is_relay)</li>
+              <li>Private (is_private)</li>
+              <li>Public (is_public)</li>
+              <li>Role-based (is_role_based)</li>
+              <li>Alias (is_alias)</li>
+              <li>Alias Method (alias_method)</li>
+              <li>EDU (is_edu)</li>
+              <li>ISP (is_isp)</li>
+              <li>Free Subdomain (is_free_subdomain)</li>
+            </ul>
+            <p>These classifications help customers understand the characteristics of an email address or domain and determine how they want to handle it within their own systems.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Sharing and Disclosure</h1>
+          <h1>5. Domain Management</h1>
+          <div class="contents">
+            <p>Domain Management features are available on the Scale plan and higher. Depending on the customer's subscription and configuration, Domain Management may include:</p>
+            <ul>
+              <li>Allowlist</li>
+              <li>Blocklist</li>
+              <li>Form Abuse Shield</li>
+            </ul>
+            <p><strong>Allowlist:</strong> Customers can add domains or email addresses to an allowlist to explicitly permit matching sources according to their configuration.</p>
+            <p><strong>Blocklist:</strong> Customers can add domains or email addresses to a blocklist to prevent matching sources from being accepted according to their configuration.</p>
+            <p><strong>Form Abuse Shield:</strong> Form Abuse Shield monitors registration activity associated with private and relay domains. When a domain reaches the registration threshold configured by the customer within the selected time window, StopReg can automatically notify the customer or block further registrations from that domain. Depending on the customer's selected configuration, the system can:</p>
+            <ul>
+              <li>Notify Mode: Automatically send an email alert containing relevant domain details and threshold information.</li>
+              <li>Block Mode: Automatically block the domain from making further registrations.</li>
+            </ul>
+            <p>To provide Form Abuse Shield, StopReg may process information such as the domain associated with a registration, registration activity, registration counts, configured thresholds, selected time windows, and the action selected by the customer.</p>
+          </div>
+        </div>
+
+        <div class="privacy-section">
+          <h1>6. Enforcement Policy</h1>
+          <div class="contents">
+            <p>StopReg's Enforcement Policy allows customers to configure how email addresses and domains are handled based on StopReg classification results. Depending on the customer's configuration, classification results may be used to:</p>
+            <ul>
+              <li>Allow an email address or domain</li>
+              <li>Warn or flag an email address or domain for review</li>
+              <li>Block an email address or domain</li>
+            </ul>
+            <p>To provide this feature, StopReg may process classification results, submitted email addresses or domains, and the customer's configured enforcement settings. The detailed functionality and configuration options for Enforcement Policy are provided on the separate Enforcement Policy page. Customers are responsible for configuring and using Enforcement Policy according to their own requirements and applicable laws.</p>
+          </div>
+        </div>
+
+        <div class="privacy-section">
+          <h1>7. Data Retention</h1>
+          <div class="contents">
+            <p>StopReg retains information only for as long as reasonably necessary to provide, maintain, secure, analyze, and improve our services.</p>
+            <p><strong>Email API:</strong> Email Addresses: When the Email API is used, submitted email addresses may be stored for analytical and operational purposes. This may include maintaining detection data, monitoring service usage, preventing abuse, maintaining security, and improving the accuracy and performance of StopReg's classification systems.</p>
+            <p><strong>Domain API:</strong> Domains: When the Domain API is used, submitted domain names may be stored for analytical and operational purposes. This may include maintaining domain detection data, monitoring service usage, preventing abuse, maintaining security, and improving the accuracy and performance of StopReg's classification systems.</p>
+            <p><strong>Account Information:</strong> Account information is retained only as necessary for billing, support, and account management.</p>
+            <p><strong>Deletion Requests:</strong> Requests for deletion of account information or personal data can be submitted at any time by contacting: <a href="mailto:support@stopreg.com">support@stopreg.com</a></p>
+            <p>We may retain certain information where necessary to comply with legal obligations, prevent abuse, resolve disputes, or protect the security and integrity of our services.</p>
+          </div>
+        </div>
+
+        <div class="privacy-section">
+          <h1>8. GDPR & Data Protection Compliance</h1>
+          <div class="contents">
+            <p>StopReg is committed to responsible data processing and supports applicable data protection requirements, including the General Data Protection Regulation (GDPR) where applicable. Our approach includes:</p>
+            <p><strong>Data Minimization:</strong> We aim to collect and process only information reasonably necessary to provide our services.</p>
+            <p><strong>Domain-Only API:</strong> Customers can use the Domain API when they prefer not to transmit complete email addresses to StopReg.</p>
+            <p><strong>Secure Processing:</strong> StopReg uses reasonable technical and organizational safeguards, including encryption, secure API access, and access controls, to protect information processed through our services.</p>
+          </div>
+        </div>
+
+        <div class="privacy-section">
+          <h1>9. Sharing and Disclosure</h1>
           <div class="contents">
             <p>We do not sell, rent, or share your data with third parties for marketing purposes.</p>
-            <br>
-            <p>Data may be shared only:<br>
-              With payment processors to complete transactions<br>
-              As required by law or to protect legal rights<br>
-              With trusted service providers under strict confidentiality agreements</p>
+            <p>Data may be shared only when reasonably necessary, including:</p>
+            <ul>
+              <li>With payment processors to complete transactions</li>
+              <li>With service providers supporting hosting, infrastructure, security, analytics, email delivery, or customer support</li>
+              <li>As required by applicable law or valid legal process</li>
+              <li>To protect the legal rights, security, property, or safety of StopReg, our users, or others</li>
+            </ul>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Security Measures</h1>
+          <h1>10. Your Privacy Rights</h1>
           <div class="contents">
-            <p>Stopreg.com implements technical and organizational measures to safeguard your data:<br>
-              Encrypted transmission of API requests<br>
-              Secure storage for account-related data only<br>
-              Access control: Only authorized personnel may process data<br>
-              Regular audits of security practices</p>
+            <p>Depending on applicable law, you may have the right to:</p>
+            <ul>
+              <li>Request deletion of your account or personal data</li>
+              <li>Access information we hold about your account</li>
+              <li>Request correction of inaccurate account information</li>
+              <li>Request information about how your personal data is processed</li>
+            </ul>
+            <p>Privacy requests can be submitted to: <a href="mailto:support@stopreg.com">support@stopreg.com</a></p>
+            <p>We may request information necessary to verify the identity of the requester before processing certain requests.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Your Privacy Rights</h1>
+          <h1>11. Cookies and Tracking</h1>
           <div class="contents">
-            <p>As a user, you have the right to:<br>
-              Request deletion of your account or personal data<br>
-              Access information we hold about your account<br>
-              Request corrections to your account data<br>
-              Withdraw consent for processing account information</p>
-            <br>
-            <p>Requests can be submitted to <a href="mailto:support@stopreg.com">support@stopreg.com</a></p>
+            <p>StopReg uses limited cookies and similar technologies necessary for website functionality, authentication, security, and analytics.</p>
+            <p>Cookies are not used to sell personal information or to track personal data for third-party marketing purposes.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Cookies and Tracking</h1>
+          <h1>12. Data Security</h1>
           <div class="contents">
-            <p>Stopreg.com uses minimal cookies necessary for website functionality and analytics. Cookies are not used
-              for tracking personal data for marketing purposes.</p>
+            <p>StopReg uses reasonable technical and organizational measures designed to protect information against unauthorized access, loss, misuse, alteration, or disclosure.</p>
+            <p>These measures may include encryption, secure API access, authentication controls, access restrictions, and other appropriate security practices.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Third-Party Links</h1>
+          <h1>13. Third-Party Links</h1>
           <div class="contents">
-            <p>Our website may include links to third-party services. Stopreg.com is not responsible for the privacy
-              practices of external websites.</p>
+            <p>The StopReg website may contain links to third-party websites or services.</p>
+            <p>StopReg is not responsible for the privacy practices, content, security, or policies of external websites. We recommend reviewing the privacy policy of any third-party website before providing personal information.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Changes to This Privacy Policy</h1>
+          <h1>14. Rate Limits</h1>
           <div class="contents">
-            <p>We may update this Privacy Policy from time to time. Updates will be posted on this page with the
-              effective date. Continued use of Stopreg.com constitutes acceptance of the updated Privacy Policy.</p>
+            <p>API rate limits depend on the customer's subscription plan:</p>
+            <ul>
+              <li>Free trial: Up to 20 requests per minute</li>
+              <li>Paid plans: Up to 5 requests per second</li>
+            </ul>
+            <p>Requests exceeding the applicable rate limit may be temporarily rejected until the relevant rate-limit period resets.</p>
           </div>
         </div>
 
         <div class="privacy-section">
-          <h1>Contact Us</h1>
+          <h1>15. Changes to This Privacy Policy</h1>
           <div class="contents">
-            <p>For questions, concerns, or requests regarding your privacy and data processing:<br>
-              Email: <a href="mailto:support@stopreg.com">support@stopreg.com</a><br>
-              Website: <a href="https://stopreg.com">https://stopreg.com</a></p>
+            <p>We may update this Privacy Policy from time to time to reflect changes to our services, technology, business practices, or applicable legal requirements.</p>
+            <p>Updates will be posted on this page with a revised Last Updated date.</p>
+          </div>
+        </div>
+
+        <div class="privacy-section">
+          <h1>16. Contact Us</h1>
+          <div class="contents">
+            <p>For questions, concerns, or requests regarding your privacy or how StopReg processes information:</p>
+            <p>Email: <a href="mailto:support@stopreg.com">support@stopreg.com</a><br>
+              Website: <a href="https://stopreg.com">StopReg.com</a></p>
           </div>
         </div>
       </section>
