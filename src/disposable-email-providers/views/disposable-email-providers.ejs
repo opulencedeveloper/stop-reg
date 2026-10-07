@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StopReg Programmatic SEO Directory</title>
+  <meta name="description"
+    content="Explore email providers, disposable email domains, domain intelligence and subdomain data with StopReg.">
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://salesiq.zohopublic.com" />
+  <link rel="dns-prefetch" href="https://salesiq.zohopublic.com" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css" />
+
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="/assets/fonts/PlusJakartaSans-Regular.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous" />
+  <link rel="preload" href="/assets/fonts/PlusJakartaSans-Bold.woff2" as="font" type="font/woff2"
+    crossorigin="anonymous" />
+  <link href="/assets/css/fonts.css" rel="stylesheet" />
+  <link href="/assets/css/variables.css" rel="stylesheet" />
+  <link href="/assets/css/styles.css" rel="stylesheet" />
+  <link href="/assets/css/landing/header.css" rel="stylesheet" />
+  <link href="/assets/css/landing/index.css" rel="stylesheet" />
+  <link href="/assets/css/dashboard/domains.css" rel="stylesheet" />
+  <link href="/assets/css/entrance-overlay.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/disposable-email-providers.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Mobile Navigation Start -->
+  <div class="nav-menu">
+    <div class="nav-menu-sect-one">
+      <a href="/" class="land-logo" aria-label="StopReg Home">
+        <img src="/assets/logo/stopreg-logo.svg" alt="StopReg - Block Disposable Email Addresses" />
+      </a>
+      <div class="nav-icon2-mobile active">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="mobile-nav-items">
+      <a href="/#what-stopreg-check">Feature</a>
+      <a href="/#api">API</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#fags">FAQs</a>
+      <a href="/documentation.html">Documentation</a>
+    </div>
+    <div class="mobile-nav-btns">
+      <a href="/sign-in.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Log In</a>
+      <a href="/sign-up.html" style="text-decoration:none; flex:1;" class="mobile-nav-btn-link">Create an Account</a>
+    </div>
+  </div>
+  <!-- Mobile Navigation End -->
+
+  <!-- Header Start -->
+  <header class="main-head-cont">
+    <div class="main-head-wrapper box animation6">
+      <a href="/" class="land-logo" aria-label="StopReg Home">
+        <img src="/assets/logo/stopreg-logo.svg" alt="StopReg - Block Disposable Email Addresses" />
+      </a>
+      <nav class="nav-wrapper">
+        <a href="/#what-stopreg-check">Feature</a>
+        <a href="/#api">API</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#fags">FAQs</a>
+        <a href="/documentation.html">Documentation</a>
+      </nav>
+      <div class="auth-wrapper">
+        <a href="/sign-in.html" class="auth-btn-link">Log In</a>
+        <a href="/sign-up.html" class="auth-btn-link">Create an Account</a>
+      </div>
+
+      <div class="nav-icon2">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  <!-- Header End -->
+
+  <main class="container">
+
+    <!-- TIER 1 -->
+    <section id="providers"
+      class="page <%= (typeof activeView !== 'undefined' && activeView === 'providers') ? 'active' : '' %>">
+      <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><span>Providers</span>
+      </div>
+      <div class="hero">
+        <span class="eyebrow">TIER 1 · PROVIDER DIRECTORY</span>
+        <h1>Disposable Email Providers</h1>
+        <p>Explore disposable and temporary email providers and view the domains associated with each provider. Open a
+          provider to explore its domain portfolio.</p>
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <div class="controls">
+
+            <div class="viewtoggle"><button class="active"
+                onclick="setView('providers','table',this)">Table</button><button
+                onclick="setView('providers','grid',this)">Grid</button></div>
+          </div>
+        </div>
+
+        <div id="providers-table" class="tableview">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>Type</th>
+                  <th>Domains</th>
+                  <th>Samples</th>
+                  <th>Updated</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (typeof providers !=='undefined' && providers && providers.length> 0) { %>
+                  <% providers.forEach(function(item) { %>
+                    <tr data-search="<%= (item.provider || '').toLowerCase() %>">
+                      <td><a href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>">
+                          <div class="primarytext">
+                            <%= item.provider %>
+                          </div>
+                          <div class="subtext">Disposable email provider</div>
+                        </a></td>
+                      <td><span class="badge red">
+                          <%= item.type || 'Disposable' %>
+                        </span></td>
+                      <td>
+                        <%= item.domainsCount || 1 %>
+                      </td>
+                      <td>
+                        <%= (item.sampleDomains && item.sampleDomains.length) ? item.sampleDomains.slice(0,
+                          2).join(', ') : ' -' %>
+                      </td>
+                      <td>
+                        <%= item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : 'Active' %>
+                      </td>
+                      <td><a class="arrow"
+                          href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>">View
+                          →</a></td>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">No disposable
+                            providers found.</td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="providers-grid" class="gridview hidden">
+          <% if (typeof providers !=='undefined' && providers && providers.length> 0) { %>
+            <% providers.forEach(function(item) { %>
+              <a class="itemcard" href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>"
+                data-search="<%= (item.provider || '').toLowerCase() %>">
+                <div class="itemtop">
+                  <div class="itemicon">
+                    <%= (item.provider || 'D' )[0].toUpperCase() %>
+                  </div>
+                  <span class="badge red">
+                    <%= item.type || 'Disposable' %>
+                  </span>
+                </div>
+                <h3>
+                  <%= item.provider %>
+                </h3>
+                <p>Temporary email provider with <%= item.domainsCount || 1 %> associated <%= (item.domainsCount===1)
+                      ? 'domain' : 'domains' %>.</p>
+                <div class="itemmeta">
+                  <span>
+                    <%= item.domainsCount || 1 %>
+                      <%= (item.domainsCount===1) ? 'domain' : 'domains' %>
+                  </span>
+                  <b class="arrow">View →</b>
+                </div>
+              </a>
+              <% }); %>
+                <% } else { %>
+                  <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No disposable
+                    providers found.</div>
+                  <% } %>
+        </div>
+        <div class="pagination">
+          <span class="muted">
+            <% if (typeof pagination !=='undefined' && pagination && pagination.total> 0) { %>
+              Showing <%= ((pagination.page - 1) * pagination.limit) + 1 %>–<%= Math.min(pagination.page *
+                  pagination.limit, pagination.total) %> of <%= pagination.total.toLocaleString() %> disposable
+                    providers
+                    <% } else { %>
+                      Showing 0 disposable providers
+                      <% } %>
+          </span>
+          <div class="pages">
+            <% if (typeof pagination !=='undefined' && pagination && pagination.page> 1) { %>
+              <button
+                data-href="/disposable-email-providers?page=<%= pagination.page - 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
+                onclick="window.location.href=this.dataset.href">Previous</button>
+              <% } else { %>
+                <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
+                <% } %>
+                  <% if (typeof pagination !=='undefined' && pagination && pagination.page < pagination.totalPages) { %>
+                    <button
+                      data-href="/disposable-email-providers?page=<%= pagination.page + 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
+                      onclick="window.location.href=this.dataset.href">Next</button>
+                    <% } else { %>
+                      <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
+                      <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <h2>Find disposable email providers before signup</h2>
+        <p>StopReg maps disposable and temporary email providers to their associated domains, helping you identify
+          temporary email infrastructure before it becomes a source of signup abuse.</p><a class="btn"
+          href="/documentation">Explore API</a>
+      </div>
+
+    </section>
+
+    <!-- TIER 2 -->
+    <section id="domains"
+      class="page <%= (typeof activeView !== 'undefined' && activeView === 'domains') ? 'active' : '' %>">
+      <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><a
+          href="/disposable-email-providers">Providers</a>
+        <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %><span>/</span><span>
+            <%= selectedProvider %>
+          </span><span>/ Domains</span>
+          <% } %>
+      </div>
+      <div class="hero providerhero">
+        <div><span class="eyebrow">TIER 2 · PROVIDER DOMAINS</span>
+          <h1>
+            <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? (selectedProvider + ' Domains' )
+              : 'Provider Domains' %>
+          </h1>
+          <p>
+            <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? `Browse the domains associated with
+              ${selectedProvider} and open detailed StopReg intelligence for each domain.`
+              : 'Browse domains associated with disposable email providers.' %>
+          </p>
+        </div>
+
+      </div>
+      <div class="card">
+        <div class="toolbar">
+          <div class="controls">
+            <div class="subdomain-count"><span>Total domains</span><strong>
+                <%= (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.total) ?
+                  providerDomainsPagination.total.toLocaleString() : (typeof providerDomains !=='undefined' ?
+                  providerDomains.length : 0) %>
+              </strong></div>
+            <div class="viewtoggle"><button class="active"
+                onclick="setView('domains','table',this)">Table</button><button
+                onclick="setView('domains','grid',this)">Grid</button></div>
+          </div>
+        </div>
+        <div id="domains-table" class="tableview">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Subdomains</th>
+                  <th>MX</th>
+                  <th>Provider</th>
+                  <th>Last checked</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length> 0) { %>
+                  <% providerDomains.forEach(function(d) { %>
+                    <tr data-search="<%= (d.domain || '').toLowerCase() %>">
+                      <td><a href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>">
+                          <div class="primarytext">
+                            <%= d.domain %>
+                          </div>
+                          <div class="subtext">Disposable domain</div>
+                        </a></td>
+                      <td>
+                        <%= (typeof d.subdomainsCount !=='undefined' && d.subdomainsCount !==null && d.subdomainsCount
+                          !=='null' ) ? d.subdomainsCount : 0 %>
+                      </td>
+                      <td><span class="badge gray mx-status" data-mx-domain="<%= d.domain %>">Checking…</span></td>
+                      <td>
+                        <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? selectedProvider : 'Provider'
+                          %>
+                      </td>
+                      <td>
+                        <%= d.createdAt ? new Date(d.createdAt).toLocaleDateString() : 'Active' %>
+                      </td>
+                      <td><a class="arrow"
+                          href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>">View
+                          →</a></td>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="6" style="text-align:center;padding:30px;color:var(--muted)">No domains
+                            registered for this provider yet.</td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div id="domains-grid" class="gridview hidden">
+          <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length> 0) { %>
+            <% providerDomains.forEach(function(d) { %>
+              <a class="itemcard"
+                href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"
+                data-search="<%= (d.domain || '').toLowerCase() %>">
+                <div class="itemtop">
+                  <div><span class="eyebrow">DOMAIN</span>
+                    <h3 style="margin-top:8px">
+                      <%= d.domain %>
+                    </h3>
+                  </div>
+                  <span class="badge red">Disposable</span>
+                </div>
+                <p>Disposable email domain associated with <%= (typeof selectedProvider !=='undefined' &&
+                    selectedProvider) ? selectedProvider : 'the provider' %>.</p>
+                <div class="itemmeta">
+                  <span>
+                    <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? selectedProvider : 'Provider' %>
+                  </span>
+                  <b class="arrow">Details →</b>
+                </div>
+              </a>
+              <% }); %>
+                <% } else { %>
+                  <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No domains found.
+                  </div>
+                  <% } %>
+        </div>
+        <div class="pagination">
+          <span class="muted">
+            <% if (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.total> 0) { %>
+              Showing <%= ((providerDomainsPagination.page - 1) * providerDomainsPagination.limit) + 1 %>–<%=
+                  Math.min(providerDomainsPagination.page * providerDomainsPagination.limit,
+                  providerDomainsPagination.total) %> of <%= providerDomainsPagination.total.toLocaleString() %> domains
+                    <% } else { %>
+                      Showing 0 domains
+                      <% } %>
+          </span>
+          <div class="pages">
+            <% if (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.page> 1) { %>
+              <button
+                data-href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page - 1 %>"
+                onclick="window.location.href=this.dataset.href">Previous</button>
+              <% } else { %>
+                <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
+                <% } %>
+                  <% if (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.page <
+                    providerDomainsPagination.totalPages) { %>
+                    <button
+                      data-href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page + 1 %>"
+                      onclick="window.location.href=this.dataset.href">Next</button>
+                    <% } else { %>
+                      <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
+                      <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>About <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? selectedProvider : 'provider' %>
+            domains</h2>
+        <p>This directory contains domains associated with the provider. Each domain has an individual StopReg page
+          containing classification signals, mail infrastructure information and discovered subdomains.</p>
+      </div>
+
+      <div class="cta get-started">
+        <h2>Get Started with 200 Free Requests Every Month</h2>
+        <p>Start protecting your signup forms with StopReg email intelligence. Test disposable, relay, alias and other
+          risky email addresses before creating accounts.</p>
+        <a class="btn" href="/sign-up.html">Get Started Free →</a>
+      </div>
+
+    </section>
+
+    <!-- TIER 3 -->
+    <section id="domain"
+      class="page <%= (typeof activeView !== 'undefined' && activeView === 'domain') ? 'active' : '' %>">
+      <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><a
+          href="/disposable-email-providers">Providers</a>
+        <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %><span>/</span><a
+            href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">
+            <%= selectedProvider %>
+          </a>
+          <% } %>
+            <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><span>/</span><span>
+                <%= selectedDomain %>
+              </span>
+              <% } %>
+      </div>
+      <div class="hero domainhero">
+        <div><span class="eyebrow">TIER 3 · DOMAIN INTELLIGENCE</span>
+          <h1>
+            <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'Domain Intelligence' %>
+          </h1>
+          <p>
+            <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? `Complete StopReg analysis for
+              ${selectedDomain}, including DNS, mail infrastructure and classification.`
+              : 'Select a domain to inspect StopReg intelligence.' %>
+          </p>
+        </div>
+      </div>
+
+      <div class="card domain-overview">
+        <div class="eyebrow">DOMAIN OVERVIEW</div>
+        <h2 style="margin-top:9px">About <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+            : 'Domain' %>
+        </h2>
+        <p>
+          <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><strong>
+              <%= selectedDomain %>
+            </strong> is a disposable email domain<% if (typeof selectedProvider !=='undefined' && selectedProvider) {
+              %> associated with <strong>
+                <%= selectedProvider %>
+              </strong>
+              <% } %>. StopReg identifies <%= selectedDomain %> as a disposable email domain and provides information to
+                  help websites recognize and manage registrations using temporary email addresses.<% } else { %>No
+                    domain selected.<% } %>
+        </p>
+        <div class="overview-meta">
+          <div><span>Domain Age</span><strong>
+              <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.domain_age) ? new
+                Date(domainDetails.domain_age).toLocaleDateString() : 'N/A' %>
+            </strong></div>
+          <div><span>First Seen</span><strong>
+              <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.createdAt) ? new
+                Date(domainDetails.createdAt).toLocaleDateString() : 'N/A' %>
+            </strong></div>
+          <div><span>Last Seen</span><strong>
+              <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.updatedAt) ? new
+                Date(domainDetails.updatedAt).toLocaleDateString() : 'N/A' %>
+            </strong></div>
+          <div><span>Data Source</span><strong>
+              <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.data_source) ?
+                domainDetails.data_source : 'StopReg Database' %>
+            </strong></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardhead">
+          <div><span class="eyebrow">SUBDOMAIN DIRECTORY</span>
+            <h2 style="margin-top:9px">Subdomains of <%= (typeof selectedDomain !=='undefined' && selectedDomain) ?
+                selectedDomain : 'Domain' %>
+            </h2>
+            <p>Discovered subdomains associated with this root domain.</p>
+          </div><span class="badge gray">0 discovered</span>
+        </div>
+        <div class="subdomain-toolbar">
+          <div class="subdomain-count"><span>Total subdomains</span><strong>0</strong></div>
+          <div class="controls">
+            <div class="viewtoggle"><button class="active"
+                onclick="setView('subdomains','table',this)">Table</button><button
+                onclick="setView('subdomains','grid',this)">Grid</button></div>
+          </div>
+        </div>
+
+        <div id="subdomains-table" class="tableview">
+          <div class="tablewrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Subdomain</th>
+                  <th>Root Domain</th>
+                  <th>Resolved IP</th>
+                  <th>Last checked</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" style="text-align:center;padding:30px;color:var(--muted)">No subdomains discovered for
+                    <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="subdomains-grid" class="gridview hidden">
+          <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered.
+          </div>
+        </div>
+        <div class="pagination"><span class="muted">Showing 0 subdomains</span>
+          <div class="pages"><button disabled style="opacity:0.5;cursor:not-allowed">Previous</button><button disabled
+              style="opacity:0.5;cursor:not-allowed">Next</button></div>
+        </div>
+      </div>
+
+      <div class="tier3-conversion-layout">
+        <div class="tier3-validation-column">
+          <div class="card api-response-card">
+            <div class="cardhead">
+              <div><span class="eyebrow">API RESPONSE</span>
+                <h2 style="margin-top:9px">Domain validation result</h2>
+                <p>The same intelligence shown on this page can be returned through the StopReg API.</p>
+              </div>
+              <button class="btn copy-json" onclick="copyDomainJson(this)" aria-label="Copy JSON response">⧉ Copy
+                JSON</button>
+            </div>
+            <pre id="domain-json" class="code"><code>{
+  "input": {
+    "suggestion": <%= (typeof classification !== 'undefined' && classification && classification.suggestion) ? JSON.stringify(classification.suggestion) : 'null' %>,
+    "domain": "<%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>"
+  },
+  "domain": {
+    "root": "<%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>",
+    "is_subdomain": false,
+    "email_provider": "<%= (typeof selectedProvider !== 'undefined' && selectedProvider) ? selectedProvider : ((typeof domainDetails !== 'undefined' && domainDetails && domainDetails.provider) ? domainDetails.provider : 'unknown') %>"
+  },
+  "mail_server": {
+    "mx_found": <%= (typeof dnsData !== 'undefined' && dnsData && dnsData.mxRecords && dnsData.mxRecords.length > 0) ? 'true' : 'false' %>,
+    "mx_records": <%- JSON.stringify((typeof dnsData !== 'undefined' && dnsData && dnsData.mxRecords) ? dnsData.mxRecords : [], null, 4) %>,
+    "mx_provider": []
+  },
+  "classification": {
+    "is_disposable": <%= (typeof classification !== 'undefined' && classification && classification.is_disposable === true) ? 'true' : 'false' %>,
+    "is_relay": <%= (typeof classification !== 'undefined' && classification && classification.is_relay === true) ? 'true' : 'false' %>,
+    "is_private": <%= (typeof classification !== 'undefined' && classification && classification.is_private === true) ? 'true' : 'false' %>,
+    "is_public": <%= (typeof classification !== 'undefined' && classification && classification.is_public === true) ? 'true' : 'false' %>,
+    "is_role_based": <%= (typeof classification !== 'undefined' && classification && classification.is_role_based === true) ? 'true' : 'false' %>,
+    "is_alias": <%= (typeof classification !== 'undefined' && classification && classification.is_alias === true) ? 'true' : 'false' %>,
+    "alias_method": <%= (typeof classification !== 'undefined' && classification && classification.alias_method) ? JSON.stringify(classification.alias_method) : 'null' %>,
+    "is_edu": <%= (typeof classification !== 'undefined' && classification && classification.is_edu === true) ? 'true' : 'false' %>,
+    "is_isp": <%= (typeof classification !== 'undefined' && classification && classification.is_isp === true) ? 'true' : 'false' %>,
+    "is_free_subdomain": <%= (typeof classification !== 'undefined' && classification && classification.is_free_subdomain === true) ? 'true' : 'false' %>
+  },
+  "list_match": {
+    "blocklisted": "Login to configure the blocklist",
+    "block_source": null,
+    "allowlisted": "Login to configure the allowlist"
+  },
+  "policy": {
+    "action": null,
+    "reason_code": null,
+    "reason": null,
+    "risk": null,
+    "message": "Login to configure allow, warn, and block actions"
+  }
+}</code></pre>
+          </div>
+        </div>
+        <div class="tier3-promo-column">
+          <div class="card quick-actions-sample">
+            <h2>QUICK ACTIONS</h2>
+            <div class="quick-action-list">
+              <a class="quick-action-row" href="/check-disposable-email.html">
+                <span class="quick-action-icon">✉</span>
+                <span class="quick-action-copy"><strong>Check another email or domain</strong><small>Start a new
+                    lookup</small></span>
+              </a>
+              <a class="quick-action-row" href="/documentation">
+                <span class="quick-action-icon">↗</span>
+                <span class="quick-action-copy"><strong>API Documentation</strong><small>Explore our API
+                    docs</small></span>
+              </a>
+              <a class="quick-action-row" href="/submit-data-correction">
+                <span class="quick-action-icon">▤</span>
+                <span class="quick-action-copy"><strong>Report incorrect data</strong><small>Help us improve our
+                    database</small></span>
+              </a>
+            </div>
+          </div>
+          <div class="card api-access-card">
+            <div class="api-access-copy">
+              <h2>API Access</h2>
+              <div class="api-subheading">Integrate real-time disposable email detection into your application.</div>
+            </div>
+            <div class="api-features">
+              <div class="api-feature"><span class="feature-check">✓</span><span>Real-time results</span></div>
+              <div class="api-feature"><span class="feature-check">✓</span><span>200+ free requests/month</span></div>
+              <div class="api-feature"><span class="feature-check">✓</span><span>99.9% uptime</span></div>
+            </div>
+            <a class="api-doc-btn" href="/documentation">View API Documentation</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card dns-records-card">
+        <h2 style="font-size:18px;margin-bottom:10px">DNS &amp; MAIL RECORDS</h2>
+        <div class="dns-tabs">
+          <span class="active" onclick="setDnsTab('mx', this)">MX Records</span>
+          <span onclick="setDnsTab('spf', this)">SPF</span>
+          <span onclick="setDnsTab('dmarc', this)">DMARC</span>
+          <span onclick="setDnsTab('dkim', this)">DKIM</span>
+          <span onclick="setDnsTab('a', this)">A/AAAA</span>
+          <span onclick="setDnsTab('ns', this)">NS</span>
+          <span onclick="setDnsTab('soa', this)">SOA</span>
+          <span onclick="setDnsTab('txt', this)">TXT</span>
+          <span onclick="setDnsTab('dnssec', this)">DNSSEC</span>
+        </div>
+        <div class="dns-scroll">
+          <table class="dns-table">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Host</th>
+                <th>Mail Server</th>
+                <th>TTL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.mxRecords && dnsData.mxRecords.length> 0) { %>
+                <% dnsData.mxRecords.forEach(function(mx) { %>
+                  <tr>
+                    <td>
+                      <%= mx.priority || 10 %>
+                    </td>
+                    <td>
+                      <%= mx.host || mx.exchange || 'N/A' %>
+                    </td>
+                    <td>
+                      <%= mx.exchange || mx.host || 'N/A' %>
+                    </td>
+                    <td>300</td>
+                  </tr>
+                  <% }); %>
+                    <% } else { %>
+                      <tr>
+                        <td colspan="4" style="text-align:center;padding:25px;color:var(--muted)">No MX records found
+                          for <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                            : 'this domain' %>.</td>
+                      </tr>
+                      <% } %>
+            </tbody>
+          </table>
+        </div>
+        <div class="dns-note"><span class="dns-info">!</span><span>MX records indicate that this domain can receive
+            emails</span></div>
+
+        <div class="dns-records-grid" style="display:none">
+          <!-- SPF Card -->
+          <div class="dns-record-card" data-record-type="spf" style="display:none">
+            <h4 class="dns-record-title">SPF RECORD</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.spfRecords && dnsData.spfRecords.length> 0) {
+                %>
+                <pre class="dns-record-value"><%= dnsData.spfRecords.join('\n') %></pre>
+                <div class="dns-record-status"><span class="dns-label">Status</span><span
+                    class="dns-status-valid">Valid</span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">No SPF record found</p>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-not-found">Not Found</span></div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- DMARC Card -->
+          <div class="dns-record-card" data-record-type="dmarc" style="display:none">
+            <h4 class="dns-record-title">DMARC RECORD</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.dmarcRecords && dnsData.dmarcRecords.length> 0)
+                { %>
+                <pre class="dns-record-value"><%= dnsData.dmarcRecords.join('\n') %></pre>
+                <div class="dns-record-status"><span class="dns-label">Policy</span><span
+                    class="dns-status-neutral">Configured</span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">No DMARC record found</p>
+                  <div class="dns-record-status"><span class="dns-label">Policy</span><span
+                      class="dns-status-not-found">Not Found</span></div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- DKIM Card -->
+          <div class="dns-record-card" data-record-type="dkim" style="display:none">
+            <h4 class="dns-record-title">DKIM STATUS</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.dkimRecords && dnsData.dkimRecords.length> 0) {
+                %>
+                <pre class="dns-record-value"><%= dnsData.dkimRecords.join('\n') %></pre>
+                <div class="dns-record-status"><span class="dns-label">Selector</span><span
+                    class="dns-status-valid">Found</span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">No DKIM records found</p>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-not-found">Not Found</span></div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- A/AAAA Card -->
+          <div class="dns-record-card" data-record-type="a" style="display:none">
+            <h4 class="dns-record-title">A / AAAA RECORDS</h4>
+            <div class="dns-record-content">
+              <% var ips=[]; if (typeof dnsData !=='undefined' && dnsData) { if (dnsData.aRecords &&
+                dnsData.aRecords.length) ips=ips.concat(dnsData.aRecords); if (dnsData.aaaaRecords &&
+                dnsData.aaaaRecords.length) ips=ips.concat(dnsData.aaaaRecords); } %>
+                <% if (ips.length> 0) { %>
+                  <pre class="dns-record-value"><%= ips.join('\n') %></pre>
+                  <div class="dns-record-status"><span class="dns-label">Count</span><span class="dns-status-valid">
+                      <%= ips.length %> IP Address<%= ips.length> 1 ? 'es' : '' %>
+                    </span></div>
+                  <% } else { %>
+                    <p class="dns-record-value" style="color:#999">No A or AAAA records found</p>
+                    <div class="dns-record-status"><span class="dns-label">Status</span><span
+                        class="dns-status-not-found">Not Found</span></div>
+                    <% } %>
+            </div>
+          </div>
+
+          <!-- NS Card -->
+          <div class="dns-record-card" data-record-type="ns" style="display:none">
+            <h4 class="dns-record-title">NAMESERVER (NS) RECORDS</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.nsRecords && dnsData.nsRecords.length> 0) { %>
+                <pre class="dns-record-value"><%= dnsData.nsRecords.join('\n') %></pre>
+                <div class="dns-record-status"><span class="dns-label">Count</span><span class="dns-status-valid">
+                    <%= dnsData.nsRecords.length %> Nameserver<%= dnsData.nsRecords.length> 1 ? 's' : '' %>
+                  </span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">No NS records found</p>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-not-found">Not Found</span></div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- SOA Card -->
+          <div class="dns-record-card" data-record-type="soa" style="display:none">
+            <h4 class="dns-record-title">START OF AUTHORITY (SOA) RECORD</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.soaRecords && dnsData.soaRecords.length> 0) {
+                %>
+                <% var soa=dnsData.soaRecords[0]; %>
+                  <pre class="dns-record-value">Primary NS: <%= (soa && soa.nsname) || 'N/A' %>
+Hostmaster: <%= (soa && soa.hostmaster) || 'N/A' %>
+Serial: <%= (soa && soa.serial) || 'N/A' %>
+Refresh: <%= (soa && soa.refresh) || 'N/A' %>
+Retry: <%= (soa && soa.retry) || 'N/A' %>
+Expire: <%= (soa && soa.expire) || 'N/A' %>
+Min TTL: <%= (soa && (soa.minttl || soa.minimum)) || 'N/A' %></pre>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-valid">Found</span></div>
+                  <% } else { %>
+                    <p class="dns-record-value" style="color:#999">No SOA record found</p>
+                    <div class="dns-record-status"><span class="dns-label">Status</span><span
+                        class="dns-status-not-found">Not Found</span></div>
+                    <% } %>
+            </div>
+          </div>
+
+          <!-- TXT Card -->
+          <div class="dns-record-card" data-record-type="txt" style="display:none">
+            <h4 class="dns-record-title">TXT RECORDS</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.txtRecords && dnsData.txtRecords.length> 0) {
+                %>
+                <pre
+                  class="dns-record-value"><%= (Array.isArray(dnsData.txtRecords[0]) ? dnsData.txtRecords.map(function(r) { return Array.isArray(r) ? r.join(' ') : r; }) : dnsData.txtRecords).join('\n\n') %></pre>
+                <div class="dns-record-status"><span class="dns-label">Count</span><span class="dns-status-valid">
+                    <%= dnsData.txtRecords.length %> Record<%= dnsData.txtRecords.length> 1 ? 's' : '' %>
+                  </span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">No TXT records found</p>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-not-found">Not Found</span></div>
+                  <% } %>
+            </div>
+          </div>
+
+          <!-- DNSSEC Card -->
+          <div class="dns-record-card" data-record-type="dnssec" style="display:none">
+            <h4 class="dns-record-title">DNSSEC STATUS</h4>
+            <div class="dns-record-content">
+              <% if (typeof dnsData !=='undefined' && dnsData && dnsData.dnssecValid) { %>
+                <p class="dns-record-value">DNSSEC is cryptographically signed and valid for this domain.</p>
+                <div class="dns-record-status"><span class="dns-label">Status</span><span
+                    class="dns-status-valid">Enabled</span></div>
+                <% } else { %>
+                  <p class="dns-record-value" style="color:#999">DNSSEC is not configured or signed for this domain.</p>
+                  <div class="dns-record-status"><span class="dns-label">Status</span><span
+                      class="dns-status-not-found">Not Enabled</span></div>
+                  <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tier3-provider-checker-row">
+        <div class="tier3-email-checker-card">
+          <h2>Check any email address or domain</h2>
+          <p>Verify whether an email address is disposable, temporary or risky.</p>
+          <a class="btn" href="/check-disposable-email">Go to Disposable Email Checker</a>
+        </div>
+
+        <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
+          <div class="tier3-provider-side">
+            <div class="card">
+              <h2 style="margin-top:0">
+                <%= selectedProvider %>
+              </h2>
+              <p>This root domain is associated with <%= selectedProvider %>.</p>
+              <a class="btn"
+                href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View Provider
+                →</a>
+            </div>
+          </div>
+          <% } %>
+      </div>
+
+      <div class="tier3-cta-related-row">
+        <div class="cta">
+          <h2>Block disposable emails before signup</h2>
+          <p>Use StopReg to classify email addresses in real time and prevent disposable, relay, alias and other
+            unwanted addresses from entering your application.</p><a class="btn" href="#api">View API Documentation</a>
+        </div>
+
+        <div class="card">
+          <div class="cardhead">
+            <div>
+              <span class="eyebrow">RELATED DOMAINS</span>
+              <h2 style="margin-top:9px">Related domains</h2>
+              <p>Other domains associated with <%= (typeof selectedProvider !=='undefined' && selectedProvider) ?
+                  selectedProvider : 'disposable email infrastructure' %>.</p>
+            </div>
+          </div>
+          <div class="related">
+            <% const otherDomains=(typeof providerDomains !=='undefined' && providerDomains) ?
+              providerDomains.filter(function(d) { return d.domain !==selectedDomain; }).slice(0, 6) : []; %>
+              <% if (otherDomains.length> 0) { %>
+                <% otherDomains.forEach(function(d) { %>
+                  <a href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"><strong>
+                      <%= d.domain %>
+                    </strong></a>
+                  <% }); %>
+                    <% } else { %>
+                      <span class="muted" style="padding:10px;">No other domains registered for this provider
+                        yet.</span>
+                      <% } %>
+          </div>
+          <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
+            <a class="related-view-all"
+              href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View all domains
+              from this provider →</a>
+            <% } %>
+        </div>
+      </div>
+
+      <div class="tier3-faq-footer">
+        <div class="tier3-faq">
+          <h2>Frequently Asked Questions About<br>
+            <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'Disposable Domains' %>
+          </h2>
+          <p>Your questions around disposable email, answered.</p>
+
+          <div class="tier3-faq-list">
+            <div class="tier3-faq-item">
+              <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                <span>1. Is <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                    : 'this domain' %> a disposable email domain?</span>
+                <span class="faq-arrow">⌄</span>
+              </button>
+              <div class="tier3-faq-answer">Yes. StopReg classifies <%= (typeof selectedDomain !=='undefined' &&
+                  selectedDomain) ? selectedDomain : 'this domain' %>
+                  <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %> (associated with <%=
+                      selectedProvider %>)<% } %> as a disposable email domain associated with temporary email
+                        infrastructure.</div>
+            </div>
+
+            <div class="tier3-faq-item">
+              <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                <span>2. What is <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                    : 'this domain' %> used for?</span>
+                <span class="faq-arrow">⌄</span>
+              </button>
+              <div class="tier3-faq-answer">The domain is used for temporary or disposable inboxes to receive emails
+                without revealing a primary personal address.</div>
+            </div>
+
+            <div class="tier3-faq-item">
+              <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                <span>3. Should I block <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                    : 'this domain' %> from my website?</span>
+                <span class="faq-arrow">⌄</span>
+              </button>
+              <div class="tier3-faq-answer">If your signup policy does not allow disposable email addresses or temporary
+                throwaway inboxes, you can block or flag registrations using this domain.</div>
+            </div>
+
+            <div class="tier3-faq-item">
+              <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                <span>4. How do I prevent signups from this domain?</span>
+                <span class="faq-arrow">⌄</span>
+              </button>
+              <div class="tier3-faq-answer">Use the StopReg API to verify email domains in real-time before account
+                creation and enforce your signup policies.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- API -->
+    <section id="api" class="page">
+      <div class="breadcrumb"><a href="#home">StopReg</a><span>/</span><span>API</span></div>
+      <div class="hero"><span class="eyebrow">DEVELOPER API</span>
+        <h1>Real-time email intelligence</h1>
+        <p>Classify disposable, relay, alias, role-based and other risky email addresses before creating accounts.</p>
+      </div>
+      <div class="card">
+        <h2>Example API response</h2>
+        <pre class="code"><code>{
+  "email": "user@example.com",
+  "classification": {
+    "is_disposable": true,
+    "is_relay": false,
+    "is_alias": false,
+    "is_role_based": false
+  },
+  "mail_server": {
+    "mx_found": true
+  }
+}</code></pre>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- Footer start -->
+  <footer class="land-foot">
+    <div class="land-foot-wrapp">
+      <div class="land-foot-wrapp-sct-one">
+        <!-- Column 1: Logo & Info -->
+        <div class="foot-col foot-col-brand">
+          <a href="/" class="foot-logo"><img src="/assets/logo/stopreg-footer-logo.svg" alt="StopReg"></a>
+          <p class="foot-desc">
+            Advanced email intelligence API built for developers who care about data quality and user privacy. Block
+            fake, disposable, and risky emails in real-time.
+          </p>
+        </div>
+
+        <div class="foot-links-group">
+          <!-- Column 2: Support -->
+          <div class="foot-col">
+            <h4 class="foot-hd">Support</h4>
+            <div class="foot-links">
+              <a href="https://status.stopreg.com/" target="_blank" class="foot-api-status">Status<span
+                  class="foot-api-status-dot"></span></a>
+              <a href="/contact.html" class="foot-link">Contact Us</a>
+              <a href="/documentation.html" class="foot-link">API Documentation</a>
+              <a href="/submit-data-correction.html" class="foot-link">Submit a data correction</a>
+            </div>
+          </div>
+
+          <!-- Column 3: Resources -->
+          <div class="foot-col">
+            <h4 class="foot-hd">Resources</h4>
+            <div class="foot-links">
+              <a href="/about.html" class="foot-link">About</a>
+              <a href="/blogs.html" class="foot-link">Blog</a>
+              <a href="/documentation.html" class="foot-link">Guides</a>
+              <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
+            </div>
+          </div>
+
+          <!-- Column 4: Legal -->
+          <div class="foot-col">
+            <h4 class="foot-hd">Legal</h4>
+            <div class="foot-links">
+              <a href="/privacy-policy.html" class="foot-link">Privacy Policy</a>
+              <a href="/terms.html" class="foot-link">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <section class="land-foot-wrapp-sct-two">
+        <p class="foot-copy">&copy; Stopreg</p>
+        <p class="foot-rights">All Rights Reserved.</p>
+      </section>
+    </div>
+  </footer>
+  <!-- Footer End -->
+
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/landing/index.js" defer></script>
+  <script src="/assets/js/landing/header.js" defer></script>
+  <!-- Zoho SalesIQ Live Chat Widget -->
+  <script>window.$zoho = window.$zoho || {}; $zoho.salesiq = $zoho.salesiq || { ready: function () { } }</script>
+  <script id="zsiqscript"
+    src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
+    defer></script>
+  <script src="/assets/js/disposable-email-providers.js" defer></script>
+  <script type="module" src="/assets/js/mx-status.js" defer></script>
+
+</body>
+
+</html>

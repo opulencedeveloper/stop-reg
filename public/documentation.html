@@ -247,17 +247,22 @@
               <h2>Getting Started with StopReg</h2>
               <h3>Email Intelligence for Signup, Fraud, and Abuse Prevention</h3>
               <p>
-                StopReg is an email intelligence API designed to help applications identify disposable, temporary, relay, alias, role-based, public email, edu, isp and private email addresses before they enter your system.
+                StopReg is an email intelligence API designed to help applications identify disposable, temporary,
+                relay, alias, role-based, public email, edu, isp and private email addresses before they enter your
+                system.
               </p>
               <p>
-                Use StopReg to evaluate email addresses and domains in real time, enforce your signup policies, and reduce unwanted registrations, trial abuse, and low-quality user data.
+                Use StopReg to evaluate email addresses and domains in real time, enforce your signup policies, and
+                reduce unwanted registrations, trial abuse, and low-quality user data.
               </p>
               <p>
-                The API returns structured classification and mail infrastructure data, allowing you to decide exactly how your application should handle each address.
+                The API returns structured classification and mail infrastructure data, allowing you to decide exactly
+                how your application should handle each address.
               </p>
 
               <h3>What You Can Detect</h3>
-              <p>StopReg goes beyond basic email syntax validation. Depending on the address and domain, the API can identify:</p>
+              <p>StopReg goes beyond basic email syntax validation. Depending on the address and domain, the API can
+                identify:</p>
               <ul>
                 <li>Disposable and temporary emails used for short-lived registrations</li>
                 <li>Relay addresses that forward messages through another service</li>
@@ -275,29 +280,38 @@
 
               <h3>Built for Real-Time Validation</h3>
               <p>
-                StopReg is designed for applications that need to make an email decision during a signup, checkout, free-trial registration, newsletter subscription, or other form submission.
+                StopReg is designed for applications that need to make an email decision during a signup, checkout,
+                free-trial registration, newsletter subscription, or other form submission.
               </p>
               <p>
-                A simple API request returns structured JSON that your application can use to determine whether an address should be accepted, flagged, or blocked.
+                A simple API request returns structured JSON that your application can use to determine whether an
+                address should be accepted, flagged, or blocked.
               </p>
 
               <h3>Flexible Enforcement</h3>
               <p>
-                StopReg does not force you to use a single blocking rule. You can build your own flexible enforcement policy around the classification data returned by the API.
+                StopReg does not force you to use a single blocking rule. You can build your own flexible enforcement
+                policy around the classification data returned by the API.
               </p>
               <p>
-                For example, you can block disposable addresses while continuing to accept relay, private, public, ISP, EDU, and role-based addresses. You can also combine multiple signals when your application requires stricter validation, such as blocking disposable, relay, and alias addresses while requiring the domain to have valid MX records.
+                For example, you can block disposable addresses while continuing to accept relay, private, public, ISP,
+                EDU, and role-based addresses. You can also combine multiple signals when your application requires
+                stricter validation, such as blocking disposable, relay, and alias addresses while requiring the domain
+                to have valid MX records.
               </p>
               <p>
-                This allows you to define validation rules based on your application's specific requirements rather than applying the same policy to every email address.
+                This allows you to define validation rules based on your application's specific requirements rather than
+                applying the same policy to every email address.
               </p>
 
               <h3>Simple Integration</h3>
               <p>
-                StopReg uses a REST API over HTTPS and supports API-token authentication. You can integrate it into virtually any backend or application stack using standard HTTP requests.
+                StopReg uses a REST API over HTTPS and supports API-token authentication. You can integrate it into
+                virtually any backend or application stack using standard HTTP requests.
               </p>
               <p>
-                Official libraries and examples are available for popular development environments, including Node.js and Laravel, with additional examples for JavaScript, Python, PHP, and cURL.
+                Official libraries and examples are available for popular development environments, including Node.js
+                and Laravel, with additional examples for JavaScript, Python, PHP, and cURL.
               </p>
 
               <h3>Get Started</h3>
@@ -307,22 +321,29 @@
                   <strong>Create your account:</strong> Sign up for a StopReg account and access your API dashboard.
                 </li>
                 <li>
-                  <strong>Get your API token:</strong> Generate an API token from your dashboard and keep it securely stored on your server.
+                  <strong>Get your API token:</strong> Generate an API token from your dashboard and keep it securely
+                  stored on your server.
                 </li>
                 <li>
-                  <strong>Choose an API endpoint:</strong> Use the Email Validation API to analyze individual email addresses or the Domain Validation API when you only need to evaluate a domain.
+                  <strong>Choose an API endpoint:</strong> Use the Email Validation API to analyze individual email
+                  addresses or the Domain Validation API when you only need to evaluate a domain.
                 </li>
                 <li>
-                  <strong>Send your request:</strong> Include your API token and the email address or domain you want to validate. StopReg returns a structured JSON response containing the available classification and validation signals.
+                  <strong>Send your request:</strong> Include your API token and the email address or domain you want to
+                  validate. StopReg returns a structured JSON response containing the available classification and
+                  validation signals.
                 </li>
                 <li>
-                  <strong>Apply your enforcement policy:</strong> Use the returned results to determine whether to allow, warn, or block an address based on your application's requirements.
+                  <strong>Apply your enforcement policy:</strong> Use the returned results to determine whether to
+                  allow, warn, or block an address based on your application's requirements.
                 </li>
               </ol>
 
               <h3>Example Use Case</h3>
               <p>
-                For a signup form, you can validate an email address before creating the account. Your application can then use StopReg's response to identify disposable, temporary, relay, alias, role-based, ISP, EDU, public, or other email classifications and apply your own validation rules.
+                For a signup form, you can validate an email address before creating the account. Your application can
+                then use StopReg's response to identify disposable, temporary, relay, alias, role-based, ISP, EDU,
+                public, or other email classifications and apply your own validation rules.
               </p>
 
               <h3>Key Features</h3>
@@ -331,7 +352,8 @@
                   <strong>Real-time Validation:</strong> Instant email checking with millisecond response times
                 </li>
                 <li>
-                  <strong>Extensive DEA Coverage:</strong> Detect disposable emails using our large and constantly growing domain database
+                  <strong>Extensive DEA Coverage:</strong> Detect disposable emails using our large and constantly
+                  growing domain database
                 </li>
                 <li>
                   <strong>Privacy-Focused:</strong> We don't store full email addresses - only check the domain part
@@ -340,27 +362,34 @@
                   <strong>Easy Integration:</strong> Simple REST API that works with any programming language
                 </li>
                 <li>
-                  <strong>Whitelisting Support:</strong> Whitelist trusted domains to ensure legitimate users are never blocked
+                  <strong>Whitelisting Support:</strong> Whitelist trusted domains to ensure legitimate users are never
+                  blocked
                 </li>
                 <li>
-                  <strong>Blacklisting Support:</strong> Blacklist unwanted domains to prevent fake signups and low-quality registrations
+                  <strong>Blacklisting Support:</strong> Blacklist unwanted domains to prevent fake signups and
+                  low-quality registrations
                 </li>
                 <li>
-                  <strong>Role, Alias & Relay Detection:</strong> Identify role-based, alias, and relay email addresses for cleaner user data
+                  <strong>Role, Alias & Relay Detection:</strong> Identify role-based, alias, and relay email addresses
+                  for cleaner user data
                 </li>
                 <li>
-                  <strong>Free, ISP & EDU Detection:</strong> Identify free, ISP, and educational email providers for better email classification
+                  <strong>Free, ISP & EDU Detection:</strong> Identify free, ISP, and educational email providers for
+                  better email classification
                 </li>
                 <li>
-                  <strong>Domain Abuse Shield:</strong> Automatically detect custom or relay domains used for repeated or abusive submissions
+                  <strong>Domain Abuse Shield:</strong> Automatically detect custom or relay domains used for repeated
+                  or abusive submissions
                 </li>
                 <li>
-                  <strong>Enforcement Policies:</strong> Choose whether to allow, warn, or block domains based on their classification
+                  <strong>Enforcement Policies:</strong> Choose whether to allow, warn, or block domains based on their
+                  classification
                 </li>
               </ul>
 
               <p style="margin-top: 24px;">
-                The sections below cover authentication, endpoints, response fields, SDKs, code examples, validation configurations, best practices, and troubleshooting.
+                The sections below cover authentication, endpoints, response fields, SDKs, code examples, validation
+                configurations, best practices, and troubleshooting.
               </p>
             </article>
             <article id="docume-item2" class="documen-content-item doc-animate-init">
@@ -424,7 +453,8 @@
               </ul>
               <h3>Rate Limits</h3>
               <p>
-                Rate limits depend on your subscription plan. Free trial accounts are limited to 20 requests per minute, while paid plans allow up to 5 requests per second.
+                Rate limits depend on your subscription plan. Free trial accounts are limited to 20 requests per minute,
+                while paid plans allow up to 5 requests per second.
               </p>
             </article>
             <article id="docume-item3" class="documen-content-item doc-animate-init">
@@ -624,7 +654,8 @@
                       <td><span class="field-name">is_subdomain</span></td>
                       <td>Boolean</td>
                       <td><code>true</code> if the input contained a subdomain prefix (e.g.,
-                        <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.</td>
+                        <code>mail.google.com</code>); <code>false</code> if the input was already a root domain.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">email_provider</span></td>
@@ -651,7 +682,8 @@
                     <tr>
                       <td><span class="field-name">email</span></td>
                       <td>String</td>
-                      <td><strong>Authenticated requests only.</strong> The original email address provided in your request. Use this to map the response back to your local records.</td>
+                      <td><strong>Authenticated requests only.</strong> The original email address provided in your
+                        request. Use this to map the response back to your local records.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">domain</span></td>
@@ -661,7 +693,10 @@
                     <tr>
                       <td><span class="field-name">normalized</span></td>
                       <td>String</td>
-                      <td><strong>Authenticated requests only.</strong> The standardized version of your input. This value is lowercased, trimmed, and stripped of sub-addressing (e.g., <i>user+tag@</i> becomes <i>user@</i>).</td>
+                      <td><strong>Authenticated requests only.</strong> The standardized version of your input. This
+                        value is lowercased, trimmed, and stripped of sub-addressing (e.g., <i>user+tag@</i> becomes
+                        <i>user@</i>).
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">suggestion</span></td>
@@ -698,7 +733,8 @@
                         (lowest number = highest precedence). Each entry contains:
                         <ul class="field-desc">
                           <li><strong>hostname:</strong> The mail exchange hostname (e.g.,
-                            <code>"aspmx.l.google.com"</code>).</li>
+                            <code>"aspmx.l.google.com"</code>).
+                          </li>
                           <li><strong>priority:</strong> The DNS priority value — lower numbers receive mail first.</li>
                         </ul>
                       </td>
@@ -735,42 +771,55 @@
                     <tr>
                       <td><span class="field-name">is_disposable</span></td>
                       <td>Boolean</td>
-                      <td><strong>High Risk:</strong> <code>true</code> if the domain belongs to a temporary, throwaway, or 10-minute email provider. Disposable email addresses can be associated with increased signup abuse and fraud risk.</td>
+                      <td><strong>High Risk:</strong> <code>true</code> if the domain belongs to a temporary, throwaway,
+                        or 10-minute email provider. Disposable email addresses can be associated with increased signup
+                        abuse and fraud risk.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_relay</span></td>
                       <td>Boolean</td>
-                      <td><strong>Low Risk:</strong> <code>true</code> if the provider is a forwarding or relay service, such as iCloud Hide My Email. Relay addresses are commonly used by privacy-conscious users.</td>
+                      <td><strong>Low Risk:</strong> <code>true</code> if the provider is a forwarding or relay service,
+                        such as iCloud Hide My Email. Relay addresses are commonly used by privacy-conscious users.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_private</span></td>
                       <td>Boolean</td>
-                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is a private or custom domain owned and managed by an individual, business, organization, or institution. It is not associated with a major public email provider.</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is a private or custom domain
+                        owned and managed by an individual, business, organization, or institution. It is not associated
+                        with a major public email provider.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_public</span></td>
                       <td>Boolean</td>
-                      <td><strong>Neutral:</strong> <code>true</code> for common free consumer email providers such as Gmail, Outlook, and Yahoo. These addresses are commonly used for personal and B2C registrations.</td>
+                      <td><strong>Neutral:</strong> <code>true</code> for common free consumer email providers such as
+                        Gmail, Outlook, and Yahoo. These addresses are commonly used for personal and B2C registrations.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_isp</span></td>
                       <td>Boolean</td>
-                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an internet service provider (ISP), such as an ISP-provided email service.</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an internet
+                        service provider (ISP), such as an ISP-provided email service.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_edu</span></td>
                       <td>Boolean</td>
-                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an educational institution, such as a university, college, or school.</td>
+                      <td><strong>Neutral:</strong> <code>true</code> if the email domain is associated with an
+                        educational institution, such as a university, college, or school.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_role_based</span></td>
                       <td>Boolean</td>
-                      <td><strong>Caution:</strong> <code>true</code> for addresses intended for groups or departments, such as <i>admin@</i> or <i>support@</i>. These addresses may not represent an individual user and may be unsuitable for personal account registrations.</td>
+                      <td><strong>Caution:</strong> <code>true</code> for addresses intended for groups or departments,
+                        such as <i>admin@</i> or <i>support@</i>. These addresses may not represent an individual user
+                        and may be unsuitable for personal account registrations.</td>
                     </tr>
                     <tr>
                       <td><span class="field-name">is_alias</span></td>
                       <td>Boolean</td>
-                      <td><strong>High Risk:</strong> <code>true</code> if an email alias or sub-addressing pattern is detected, such as <i>user+tag@gmail.com</i>. Aliases can allow multiple addresses to point to the same mailbox and may be used to bypass registration limits or create multiple accounts.</td>
+                      <td><strong>High Risk:</strong> <code>true</code> if an email alias or sub-addressing pattern is
+                        detected, such as <i>user+tag@gmail.com</i>. Aliases can allow multiple addresses to point to
+                        the same mailbox and may be used to bypass registration limits or create multiple accounts.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -790,22 +839,33 @@
                     <tr>
                       <td><span class="field-name">action</span></td>
                       <td>String</td>
-                      <td><strong>Policy:</strong> Enforcement action based on your configured policies. One of: <code>"allow"</code>, <code>"warn"</code>, or <code>"block"</code>. Determined by the domain's classification and your configured enforcement policy. Requires API token authentication.</td>
+                      <td><strong>Policy:</strong> Enforcement action based on your configured policies. One of:
+                        <code>"allow"</code>, <code>"warn"</code>, or <code>"block"</code>. Determined by the domain's
+                        classification and your configured enforcement policy. Requires API token authentication.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">reason_code</span></td>
                       <td>String</td>
-                      <td><strong>Code:</strong> Machine-readable reason for the action. Examples: <code>"IS_DISPOSABLE"</code>, <code>"IS_RELAY"</code>, <code>"IS_ALIAS"</code>, <code>"IS_ROLE_BASED"</code>, <code>"UNKNOWN"</code>. Useful for logging and analytics.</td>
+                      <td><strong>Code:</strong> Machine-readable reason for the action. Examples:
+                        <code>"IS_DISPOSABLE"</code>, <code>"IS_RELAY"</code>, <code>"IS_ALIAS"</code>,
+                        <code>"IS_ROLE_BASED"</code>, <code>"UNKNOWN"</code>. Useful for logging and analytics.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">reason</span></td>
                       <td>String</td>
-                      <td><strong>Message:</strong> Human-readable explanation of why the action was taken, such as <code>"This email uses a disposable domain provider."</code></td>
+                      <td><strong>Message:</strong> Human-readable explanation of why the action was taken, such as
+                        <code>"This email uses a disposable domain provider."</code>
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">risk</span></td>
                       <td>String</td>
-                      <td><strong>Risk Level:</strong> Risk assessment for the email or domain. One of: <code>"low"</code>, <code>"medium"</code>, or <code>"high"</code>. Reflects the risk level determined by the detected email and domain characteristics.</td>
+                      <td><strong>Risk Level:</strong> Risk assessment for the email or domain. One of:
+                        <code>"low"</code>, <code>"medium"</code>, or <code>"high"</code>. Reflects the risk level
+                        determined by the detected email and domain characteristics.
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -825,24 +885,35 @@
                     <tr>
                       <td><span class="field-name">blocklisted</span></td>
                       <td>Boolean | String</td>
-                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured blocklist, <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message. Useful for enforcing custom domain policies.</td>
+                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured blocklist,
+                        <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message.
+                        Useful for enforcing custom domain policies.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">block_source</span></td>
                       <td>String | Null</td>
-                      <td><strong>Source:</strong> Indicates the source of the blocklist entry, such as <code>"user"</code> (manually added), <code>"system"</code> (StopReg system list), or <code>null</code> if not blocklisted. Helps track where blocking decisions originated.</td>
+                      <td><strong>Source:</strong> Indicates the source of the blocklist entry, such as
+                        <code>"user"</code> (manually added), <code>"system"</code> (StopReg system list), or
+                        <code>null</code> if not blocklisted. Helps track where blocking decisions originated.
+                      </td>
                     </tr>
                     <tr>
                       <td><span class="field-name">allowlisted</span></td>
                       <td>Boolean | String</td>
-                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured allowlist, <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message. Allowlisted domains bypass policy restrictions.</td>
+                      <td><strong>List Match:</strong> <code>true</code> if the domain is on your configured allowlist,
+                        <code>false</code> otherwise. For unauthenticated requests, returns a string prompt message.
+                        Allowlisted domains bypass policy restrictions.
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               <p style="margin-top: 16px; font-style: italic; color: #666;">
-                <strong>Note:</strong> The <code>policy</code> object is only fully populated for authenticated requests (with a valid <code>x-api-token</code> header). Anonymous requests receive a simplified response with a default message.
+                <strong>Note:</strong> The <code>policy</code> object is only fully populated for authenticated requests
+                (with a valid <code>x-api-token</code> header). Anonymous requests receive a simplified response with a
+                default message.
               </p>
 
               <h3>Error Responses</h3>
@@ -1230,27 +1301,36 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
             <article id="docume-item-domain-management" class="documen-content-item doc-animate-init">
               <h2>Domain Management</h2>
               <p>
-                <strong>Form Abuse Shield</strong> is a premium feature that automatically detects suspicious activity from private and relay email domains and helps prevent repeated registrations from abusive domains.
-                It works alongside email validation to provide an additional layer of protection against form abuse, spam registrations, and fraudulent activity.
+                <strong>Form Abuse Shield</strong> is a premium feature that automatically detects suspicious activity
+                from private and relay email domains and helps prevent repeated registrations from abusive domains.
+                It works alongside email validation to provide an additional layer of protection against form abuse,
+                spam registrations, and fraudulent activity.
               </p>
 
               <h3>What Is Form Abuse Shield?</h3>
               <p>
-                Form Abuse Shield monitors registration activity from private and relay domains. When a domain reaches your configured registration threshold within the selected time window, StopReg can automatically notify you or block further registrations from that domain.
+                Form Abuse Shield monitors registration activity from private and relay domains. When a domain reaches
+                your configured registration threshold within the selected time window, StopReg can automatically notify
+                you or block further registrations from that domain.
                 When the threshold is reached, the system can:
               </p>
               <ul>
-                <li><strong>Notify Mode:</strong> Automatically send you an email alert with the domain details and threshold information.</li>
+                <li><strong>Notify Mode:</strong> Automatically send you an email alert with the domain details and
+                  threshold information.</li>
                 <li><strong>Block Mode:</strong> Automatically block the domain from making further registrations.</li>
               </ul>
 
               <h3>Key Features</h3>
               <ul>
-                <li><strong>Automatic Detection:</strong> Monitors multiple registrations from the same private or relay domain.</li>
-                <li><strong>Configurable Threshold:</strong> Set the number of requests from a private or relay domain before an action is triggered, from 2 to 50 requests.</li>
+                <li><strong>Automatic Detection:</strong> Monitors multiple registrations from the same private or relay
+                  domain.</li>
+                <li><strong>Configurable Threshold:</strong> Set the number of requests from a private or relay domain
+                  before an action is triggered, from 2 to 50 requests.</li>
                 <li><strong>Flexible Time Window:</strong> Choose a monitoring period of 1, 3, or 7 days.</li>
-                <li><strong>Two Action Modes:</strong> Choose Notify for email alerts or Block for automatic blocking.</li>
-                <li><strong>Dashboard Control:</strong> Manage, review, and adjust your Form Abuse Shield settings at any time.</li>
+                <li><strong>Two Action Modes:</strong> Choose Notify for email alerts or Block for automatic blocking.
+                </li>
+                <li><strong>Dashboard Control:</strong> Manage, review, and adjust your Form Abuse Shield settings at
+                  any time.</li>
               </ul>
 
               <h3>How Form Abuse Shield Works</h3>
@@ -1260,10 +1340,12 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 Navigate to Manage Domains and configure your Form Abuse Shield settings.
               </p>
               <ul>
-                <li><strong>Detection Rule:</strong> Set the registration threshold, such as blocking after 5 requests.</li>
+                <li><strong>Detection Rule:</strong> Set the registration threshold, such as blocking after 5 requests.
+                </li>
                 <li><strong>Time Window:</strong> Choose your monitoring period: 1, 3, or 7 days.</li>
                 <li><strong>Action:</strong> Select Notify for alerts or Block for automatic blocking.</li>
-                <li><strong>Take No Action:</strong> The system will not monitor or take action on domain registrations, regardless of the configured threshold.</li>
+                <li><strong>Take No Action:</strong> The system will not monitor or take action on domain registrations,
+                  regardless of the configured threshold.</li>
               </ul>
 
               <h4>Step 2: Monitoring Begins</h4>
@@ -1271,9 +1353,12 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 Once configured, Form Abuse Shield continuously monitors incoming registration activity.
               </p>
               <ul>
-                <li><strong>Automatic Counting:</strong> Counts requests from private or relay domains for each domain within your specified time window.</li>
-                <li><strong>Tracks Registration Activity:</strong> Monitors the number of registrations associated with each domain.</li>
-                <li><strong>Compares Against Threshold:</strong> Compares registration activity with your configured threshold.</li>
+                <li><strong>Automatic Counting:</strong> Counts requests from private or relay domains for each domain
+                  within your specified time window.</li>
+                <li><strong>Tracks Registration Activity:</strong> Monitors the number of registrations associated with
+                  each domain.</li>
+                <li><strong>Compares Against Threshold:</strong> Compares registration activity with your configured
+                  threshold.</li>
               </ul>
 
               <h4>Step 3: Automatic Action Is Triggered</h4>
@@ -1281,8 +1366,10 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 When a domain reaches your configured threshold:
               </p>
               <ul>
-                <li><strong>Notify Mode:</strong> Sends you an email alert containing the domain details and threshold information.</li>
-                <li><strong>Block Mode:</strong> Automatically adds the domain to your blocklist and rejects further registrations from that domain.</li>
+                <li><strong>Notify Mode:</strong> Sends you an email alert containing the domain details and threshold
+                  information.</li>
+                <li><strong>Block Mode:</strong> Automatically adds the domain to your blocklist and rejects further
+                  registrations from that domain.</li>
               </ul>
 
               <h3>Notify Mode vs. Block Mode</h3>
@@ -1325,7 +1412,8 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
               <h3>Manual Allowlist Protection</h3>
               <p>
-                <strong>Critical Protection:</strong> Domains that you manually add to your allowlist are protected from automatic blocking by Form Abuse Shield, regardless of:
+                <strong>Critical Protection:</strong> Domains that you manually add to your allowlist are protected from
+                automatic blocking by Form Abuse Shield, regardless of:
               </p>
               <ul>
                 <li>How many requests the domain receives</li>
@@ -1333,12 +1421,14 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 <li>How high or low your threshold is configured</li>
               </ul>
               <p>
-              This ensures that manually allowlisted domains remain trusted and are never automatically blocked by Form Abuse Shield.
+                This ensures that manually allowlisted domains remain trusted and are never automatically blocked by
+                Form Abuse Shield.
               </p>
 
               <h3>Manual Blocklist Protection</h3>
               <p>
-                Similarly, domains that you manually add to your blocklist remain blocked and cannot be unblocked by Form Abuse Shield's automatic processes.
+                Similarly, domains that you manually add to your blocklist remain blocked and cannot be unblocked by
+                Form Abuse Shield's automatic processes.
               </p>
 
               <h3>Configuration Examples</h3>
@@ -1348,18 +1438,21 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 <li><strong>Threshold:</strong> 5 requests</li>
                 <li><strong>Time Window:</strong> 3 days</li>
                 <li><strong>Action:</strong> Notify</li>
-                <li><strong>Result:</strong> Helps identify suspicious registration activity while allowing you to review domains before blocking them.</li>
+                <li><strong>Result:</strong> Helps identify suspicious registration activity while allowing you to
+                  review domains before blocking them.</li>
               </ul>
 
               <h3>FAQ</h3>
               <p><strong>Q: Can I manually allowlist a domain to prevent auto-blocking?</strong></p>
               <p>
-                A: Yes! Manually allowlisted domains are permanently protected and will never be auto-blocked, regardless of Form Abuse Shield settings.
+                A: Yes! Manually allowlisted domains are permanently protected and will never be auto-blocked,
+                regardless of Form Abuse Shield settings.
               </p>
 
               <p><strong>Q: What happens if I switch from Notify to Block mode?</strong></p>
               <p>
-                A: Domains previously in Notify mode will be auto-blocked if they continue to receive requests and reach your threshold. However, manually allowlisted domains will remain protected.
+                A: Domains previously in Notify mode will be auto-blocked if they continue to receive requests and reach
+                your threshold. However, manually allowlisted domains will remain protected.
               </p>
 
               <p><strong>Q: Can I unblock an automatically blocked domain?</strong></p>
@@ -1374,7 +1467,9 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
 
               <h3>Support</h3>
               <p>
-                If you have questions about Form Abuse Shield or need help configuring it, contact our support team at <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a> or visit the Manage Domains page to get started.
+                If you have questions about Form Abuse Shield or need help configuring it, contact our support team at
+                <a href="mailto:support@stopreg.com" style="color: #1452ca">support@stopreg.com</a> or visit the Manage
+                Domains page to get started.
               </p>
             </article>
           </div>
@@ -1433,6 +1528,7 @@ $url = "https://api.stopreg.com/api/v1/verify/email/" . urlencode($email);
                 <a href="/blogs.html" class="foot-link">Blog</a>
                 <a href="/documentation.html" class="foot-link">Guides</a>
                 <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
+                 
               </div>
             </div>
 

@@ -1,6 +1,24 @@
 {
+  "name": "stop-reg-front-end",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/server.ts",
+    "build": "tsc && mkdir -p dist/disposable-email-providers/views && cp -r src/disposable-email-providers/views/* dist/disposable-email-providers/views/",
+    "start": "node dist/server.js"
+  },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^5.2.1",
-    "express.js": "^1.0.0"
+    "helmet": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }
