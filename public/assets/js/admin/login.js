@@ -1,10 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
    const form = document.getElementById("adminSignIn-form");
-    
+
     if (!form) {
         console.error("Critical Error: Admin login form not found in DOM.");
         return;
     }
+
+    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE_URL = isDev ? "http://localhost:8080/api/v1/admin" : "https://api.stopreg.com/api/v1/admin";
 
     const submitBtn = form.querySelector(".cr-btn");
     const emailInput = document.getElementById("admin-email");
@@ -231,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
             submitBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Authenticating...`;
             
             try {
-                const response = await fetch("https://api.stopreg.com/api/v1/admin/login", {
+                const response = await fetch(`${API_BASE_URL}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password }),

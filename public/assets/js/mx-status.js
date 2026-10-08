@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const badges = document.querySelectorAll('.mx-status[data-mx-domain]');
 
-  const API_BASE = "https://api.stopreg.com/api/v1";
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_BASE = isDev ? "http://localhost:8080/api/v1" : "https://api.stopreg.com/api/v1";
 
   const fetchMx = async (rawDomain) => {
     const domain = rawDomain.trim();

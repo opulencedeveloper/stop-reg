@@ -2,7 +2,8 @@
  * Show/hide Admin Management link based on Super Admin status
  */
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE_URL = "https://api.stopreg.com/api/v1/admin";
+  const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_BASE_URL = isDev ? "http://localhost:8080/api/v1/admin" : "https://api.stopreg.com/api/v1/admin";
   const TOKEN_KEY = "adminToken";
 
   const checkSuperAdminStatusAndUpdateNav = async () => {

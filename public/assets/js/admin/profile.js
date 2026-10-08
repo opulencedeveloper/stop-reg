@@ -6,7 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     // --- CONFIGURATION ---
-    const API_BASE_URL = "https://api.stopreg.com/api/v1/admin";
+    const API_BASE_URL = window.ADMIN_API_BASE_URL;
     const TOKEN_KEY = "adminToken";
 
     // --- ELEMENT SELECTORS ---

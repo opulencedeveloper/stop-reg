@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
+    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const BASE_URL = isDev ? "http://localhost:8080/api/v1/admin" : "https://api.stopreg.com/api/v1/admin";
 
     // --- DOM ELEMENTS (Dynamic Selection) ---
     const getEl = (id) => document.getElementById(id);

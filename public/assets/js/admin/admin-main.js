@@ -1,3 +1,7 @@
+// Global Admin API Configuration
+const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+window.ADMIN_API_BASE_URL = isDev ? "http://localhost:8080/api/v1/admin" : "https://api.stopreg.com/api/v1/admin";
+
 document.addEventListener('DOMContentLoaded', () => {
     const TOKEN_KEY = "adminToken";
     const adminToken = localStorage.getItem(TOKEN_KEY);

@@ -1,0 +1,3861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopReg Programmatic SEO Directory</title>
+    <meta name="description"
+        content="Explore email providers, disposable email domains, domain intelligence and subdomain data with StopReg.">
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --card: #fff;
+            --text: #101828;
+            --muted: #667085;
+            --border: #e4e7ec;
+            --primary: #5b5bd6;
+            --primary2: #4848c7;
+            --green: #079455;
+            --greenbg: #ecfdf3;
+            --red: #d92d20;
+            --redbg: #fff1f0;
+            --amber: #b54708;
+            --amberbg: #fffaeb;
+            --soft: #f2f4f7;
+            --shadow: 0 8px 28px rgba(16, 24, 40, .055)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: auto
+        }
+
+        .header {
+            height: 70px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50
+        }
+
+        .nav {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 850;
+            letter-spacing: -.8px
+        }
+
+        .logo span {
+            color: var(--primary)
+        }
+
+        .navlinks {
+            display: flex;
+            gap: 25px;
+            font-size: 14px;
+            color: #475467
+        }
+
+        .navlinks a:hover {
+            color: var(--primary)
+        }
+
+        .btn {
+            border: 1px solid var(--border);
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-weight: 650;
+            font-size: 13px;
+            cursor: pointer
+        }
+
+        .btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff
+        }
+
+        .btn.primary:hover {
+            background: var(--primary2)
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding: 26px 0 8px;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary)
+        }
+
+        .page {
+            display: none
+        }
+
+        .page.active {
+            display: block
+        }
+
+        .hero {
+            padding: 35px 0 27px;
+            max-width: 850px
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #eeefff;
+            color: #4b4bbd;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .09em
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            line-height: 1.05;
+            letter-spacing: -2.2px;
+            margin: 14px 0
+        }
+
+        h2 {
+            font-size: 21px;
+            letter-spacing: -.6px;
+            margin: 0 0 6px
+        }
+
+        h3 {
+            font-size: 16px;
+            margin: 0 0 5px
+        }
+
+        p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin: 7px 0
+        }
+
+        .hero p {
+            font-size: 17px;
+            max-width: 760px
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 8px 0 22px
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 19px;
+            box-shadow: var(--shadow)
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 4px
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow)
+        }
+
+        .cardhead {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 18px
+        }
+
+        .cardhead p {
+            font-size: 13px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 17px;
+            flex-wrap: wrap
+        }
+
+        .search {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            min-width: 220px
+        }
+
+        .search input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 11px 13px;
+            outline: 0;
+            background: #fff
+        }
+
+        .search input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px #5b5bd61a
+        }
+
+        .controls {
+            display: flex;
+            gap: 7px;
+            align-items: center
+        }
+
+        .viewtoggle {
+            display: flex;
+            background: var(--soft);
+            padding: 4px;
+            border-radius: 9px
+        }
+
+        .viewtoggle button {
+            border: 0;
+            background: transparent;
+            padding: 7px 10px;
+            border-radius: 6px;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .viewtoggle button.active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: 0 1px 4px #10182812
+        }
+
+        .tablewrap {
+            overflow: auto
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px
+        }
+
+        .table th {
+            text-align: left;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            font-weight: 750;
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .table tr:last-child td {
+            border-bottom: 0
+        }
+
+        .table tbody tr:hover {
+            background: #fafbfc
+        }
+
+        .primarytext {
+            font-weight: 700
+        }
+
+        .subtext {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 5px 9px;
+            font-size: 10px;
+            font-weight: 750
+        }
+
+        .badge.red {
+            background: var(--redbg);
+            color: var(--red)
+        }
+
+        .badge.green {
+            background: var(--greenbg);
+            color: var(--green)
+        }
+
+        .badge.amber {
+            background: var(--amberbg);
+            color: var(--amber)
+        }
+
+        .badge.gray {
+            background: var(--soft);
+            color: #475467
+        }
+
+        .arrow {
+            color: var(--primary);
+            font-weight: 750
+        }
+
+        .gridview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px
+        }
+
+        .gridview.hidden,
+        .tableview.hidden {
+            display: none
+        }
+
+        .itemcard {
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 18px;
+            background: #fff;
+            transition: .15s
+        }
+
+        .itemcard:hover {
+            border-color: #c8c9f2;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow)
+        }
+
+        .itemtop {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start
+        }
+
+        .itemicon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: #111827;
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 800
+        }
+
+        .itemcard p {
+            font-size: 12px;
+            margin: 12px 0
+        }
+
+        .itemmeta {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
+            margin-top: 14px;
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 19px;
+            padding-top: 17px;
+            border-top: 1px solid var(--border)
+        }
+
+        .pages {
+            display: flex;
+            gap: 5px
+        }
+
+        .pages button {
+            min-width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
+            background: #fff;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px
+        }
+
+        .pages button.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary)
+        }
+
+        .providerhero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px
+        }
+
+        .provideridentity {
+            display: flex;
+            gap: 15px;
+            align-items: center
+        }
+
+        .providerlogo {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: #111827;
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 850;
+            font-size: 20px
+        }
+
+        .provideridentity h1 {
+            font-size: 42px;
+            margin: 5px 0
+        }
+
+        .provideridentity p {
+            margin: 0
+        }
+
+        .domainhero {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: center
+        }
+
+        .domainhero h1 {
+            font-size: 43px;
+            margin: 8px 0
+        }
+
+        .statusbox {
+            display: flex;
+            gap: 11px;
+            align-items: center;
+            padding: 15px 17px;
+            border-radius: 13px;
+            background: var(--redbg);
+            color: var(--red);
+            min-width: 245px
+        }
+
+        .statusicon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: 800
+        }
+
+        .twocol {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        .inforow {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .inforow:last-child {
+            border-bottom: 0
+        }
+
+        .inforow span {
+            color: var(--muted)
+        }
+
+        .inforow strong {
+            text-align: right
+        }
+
+        .related {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px
+        }
+
+        .related a {
+            padding: 12px 13px;
+            background: var(--soft);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 650
+        }
+
+        .related a:hover {
+            background: #e8eaf0
+        }
+
+        .cta {
+            background: #111827;
+            color: #fff;
+            border-radius: 18px;
+            padding: 30px;
+            margin: 28px 0
+        }
+
+        .cta p {
+            color: #98a2b3;
+            max-width: 700px
+        }
+
+        .footer {
+            padding: 30px 0 55px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .code {
+            background: #101828;
+            color: #e5e7eb;
+            border-radius: 11px;
+            padding: 17px;
+            overflow: auto;
+            font-size: 12px;
+            line-height: 1.6
+        }
+
+        .hide {
+            display: none !important
+        }
+
+        .get-started {
+            text-align: center;
+            padding: 38px 25px;
+            background: linear-gradient(135deg, #111827, #20204a);
+        }
+
+        .get-started h2,
+        .get-started-card h2 {
+            color: #fff;
+            font-size: 27px;
+            letter-spacing: -.8px;
+        }
+
+        .get-started p {
+            max-width: 700px;
+            margin: 8px auto 20px;
+            color: #b8c0cc;
+        }
+
+        .get-started-card {
+            text-align: center;
+            padding: 34px 25px;
+        }
+
+        .get-started-card p {
+            max-width: 650px;
+            margin: 8px auto 19px;
+        }
+
+        .api-response-card .cardhead {
+            align-items: center;
+        }
+
+        .copy-json {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .copy-json.copied {
+            color: var(--green);
+            border-color: #b7ebcd;
+            background: var(--greenbg);
+        }
+
+        .api-response-card .code {
+            margin: 0;
+        }
+
+        .domain-overview {
+            padding: 26px;
+        }
+
+        .domain-overview>p {
+            max-width: 900px;
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .overview-meta {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .overview-meta>div {
+            padding: 17px 18px 3px 0;
+            border-right: 1px solid var(--border);
+            margin-right: 18px;
+        }
+
+        .overview-meta>div:last-child {
+            border-right: 0;
+            margin-right: 0;
+        }
+
+        .overview-meta span {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .overview-meta strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .quick-actions-card {
+            padding: 25px;
+        }
+
+        .quick-actions-head h2 {
+            max-width: 760px;
+            font-size: 21px;
+            line-height: 1.4;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fff;
+            transition: .15s ease;
+        }
+
+        .quick-action:hover {
+            border-color: #c8c9f2;
+            background: #fafaff;
+            transform: translateY(-1px);
+        }
+
+        .quick-action strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .quick-action span {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .quick-action b {
+            color: var(--primary);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+
+        .quick-actions-sample {
+            padding: 15px;
+            background: #fff;
+        }
+
+        .quick-actions-sample h2 {
+            margin: 0;
+            padding: 2px 0 13px;
+            border-bottom: 1px solid var(--border);
+            font-size: 18px;
+            line-height: 1.3;
+            color: #292929;
+        }
+
+        .quick-action-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quick-action-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: inherit;
+        }
+
+        .quick-action-row+.quick-action-row {
+            padding-top: 7px;
+        }
+
+        .quick-action-icon {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 7px;
+            background: #eef4ff;
+            color: #1452CA;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .quick-action-copy {
+            min-width: 0;
+        }
+
+        .quick-action-copy strong {
+            display: block;
+            font-size: 14px;
+            line-height: 1.25;
+            font-weight: 700;
+            color: #292929;
+        }
+
+        .quick-action-copy small {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            line-height: 1.35;
+            color: #777;
+        }
+
+        .api-access-card {
+            padding: 18px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: stretch;
+            background: #fff;
+        }
+
+        .api-access-copy h2 {
+            margin: 0 0 4px;
+            font-size: 24px;
+            line-height: 1.25;
+            font-weight: 700;
+            color: #292929;
+        }
+
+        .api-subheading {
+            font-size: 13px;
+            line-height: 1.45;
+            color: #777;
+            margin: 0;
+        }
+
+        .api-features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .api-feature {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #292929;
+        }
+
+        .feature-check {
+            width: 15px;
+            height: 15px;
+            display: grid;
+            place-items: center;
+            color: #111;
+            font-size: 16px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .api-doc-btn {
+            width: 100%;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            border: 1px solid #1452CA;
+            border-radius: 7px;
+            background: #fff;
+            color: #1452CA;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 3px;
+        }
+
+        .api-doc-btn:hover {
+            background: #fff;
+            color: #1452CA;
+        }
+
+        @media(max-width:850px) {
+            .api-access-card {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .quick-actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-meta {
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+            }
+
+            .overview-meta>div:nth-child(2) {
+                border-right: 0;
+                margin-right: 0;
+            }
+
+            .overview-meta>div:nth-child(3) {
+                border-top: 1px solid var(--border);
+            }
+
+            .overview-meta>div:nth-child(4) {
+                border-top: 1px solid var(--border);
+                border-right: 0;
+                margin-right: 0;
+            }
+
+            .navlinks {
+                display: none
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .gridview {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .twocol {
+                grid-template-columns: 1fr
+            }
+
+            .providerhero,
+            .domainhero {
+                display: block
+            }
+
+            .statusbox {
+                margin-top: 22px
+            }
+
+            .related {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        @media(max-width:560px) {
+            .container {
+                width: calc(100% - 22px)
+            }
+
+            .stats,
+            .gridview {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                padding-top: 25px
+            }
+
+            .card {
+                padding: 17px
+            }
+
+            .provideridentity h1,
+            .domainhero h1 {
+                font-size: 34px
+            }
+
+            .toolbar {
+                align-items: stretch
+            }
+
+            .controls {
+                justify-content: space-between
+            }
+
+            .search {
+                min-width: 100%
+            }
+
+            .pagination {
+                align-items: flex-start;
+                flex-direction: column
+            }
+        }
+
+        .pages button.prev,
+        .pages button.next {
+            padding: 0 10px;
+            min-width: auto;
+        }
+
+
+        .subdomain-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 17px;
+            flex-wrap: wrap
+        }
+
+        .subdomain-search {
+            width: 280px;
+            flex: 0 0 280px
+        }
+
+        .subdomain-search input {
+            width: 100%;
+            box-sizing: border-box
+        }
+
+        .subdomain-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap
+        }
+
+        .subdomain-count strong {
+            font-size: 14px;
+            color: #111827
+        }
+
+        @media(max-width:560px) {
+            .subdomain-search {
+                width: 100%;
+                flex: 1 1 100%
+            }
+
+            .subdomain-toolbar {
+                align-items: stretch
+            }
+
+            .subdomain-count {
+                justify-content: center
+            }
+        }
+
+        .tier3-cta-related-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 20px 0;
+        }
+
+        .tier3-cta-related-row>.cta,
+        .tier3-cta-related-row>.card {
+            margin: 0;
+            height: 100%;
+        }
+
+        .tier3-cta-related-row .cta {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 26px 30px 24px;
+        }
+
+        .tier3-cta-related-row .cta h2 {
+            margin: 0 0 8px;
+            line-height: 1.18;
+        }
+
+        .tier3-cta-related-row .cta p {
+            margin: 0 0 12px;
+            line-height: 1.48;
+        }
+
+        .tier3-cta-related-row .cta .btn {
+            align-self: flex-start;
+        }
+
+        .tier3-cta-related-row .related {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 9px;
+        }
+
+        @media (max-width:760px) {
+            .tier3-cta-related-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <style id="stopreg-button-colors">
+        /* Main action buttons */
+        .btn,
+        .button,
+        .primary-btn,
+        .cta-btn,
+        .cta-button,
+        .action-btn,
+        a.btn,
+        a.button {
+            background-color: #1452CA !important;
+            color: #FFFFFF !important;
+            border-color: #1452CA !important;
+        }
+
+        .btn:hover,
+        .button:hover,
+        .primary-btn:hover,
+        .cta-btn:hover,
+        .cta-button:hover,
+        .action-btn:hover,
+        a.btn:hover,
+        a.button:hover {
+            background-color: #1452CA !important;
+            color: #FFFFFF !important;
+            border-color: #1452CA !important;
+        }
+
+        /* Keep Table/Grid toggle buttons in their original styling */
+        .viewtoggle button {
+            background: transparent !important;
+            color: var(--muted) !important;
+            border-color: transparent !important;
+        }
+
+        .viewtoggle button.active {
+            background: #fff !important;
+            color: var(--text) !important;
+            border-color: transparent !important;
+        }
+
+        /* Keep pagination buttons in their original styling */
+        .pages button {
+            background: #fff !important;
+            color: var(--text) !important;
+            border-color: var(--border) !important;
+        }
+
+        .pages button.active {
+            background: var(--primary) !important;
+            color: #fff !important;
+            border-color: var(--primary) !important;
+        }
+    </style>
+    <style id="tier3-conversion-layout">
+        .tier3-conversion-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+            gap: 18px;
+            align-items: stretch;
+            margin-top: 18px
+        }
+
+        .tier3-validation-column,
+        .tier3-promo-column {
+            min-width: 0
+        }
+
+        .tier3-validation-column>.card {
+            height: 100%;
+            box-sizing: border-box
+        }
+
+        .tier3-promo-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px
+        }
+
+        .tier3-promo-column>.card {
+            margin: 0
+        }
+
+        .tier3-promo-column .get-started-card,
+        .tier3-promo-column .api-access-card {
+            flex: 1
+        }
+
+        @media(max-width:850px) {
+            .tier3-conversion-layout {
+                grid-template-columns: 1fr
+            }
+
+            .tier3-validation-column>.card {
+                height: auto
+            }
+        }
+    </style>
+
+    <style id="api-subheading-fix">
+        .api-access-copy .api-subheading {
+            font-size: 13px;
+            line-height: 1.45;
+            font-weight: 600;
+            color: #111827;
+            margin: 8px 0 10px;
+            max-width: 360px;
+        }
+    </style>
+
+    <style>
+        .dns-records-card {
+            margin-top: 18px
+        }
+
+        .dns-tabs {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap
+        }
+
+        .dns-tabs span {
+            padding: 12px 5px 9px;
+            color: #777;
+            font-size: 13px
+        }
+
+        .dns-tabs span.active {
+            color: #1452CA;
+            font-weight: 700;
+            border-bottom: 2px solid #1452CA
+        }
+
+        .dns-scroll {
+            overflow-x: auto;
+            padding-top: 3px
+        }
+
+        .dns-table {
+            width: 100%;
+            min-width: 690px;
+            border-collapse: collapse
+        }
+
+        .dns-table th,
+        .dns-table td {
+            text-align: left;
+            padding: 11px 9px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px
+        }
+
+        .dns-table th {
+            font-weight: 700;
+            color: #344054
+        }
+
+        .dns-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #333
+        }
+
+        .dns-info {
+            width: 17px;
+            height: 17px;
+            border: 1px solid #111;
+            border-radius: 50%;
+            display: inline-grid;
+            place-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex: none
+        }
+    </style>
+
+
+
+
+    <style id="larger-subdomain-description">
+        /* Larger subdomain descriptions */
+        #subdomains-grid .itemcard p {
+            font-size: 14px !important;
+            line-height: 1.5;
+        }
+
+        #subdomains-grid .itemcard .itemmeta {
+            font-size: 12px !important;
+        }
+
+        #subdomains-table .subtext {
+            font-size: 13px !important;
+        }
+    </style>
+
+
+    <style id="all-sections-larger-font">
+        /* Increase typography across all sections while preserving existing layout */
+        body {
+            font-size: 16px;
+        }
+
+        .container,
+        .section,
+        section,
+        main {
+            font-size: 16px;
+        }
+
+        .section-title,
+        section h2 {
+            font-size: 28px !important;
+        }
+
+        .section-subtitle,
+        section>.section-head p,
+        .section-head p {
+            font-size: 16px !important;
+            line-height: 1.6;
+        }
+
+        .hero h1 {
+            font-size: 42px !important;
+        }
+
+        .hero p {
+            font-size: 18px !important;
+            line-height: 1.65;
+        }
+
+        .card h3,
+        .itemcard h3 {
+            font-size: 18px !important;
+        }
+
+        .card p,
+        .itemcard p {
+            font-size: 15px !important;
+            line-height: 1.55;
+        }
+
+        .itemmeta {
+            font-size: 13px !important;
+        }
+
+        label,
+        .label,
+        .eyebrow,
+        .badge,
+        .chip {
+            font-size: 13px !important;
+        }
+
+        th,
+        td {
+            font-size: 14px !important;
+        }
+
+        .table-wrap td,
+        .table-wrap th {
+            line-height: 1.5;
+        }
+
+        input,
+        select,
+        textarea {
+            font-size: 15px !important;
+        }
+
+        button,
+        .btn {
+            font-size: 15px !important;
+        }
+
+        .quick-actions,
+        .quick-actions p,
+        .quick-actions a {
+            font-size: 15px !important;
+        }
+
+        pre,
+        code {
+            font-size: 14px !important;
+            line-height: 1.6;
+        }
+
+        .footer,
+        footer {
+            font-size: 14px !important;
+        }
+    </style>
+
+    <style id="global-font-size-increase">
+        /* Global font size increase across all sections */
+        body {
+            font-size: 17px !important;
+        }
+
+        p,
+        li,
+        td,
+        th,
+        label,
+        input,
+        select,
+        textarea,
+        button,
+        a,
+        small {
+            font-size: 1.05em !important;
+        }
+
+        .section,
+        section,
+        .card,
+        .panel,
+        .box,
+        .itemcard,
+        .feature-card,
+        .api-card,
+        .provider-card,
+        .domain-card,
+        .overview-card,
+        .quick-action,
+        .cta-card {
+            font-size: 17px !important;
+        }
+
+        h1 {
+            font-size: clamp(38px, 4vw, 56px) !important;
+        }
+
+        h2 {
+            font-size: clamp(30px, 3vw, 42px) !important;
+        }
+
+        h3 {
+            font-size: 24px !important;
+        }
+
+        h4 {
+            font-size: 20px !important;
+        }
+
+        .hero p,
+        .section p,
+        .card p,
+        .panel p,
+        .itemcard p {
+            font-size: 17px !important;
+            line-height: 1.65 !important;
+        }
+
+        .itemmeta {
+            font-size: 14px !important;
+        }
+
+        .subtext {
+            font-size: 15px !important;
+        }
+
+        table {
+            font-size: 16px !important;
+        }
+
+        th,
+        td {
+            font-size: 16px !important;
+        }
+
+        input,
+        select,
+        textarea {
+            font-size: 16px !important;
+        }
+
+        button {
+            font-size: 16px !important;
+        }
+    </style>
+
+
+    <style id="tier3-provider-checker-layout">
+        .tier3-provider-checker-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+            gap: 24px;
+            align-items: start;
+            margin: 24px 0;
+        }
+
+        .tier3-email-checker-card {
+            background: #fff;
+            border: 1px solid #dfe3ea;
+            border-radius: 15px;
+            padding: 20px 14px 28px;
+            box-sizing: border-box;
+        }
+
+        .tier3-email-checker-card .checker-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 0 18px 4px;
+            color: #1452CA;
+        }
+
+        .tier3-email-checker-card h2 {
+            margin: 0 0 8px;
+            font-size: 22px !important;
+            line-height: 1.3;
+        }
+
+        .tier3-email-checker-card p {
+            margin: 0 0 14px;
+            color: #667085;
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+        }
+
+        .tier3-email-checker-card .btn {
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            background: #1452CA;
+            color: #fff;
+            border: 0;
+        }
+
+        .tier3-provider-side {
+            position: relative;
+        }
+
+        .tier3-provider-side .card {
+            margin: 0;
+        }
+
+        @media (max-width: 760px) {
+            .tier3-provider-checker-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tier3-provider-side .provider-label {
+                text-align: left;
+            }
+        }
+    </style>
+
+
+    <style id="equal-checker-provider-columns">
+        .tier3-provider-checker-row {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px !important;
+        }
+
+        .tier3-email-checker-card,
+        .tier3-provider-side {
+            width: 100% !important;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        .tier3-provider-side .card {
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 760px) {
+            .tier3-provider-checker-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+
+    <style id="equal-section-typography-spacing">
+        /* Match typography between the two top sections */
+        .tier3-provider-checker-row .tier3-email-checker-card h2,
+        .tier3-provider-checker-row .tier3-provider-side .card h2 {
+            font-size: 28px !important;
+            line-height: 1.25 !important;
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .tier3-provider-checker-row .tier3-email-checker-card p,
+        .tier3-provider-checker-row .tier3-provider-side .card p {
+            font-size: 16px !important;
+            line-height: 1.55 !important;
+            margin-top: 0 !important;
+            margin-bottom: 18px !important;
+        }
+
+        /* Give the buttons proper separation from the description */
+        .tier3-provider-checker-row .tier3-email-checker-card .btn,
+        .tier3-provider-checker-row .tier3-provider-side .card .btn {
+            margin-top: 4px !important;
+        }
+
+        /* Keep both cards visually balanced */
+        .tier3-provider-checker-row .tier3-email-checker-card,
+        .tier3-provider-checker-row .tier3-provider-side .card {
+            min-height: 148px;
+            box-sizing: border-box;
+        }
+    </style>
+
+
+    <style id="global-button-text-spacing">
+        /* Consistent small separation between descriptive text and following buttons */
+        p+.btn,
+        p+button,
+        p+a.btn,
+        .subtext+.btn,
+        .description+.btn,
+        .itemcard p+.btn,
+        .card p+.btn,
+        .panel p+.btn,
+        .hero p+.btn {
+            margin-top: 8px !important;
+        }
+
+        /* Also handle buttons inside a wrapper immediately following descriptive text */
+        p+.actions,
+        p+.button-group,
+        p+.btn-group,
+        .subtext+.actions,
+        .description+.actions {
+            margin-top: 8px !important;
+        }
+    </style>
+
+
+    <style id="professional-cta-spacing">
+        /* Compact, balanced final CTA */
+        .cta {
+            padding: 30px 30px 28px !important;
+            margin: 24px 0 20px !important;
+        }
+
+        .cta h2 {
+            margin: 0 0 10px !important;
+            line-height: 1.2 !important;
+        }
+
+        .cta p {
+            margin: 0 0 14px !important;
+            line-height: 1.5 !important;
+            max-width: 760px;
+        }
+
+        .cta .btn {
+            display: inline-flex !important;
+            margin-top: 2px !important;
+            align-items: center;
+        }
+
+        .footer {
+            padding: 18px 0 38px !important;
+        }
+    </style>
+
+
+    <style id="cta-final-tight-layout">
+        /* Final CTA: tighter, balanced, professional spacing */
+        .cta {
+            padding: 26px 30px 24px !important;
+            margin: 24px 0 16px !important;
+        }
+
+        .cta h2 {
+            margin: 0 0 8px !important;
+            line-height: 1.18 !important;
+        }
+
+        .cta p {
+            margin: 0 0 12px !important;
+            line-height: 1.48 !important;
+            max-width: 760px !important;
+        }
+
+        .cta .btn {
+            display: inline-flex !important;
+            margin-top: 0 !important;
+            align-items: center;
+        }
+
+        .footer {
+            padding: 14px 0 28px !important;
+        }
+    </style>
+
+
+    <style id="tier1-grid-subdomains">
+        #providers-grid .itemmeta {
+            display: flex !important;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+        }
+
+        #providers-grid .itemmeta .arrow {
+            margin-left: auto;
+        }
+    </style>
+
+
+    <style id="quick-actions-smaller-subtext">
+        .quick-action-copy small {
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+            margin-top: 3px !important;
+        }
+    </style>
+
+
+    <style id="quick-actions-subtext-medium">
+        .quick-action-copy small {
+            font-size: 13.5px !important;
+            line-height: 1.45 !important;
+            margin-top: 4px !important;
+        }
+    </style>
+
+
+    <style id="fifteen-items-per-page">
+        /* Show a maximum of 15 records in each table and grid page */
+        #providers-table tbody tr:nth-child(n+16),
+        #providers-grid .itemcard:nth-child(n+16),
+        #domains-table tbody tr:nth-child(n+16),
+        #domains-grid .itemcard:nth-child(n+16),
+        #subdomains-table tbody tr:nth-child(n+16),
+        #subdomains-grid .itemcard:nth-child(n+16) {
+            display: none !important;
+        }
+    </style>
+
+
+    <style id="tier3-related-alignment">
+        /* Tier 3 CTA + Related Domains: equal-height cards and aligned content */
+        .cta-related-row {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            align-items: stretch !important;
+            gap: 18px !important;
+        }
+
+        .cta-related-row>.cta,
+        .cta-related-row>.card {
+            height: 100% !important;
+            margin: 0 !important;
+        }
+
+        .cta-related-row>.cta {
+            min-height: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
+
+        .cta-related-row .related {
+            display: grid !important;
+            gap: 9px !important;
+        }
+
+        @media (max-width: 760px) {
+            .cta-related-row {
+                grid-template-columns: 1fr !important;
+            }
+
+            .tier3-cta-related-row>.card .related {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+    <style id="tier3-cta-related-final-fix">
+        /* Tier 3 bottom row: force both cards to start and end on exactly the same lines. */
+        .tier3-cta-related-row {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+            gap: 18px !important;
+            align-items: stretch !important;
+            grid-auto-rows: 1fr !important;
+            margin: 20px 0 !important;
+        }
+
+        .tier3-cta-related-row>.cta,
+        .tier3-cta-related-row>.card {
+            margin: 0 !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            height: 100% !important;
+            min-height: 0 !important;
+            box-sizing: border-box !important;
+            align-self: stretch !important;
+        }
+
+        .tier3-cta-related-row>.cta {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
+
+        .tier3-cta-related-row>.card {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .tier3-cta-related-row>.card .related {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 9px !important;
+        }
+
+        .tier3-cta-related-row>.card .related a {
+            display: flex !important;
+            align-items: center !important;
+            min-height: 54px !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (max-width: 760px) {
+            .tier3-cta-related-row {
+                grid-template-columns: 1fr !important;
+                grid-auto-rows: auto !important;
+            }
+
+            .tier3-cta-related-row>.cta,
+            .tier3-cta-related-row>.card {
+                height: auto !important;
+            }
+        }
+    </style>
+
+    <style id="related-domains-view-all">
+        .tier3-cta-related-row .related-view-all {
+            display: block;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+            color: #1452CA;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .tier3-cta-related-row .related-view-all:hover {
+            color: #1452CA;
+        }
+    </style>
+
+    <style id="tier1-tier2-footer-style">
+        .site-footer {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 56px 24px 30px;
+            margin-top: 28px;
+        }
+
+        .site-footer-inner {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1fr;
+            gap: 50px;
+            padding: 0 0 42px;
+        }
+
+        .footer-brand {
+            max-width: 330px
+        }
+
+        .footer-logo-mark {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #fff;
+            border-radius: 7px;
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+            color: #fff;
+            margin-bottom: 7px;
+        }
+
+        .footer-brand-name {
+            font-size: 14px;
+            letter-spacing: .04em;
+            color: #fff;
+            margin-bottom: 9px
+        }
+
+        .footer-brand p {
+            color: #c4c7cd;
+            font-size: 12px;
+            line-height: 1.45;
+            margin: 0
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .footer-column h4 {
+            font-size: 13px;
+            color: #fff;
+            margin: 0 0 2px
+        }
+
+        .footer-column a {
+            color: #ddd;
+            font-size: 12px;
+            text-decoration: none
+        }
+
+        .footer-column a:hover {
+            color: #fff
+        }
+
+        .site-footer-bottom {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            border-top: 1px solid #555;
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 11px;
+        }
+
+        @media(max-width:760px) {
+            .site-footer {
+                padding-left: 16px;
+                padding-right: 16px
+            }
+
+            .site-footer-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                padding-bottom: 30px
+            }
+
+            .footer-brand {
+                grid-column: 1/-1;
+                max-width: none
+            }
+        }
+
+        @media(max-width:480px) {
+            .site-footer-inner {
+                grid-template-columns: 1fr
+            }
+
+            .footer-brand {
+                grid-column: auto
+            }
+
+            .site-footer-bottom {
+                font-size: 10px
+            }
+        }
+    </style>
+
+
+    <style id="tier1-tier2-reference-footer">
+        .reference-footer {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 42px 24px 22px;
+            margin-top: 28px
+        }
+
+        .reference-footer-inner {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1fr;
+            gap: 50px;
+            padding: 0 0 30px
+        }
+
+        .reference-footer .footer-brand {
+            max-width: 330px
+        }
+
+        .reference-footer .footer-logo-mark {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #fff;
+            border-radius: 7px;
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+            color: #fff;
+            margin-bottom: 7px
+        }
+
+        .reference-footer .footer-brand-name {
+            font-size: 14px;
+            letter-spacing: .04em;
+            color: #fff;
+            margin-bottom: 9px
+        }
+
+        .reference-footer .footer-brand p {
+            color: #c4c7cd;
+            font-size: 12px;
+            line-height: 1.45;
+            margin: 0
+        }
+
+        .reference-footer .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .reference-footer .footer-column h4 {
+            font-size: 13px;
+            color: #fff;
+            margin: 0 0 2px
+        }
+
+        .reference-footer .footer-column a {
+            color: #ddd;
+            font-size: 12px;
+            text-decoration: none
+        }
+
+        .reference-footer .footer-column a:hover {
+            color: #fff
+        }
+
+        .reference-footer-bottom {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            border-top: 1px solid #555;
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 11px
+        }
+
+        @media(max-width:760px) {
+            .reference-footer {
+                padding-left: 16px;
+                padding-right: 16px
+            }
+
+            .reference-footer-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                padding-bottom: 24px
+            }
+
+            .reference-footer .footer-brand {
+                grid-column: 1/-1;
+                max-width: none
+            }
+        }
+
+        @media(max-width:480px) {
+            .reference-footer-inner {
+                grid-template-columns: 1fr
+            }
+
+            .reference-footer .footer-brand {
+                grid-column: auto
+            }
+
+            .reference-footer-bottom {
+                font-size: 10px
+            }
+        }
+    </style>
+
+    <style id="tier3-faq-footer-only">
+        .tier3-faq-footer {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            margin-top: 28px;
+            padding: 62px 24px 0;
+        }
+
+        .tier3-faq {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .tier3-faq h2 {
+            color: #fff;
+            font-size: 30px !important;
+            line-height: 1.12;
+            letter-spacing: -.8px;
+            margin: 0 auto 8px;
+            max-width: 650px;
+        }
+
+        .tier3-faq>p {
+            color: #c4c7cd;
+            font-size: 11px !important;
+            line-height: 1.4;
+            margin: 0 auto 20px;
+        }
+
+        .tier3-faq-list {
+            width: min(510px, 100%);
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .tier3-faq-item {
+            background: #252525;
+            margin-bottom: 7px;
+        }
+
+        .tier3-faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px 18px;
+            border: 0;
+            background: transparent;
+            color: #fff;
+            text-align: left;
+            cursor: pointer;
+            font-size: 12px !important;
+            font-weight: 700;
+        }
+
+        .tier3-faq-question .faq-arrow {
+            color: #1683ff;
+            font-size: 15px;
+            flex: 0 0 auto;
+            transition: transform .2s ease;
+        }
+
+        .tier3-faq-answer {
+            display: none;
+            padding: 0 18px 16px;
+            color: #c4c7cd;
+            font-size: 11px !important;
+            line-height: 1.55;
+        }
+
+        .tier3-faq-item.open .tier3-faq-answer {
+            display: block
+        }
+
+        .tier3-faq-item.open .faq-arrow {
+            transform: rotate(180deg)
+        }
+
+        .tier3-reference-footer {
+            width: min(1050px, 100%);
+            margin: 76px auto 0;
+            padding: 0 0 22px;
+        }
+
+        .tier3-reference-footer-inner {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .tier3-reference-footer .footer-brand {
+            max-width: 330px
+        }
+
+        .tier3-reference-footer .footer-logo-mark {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #fff;
+            border-radius: 7px;
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+            color: #fff;
+            margin-bottom: 7px;
+        }
+
+        .tier3-reference-footer .footer-brand-name {
+            font-size: 14px;
+            color: #fff;
+            letter-spacing: .04em;
+            margin-bottom: 9px;
+        }
+
+        .tier3-reference-footer .footer-brand p {
+            color: #c4c7cd;
+            font-size: 12px !important;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        .tier3-reference-footer .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .tier3-reference-footer .footer-column h4 {
+            font-size: 13px !important;
+            color: #fff;
+            margin: 0 0 2px;
+        }
+
+        .tier3-reference-footer .footer-column a {
+            color: #ddd;
+            font-size: 12px !important;
+            text-decoration: none;
+        }
+
+        .tier3-reference-footer .footer-column a:hover {
+            color: #fff
+        }
+
+        .tier3-reference-footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 11px !important;
+        }
+
+        @media(max-width:760px) {
+            .tier3-faq-footer {
+                padding-left: 16px;
+                padding-right: 16px
+            }
+
+            .tier3-reference-footer-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                padding-bottom: 24px
+            }
+
+            .tier3-reference-footer .footer-brand {
+                grid-column: 1/-1;
+                max-width: none
+            }
+        }
+
+        @media(max-width:480px) {
+            .tier3-reference-footer-inner {
+                grid-template-columns: 1fr
+            }
+
+            .tier3-reference-footer .footer-brand {
+                grid-column: auto
+            }
+
+            .tier3-reference-footer-bottom {
+                font-size: 10px !important
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <a class="logo" href="#home">Stop<span>Reg</span></a>
+            <nav class="navlinks">
+                <a href="#providers">Providers</a><a href="#provider">Provider</a><a href="#domains">Domains</a><a
+                    href="#domain">Domain Details</a><a href="#api">API</a>
+            </nav>
+            <a class="btn primary" href="#domain">Check Email</a>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- HOME -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <span class="eyebrow">PROGRAMMATIC SEO ARCHITECTURE</span>
+                <h1>Three layers of email domain intelligence.</h1>
+                <p>A professional directory experience designed for scalable provider, domain and subdomain SEO pages
+                    while keeping every page useful to visitors.</p>
+            </div>
+            <div class="twocol">
+                <a class="card" href="#providers">
+                    <h2>Tier 1 · Providers</h2>
+                    <p>Browse disposable and temporary email providers. Each provider has its own SEO landing page and
+                        domain portfolio.</p>
+                </a>
+                <a class="card" href="#domains">
+                    <h2>Tier 2 · Domains</h2>
+                    <p>Browse domains belonging to a provider with searchable, paginated table and grid layouts.</p>
+                </a>
+                <a class="card" href="#domain">
+                    <h2>Tier 3 · Domain intelligence</h2>
+                    <p>Detailed domain classification, MX information and a paginated subdomain directory.</p>
+                </a>
+                <a class="card" href="#api">
+                    <h2>StopReg API</h2>
+                    <p>Turn the intelligence shown on these pages into automated signup protection.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- TIER 1 -->
+        <section id="providers" class="page">
+            <div class="breadcrumb"><a href="#home">StopReg</a><span>/</span><span>Providers</span></div>
+            <div class="hero">
+                <span class="eyebrow">TIER 1 · PROVIDER DIRECTORY</span>
+                <h1>Disposable Email Providers</h1>
+                <p>Explore disposable and temporary email providers and view the domains associated with each provider.
+                    Open a provider to explore its domain portfolio.</p>
+            </div>
+            <div class="card">
+                <div class="toolbar">
+                    <div class="controls">
+
+                        <div class="viewtoggle"><button class="active"
+                                onclick="setView('providers','table',this)">Table</button><button
+                                onclick="setView('providers','grid',this)">Grid</button></div>
+                    </div>
+                </div>
+
+                <div id="providers-table" class="tableview">
+                    <div class="tablewrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Provider</th>
+                                    <th>Type</th>
+                                    <th>Domains</th>
+                                    <th>Subdomains</th>
+                                    <th>Updated</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-search="10 minute mail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">10 Minute Mail</div>
+                                            <div class="subtext">Temporary email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>24</td>
+                                    <td>128</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="tempmail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">TempMail</div>
+                                            <div class="subtext">Temporary mailbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>18</td>
+                                    <td>94</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="guerrilla mail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Guerrilla Mail</div>
+                                            <div class="subtext">Temporary email provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>12</td>
+                                    <td>61</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="maildrop">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Maildrop</div>
+                                            <div class="subtext">Public temporary inbox</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>9</td>
+                                    <td>42</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="yopmail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">YOPmail</div>
+                                            <div class="subtext">Disposable mailbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>15</td>
+                                    <td>73</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="emailondeck">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">EmailOnDeck</div>
+                                            <div class="subtext">Temporary email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>8</td>
+                                    <td>36</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="mailinator">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Mailinator</div>
+                                            <div class="subtext">Public temporary email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>21</td>
+                                    <td>109</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="throwawaymail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">ThrowAwayMail</div>
+                                            <div class="subtext">Disposable email provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>7</td>
+                                    <td>31</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="minuteinbox">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">MinuteInbox</div>
+                                            <div class="subtext">Temporary mailbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>6</td>
+                                    <td>28</td>
+                                    <td>3 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="mohmal">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Mohmal</div>
+                                            <div class="subtext">Temporary email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>11</td>
+                                    <td>49</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="emailtemp">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">EmailTemp</div>
+                                            <div class="subtext">Disposable inbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>5</td>
+                                    <td>24</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">10MinuteMail</div>
+                                            <div class="subtext">Temporary email provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>10</td>
+                                    <td>45</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="getnada">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">GetNada</div>
+                                            <div class="subtext">Temporary mailbox service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>13</td>
+                                    <td>57</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="mytemp.email">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">MyTemp.email</div>
+                                            <div class="subtext">Disposable email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>4</td>
+                                    <td>19</td>
+                                    <td>3 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="tempr.email">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Tempr.email</div>
+                                            <div class="subtext">Temporary email provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>8</td>
+                                    <td>34</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="fake mail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Fake Mail</div>
+                                            <div class="subtext">Disposable mailbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>6</td>
+                                    <td>27</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="mailnesia">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Mailnesia</div>
+                                            <div class="subtext">Temporary email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>9</td>
+                                    <td>41</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="harakirimail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Harakirimail</div>
+                                            <div class="subtext">Disposable email provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>5</td>
+                                    <td>22</td>
+                                    <td>3 days ago</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="crazymailing">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">Crazymailing</div>
+                                            <div class="subtext">Temporary inbox provider</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>4</td>
+                                    <td>18</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                                <tr data-search="dropmail">
+                                    <td><a href="#provider">
+                                            <div class="primarytext">DropMail</div>
+                                            <div class="subtext">Disposable email service</div>
+                                        </a></td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td>7</td>
+                                    <td>33</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#provider">View →</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="providers-grid" class="gridview hidden">
+                    <a class="itemcard" href="#provider" data-search="10 minute mail">
+                        <div class="itemtop">
+                            <div class="itemicon">1</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10 Minute Mail</h3>
+                        <p>Temporary email service with 24 associated domains.</p>
+                        <div class="itemmeta"><span>24 domains</span><span>128 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="tempmail">
+                        <div class="itemtop">
+                            <div class="itemicon">T</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>TempMail</h3>
+                        <p>Temporary mailbox provider with 18 associated domains.</p>
+                        <div class="itemmeta"><span>18 domains</span><span>94 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="guerrilla mail">
+                        <div class="itemtop">
+                            <div class="itemicon">G</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Guerrilla Mail</h3>
+                        <p>Temporary email provider with 12 associated domains.</p>
+                        <div class="itemmeta"><span>12 domains</span><span>61 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="maildrop">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Maildrop</h3>
+                        <p>Public temporary inbox with 9 associated domains.</p>
+                        <div class="itemmeta"><span>9 domains</span><span>42 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="yopmail">
+                        <div class="itemtop">
+                            <div class="itemicon">Y</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>YOPmail</h3>
+                        <p>Disposable mailbox provider with 15 associated domains.</p>
+                        <div class="itemmeta"><span>15 domains</span><span>73 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="emailondeck">
+                        <div class="itemtop">
+                            <div class="itemicon">E</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>EmailOnDeck</h3>
+                        <p>Temporary email service with 8 associated domains.</p>
+                        <div class="itemmeta"><span>8 domains</span><span>36 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="mailinator">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Mailinator</h3>
+                        <p>Public temporary email service with 21 associated domains.</p>
+                        <div class="itemmeta"><span>21 domains</span><span>109 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="throwawaymail">
+                        <div class="itemtop">
+                            <div class="itemicon">T</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>ThrowAwayMail</h3>
+                        <p>Disposable email provider with 7 associated domains.</p>
+                        <div class="itemmeta"><span>7 domains</span><span>31 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="minuteinbox">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>MinuteInbox</h3>
+                        <p>Temporary mailbox provider with 6 associated domains.</p>
+                        <div class="itemmeta"><span>6 domains</span><span>28 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="mohmal">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Mohmal</h3>
+                        <p>Temporary email service with 11 associated domains.</p>
+                        <div class="itemmeta"><span>11 domains</span><span>49 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="emailtemp">
+                        <div class="itemtop">
+                            <div class="itemicon">E</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>EmailTemp</h3>
+                        <p>Disposable inbox provider with 5 associated domains.</p>
+                        <div class="itemmeta"><span>5 domains</span><span>24 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="10minutemail">
+                        <div class="itemtop">
+                            <div class="itemicon">1</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10MinuteMail</h3>
+                        <p>Temporary email provider with 10 associated domains.</p>
+                        <div class="itemmeta"><span>10 domains</span><span>45 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="getnada">
+                        <div class="itemtop">
+                            <div class="itemicon">G</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>GetNada</h3>
+                        <p>Temporary mailbox service with 13 associated domains.</p>
+                        <div class="itemmeta"><span>13 domains</span><span>57 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="mytemp.email">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>MyTemp.email</h3>
+                        <p>Disposable email service with 4 associated domains.</p>
+                        <div class="itemmeta"><span>4 domains</span><span>19 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="tempr.email">
+                        <div class="itemtop">
+                            <div class="itemicon">T</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Tempr.email</h3>
+                        <p>Temporary email provider with 8 associated domains.</p>
+                        <div class="itemmeta"><span>8 domains</span><span>34 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="fake mail">
+                        <div class="itemtop">
+                            <div class="itemicon">F</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Fake Mail</h3>
+                        <p>Disposable mailbox provider with 6 associated domains.</p>
+                        <div class="itemmeta"><span>6 domains</span><span>27 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="mailnesia">
+                        <div class="itemtop">
+                            <div class="itemicon">M</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Mailnesia</h3>
+                        <p>Temporary email service with 9 associated domains.</p>
+                        <div class="itemmeta"><span>9 domains</span><span>41 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="harakirimail">
+                        <div class="itemtop">
+                            <div class="itemicon">H</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Harakirimail</h3>
+                        <p>Disposable email provider with 5 associated domains.</p>
+                        <div class="itemmeta"><span>5 domains</span><span>22 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="crazymailing">
+                        <div class="itemtop">
+                            <div class="itemicon">C</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>Crazymailing</h3>
+                        <p>Temporary inbox provider with 4 associated domains.</p>
+                        <div class="itemmeta"><span>4 domains</span><span>18 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                    <a class="itemcard" href="#provider" data-search="dropmail">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>DropMail</h3>
+                        <p>Disposable email service with 7 associated domains.</p>
+                        <div class="itemmeta"><span>7 domains</span><span>33 subdomains</span><b class="arrow">View
+                                →</b></div>
+                    </a>
+                </div>
+                <div class="pagination"><span class="muted">Showing 1–15 of 2,840+ disposable providers</span>
+                    <div class="pages"><button>Previous</button><button>Next</button></div>
+                </div>
+            </div>
+            <div class="cta">
+                <h2>Find disposable email providers before signup</h2>
+                <p>StopReg maps disposable and temporary email providers to their associated domains, helping you
+                    identify temporary email infrastructure before it becomes a source of signup abuse.</p><a
+                    class="btn" href="#api">Explore API</a>
+            </div>
+
+            <footer class="reference-footer">
+                <div class="reference-footer-inner">
+                    <div class="footer-brand">
+                        <div class="footer-logo-mark">✉</div>
+                        <div class="footer-brand-name">STOPREG</div>
+                        <p>Advanced email intelligence API built for developers who care about data quality and user
+                            privacy. Block fake, disposable, and risky emails in real-time.</p>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4><a href="#">🟢 Status</a><a href="#">Contact Us</a><a href="#">API
+                            Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Guides</a><a
+                            href="#">Disposable Email Checker</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="reference-footer-bottom"><span>StopReg © 2026 · Email intelligence for safer signups · Email
+                        intelligence for safer signups</span><span>All Rights Reserved.</span></div>
+            </footer>
+        </section>
+
+        <!-- TIER 2 -->
+        <section id="domains" class="page">
+            <div class="breadcrumb"><a href="#home">StopReg</a><span>/</span><a
+                    href="#providers">Providers</a><span>/</span><span>10 Minute Mail</span><span>/ Domains</span></div>
+            <div class="hero providerhero">
+                <div><span class="eyebrow">TIER 2 · PROVIDER DOMAINS</span>
+                    <h1>10 Minute Mail Domains</h1>
+                    <p>Browse the domains associated with 10 Minute Mail and open detailed StopReg intelligence for each
+                        domain.</p>
+                </div>
+
+            </div>
+            <div class="card">
+                <div class="toolbar">
+                    <div class="controls">
+                        <div class="subdomain-count"><span>Total subdomains</span><strong>830</strong></div>
+                        <div class="viewtoggle"><button class="active"
+                                onclick="setView('domains','table',this)">Table</button><button
+                                onclick="setView('domains','grid',this)">Grid</button></div>
+                    </div>
+                </div>
+                <div id="domains-table" class="tableview">
+                    <div class="tablewrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Domain</th>
+                                    <th>Subdomains</th>
+                                    <th>Classification</th>
+                                    <th>MX</th>
+                                    <th>Provider</th>
+                                    <th>Last checked</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-search="10minutemail.com">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.com</div>
+                                            <div class="subtext">Root domain</div>
+                                        </a></td>
+                                    <td>128</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.net">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.net</div>
+                                            <div class="subtext">Root domain</div>
+                                        </a></td>
+                                    <td>94</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="temp-mail.example">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">temp-mail.example</div>
+                                            <div class="subtext">Provider domain</div>
+                                        </a></td>
+                                    <td>61</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="mail-temp.example">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">mail-temp.example</div>
+                                            <div class="subtext">Provider domain</div>
+                                        </a></td>
+                                    <td>42</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge gray">Not found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="temporary.example">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">temporary.example</div>
+                                            <div class="subtext">Provider domain</div>
+                                        </a></td>
+                                    <td>73</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="tempbox.example">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">tempbox.example</div>
+                                            <div class="subtext">Provider domain</div>
+                                        </a></td>
+                                    <td>36</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.net">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.net</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>109</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.org">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.org</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>31</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Today</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.co">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.co</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>28</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.site">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.site</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>49</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>Yesterday</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.online">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.online</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>24</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.xyz">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.xyz</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>45</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>2 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.info">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.info</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>57</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>3 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.app">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.app</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>19</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>3 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                                <tr data-search="10minutemail.email">
+                                    <td><a href="#domain">
+                                            <div class="primarytext">10minutemail.email</div>
+                                            <div class="subtext">Disposable email domain</div>
+                                        </a></td>
+                                    <td>34</td>
+                                    <td><span class="badge red">Disposable</span></td>
+                                    <td><span class="badge green">Found</span></td>
+                                    <td>10 Minute Mail</td>
+                                    <td>4 days ago</td>
+                                    <td><a class="arrow" href="#domain">View →</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="domains-grid" class="gridview hidden">
+                    <a class="itemcard" href="#domain" data-search="10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>128 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.net">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">10minutemail.net</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Disposable email domain associated with the provider.</p>
+                        <div class="itemmeta"><span>94 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="temp-mail.example">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">temp-mail.example</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Provider-associated disposable email domain.</p>
+                        <div class="itemmeta"><span>61 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mail-temp.example">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">mail-temp.example</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Domain classified by StopReg.</p>
+                        <div class="itemmeta"><span>42 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="temporary.example">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">temporary.example</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Temporary email domain associated with this provider.</p>
+                        <div class="itemmeta"><span>73 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="tempbox.example">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">DOMAIN</span>
+                                <h3 style="margin-top:8px">tempbox.example</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Provider-associated disposable domain.</p>
+                        <div class="itemmeta"><span>36 subdomains</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.net">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.net</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>109 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.org">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.org</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>31 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.co">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.co</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>28 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.site">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.site</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>49 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.online">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.online</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>24 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.xyz">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.xyz</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>45 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.info">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.info</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>57 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.app">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.app</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>19 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="10minutemail.email">
+                        <div class="itemtop">
+                            <div class="itemicon">D</div><span class="badge red">Disposable</span>
+                        </div>
+                        <h3>10minutemail.email</h3>
+                        <p>Disposable email domain associated with 10 Minute Mail.</p>
+                        <div class="itemmeta"><span>34 subdomains</span><b class="arrow">View →</b></div>
+                    </a>
+                </div>
+                <div class="pagination"><span class="muted">Showing 1–15 of 15 domains</span>
+                    <div class="pages"><button>Previous</button><button>Next</button></div>
+                </div>
+            </div>
+            <div class="card">
+                <h2>About 10 Minute Mail domains</h2>
+                <p>This directory contains domains associated with the provider. Each domain has an individual StopReg
+                    page containing classification signals, mail infrastructure information and discovered subdomains.
+                </p>
+            </div>
+
+            <div class="cta get-started">
+                <h2>Get Started with 200 Free Requests Every Month</h2>
+                <p>Start protecting your signup forms with StopReg email intelligence. Test disposable, relay, alias and
+                    other risky email addresses before creating accounts.</p>
+                <a class="btn" href="#api">Get Started Free →</a>
+            </div>
+
+            <footer class="reference-footer">
+                <div class="reference-footer-inner">
+                    <div class="footer-brand">
+                        <div class="footer-logo-mark">✉</div>
+                        <div class="footer-brand-name">STOPREG</div>
+                        <p>Advanced email intelligence API built for developers who care about data quality and user
+                            privacy. Block fake, disposable, and risky emails in real-time.</p>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4><a href="#">🟢 Status</a><a href="#">Contact Us</a><a href="#">API
+                            Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Guides</a><a
+                            href="#">Disposable Email Checker</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+                    </div>
+                </div>
+                <div class="reference-footer-bottom"><span>StopReg © 2026 · Email intelligence for safer signups · Email
+                        intelligence for safer signups</span><span>All Rights Reserved.</span></div>
+            </footer>
+        </section>
+
+        <!-- TIER 3 -->
+        <section id="domain" class="page">
+            <div class="breadcrumb"><a href="#home">StopReg</a><span>/</span><a
+                    href="#providers">Providers</a><span>/</span><a
+                    href="#domains">Domains</a><span>/</span><span>10minutemail.com</span></div>
+            <div class="hero domainhero">
+                <div><span class="eyebrow">TIER 3 · DOMAIN INTELLIGENCE</span>
+                    <h1>10minutemail.com</h1>
+                    <p>Complete StopReg analysis for this root domain, including DNS, mail infrastructure and discovered
+                        subdomains.</p>
+                </div>
+                <div class="statusbox">
+                    <div class="statusicon">!</div>
+                    <div><strong>Disposable Email</strong><br><small>StopReg classification</small></div>
+                </div>
+            </div>
+
+            <div class="card domain-overview">
+                <div class="eyebrow">DOMAIN OVERVIEW</div>
+                <h2 style="margin-top:9px">About winter.web.id</h2>
+                <p><strong>winter.web.id</strong> is a disposable email domain associated with temporary email services.
+                    StopReg identifies winter.web.id as a disposable email domain and provides information to help
+                    websites recognize and manage registrations using temporary email addresses.</p>
+                <div class="overview-meta">
+                    <div><span>Domain Age</span><strong>1 Year, 1 Month</strong></div>
+                    <div><span>First Seen</span><strong>2026-09-19</strong></div>
+                    <div><span>Last Seen</span><strong>2026-10-03</strong></div>
+                    <div><span>Registrar</span><strong>PT Exabytes Network</strong></div>
+                </div>
+            </div>
+
+
+
+
+            <div class="card">
+                <div class="cardhead">
+                    <div><span class="eyebrow">SUBDOMAIN DIRECTORY</span>
+                        <h2 style="margin-top:9px">Subdomains of 10minutemail.com</h2>
+                        <p>Discovered subdomains associated with this root domain. Each subdomain can have its own
+                            detailed classification page.</p>
+                    </div><span class="badge gray">128 discovered</span>
+                </div>
+                <div class="subdomain-toolbar">
+                    <div class="subdomain-count"><span>Total subdomains</span><strong>128</strong></div>
+                    <div class="controls">
+                        <div class="viewtoggle"><button class="active"
+                                onclick="setView('subdomains','table',this)">Table</button><button
+                                onclick="setView('subdomains','grid',this)">Grid</button></div>
+                    </div>
+                </div>
+
+                <div id="subdomains-table" class="tableview">
+                    <div class="tablewrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Subdomain</th>
+                                    <th>Root Domain</th>
+                                    <th>Resolved IP</th>
+                                    <th>Last checked</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-search="mail.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mail.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.10</td>
+                                    <td>Today</td>
+                                </tr>
+                                <tr data-search="temp.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">temp.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.11</td>
+                                    <td>Today</td>
+                                </tr>
+                                <tr data-search="api.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">api.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.12</td>
+                                    <td>Yesterday</td>
+                                </tr>
+                                <tr data-search="mx.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mx.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.13</td>
+                                    <td>Yesterday</td>
+                                </tr>
+                                <tr data-search="smtp.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">smtp.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.14</td>
+                                    <td>2 days ago</td>
+                                </tr>
+                                <tr data-search="webmail.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">webmail.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.15</td>
+                                    <td>2 days ago</td>
+                                </tr>
+                                <tr data-search="mail2.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mail2.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.16</td>
+                                    <td>3 days ago</td>
+                                </tr>
+                                <tr data-search="mx2.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mx2.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.17</td>
+                                    <td>3 days ago</td>
+                                </tr>
+                                <tr data-search="smtp2.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">smtp2.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.18</td>
+                                    <td>4 days ago</td>
+                                </tr>
+                                <tr data-search="portal.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">portal.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.19</td>
+                                    <td>4 days ago</td>
+                                </tr>
+                                <tr data-search="inbox.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">inbox.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.20</td>
+                                    <td>5 days ago</td>
+                                </tr>
+                                <tr data-search="relay.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">relay.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.21</td>
+                                    <td>5 days ago</td>
+                                </tr>
+                                <tr data-search="mail3.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mail3.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.22</td>
+                                    <td>6 days ago</td>
+                                </tr>
+                                <tr data-search="mx3.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">mx3.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.23</td>
+                                    <td>6 days ago</td>
+                                </tr>
+                                <tr data-search="smtp3.10minutemail.com">
+                                    <td>
+                                        <div class="primarytext">smtp3.10minutemail.com</div>
+                                    </td>
+                                    <td>10minutemail.com</td>
+                                    <td>192.0.2.24</td>
+                                    <td>7 days ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="subdomains-grid" class="gridview hidden">
+                    <a class="itemcard" href="#domain" data-search="mail.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mail.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.10</p>
+                        <div class="itemmeta"><span>Today</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="temp.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">temp.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.11</p>
+                        <div class="itemmeta"><span>Today</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="api.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">api.10minutemail.com</h3>
+                            </div><span class="badge gray">Unknown</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.12</p>
+                        <div class="itemmeta"><span>Yesterday</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mx.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mx.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.13</p>
+                        <div class="itemmeta"><span>Yesterday</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="smtp.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">smtp.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.14</p>
+                        <div class="itemmeta"><span>2 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="webmail.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">webmail.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.15</p>
+                        <div class="itemmeta"><span>2 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mail2.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mail2.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.16</p>
+                        <div class="itemmeta"><span>3 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mx2.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mx2.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.17</p>
+                        <div class="itemmeta"><span>3 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="smtp2.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">smtp2.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.18</p>
+                        <div class="itemmeta"><span>4 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="portal.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">portal.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.19</p>
+                        <div class="itemmeta"><span>4 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="inbox.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">inbox.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.20</p>
+                        <div class="itemmeta"><span>5 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="relay.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">relay.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.21</p>
+                        <div class="itemmeta"><span>5 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mail3.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mail3.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.22</p>
+                        <div class="itemmeta"><span>6 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="mx3.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">mx3.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.23</p>
+                        <div class="itemmeta"><span>6 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                    <a class="itemcard" href="#domain" data-search="smtp3.10minutemail.com">
+                        <div class="itemtop">
+                            <div><span class="eyebrow">SUBDOMAIN</span>
+                                <h3 style="margin-top:8px">smtp3.10minutemail.com</h3>
+                            </div><span class="badge red">Disposable</span>
+                        </div>
+                        <p>Root: 10minutemail.com · IP: 192.0.2.24</p>
+                        <div class="itemmeta"><span>7 days ago</span><b class="arrow">Details →</b></div>
+                    </a>
+                </div>
+                <div class="pagination"><span class="muted">Showing 1–15 of 128 subdomains</span>
+                    <div class="pages"><button>Previous</button><button>Next</button></div>
+                </div>
+            </div>
+
+            <div class="tier3-conversion-layout">
+                <div class="tier3-validation-column">
+                    <div class="card api-response-card">
+                        <div class="cardhead">
+                            <div><span class="eyebrow">API RESPONSE</span>
+                                <h2 style="margin-top:9px">Domain validation result</h2>
+                                <p>The same intelligence shown on this page can be returned through the StopReg API.</p>
+                            </div>
+                            <button class="btn copy-json" onclick="copyDomainJson(this)"
+                                aria-label="Copy JSON response">⧉ Copy JSON</button>
+                        </div>
+                        <pre id="domain-json" class="code"><code>{
+  "domain": "10minutemail.com",
+  "classification": {
+    "is_disposable": true,
+    "is_relay": false,
+    "is_alias": false,
+    "is_forwarding": false,
+    "is_role_based": false,
+    "is_public": false
+  },
+  "mail_server": {
+    "mx_found": true,
+    "mx_provider": "Temporary Mail Infrastructure",
+    "mx_records": [
+      "mail.example.net"
+    ]
+  },
+  "provider": {
+    "name": "10 Minute Mail"
+  },
+  "status": "active"
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tier3-promo-column">
+                    <div class="card quick-actions-sample">
+                        <h2>QUICK ACTIONS</h2>
+                        <div class="quick-action-list">
+                            <a class="quick-action-row" href="#domain">
+                                <span class="quick-action-icon">✉</span>
+                                <span class="quick-action-copy"><strong>Check another email or
+                                        domain</strong><small>Start a new lookup</small></span>
+                            </a>
+                            <a class="quick-action-row" href="#api">
+                                <span class="quick-action-icon">↗</span>
+                                <span class="quick-action-copy"><strong>API Documentation</strong><small>Explore our API
+                                        docs</small></span>
+                            </a>
+                            <a class="quick-action-row" href="#api">
+                                <span class="quick-action-icon">▤</span>
+                                <span class="quick-action-copy"><strong>Report incorrect data</strong><small>Help us
+                                        improve our database</small></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card api-access-card">
+                        <div class="api-access-copy">
+                            <h2>API Access</h2>
+                            <div class="api-subheading">Integrate real-time disposable email detection into your
+                                application.</div>
+                        </div>
+                        <div class="api-features">
+                            <div class="api-feature"><span class="feature-check">✓</span><span>Real-time results</span>
+                            </div>
+                            <div class="api-feature"><span class="feature-check">✓</span><span>200+ free
+                                    requests/month</span></div>
+                            <div class="api-feature"><span class="feature-check">✓</span><span>99.9% uptime</span></div>
+                        </div>
+                        <a class="api-doc-btn" href="#api">View API Documentation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card dns-records-card">
+                <h2 style="font-size:18px;margin-bottom:10px">DNS &amp; MAIL RECORDS</h2>
+                <div class="dns-tabs">
+                    <span class="active">MX
+                        Records</span><span>SPF</span><span>DMARC</span><span>DKIM</span><span>A/AAAA</span><span>NS</span><span>SOA</span><span>TXT</span><span>DNSSEC</span>
+                </div>
+                <div class="dns-scroll">
+                    <table class="dns-table">
+                        <thead>
+                            <tr>
+                                <th>Priority</th>
+                                <th>Host</th>
+                                <th>Mail Server</th>
+                                <th>TTL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>35</td>
+                                <td>route3.mx.cloudflare.net</td>
+                                <td>route3.mx.cloudflare.net</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td>route1.mx.cloudflare.net</td>
+                                <td>route1.mx.cloudflare.net</td>
+                                <td>N/A</td>
+                            </tr>
+                            <tr>
+                                <td>27</td>
+                                <td>route2.mx.cloudflare.net</td>
+                                <td>route2.mx.cloudflare.net</td>
+                                <td>N/A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dns-note"><span class="dns-info">!</span><span>MX records indicate that this domain can
+                        receive emails</span></div>
+            </div>
+
+            <div class="tier3-provider-checker-row">
+                <div class="tier3-email-checker-card">
+                    <h2>Check any email address or domain</h2>
+                    <p>Verify whether an email address is disposable, temporary or risky.</p>
+                    <a class="btn" href="#domain">Go to Disposable Email Checker</a>
+                </div>
+
+                <div class="tier3-provider-side">
+                    <div class="card">
+                        <h2 style="margin-top:0">10 Minute Mail</h2>
+                        <p>This root domain is associated with the 10 Minute Mail provider.</p>
+                        <a class="btn" href="#provider">View Provider →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier3-cta-related-row">
+                <div class="cta">
+                    <h2>Block disposable emails before signup</h2>
+                    <p>Use StopReg to classify email addresses in real time and prevent disposable, relay, alias and
+                        other unwanted addresses from entering your application.</p><a class="btn" href="#api">View API
+                        Documentation</a>
+                </div>
+
+                <div class="card">
+                    <div class="cardhead">
+                        <div>
+                            <span class="eyebrow">RELATED DOMAINS</span>
+                            <h2 style="margin-top:9px">Related domains</h2>
+                            <p>Other domains associated with the same provider or disposable email infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="related">
+                        <a href="#domain"><strong>10minutemail.net</strong></a>
+                        <a href="#domain"><strong>10minutemail.org</strong></a>
+                        <a href="#domain"><strong>10minutemail.co</strong></a>
+                        <a href="#domain"><strong>10minutemail.site</strong></a>
+                        <a href="#domain"><strong>10minutemail.online</strong></a>
+                        <a href="#domain"><strong>10minutemail.xyz</strong></a>
+                    </div>
+                    <a class="related-view-all" href="#domains">View all domains from this provider →</a>
+                </div>
+            </div>
+
+            <div class="tier3-faq-footer">
+                <div class="tier3-faq">
+                    <h2>Frequently Asked Questions About<br>winter.web.id</h2>
+                    <p>Your questions around disposable email, answered.</p>
+
+                    <div class="tier3-faq-list">
+                        <div class="tier3-faq-item">
+                            <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                                <span>1. Is winter.web.id a disposable email domain?</span>
+                                <span class="faq-arrow">⌄</span>
+                            </button>
+                            <div class="tier3-faq-answer">Yes. StopReg classifies winter.web.id as a disposable email
+                                domain associated with temporary email infrastructure.</div>
+                        </div>
+
+                        <div class="tier3-faq-item">
+                            <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                                <span>2. What is winter.web.id used for?</span>
+                                <span class="faq-arrow">⌄</span>
+                            </button>
+                            <div class="tier3-faq-answer">The domain is associated with temporary email services and can
+                                be used for disposable email addresses.</div>
+                        </div>
+
+                        <div class="tier3-faq-item">
+                            <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                                <span>3. Should I block winter.web.id from my website?</span>
+                                <span class="faq-arrow">⌄</span>
+                            </button>
+                            <div class="tier3-faq-answer">If your signup policy does not allow disposable email
+                                addresses, you can block or warn on registrations using this domain.</div>
+                        </div>
+
+                        <div class="tier3-faq-item">
+                            <button class="tier3-faq-question" type="button" onclick="toggleTier3Faq(this)">
+                                <span>4. How do I prevent signups from this domain?</span>
+                                <span class="faq-arrow">⌄</span>
+                            </button>
+                            <div class="tier3-faq-answer">Use StopReg to classify the email address before account
+                                creation and apply your signup enforcement policy.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="tier3-reference-footer">
+                    <div class="tier3-reference-footer-inner">
+                        <div class="footer-brand">
+                            <div class="footer-logo-mark">✉</div>
+                            <div class="footer-brand-name">STOPREG</div>
+                            <p>Advanced email intelligence API built for developers who care about data quality and user
+                                privacy. Block fake, disposable, and risky emails in real-time.</p>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Support</h4>
+                            <a href="#">🟢 Status</a>
+                            <a href="#">Contact Us</a>
+                            <a href="#">API Documentation</a>
+                            <a href="#">Official Libraries</a>
+                            <a href="#">Submit a data correction</a>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Resources</h4>
+                            <a href="#">About</a>
+                            <a href="#">Blog</a>
+                            <a href="#">Guides</a>
+                            <a href="#">Disposable Email Checker</a>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Legal</h4>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Service</a>
+                        </div>
+                    </div>
+                    <div class="tier3-reference-footer-bottom">
+                        <span>StopReg © 2026 · Email intelligence for safer signups · Email intelligence for safer
+                            signups</span>
+                        <span>All Rights Reserved.</span>
+                    </div>
+                </footer>
+            </div>
+        </section>
+
+        <!-- API -->
+        <section id="api" class="page">
+            <div class="breadcrumb"><a href="#home">StopReg</a><span>/</span><span>API</span></div>
+            <div class="hero"><span class="eyebrow">DEVELOPER API</span>
+                <h1>Real-time email intelligence</h1>
+                <p>Classify disposable, relay, alias, role-based and other risky email addresses before creating
+                    accounts.</p>
+            </div>
+            <div class="card">
+                <h2>Example API response</h2>
+                <pre class="code"><code>{
+  "email": "user@example.com",
+  "classification": {
+    "is_disposable": true,
+    "is_relay": false,
+    "is_alias": false,
+    "is_role_based": false
+  },
+  "mail_server": {
+    "mx_found": true
+  }
+}</code></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showPage() {
+            const id = (location.hash || '#home').substring(1);
+            document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+            (document.getElementById(id) || document.getElementById('home')).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        window.addEventListener('hashchange', showPage); showPage();
+
+        function setView(section, view, button) {
+            const table = document.getElementById(section + '-table');
+            const grid = document.getElementById(section + '-grid');
+            table.classList.toggle('hidden', view !== 'table');
+            grid.classList.toggle('hidden', view !== 'grid');
+            button.parentElement.querySelectorAll('button').forEach(x => x.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function filterItems(section, value) {
+            value = value.toLowerCase().trim();
+            ['table', 'grid'].forEach(view => {
+                const root = document.getElementById(section + '-' + view);
+                if (!root) return;
+                root.querySelectorAll('[data-search]').forEach(item => {
+                    item.style.display = item.dataset.search.toLowerCase().includes(value) ? '' : 'none';
+                });
+            });
+        }
+
+
+        async function copyDomainJson(button) {
+            const code = document.querySelector('#domain-json code');
+            if (!code) return;
+            try {
+                await navigator.clipboard.writeText(code.innerText);
+                const original = button.innerHTML;
+                button.innerHTML = '✓ Copied';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = original;
+                    button.classList.remove('copied');
+                }, 1600);
+            } catch (e) {
+                const range = document.createRange();
+                range.selectNodeContents(code);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand('copy');
+                selection.removeAllRanges();
+                button.innerHTML = '✓ Copied';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = '⧉ Copy JSON';
+                    button.classList.remove('copied');
+                }, 1600);
+            }
+        }
+
+        function setPageSize(section, value) {
+            // UI-only demo control. Connect this to server-side pagination in production.
+            console.log(section, value);
+        }
+    </script>
+
+    <script>
+        function toggleTier3Faq(button) {
+            const item = button.closest('.tier3-faq-item');
+            item.classList.toggle('open');
+        }
+    </script>
+
+</body>
+
+</html>

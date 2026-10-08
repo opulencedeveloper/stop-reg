@@ -220,6 +220,7 @@
             </div>
             <div class="seo-tabs">
               <button class="seo-tab-btn active" data-tab="disposables">Disposable Domains</button>
+              <button class="seo-tab-btn" data-tab="disposable-subdomains">Disposable Subdomains</button>
               <button class="seo-tab-btn" data-tab="meta-provider">Meta Provider</button>
               <button class="seo-tab-btn" data-tab="meta-domains">Meta Domains</button>
               <button class="seo-tab-btn" data-tab="provider-descriptions">Provider Descriptions</button>
@@ -250,6 +251,30 @@
                     </tr>
                   </thead>
                   <tbody id="disposables-tbody">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Disposable Subdomains Tab Content -->
+            <div class="tab-content" id="disposable-subdomains-content">
+              <div class="chart-loading-state" id="admin-subdomains-loading" style="display: none;">
+                <div class="chart-spinner"></div>
+                <span class="chart-loading-text">Loading disposable subdomains...</span>
+              </div>
+
+              <div class="subdomains-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Provider</th>
+                      <th>Domain</th>
+                      <th>Subdomain</th>
+                      <th>Flagged Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="subdomains-tbody">
                     <!-- Dynamic Rows -->
                   </tbody>
                 </table>

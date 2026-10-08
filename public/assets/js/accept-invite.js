@@ -7,7 +7,8 @@
  * - Handles Form Validation (Custom) and Submission
  */
 
-const API_BASE_URL = 'https://api.stopreg.com/api/v1';
+const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE_URL = isDev ? 'http://localhost:8080/api/v1' : 'https://api.stopreg.com/api/v1';
 
 document.addEventListener('DOMContentLoaded', async () => {
     // -------------------------------------------------------------------------

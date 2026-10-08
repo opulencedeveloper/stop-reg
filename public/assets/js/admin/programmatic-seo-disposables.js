@@ -24,7 +24,8 @@ function getEnumOptions(field) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const adminToken = localStorage.getItem("adminToken");
-    const BASE_URL = "https://api.stopreg.com/api/v1/admin";
+    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const BASE_URL = isDev ? "http://localhost:8080/api/v1/admin" : "https://api.stopreg.com/api/v1/admin";
 
     // --- DOM ELEMENTS ---
     const getEl = (id) => document.getElementById(id);
@@ -142,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const method = options.method || 'GET';
 
             if (window.handleAdminAuthError(response)) {
-                console.warn(`[API] ${method} ${endpoint} - Auth error (${response.status})`);
                 return null;
             }
 
@@ -150,12 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 responseData = await response.json();
             } catch (parseError) {
-                console.warn(`[API Parse Warning] ${method} ${endpoint}: Could not parse response as JSON`, parseError.message);
                 responseData = {};
             }
 
             if (!response.ok) {
-                console.error(`[API Error] ${method} ${endpoint}`, {
                     status: response.statusText,
                     statusCode: response.status,
                     description: responseData.description || responseData.message || 'Unknown error',
@@ -165,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return responseData;
         } catch (error) {
-            console.error(`[API Fetch Error] ${options.method || 'GET'} ${endpoint}:`, {
                 message: error.message,
                 stack: error.stack,
                 error: error
@@ -179,9 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- UI HELPERS ---
     const showLoading = () => {
-        console.log("showLoading called, currentTab:", currentTab);
         const activeTabContent = document.querySelector(".tab-content.active");
-        console.log("activeTabContent:", activeTabContent);
 
         if (activeTabContent) {
             // Hide all buttons in this tab's header
@@ -189,7 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
             buttons.forEach(btn => {
                 btn.style.display = "none";
                 btn.disabled = true;
-                console.log("Hiding button:", btn.className);
             });
 
             // Find existing spinner or create one
@@ -214,11 +208,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     activeTabContent.insertBefore(spinner, activeTabContent.firstChild);
                 }
-                console.log("Created new spinner for", currentTab);
             }
 
             spinner.style.display = "flex";
-            console.log("Showing spinner for", currentTab);
 
             // Hide count card container (keep visible only for sitemap tabs during search)
             const countCardCont = activeTabContent.querySelector(".sitemap-count-card-cont");
@@ -227,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const isSitemapTab = currentTab === "provider-sitemaps" || currentTab === "domain-sitemaps";
                 if (!isSearch || !isSitemapTab) {
                     countCardCont.style.display = "none";
-                    console.log("Hiding count card container");
                 }
             }
 
@@ -235,7 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const tableWrapper = activeTabContent.querySelector("div[class*='-table-wrapper']") || activeTabContent.querySelector(".disposables-table-wrapper");
             if (tableWrapper) {
                 tableWrapper.style.display = "none";
-                console.log("Hiding table wrapper");
             }
         }
 
@@ -243,7 +233,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const hideLoading = () => {
-        console.log("hideLoading called, currentTab:", currentTab);
         const activeTabContent = document.querySelector(".tab-content.active");
 
         if (activeTabContent) {
@@ -252,28 +241,24 @@ document.addEventListener("DOMContentLoaded", () => {
             buttons.forEach(btn => {
                 btn.style.display = "";
                 btn.disabled = false;
-                console.log("Showing button:", btn.className);
             });
 
             // Hide spinner
             const spinner = activeTabContent.querySelector(".chart-loading-state");
             if (spinner) {
                 spinner.style.display = "none";
-                console.log("Hiding spinner for", currentTab);
             }
 
             // Show count card container
             const countCardCont = activeTabContent.querySelector(".sitemap-count-card-cont");
             if (countCardCont) {
                 countCardCont.style.display = "";
-                console.log("Showing count card container");
             }
 
             // Show tables and wrappers
             const tableWrapper = activeTabContent.querySelector("div[class*='-table-wrapper']") || activeTabContent.querySelector(".disposables-table-wrapper");
             if (tableWrapper) {
                 tableWrapper.style.display = "";
-                console.log("Showing table wrapper");
             }
         }
 
@@ -312,18 +297,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- DATA LOADING & RENDERING ---
     async function loadDisposables(page = 1, search = "", isSilent = false) {
-        console.log("loadDisposables called - page:", page, "search:", search, "isSilent:", isSilent);
         if (isApiLoading) {
-            console.log("API already loading, returning early");
             return;
         }
 
         isApiLoading = true;
         if (!isSilent) {
-            console.log("Calling showLoading() because isSilent is false");
             showLoading();
         } else {
-            console.log("NOT calling showLoading() because isSilent is TRUE");
         }
         try {
             const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
@@ -371,19 +352,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderPagination(pagination) {
-        console.log('[renderPagination] paginationContainer:', paginationContainer);
-        console.log('[renderPagination] pagination data:', pagination);
 
         if (!paginationContainer) {
-            console.error('[renderPagination] paginationContainer is null or undefined!');
             return;
         }
 
         const { page, pages } = pagination;
-        console.log('[renderPagination] page:', page, 'pages:', pages);
 
         if (pages <= 1) {
-            console.log('[renderPagination] Only 1 page, clearing pagination');
             paginationContainer.innerHTML = "";
             return;
         }
@@ -441,6 +417,65 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             };
         });
+    }
+
+    // --- DISPOSABLE SUBDOMAINS FUNCTIONS ---
+    async function loadDisposableSubdomains(page = 1, search = "", isSilent = false) {
+        if (isApiLoading) {
+            return;
+        }
+
+        isApiLoading = true;
+        if (!isSilent) {
+            showLoading();
+        }
+        try {
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/disposable-subdomains?page=${page}&limit=${currentLimit}${searchParam}`);
+            if (!result || result.message === "error") {
+                throw new Error(result?.description || "Failed to fetch disposable subdomains.");
+            }
+            if (!result.data) {
+                throw new Error("API returned no data field");
+            }
+
+            if (!isSilent) hideLoading();
+            renderSubdomainsTable(result.data.subdomains);
+            renderPagination(result.data.pagination);
+            showTab("disposable-subdomains-content");
+            if (paginationContainer) paginationContainer.style.display = "flex";
+
+        } catch (error) {
+            renderSectionError(error.message, () => loadDisposableSubdomains(page, search));
+        } finally {
+            isApiLoading = false;
+        }
+    }
+
+    function renderSubdomainsTable(subdomains) {
+        const tbody = getEl("subdomains-tbody");
+        if (!tbody) return;
+
+        if (subdomains.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No disposable subdomains found.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = subdomains.map(s => {
+            const date = new Date(s.flagged_date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            return `
+                <tr>
+                    <td>${s.provider || '-'}</td>
+                    <td>${s.domain || '-'}</td>
+                    <td>${s.subdomain || '-'}</td>
+                    <td>${date}</td>
+                </tr>
+            `;
+        }).join("");
     }
 
     // --- META PROVIDER FUNCTIONS ---
@@ -929,11 +964,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
             const result = await apiFetch(`/programmatic-seo/provider-sitemaps?page=${page}&limit=${currentLimit}${searchParam}`);
-            console.log('[loadProviderSitemaps] API result:', result);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
             if (!isSilent) hideLoading();
             loadedProviderSitemaps = result.data.data || [];
-            console.log('[loadProviderSitemaps] result.data.count:', result.data.count, 'publishedToday:', result.data.publishedToday);
             renderProviderSitemapsTable(loadedProviderSitemaps, result.data.count, result.data.publishedToday);
             renderPagination(result.data.pagination);
             showTab("provider-sitemaps-content");
@@ -942,21 +975,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderProviderSitemapsTable(sitemaps, count, publishedToday) {
-        console.log('[renderProviderSitemapsTable] sitemaps:', sitemaps, 'count:', count, 'publishedToday:', publishedToday);
         const tbody = getEl("provider-sitemaps-tbody");
         if (!tbody) return;
 
         const countEl = getEl("provider-sitemaps-count");
         const todayEl = getEl("provider-sitemaps-today-count");
-        console.log('[renderProviderSitemapsTable] countEl:', countEl, 'todayEl:', todayEl);
         if (countEl && count !== undefined) {
-            console.log('[renderProviderSitemapsTable] Setting count to:', count);
             countEl.textContent = count;
         } else {
-            console.log('[renderProviderSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
         }
         if (todayEl && publishedToday !== undefined && publishedToday !== null) {
-            console.log('[renderProviderSitemapsTable] Setting publishedToday to:', publishedToday);
             todayEl.textContent = publishedToday;
         }
 
@@ -1017,11 +1045,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
             const result = await apiFetch(`/programmatic-seo/domain-sitemaps?page=${page}&limit=${currentLimit}${searchParam}`);
-            console.log('[loadDomainSitemaps] API result:', result);
             if (!result || result.message === "error") throw new Error(result?.description || "Failed to fetch records.");
             if (!isSilent) hideLoading();
             loadedDomainSitemaps = result.data.data || [];
-            console.log('[loadDomainSitemaps] result.data.count:', result.data.count);
             renderDomainSitemapsTable(loadedDomainSitemaps, result.data.count, result.data.publishedToday);
             renderPagination(result.data.pagination);
             showTab("domain-sitemaps-content");
@@ -1030,17 +1056,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderDomainSitemapsTable(sitemaps, count, publishedToday) {
-        console.log('[renderDomainSitemapsTable] sitemaps:', sitemaps, 'count:', count);
         const tbody = getEl("domain-sitemaps-tbody");
         if (!tbody) return;
 
         const countEl = getEl("domain-sitemaps-count");
-        console.log('[renderDomainSitemapsTable] countEl:', countEl);
         if (countEl && count !== undefined) {
-            console.log('[renderDomainSitemapsTable] Setting count to:', count);
             countEl.textContent = count;
         } else {
-            console.log('[renderDomainSitemapsTable] Count not set - countEl:', countEl, 'count:', count);
         }
 
         const todayEl = getEl("domain-sitemaps-today-count");
@@ -1155,9 +1177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadUnpublishedProviders(page = 1, search = "", isSilent = false) {
-        console.log("loadUnpublishedProviders called - page:", page, "search:", search);
         if (isApiLoading) {
-            console.log("API already loading, returning early");
             return;
         }
 
@@ -1223,7 +1243,6 @@ document.addEventListener("DOMContentLoaded", () => {
     seoTabButtons.forEach(btn => {
         btn.onclick = () => {
             const tab = btn.dataset.tab;
-            console.log("Tab clicked:", tab);
             if (tab === currentTab) return;
             seoTabButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
@@ -1233,13 +1252,11 @@ document.addEventListener("DOMContentLoaded", () => {
             currentSearch = "";
             if (searchInput) {
                 searchInput.value = "";
-                // Show search input for disposables, provider-features, sitemap tabs, and unpublished-providers
-                if (tab === "disposables" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "unpublished-providers") {
+                // Show search input for disposables, disposable-subdomains, provider-features, sitemap tabs, and unpublished-providers
+                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "unpublished-providers") {
                     searchInput.parentElement.style.display = "flex";
-                    console.log("Showing search input");
                 } else {
                     searchInput.parentElement.style.display = "none";
-                    console.log("Hiding search input");
                 }
             }
 
@@ -1248,19 +1265,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (paginationSelectContainer) {
                 if (tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "provider-features") {
                     paginationSelectContainer.style.display = "inline-block";
-                    console.log("Showing pagination select for:", tab);
                 } else {
                     paginationSelectContainer.style.display = "none";
-                    console.log("Hiding pagination select");
                 }
             }
-            console.log("About to load tab data for:", tab);
             if (tab === "disposables") {
-                console.log("Loading disposables");
                 loadDisposables(currentPage, currentSearch);
             }
+            else if (tab === "disposable-subdomains") {
+                loadDisposableSubdomains(currentPage, currentSearch);
+            }
             else if (tab === "meta-provider") {
-                console.log("Loading meta-provider");
                 loadMetaProviders(currentPage);
             }
             else if (tab === "meta-domains") loadMetaDomains(currentPage);
@@ -1286,16 +1301,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) {
         let searchTimeout;
         searchInput.oninput = () => {
-            console.log("Search input changed:", searchInput.value);
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 currentSearch = searchInput.value.trim();
                 currentPage = 1;
                 const isSilent = false; // Always show loading spinner during search
-                console.log("Search triggered - currentTab:", currentTab, "search:", currentSearch, "isSilent:", isSilent);
                 if (currentTab === "disposables") {
-                    console.log("Calling loadDisposables with isSilent:", isSilent);
                     loadDisposables(currentPage, currentSearch, isSilent);
+                } else if (currentTab === "disposable-subdomains") {
+                    loadDisposableSubdomains(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "provider-features") {
                     loadProviderFeatures(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "provider-sitemaps") {
@@ -1321,6 +1335,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Reload current tab data with new page size
             if (currentTab === "disposables") {
                 loadDisposables(currentPage, currentSearch);
+            } else if (currentTab === "disposable-subdomains") {
+                loadDisposableSubdomains(currentPage, currentSearch);
             } else if (currentTab === "meta-provider") {
                 loadMetaProviders(currentPage);
             } else if (currentTab === "meta-domains") {
@@ -1960,7 +1976,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                console.error('[Form Submission Error]:', {
                     message: error.message,
                     stack: error.stack,
                     error: error
@@ -2050,7 +2065,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                console.error('[Form Submission Error]:', {
                     message: error.message,
                     stack: error.stack,
                     error: error
@@ -2139,7 +2153,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                console.error('[Form Submission Error]:', {
                     message: error.message,
                     stack: error.stack,
                     error: error
@@ -2239,7 +2252,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                console.error('[Form Submission Error]:', {
                     message: error.message,
                     stack: error.stack,
                     error: error
@@ -2349,7 +2361,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (providerEl) providerEl.textContent = providersCount.toLocaleString();
             if (domainEl) domainEl.textContent = domainsCount.toLocaleString();
         } catch (error) {
-            console.warn("Failed to load sitemap counts:", error.message);
         }
     }
 

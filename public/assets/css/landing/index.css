@@ -1564,14 +1564,15 @@ body {
 
 .fags-hd,
 .fags-docs {
-  font-size: 48px;
+  font-size: 48px !important;
   color: var(--color-one);
   font-family: "PlusJakartaSans-ExtraBold";
   text-align: center;
   margin: auto;
   margin-bottom: 24px;
   padding: 0px 16px;
-  max-width: 1200px;
+  max-width: 1200px !important;
+  width: 100%;
 
 }
 
@@ -1622,12 +1623,13 @@ body {
 .accordion-content {
   max-height: 0;
   overflow: hidden;
-  color: var(--color-one);
+  color: var(--color-one) !important;
   transition: max-height 0.3s ease-out;
 }
 
 .faq-answer-inner {
   padding: 20px 30px;
+  color: white;
 }
 
 .faq-answer-inner-link {
@@ -1639,7 +1641,8 @@ body {
   margin: 0;
   padding: 0;
   font-size: 17px;
-  line-height: 1.8;
+  line-height: 1.8 !important;
+  color: var(--color-one) !important;
 }
 
 .accordion-content.show {
@@ -3089,7 +3092,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 
   .fags-hd {
-    font-size: 24px;
+    font-size: 24px !important;
     margin-bottom: 10px;
   }
 
