@@ -100,3 +100,9 @@ function setDnsTab(tabType, element){
   }
 }
 
+function navigateSubdomainPage(page) {
+  const url = new URL(window.location);
+  url.searchParams.set('subdomainPage', page);
+  window.location = url.toString();
+}
+

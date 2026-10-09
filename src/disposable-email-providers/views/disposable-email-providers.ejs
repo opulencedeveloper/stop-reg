@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StopReg Programmatic SEO Directory</title>
+  <title><%= typeof metaTitle !== 'undefined' && metaTitle ? metaTitle : 'StopReg Programmatic SEO Directory' %></title>
   <meta name="description"
-    content="Explore email providers, disposable email domains, domain intelligence and subdomain data with StopReg.">
+    content="<%= typeof metaDescription !== 'undefined' && metaDescription ? metaDescription : 'Explore email providers, disposable email domains, domain intelligence and subdomain data with StopReg.' %>">
+  <link rel="canonical" href="<%= typeof canonicalUrl !== 'undefined' && canonicalUrl ? canonicalUrl : 'https://stopreg.com/disposable-email-providers' %>" />
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
@@ -104,7 +105,6 @@
         <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><span>Providers</span>
         </div>
         <div class="hero">
-          <span class="eyebrow">TIER 1 · PROVIDER DIRECTORY</span>
           <h1>Disposable Email Providers</h1>
           <p>Explore disposable and temporary email providers and view the domains associated with each provider. Open a
             provider to explore its domain portfolio.</p>
@@ -251,7 +251,7 @@
             <% } %>
         </div>
         <div class="hero providerhero">
-          <div><span class="eyebrow">TIER 2 · PROVIDER DOMAINS</span>
+          <div>
             <h1>
               <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? (selectedProvider + ' Domains' )
                 : 'Provider Domains' %>
@@ -397,7 +397,8 @@
 
         <div class="cta get-started">
           <h2>Get Started with 200 Free Requests Every Month</h2>
-          <p class="get-started-text">Start protecting your signup forms with StopReg email intelligence. Test disposable, relay, alias and other
+          <p class="get-started-text">Start protecting your signup forms with StopReg email intelligence. Test
+            disposable, relay, alias and other
             risky email addresses before creating accounts.</p>
           <a class="btn" href="/sign-up.html">Get Started Free →</a>
         </div>
@@ -420,7 +421,7 @@
                 <% } %>
         </div>
         <div class="hero domainhero">
-          <div><span class="eyebrow">TIER 3 · DOMAIN INTELLIGENCE</span>
+          <div>
             <h1>
               <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'Domain Intelligence' %>
             </h1>
@@ -430,31 +431,22 @@
                 : 'Select a domain to inspect StopReg intelligence.' %>
             </p>
 
-            
-          </div>
-          <%
-            let statusClass = 'status-standard';
-            let statusTitle = 'Standard Email';
 
-            if (typeof domainDetails !=='undefined' && domainDetails && domainDetails.classification) {
-              if (domainDetails.classification.is_disposable) {
-                statusClass = 'status-disposable';
-                statusTitle = 'Disposable Email';
-              } else if (domainDetails.classification.is_relay) {
-                statusClass = 'status-relay';
-                statusTitle = 'Email Relay';
-              } else if (domainDetails.classification.is_private) {
-                statusClass = 'status-private';
-                statusTitle = 'Private Email';
-              }
-            }
-          %>
-          <div class="statusbox <%= statusClass %>">
-                    <div class="statusicon">!</div>
-                    <div>
-                      <strong><%= statusTitle %></strong><br><small>StopReg classification</small>
-                    </div>
-                </div>
+          </div>
+          <% let statusClass='status-standard' ; let statusTitle='Standard Email' ; if (typeof domainDetails
+            !=='undefined' && domainDetails && domainDetails.classification) { if
+            (domainDetails.classification.is_disposable) { statusClass='status-disposable' ;
+            statusTitle='Disposable Email' ; } else if (domainDetails.classification.is_relay) {
+            statusClass='status-relay' ; statusTitle='Email Relay' ; } else if (domainDetails.classification.is_private)
+            { statusClass='status-private' ; statusTitle='Private Email' ; } } %>
+            <div class="statusbox <%= statusClass %>">
+              <div class="statusicon">!</div>
+              <div>
+                <strong>
+                  <%= statusTitle %>
+                </strong><br><small>StopReg classification</small>
+              </div>
+            </div>
         </div>
 
         <div class="card domain-overview">
@@ -476,12 +468,15 @@
           </p>
           <div class="overview-meta">
             <div><span>Domain Age</span><strong>
-                <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.domain_age) ? new
-                  Date(domainDetails.domain_age).toLocaleDateString() : 'N/A' %>
+                <%= (typeof domainAge !== 'undefined') ? domainAge : 'N/A' %>
               </strong></div>
             <div><span>Last Seen</span><strong>
                 <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.updatedAt) ? new
                   Date(domainDetails.updatedAt).toLocaleDateString() : 'N/A' %>
+              </strong></div>
+            <div><span>Free Subdomain</span><strong>
+                <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.classification &&
+                  domainDetails.classification.is_free_subdomain===true) ? 'Yes' : 'No' %>
               </strong></div>
           </div>
         </div>
@@ -493,10 +488,10 @@
                   selectedDomain : 'Domain' %>
               </h2>
               <p>Discovered subdomains associated with this root domain.</p>
-            </div><span class="badge gray">0 discovered</span>
+            </div><span class="badge gray"><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %> discovered</span>
           </div>
           <div class="subdomain-toolbar">
-            <div class="subdomain-count"><span>Total subdomains</span><strong>0</strong></div>
+            <div class="subdomain-count"><span>Total subdomains</span><strong><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %></strong></div>
             <div class="controls">
               <div class="viewtoggle"><button class="active"
                   onclick="setView('subdomains','table',this)">Table</button><button
@@ -511,17 +506,34 @@
                   <tr>
                     <th>Subdomain</th>
                     <th>Root Domain</th>
-                    <th>Resolved IP</th>
                     <th>Last checked</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td colspan="4" style="text-align:center;padding:30px;color:var(--muted)">No subdomains discovered
-                      for
-                      <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
-                    </td>
-                  </tr>
+                  <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
+                    <% subdomains.forEach(function(sub) { %>
+                      <tr>
+                        <td>
+                          <%= sub.subdomain || 'N/A' %>
+                        </td>
+                        <td>
+                          <%= sub.domain || selectedDomain || 'N/A' %>
+                        </td>
+                        <td>
+                          <%= sub.flagged_date ? new Date(sub.flagged_date).toLocaleDateString() : '-' %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="3" style="text-align:center;padding:30px;color:var(--muted)">No subdomains
+                              discovered
+                              for
+                              <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                                : 'this domain' %>.
+                            </td>
+                          </tr>
+                          <% } %>
                 </tbody>
               </table>
             </div>
@@ -531,9 +543,23 @@
             <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered.
             </div>
           </div>
-          <div class="pagination"><span class="muted">Showing 0 subdomains</span>
-            <div class="pages"><button disabled style="opacity:0.5;cursor:not-allowed">Previous</button><button disabled
-                style="opacity:0.5;cursor:not-allowed">Next</button></div>
+          <div class="pagination">
+            <span class="muted">Showing <%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination) ?
+                subdomainsPagination.total : 0 %> subdomains</span>
+            <div class="pages">
+              <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.page> 1)
+                { %>
+                <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page - 1 %>)">Previous</button>
+                <% } else { %>
+                  <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
+                  <% } %>
+                    <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination &&
+                      subdomainsPagination.page < subdomainsPagination.totalPages) { %>
+                      <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page + 1 %>)">Next</button>
+                      <% } else { %>
+                        <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
+                        <% } %>
+            </div>
           </div>
         </div>
 
@@ -581,11 +607,10 @@
     "allowlisted": "Login to configure the allowlist"
   },
   "policy": {
-    "action": null,
-    "reason_code": null,
-    "reason": null,
-    "risk": null,
-    "message": "Login to configure allow, warn, and block actions"
+    "action": "block",
+    "reason_code": "DISPOSABLE_DOMAIN",
+    "reason": "Domain is used for temporary email addresses",
+    "risk": "high"
   }
 }</code></pre>
             </div>
@@ -622,6 +647,47 @@
                 <div class="api-feature"><span class="feature-check">✓</span><span>99.9% uptime</span></div>
               </div>
               <a class="api-doc-btn" href="/documentation">View API Documentation</a>
+            </div>
+
+
+            <div class="tier3-cta-related-col">
+              <div class="cta">
+                <h2>Block disposable emails before signup</h2>
+                <p>Use StopReg to classify email addresses in real time and prevent disposable, relay, alias and other
+                  unwanted addresses from entering your application.</p><a class="btn" href="/documentation">View API
+                  Documentation</a>
+              </div>
+
+              <div class="card">
+                <div class="cardhead">
+                  <div>
+                    <span class="eyebrow">RELATED DOMAINS</span>
+                    <h2 style="margin-top:9px">Related domains</h2>
+                    <p>Other domains associated with <%= (typeof selectedProvider !=='undefined' && selectedProvider) ?
+                        selectedProvider : 'disposable email infrastructure' %>.</p>
+                  </div>
+                </div>
+                <div class="related">
+                  <% const otherDomains=(typeof providerDomains !=='undefined' && providerDomains) ?
+                    providerDomains.filter(function(d) { return d.domain !==selectedDomain; }).slice(0, 6) : []; %>
+                    <% if (otherDomains.length> 0) { %>
+                      <% otherDomains.forEach(function(d) { %>
+                        <a href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"><strong>
+                            <%= d.domain %>
+                          </strong></a>
+                        <% }); %>
+                          <% } else { %>
+                            <span class="muted" style="padding:10px;">No other domains registered for this provider
+                              yet.</span>
+                            <% } %>
+                </div>
+                <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
+                  <a class="related-view-all"
+                    href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View all
+                    domains
+                    from this provider →</a>
+                  <% } %>
+              </div>
             </div>
           </div>
         </div>
@@ -674,8 +740,10 @@
             <div class="dns-record-card" data-record-type="spf" style="display:none">
               <h4 class="dns-record-title">SPF RECORD</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -683,8 +751,10 @@
             <div class="dns-record-card" data-record-type="dmarc" style="display:none">
               <h4 class="dns-record-title">DMARC RECORD</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Policy</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Policy</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -692,8 +762,10 @@
             <div class="dns-record-card" data-record-type="dkim" style="display:none">
               <h4 class="dns-record-title">DKIM STATUS</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Selector</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Selector</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -701,8 +773,10 @@
             <div class="dns-record-card" data-record-type="a" style="display:none">
               <h4 class="dns-record-title">A / AAAA RECORDS</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -710,8 +784,10 @@
             <div class="dns-record-card" data-record-type="ns" style="display:none">
               <h4 class="dns-record-title">NAMESERVER (NS) RECORDS</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -719,8 +795,10 @@
             <div class="dns-record-card" data-record-type="soa" style="display:none">
               <h4 class="dns-record-title">START OF AUTHORITY (SOA) RECORD</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -728,8 +806,10 @@
             <div class="dns-record-card" data-record-type="txt" style="display:none">
               <h4 class="dns-record-title">TXT RECORDS</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Count</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
 
@@ -737,8 +817,10 @@
             <div class="dns-record-card" data-record-type="dnssec" style="display:none">
               <h4 class="dns-record-title">DNSSEC STATUS</h4>
               <div class="dns-record-content">
-                <p class="dns-record-value"><span class="shimmer" style="display: block; height: 16px; width: 80%;"></span></p>
-                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer" style="display: block; height: 16px; width: 60px;"></span></div>
+                <p class="dns-record-value"><span class="shimmer"
+                    style="display: block; height: 16px; width: 80%;"></span></p>
+                <div class="dns-record-status"><span class="dns-label">Status</span><span class="shimmer"
+                    style="display: block; height: 16px; width: 60px;"></span></div>
               </div>
             </div>
           </div>
@@ -766,44 +848,7 @@
             <% } %>
         </div>
 
-        <div class="tier3-cta-related-row">
-          <div class="cta">
-            <h2>Block disposable emails before signup</h2>
-            <p>Use StopReg to classify email addresses in real time and prevent disposable, relay, alias and other
-              unwanted addresses from entering your application.</p><a class="btn" href="/documentation">View API
-              Documentation</a>
-          </div>
 
-          <div class="card">
-            <div class="cardhead">
-              <div>
-                <span class="eyebrow">RELATED DOMAINS</span>
-                <h2 style="margin-top:9px">Related domains</h2>
-                <p>Other domains associated with <%= (typeof selectedProvider !=='undefined' && selectedProvider) ?
-                    selectedProvider : 'disposable email infrastructure' %>.</p>
-              </div>
-            </div>
-            <div class="related">
-              <% const otherDomains=(typeof providerDomains !=='undefined' && providerDomains) ?
-                providerDomains.filter(function(d) { return d.domain !==selectedDomain; }).slice(0, 6) : []; %>
-                <% if (otherDomains.length> 0) { %>
-                  <% otherDomains.forEach(function(d) { %>
-                    <a href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"><strong>
-                        <%= d.domain %>
-                      </strong></a>
-                    <% }); %>
-                      <% } else { %>
-                        <span class="muted" style="padding:10px;">No other domains registered for this provider
-                          yet.</span>
-                        <% } %>
-            </div>
-            <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
-              <a class="related-view-all"
-                href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View all domains
-                from this provider →</a>
-              <% } %>
-          </div>
-        </div>
 
 
       </section>
@@ -857,11 +902,15 @@
           </button>
           <div id="faq-1" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>Yes. StopReg classifies <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
-                  : 'this domain' %>
-                  <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %> (associated with <%=
-                      selectedProvider %>)<% } %> as a disposable email domain associated with temporary email
-                        infrastructure.</p>
+              <p>Yes. StopReg classifies <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><strong>
+                    <%= selectedDomain %>
+                  </strong>
+                  <% } else { %>this domain<% } %> as a disposable email domain<% if (typeof selectedProvider
+                        !=='undefined' && selectedProvider) { %> associated with <strong>
+                          <%= selectedProvider %>
+                        </strong>
+                        <% } %>. Email addresses using this service may be intended for temporary or short-term use,
+                          making them unsuitable for legitimate account registration.</p>
             </div>
           </div>
         </div>
@@ -877,8 +926,10 @@
           </button>
           <div id="faq-2" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>The domain is used for temporary or disposable inboxes to receive emails
-                without revealing a primary personal address.</p>
+              <p>It is associated with a disposable email service that provides temporary email addresses. These
+                services may be used for short-term registrations, free trial abuse, promotional fraud, spam, bot
+                activity, phishing, scams, and other situations where users do not want to provide a permanent email
+                address.</p>
             </div>
           </div>
         </div>
@@ -894,8 +945,9 @@
           </button>
           <div id="faq-3" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>If your signup policy does not allow disposable email addresses or temporary
-                throwaway inboxes, you can block or flag registrations using this domain.</p>
+              <p>If your website requires reliable, long-term email addresses, blocking disposable email addresses can
+                help improve signup quality and reduce abuse. StopReg can check an email address in real time and
+                provide classification data that you can use to allow, block, or flag registrations.</p>
             </div>
           </div>
         </div>
@@ -910,8 +962,10 @@
           </button>
           <div id="faq-4" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>Use the StopReg API to verify email domains in real-time before account
-                creation and enforce your signup policies</p>
+              <p>Check the email address during registration using the <a class="faq-answer-inner-link"
+                  href="/documentation">StopReg API</a>. The response includes disposable-email classification, allowing
+                your application to apply its own signup policy and decide whether the registration should be accepted,
+                blocked, or reviewed.</p>
             </div>
           </div>
         </div>
@@ -993,13 +1047,13 @@
   <script id="zsiqscript"
     src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
     defer></script>
-  <script src="/assets/js/disposable-email-providers.js" defer></script>
-  <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length > 0) { %>
+  <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length> 0) { %>
+    <script src="/assets/js/disposable-email-providers.js" defer></script>
     <script type="module" src="/assets/js/mx-status.js" defer></script>
-  <% } %>
-  <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %>
-    <script src="/assets/js/dns-records-mx.js" defer></script>
-  <% } %>
+    <% } %>
+      <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %>
+        <script src="/assets/js/dns-records-mx.js" defer></script>
+        <% } %>
 
 </body>
 

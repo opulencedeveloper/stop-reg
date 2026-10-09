@@ -657,7 +657,7 @@ p {
 
 .overview-meta {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0;
   margin-top: 22px;
   border-top: 1px solid var(--border);
@@ -1038,10 +1038,56 @@ p {
 }
 
 .tier3-cta-related-row {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
   margin: 20px 0;
+}
+
+.tier3-cta-related-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.tier3-cta-related-col>.cta {
+  margin: 0 !important;
+  padding: 0;
+}
+
+.tier3-cta-related-col>.card {
+  margin: 0;
+  height: 100%;
+}
+
+.tier3-cta-related-col .cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 30px 24px;
+  margin: 0;
+}
+
+.tier3-cta-related-col .cta h2 {
+  margin: 0 !important;
+  line-height: 1.18;
+}
+
+.tier3-cta-related-col .cta p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.tier3-cta-related-col .cta .btn {
+  align-self: flex-start;
+}
+
+.tier3-cta-related-col .related {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
 }
 
 .tier3-cta-related-row>.cta,
@@ -1075,6 +1121,20 @@ p {
   display: grid;
   grid-template-columns: 1fr;
   gap: 9px;
+}
+
+.tier3-cta-related-col .related-view-all {
+  display: block;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: #1452CA;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tier3-cta-related-col .related-view-all:hover {
+  color: #1452CA;
 }
 
 @media (max-width:760px) {
@@ -1157,7 +1217,7 @@ a.button:hover {
 .tier3-promo-column {
   display: flex;
   flex-direction: column;
-  gap: 18px
+  gap: 18px;
 }
 
 .tier3-promo-column>.card {
@@ -2293,3 +2353,6 @@ p+.btn-group,
     font-size: 10px !important
   }
 }
+
+
+

@@ -10,6 +10,7 @@ class DisposableEmailProvidersController {
       const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 15;
       const search = (req.query.search as string) || "";
       const domainPage = req.query.domainPage ? parseInt(req.query.domainPage as string, 10) : 1;
+      const subdomainPage = req.query.subdomainPage ? parseInt(req.query.subdomainPage as string, 10) : 1;
       // Extract provider and domain from route params (e.g. /provider/:provider, /domain-inteligence/:domain)
       // or fallback to query params for backwards compatibility
       const provider = (req.params.provider as string) || (req.query.provider as string) || undefined;
@@ -34,12 +35,70 @@ class DisposableEmailProvidersController {
         provider,
         domainPage,
         domain,
+        subdomainPage,
       });
 
-      const selectedProvider = provider || pageData?.domainDetails?.provider || pageData?.selectedProvider || null;
-      const selectedDomain = domain || pageData?.selectedDomain || null;
+      const selectedProvider = provider || null;  // Only use explicitly requested provider, not the default
+      const selectedDomain = domain || null;  // Only use explicitly requested domain, not the default
+
+      // Build canonical URL for pagination
+      let canonicalUrl = 'https://stopreg.com/disposable-email-providers';
+      if (selectedDomain) {
+        canonicalUrl = `https://stopreg.com/disposable-email-providers/domain-inteligence/${selectedDomain}`;
+        if (subdomainPage > 1) canonicalUrl += `?subdomainPage=${subdomainPage}`;
+      } else if (selectedProvider) {
+        canonicalUrl = `https://stopreg.com/disposable-email-providers/provider/${selectedProvider}`;
+        if (domainPage > 1) canonicalUrl += `?domainPage=${domainPage}`;
+      } else {
+        if (page > 1) canonicalUrl += `?page=${page}`;
+      }
 
       const classification = pageData?.domainDetails?.classification || null;
+
+      // Calculate domain age in days (server-side, matching domain-management.js approach)
+      let domainAge = 'N/A';
+      if (pageData?.domainDetails?.domain_age) {
+        const ageDate = new Date(pageData.domainDetails.domain_age);
+        if (!isNaN(ageDate.getTime())) {
+          const now = new Date();
+          const diffMs = now.getTime() - ageDate.getTime();
+          const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+          const finalDays = days < 0 ? 0 : days;
+          if (finalDays === 0) {
+            domainAge = 'Today';
+          } else {
+            domainAge = `${finalDays} day${finalDays === 1 ? '' : 's'}`;
+          }
+        }
+      }
+
+      // Generate SEO meta tags based on active view and pagination
+      let metaTitle = '';
+      let metaDescription = '';
+
+      if (selectedDomain) {
+        // TIER 3: Domain Details Page
+        metaTitle = `${selectedDomain} - ${selectedProvider || 'Disposable Email'} Domain | StopReg`;
+        metaDescription = `Explore ${selectedDomain} disposable email domain. Browse DNS records, subdomains, MX infrastructure and classification tracked by StopReg.`;
+      } else if (selectedProvider) {
+        // TIER 2: Provider Domains Page
+        if (domainPage === 1) {
+          metaTitle = `${selectedProvider} Disposable & Temporary Email Domains | StopReg`;
+          metaDescription = `Explore disposable and temporary email domains associated with ${selectedProvider}. Browse its linked domains and email infrastructure tracked by StopReg.`;
+        } else {
+          metaTitle = `${selectedProvider} Disposable Email Domains - Page ${domainPage} | StopReg`;
+          metaDescription = `Browse page ${domainPage} of disposable and temporary email domains associated with ${selectedProvider}. Explore linked domains and email infrastructure tracked by StopReg.`;
+        }
+      } else {
+        // TIER 1: Providers List Page
+        if (page === 1) {
+          metaTitle = 'Disposable & Temporary Email Providers | StopReg';
+          metaDescription = 'Browse disposable and temporary email provider directory. Discover providers associated with throwaway and burner email domains.';
+        } else {
+          metaTitle = `Page ${page}- Disposable & Temporary Email Providers | StopReg`;
+          metaDescription = `Browse page ${page} of the disposable and temporary email provider directory. Discover providers associated with throwaway and burner email domains.`;
+        }
+      }
 
       let viewPath = path.join(__dirname, "../views/disposable-email-providers.ejs");
       if (!fs.existsSync(viewPath)) {
@@ -50,6 +109,11 @@ class DisposableEmailProvidersController {
       }
 
       return res.render(viewPath, {
+        // SEO Meta Tags
+        metaTitle,
+        metaDescription,
+        canonicalUrl,
+
         activeView,
 
         // Tier 1 Data
@@ -70,8 +134,16 @@ class DisposableEmailProvidersController {
         // Tier 3 Data
         selectedDomain,
         domainDetails: pageData?.domainDetails || null,
+        domainAge,
         classification,
         dnsData: pageData?.dnsData || null,
+        subdomains: pageData?.subdomains || [],
+        subdomainsPagination: pageData?.subdomainsPagination || {
+          page: subdomainPage,
+          limit: 15,
+          total: 0,
+          totalPages: 0,
+        },
       });
     } catch (error) {
       next(error);

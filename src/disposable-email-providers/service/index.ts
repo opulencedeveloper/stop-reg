@@ -54,6 +54,8 @@ export interface IDisposablePageData {
   selectedDomain?: string;
   domainDetails?: any;
   dnsData?: any;
+  subdomains?: any[];
+  subdomainsPagination?: IPagination;
 }
 
 class DisposableEmailProvidersService {
@@ -64,6 +66,7 @@ class DisposableEmailProvidersService {
     provider?: string;
     domainPage?: number;
     domain?: string;
+    subdomainPage?: number;
   } = {}): Promise<IDisposablePageData | null> {
     const params = new URLSearchParams();
     if (options.page) params.set("page", String(options.page));
@@ -72,9 +75,11 @@ class DisposableEmailProvidersService {
     if (options.provider) params.set("provider", options.provider);
     if (options.domainPage) params.set("domainPage", String(options.domainPage));
     if (options.domain) params.set("domain", options.domain);
+    if (options.subdomainPage) params.set("subdomainPage", String(options.subdomainPage));
 
     const url = `${config.api.baseUrl}/email-domains/disposable-page-data?${params.toString()}`;
     Logging.info(`[DISPOSABLE-PAGE] Single API called: ${url}`);
+    console.log(`[DISPOSABLE-PAGE] Fetching page data with options:`, options);
 
     try {
       const response = await fetch(url, {
@@ -85,13 +90,25 @@ class DisposableEmailProvidersService {
 
       if (!response.ok) {
         Logging.warn(`Backend returned status ${response.status} when fetching disposable page data from ${url}`);
+        console.warn(`[DISPOSABLE-PAGE] API error status: ${response.status}`);
         return null;
       }
 
       const json: any = await response.json();
-      return json?.data || null;
+      const data = json?.data || null;
+
+      console.log(`[DISPOSABLE-PAGE] API Response received:`, {
+        hasData: !!data,
+        selectedDomain: data?.selectedDomain,
+        subdomainsCount: data?.subdomains ? data.subdomains.length : 0,
+        subdomains: data?.subdomains,
+        providerDomainsCount: data?.providerDomains ? data.providerDomains.length : 0,
+      });
+
+      return data;
     } catch (error: any) {
       Logging.error(`Failed to fetch disposable page data: ${error.message}`);
+      console.error(`[DISPOSABLE-PAGE] Fetch error:`, error);
       return null;
     }
   }
@@ -171,18 +188,18 @@ class DisposableEmailProvidersService {
     }
   }
 
-  public async fetchDomainDns(domain: string): Promise<IDnsData | null> {
-    const url = `${config.api.baseUrl}/seo/dns/domain/${encodeURIComponent(domain)}`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) return null;
-      const json: any = await response.json();
-      return json?.data || null;
-    } catch (error: any) {
-      Logging.error(`Failed to fetch DNS for ${domain}: ${error.message}`);
-      return null;
-    }
-  }
+  // public async fetchDomainDns(domain: string): Promise<IDnsData | null> {
+  //   const url = `${config.api.baseUrl}/seo/dns/domain/${encodeURIComponent(domain)}`;
+  //   try {
+  //     const response = await fetch(url);
+  //     if (!response.ok) return null;
+  //     const json: any = await response.json();
+  //     return json?.data || null;
+  //   } catch (error: any) {
+  //     Logging.error(`Failed to fetch DNS for ${domain}: ${error.message}`);
+  //     return null;
+  //   }
+  // }
 }
 
 export const disposableEmailProvidersService = new DisposableEmailProvidersService();

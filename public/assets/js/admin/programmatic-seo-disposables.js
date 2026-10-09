@@ -154,19 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (!response.ok) {
-                    status: response.statusText,
-                    statusCode: response.status,
-                    description: responseData.description || responseData.message || 'Unknown error',
-                    fullResponse: responseData
-                });
+                // Error response received
             }
 
             return responseData;
         } catch (error) {
-                message: error.message,
-                stack: error.stack,
-                error: error
-            });
             if (error.message.includes("Failed to fetch")) {
                 throw new Error("Network error, please check your connection and try again.");
             }
@@ -357,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const { page, pages } = pagination;
+        const { page, pages = pagination.totalPages } = pagination;
 
         if (pages <= 1) {
             paginationContainer.innerHTML = "";
@@ -397,6 +389,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     currentPage = targetPage;
                     if (currentTab === "disposables") {
                         loadDisposables(currentPage, currentSearch);
+                    } else if (currentTab === "disposable-subdomains") {
+                        loadDisposableSubdomains(currentPage, currentSearch);
                     } else if (currentTab === "meta-provider") {
                         loadMetaProviders(currentPage);
                     } else if (currentTab === "meta-domains") {
@@ -443,7 +437,6 @@ document.addEventListener("DOMContentLoaded", () => {
             renderSubdomainsTable(result.data.subdomains);
             renderPagination(result.data.pagination);
             showTab("disposable-subdomains-content");
-            if (paginationContainer) paginationContainer.style.display = "flex";
 
         } catch (error) {
             renderSectionError(error.message, () => loadDisposableSubdomains(page, search));
@@ -1250,6 +1243,7 @@ document.addEventListener("DOMContentLoaded", () => {
             currentTab = tab;
             currentPage = 1;
             currentSearch = "";
+            if (paginationContainer) paginationContainer.innerHTML = "";
             if (searchInput) {
                 searchInput.value = "";
                 // Show search input for disposables, disposable-subdomains, provider-features, sitemap tabs, and unpublished-providers
@@ -1260,10 +1254,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // Show pagination select ONLY for provider-sitemaps, domain-sitemaps, and provider-features tabs
+            // Show pagination select for disposables, disposable-subdomains, provider-features, and sitemaps tabs
             const paginationSelectContainer = document.querySelector(".pagination-select-container");
             if (paginationSelectContainer) {
-                if (tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "provider-features") {
+                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "provider-features") {
                     paginationSelectContainer.style.display = "inline-block";
                 } else {
                     paginationSelectContainer.style.display = "none";
@@ -1313,11 +1307,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (currentTab === "provider-features") {
                     loadProviderFeatures(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "provider-sitemaps") {
-                    loadProviderSitemaps(currentPage, currentSearch, false); // Always show loading spinner
+                    loadProviderSitemaps(currentPage, currentSearch, false);
                 } else if (currentTab === "domain-sitemaps") {
-                    loadDomainSitemaps(currentPage, currentSearch, false); // Always show loading spinner
+                    loadDomainSitemaps(currentPage, currentSearch, false);
                 } else if (currentTab === "unpublished-providers") {
-                    loadUnpublishedProviders(currentPage, currentSearch, false); // Always show loading spinner
+                    loadUnpublishedProviders(currentPage, currentSearch, false);
                 }
             }, 300);
         };
@@ -1976,10 +1970,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                    message: error.message,
-                    stack: error.stack,
-                    error: error
-                });
                 if (typeof iziToast !== 'undefined') {
                     iziToast.error({title: 'Network Error', message: error.message, position: 'topRight'});
                 }
@@ -2065,10 +2055,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                    message: error.message,
-                    stack: error.stack,
-                    error: error
-                });
                 if (typeof iziToast !== 'undefined') {
                     iziToast.error({title: 'Network Error', message: error.message, position: 'topRight'});
                 }
@@ -2153,10 +2139,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                    message: error.message,
-                    stack: error.stack,
-                    error: error
-                });
                 if (typeof iziToast !== 'undefined') {
                     iziToast.error({title: 'Network Error', message: error.message, position: 'topRight'});
                 }
@@ -2252,10 +2234,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             } catch (error) {
-                    message: error.message,
-                    stack: error.stack,
-                    error: error
-                });
                 if (typeof iziToast !== 'undefined') {
                     iziToast.error({title: 'Network Error', message: error.message, position: 'topRight'});
                 }
