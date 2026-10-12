@@ -641,8 +641,17 @@ p {
   background: var(--greenbg);
 }
 
+.api-response-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .api-response-card .code {
   margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
 }
 
 .domain-overview {
@@ -1209,8 +1218,15 @@ a.button:hover {
   min-width: 0
 }
 
+.tier3-validation-column {
+  position: relative
+}
+
 .tier3-validation-column>.card {
-  height: 100%;
+  position: absolute;
+  inset: 0;
+  height: auto;
+  margin: 0;
   box-sizing: border-box
 }
 
@@ -1238,7 +1254,12 @@ a.button:hover {
     grid-template-columns: 1fr
   }
 
+  .tier3-validation-column {
+    position: static
+  }
+
   .tier3-validation-column>.card {
+    position: static;
     height: auto
   }
 }

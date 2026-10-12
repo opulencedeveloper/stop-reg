@@ -125,7 +125,6 @@
                 <thead>
                   <tr>
                     <th>Provider</th>
-                    <th>Type</th>
                     <th>Domains</th>
                     <th>Subdomains</th>
                     <th>Updated</th>
@@ -142,9 +141,6 @@
                             </div>
                             <div class="subtext">Disposable email provider</div>
                           </a></td>
-                        <td><span class="badge red">
-                            <%= item.type || 'Disposable' %>
-                          </span></td>
                         <td>
                           <%= item.domainsCount || 1 %>
                         </td>
@@ -285,7 +281,6 @@
                     <th>Domain</th>
                     <th>Subdomains</th>
                     <th>MX</th>
-                    <th>Provider</th>
                     <th>Last checked</th>
                     <th></th>
                   </tr>
@@ -306,10 +301,6 @@
                             !=='null' ) ? d.subdomainsCount : 0 %>
                         </td>
                         <td><span class="badge gray mx-status" data-mx-domain="<%= d.domain %>">Checking…</span></td>
-                        <td>
-                          <%= (typeof selectedProvider !=='undefined' && selectedProvider) ? selectedProvider
-                            : 'Provider' %>
-                        </td>
                         <td>
                           <%= d.createdAt ? new Date(d.createdAt).toLocaleDateString() : 'Active' %>
                         </td>
@@ -408,11 +399,11 @@
       <!-- TIER 3 -->
       <section id="domain"
         class="page <%= (typeof activeView !== 'undefined' && activeView === 'domain') ? 'active' : '' %>">
-        <div class="breadcrumb"><a href="/providers">StopReg</a><span>/</span><a
-            href="/providers">Providers</a>
-          <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %><span>/</span><a
-              href="/provider/<%= encodeURIComponent(selectedProvider) %>">
-              <%= selectedProvider %>
+        <% const breadcrumbProvider = (typeof selectedProvider !== 'undefined' && selectedProvider) || (typeof domainDetails !== 'undefined' && domainDetails && domainDetails.provider) || null; %>
+        <div class="breadcrumb"><a href="/">StopReg</a><span>/</span><a href="/providers">Providers</a>
+          <% if (breadcrumbProvider) { %><span>/</span><a
+              href="/provider/<%= encodeURIComponent(breadcrumbProvider) %>">
+              <%= breadcrumbProvider %>
             </a>
             <% } %>
               <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><span>/</span><span>
@@ -436,7 +427,7 @@
           <% let statusClass='status-standard' ; let statusTitle='Standard Email' ; if (typeof domainDetails
             !=='undefined' && domainDetails && domainDetails.classification) { if
             (domainDetails.classification.is_disposable) { statusClass='status-disposable' ;
-            statusTitle='Disposable Email' ; } else if (domainDetails.classification.is_relay) {
+            statusTitle='Disposable Domain' ; } else if (domainDetails.classification.is_relay) {
             statusClass='status-relay' ; statusTitle='Email Relay' ; } else if (domainDetails.classification.is_private)
             { statusClass='status-private' ; statusTitle='Private Email' ; } } %>
             <div class="statusbox <%= statusClass %>">
@@ -865,7 +856,7 @@
             <div class="tier3-provider-side">
               <div class="card">
                 <h2 style="margin-top:0">
-                  <%= providerName %>
+                  <%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>
                 </h2>
                 <p>This root domain is associated with <%= providerName %>.</p>
                 <a class="btn"
@@ -930,15 +921,7 @@
           </button>
           <div id="faq-1" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>Yes. StopReg classifies <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><strong>
-                    <%= selectedDomain %>
-                  </strong>
-                  <% } else { %>this domain<% } %> as a disposable email domain<% if (typeof selectedProvider
-                        !=='undefined' && selectedProvider) { %> associated with <strong>
-                          <%= selectedProvider %>
-                        </strong>
-                        <% } %>. Email addresses using this service may be intended for temporary or short-term use,
-                          making them unsuitable for legitimate account registration.</p>
+              <p>Yes. StopReg classifies <strong><%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %></strong> as a disposable email domain that provides temporary email addresses. Addresses from this domain may be used for short-term registrations and may increase the risk of fake signups or free-trial abuse.</p>
             </div>
           </div>
         </div>
@@ -954,10 +937,7 @@
           </button>
           <div id="faq-2" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>It is associated with a disposable email service that provides temporary email addresses. These
-                services may be used for short-term registrations, free trial abuse, promotional fraud, spam, bot
-                activity, phishing, scams, and other situations where users do not want to provide a permanent email
-                address.</p>
+              <p><strong><%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'This domain' %></strong> is associated with <% if (breadcrumbProvider) { %><strong><%= breadcrumbProvider %></strong>, a disposable email service<% } else { %>a disposable email service<% } %> that provides temporary email addresses. These addresses may be used for short-term registrations, website testing, and accessing online services without a permanent email address. Like other disposable email services, they can also be exploited for fake signups, free-trial abuse, spam, and automated account creation.</p>
             </div>
           </div>
         </div>
@@ -973,9 +953,7 @@
           </button>
           <div id="faq-3" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>If your website requires reliable, long-term email addresses, blocking disposable email addresses can
-                help improve signup quality and reduce abuse. StopReg can check an email address in real time and
-                provide classification data that you can use to allow, block, or flag registrations.</p>
+              <p>If your website requires reliable email addresses for account registration, blocking <strong><%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %></strong> may help reduce disposable email signups and free-trial abuse. However, the decision depends on your registration policy and business needs. StopReg can classify email addresses in real time, allowing you to block, flag, or accept registrations based on your own validation rules.</p>
             </div>
           </div>
         </div>
@@ -990,10 +968,7 @@
           </button>
           <div id="faq-4" class="accordion-content">
             <div class="faq-answer-inner">
-              <p>Check the email address during registration using the <a class="faq-answer-inner-link"
-                  href="/documentation">StopReg API</a>. The response includes disposable-email classification, allowing
-                your application to apply its own signup policy and decide whether the registration should be accepted,
-                blocked, or reviewed.</p>
+              <p>Use the <a class="faq-answer-inner-link" href="/documentation">StopReg API</a> to check email addresses during registration. The API returns disposable-email classification data that your application can use to apply your signup policy and decide whether to accept, block, or flag registrations using <strong><%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %></strong>.</p>
             </div>
           </div>
         </div>
