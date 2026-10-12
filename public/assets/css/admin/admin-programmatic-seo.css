@@ -918,19 +918,22 @@
   perspective: 1000px;
 }
 
-.meta-domains-modal-overlay.active .meta-domains-modal-container {
+.meta-domains-modal-overlay.active .meta-domains-modal-container,
+.subdomains-modal-overlay.active .subdomains-modal-container {
   transform: scale(1) translateY(0) rotateX(0deg);
   opacity: 1;
 }
 
-.meta-domains-modal-header {
+.meta-domains-modal-header,
+.subdomains-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
 }
 
-.meta-domains-modal-header h3 {
+.meta-domains-modal-header h3,
+.subdomains-modal-header h3 {
   font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 18px;
   color: #131313;
@@ -953,12 +956,14 @@
 }
 
 /* Meta Domains Form */
-.meta-domains-modal-form .form-group {
+.meta-domains-modal-form .form-group,
+.subdomains-modal-form .form-group {
   margin-bottom: 16px;
   position: relative;
 }
 
-.meta-domains-modal-form label {
+.meta-domains-modal-form label,
+.subdomains-modal-form label {
   display: block;
   font-family: 'Inter_28pt-Medium', sans-serif;
   font-size: 14px;
@@ -967,7 +972,9 @@
 }
 
 .meta-domains-modal-form input[type="text"],
-.meta-domains-modal-form textarea {
+.meta-domains-modal-form textarea,
+.subdomains-modal-form input[type="text"],
+.subdomains-modal-form input[type="password"] {
   width: 100%;
   border: 1px solid #EDEDED;
   border-radius: 8px;
@@ -992,11 +999,13 @@
 }
 
 .meta-domains-modal-form input[type="text"]:focus,
-.meta-domains-modal-form textarea:focus {
+.meta-domains-modal-form textarea:focus,
+.subdomains-modal-form input[type="text"]:focus {
   border-color: #1452CA;
 }
 
-.meta-domains-submit-btn {
+.meta-domains-submit-btn,
+.subdomains-submit-btn {
   width: 100%;
   height: 48px;
   background: #ECF2FD;
@@ -1013,24 +1022,28 @@
   gap: 8px;
 }
 
-.meta-domains-submit-btn:hover {
+.meta-domains-submit-btn:hover,
+.subdomains-submit-btn:hover {
   background: #1452CA;
   color: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(20, 82, 202, 0.2);
 }
 
-.meta-domains-submit-btn:active {
+.meta-domains-submit-btn:active,
+.subdomains-submit-btn:active {
   transform: translateY(0);
 }
 
-.meta-domains-submit-btn:disabled {
+.meta-domains-submit-btn:disabled,
+.subdomains-submit-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
 /* Meta Domains Delete Confirmation Modal */
-.meta-domains-delete-modal-overlay {
+.meta-domains-delete-modal-overlay,
+.subdomains-delete-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -1049,13 +1062,15 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.meta-domains-delete-modal-overlay.is-active {
+.meta-domains-delete-modal-overlay.is-active,
+.subdomains-delete-modal-overlay.is-active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-.meta-domains-delete-modal-container {
+.meta-domains-delete-modal-container,
+.subdomains-delete-modal-container {
   width: 100%;
   max-width: 440px;
   background: #FFFFFF;
@@ -1068,18 +1083,21 @@
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.meta-domains-delete-modal-overlay.is-active .meta-domains-delete-modal-container {
+.meta-domains-delete-modal-overlay.is-active .meta-domains-delete-modal-container,
+.subdomains-delete-modal-overlay.is-active .subdomains-delete-modal-container {
   transform: scale(1) translateY(0);
 }
 
-.meta-domains-delete-modal-header {
+.meta-domains-delete-modal-header,
+.subdomains-delete-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 20px;
 }
 
-.meta-domains-delete-modal-close {
+.meta-domains-delete-modal-close,
+.subdomains-delete-modal-close {
   background: none;
   border: none;
   cursor: pointer;
@@ -1087,6 +1105,7 @@
 
 .meta-provider-delete-modal-close img,
 .meta-domains-delete-modal-close img,
+.subdomains-delete-modal-close img,
 .provider-descriptions-delete-modal-close img,
 .disposable-domain-descriptions-delete-modal-close img,
 .domain-descriptions-delete-modal-close img,
@@ -1096,7 +1115,8 @@
   pointer-events: none;
 }
 
-.meta-domains-delete-modal-content h3 {
+.meta-domains-delete-modal-content h3,
+.subdomains-delete-modal-content h3 {
   font-family: 'Inter_28pt-SemiBold', sans-serif;
   font-size: 20px;
   color: #101828;
@@ -1104,7 +1124,8 @@
   margin-top: 0;
 }
 
-.meta-domains-delete-modal-content p {
+.meta-domains-delete-modal-content p,
+.subdomains-delete-modal-content p {
   font-family: 'Inter_28pt-Regular', sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -1112,13 +1133,16 @@
   margin-bottom: 32px;
 }
 
-.meta-domains-delete-modal-actions {
+.meta-domains-delete-modal-actions,
+.subdomains-delete-modal-actions {
   display: flex;
   gap: 12px;
 }
 
 .meta-domains-delete-modal-actions .btn-cancel,
-.meta-domains-delete-modal-actions .btn-confirm-remove {
+.meta-domains-delete-modal-actions .btn-confirm-remove,
+.subdomains-delete-modal-actions .btn-cancel,
+.subdomains-delete-modal-actions .btn-confirm-remove {
   flex: 1;
   height: 44px;
   border-radius: 8px;
@@ -1133,37 +1157,44 @@
   border: none;
 }
 
-.meta-domains-delete-modal-actions .btn-cancel {
+.meta-domains-delete-modal-actions .btn-cancel,
+.subdomains-delete-modal-actions .btn-cancel {
   background: #FFFFFF;
   border: 1px solid #D0D5DD;
   color: #344054;
 }
 
-.meta-domains-delete-modal-actions .btn-cancel:hover {
+.meta-domains-delete-modal-actions .btn-cancel:hover,
+.subdomains-delete-modal-actions .btn-cancel:hover {
   background: #F9FAFB;
 }
 
-.meta-domains-delete-modal-actions .btn-confirm-remove {
+.meta-domains-delete-modal-actions .btn-confirm-remove,
+.subdomains-delete-modal-actions .btn-confirm-remove {
   background: #D92D20;
   border: 1px solid #D92D20;
   color: #FFFFFF;
 }
 
-.meta-domains-delete-modal-actions .btn-confirm-remove:hover {
+.meta-domains-delete-modal-actions .btn-confirm-remove:hover,
+.subdomains-delete-modal-actions .btn-confirm-remove:hover {
   background: #B42318;
 }
 
-.meta-domains-delete-modal-actions .btn-confirm-remove:disabled {
+.meta-domains-delete-modal-actions .btn-confirm-remove:disabled,
+.subdomains-delete-modal-actions .btn-confirm-remove:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.meta-domains-delete-modal-overlay.is-exiting {
+.meta-domains-delete-modal-overlay.is-exiting,
+.subdomains-delete-modal-overlay.is-exiting {
   opacity: 0;
   pointer-events: none;
 }
 
-.meta-domains-delete-modal-overlay.is-exiting .meta-domains-delete-modal-container {
+.meta-domains-delete-modal-overlay.is-exiting .meta-domains-delete-modal-container,
+.subdomains-delete-modal-overlay.is-exiting .subdomains-delete-modal-container {
   transform: scale(0.95) translateY(10px);
   opacity: 0;
 }
@@ -2874,6 +2905,7 @@
 /* Apply mx-matching modal design to ALL modals */
 .meta-provider-modal-overlay,
 .meta-domains-modal-overlay,
+.subdomains-modal-overlay,
 .provider-descriptions-modal-overlay,
 .disposable-domain-descriptions-modal-overlay,
 .domain-descriptions-modal-overlay,
@@ -2900,6 +2932,7 @@
 
 .meta-provider-modal-overlay.active,
 .meta-domains-modal-overlay.active,
+.subdomains-modal-overlay.active,
 .provider-descriptions-modal-overlay.active,
 .disposable-domain-descriptions-modal-overlay.active,
 .domain-descriptions-modal-overlay.active,
@@ -2912,6 +2945,7 @@
 
 .meta-provider-modal-container,
 .meta-domains-modal-container,
+.subdomains-modal-container,
 .provider-descriptions-modal-container,
 .disposable-domain-descriptions-modal-container,
 .domain-descriptions-modal-container,
@@ -2933,6 +2967,7 @@
 
 .meta-provider-modal-overlay.active .meta-provider-modal-container,
 .meta-domains-modal-overlay.active .meta-domains-modal-container,
+.subdomains-modal-overlay.active .subdomains-modal-container,
 .provider-descriptions-modal-overlay.active .provider-descriptions-modal-container,
 .disposable-domain-descriptions-modal-overlay.active .disposable-domain-descriptions-modal-container,
 .domain-descriptions-modal-overlay.active .domain-descriptions-modal-container,
@@ -2973,6 +3008,7 @@
 
 .meta-provider-modal-close,
 .meta-domains-modal-close,
+.subdomains-modal-close,
 .provider-descriptions-modal-close,
 .disposable-domain-descriptions-modal-close,
 .domain-descriptions-modal-close,
@@ -2991,6 +3027,7 @@
 
 .meta-provider-modal-close:hover,
 .meta-domains-modal-close:hover,
+.subdomains-modal-close:hover,
 .provider-descriptions-modal-close:hover,
 .disposable-domain-descriptions-modal-close:hover,
 .domain-descriptions-modal-close:hover,

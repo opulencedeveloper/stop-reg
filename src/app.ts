@@ -39,7 +39,7 @@ app.get("/healthcheck", (_req: Request, res: Response) => {
   res.status(200).send("<!DOCTYPE html><html><head><title>Healthcheck</title></head><body><h1>Server is UP 🔥🔧🎂</h1></body></html>");
 });
 
-app.use("/disposable-email-providers", DisposableEmailProvidersRouter);
+app.use("/", DisposableEmailProvidersRouter);
 app.use(SeoRouter);
 
 

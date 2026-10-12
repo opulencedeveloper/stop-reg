@@ -67,7 +67,7 @@ class DisposableEmailProvidersService {
     domainPage?: number;
     domain?: string;
     subdomainPage?: number;
-  } = {}): Promise<IDisposablePageData | null> {
+  } = {}): Promise<IDisposablePageData | "NOT_FOUND" | null> {
     const params = new URLSearchParams();
     if (options.page) params.set("page", String(options.page));
     if (options.limit) params.set("limit", String(options.limit));
@@ -87,6 +87,10 @@ class DisposableEmailProvidersService {
           Accept: "application/json",
         },
       });
+
+      if (response.status === 404) {
+        return "NOT_FOUND";
+      }
 
       if (!response.ok) {
         Logging.warn(`Backend returned status ${response.status} when fetching disposable page data from ${url}`);

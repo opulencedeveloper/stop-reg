@@ -77,6 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelDomainDescriptionsDeleteBtn = getEl("cancel-domain-descriptions-delete-btn");
     const confirmDomainDescriptionsDeleteBtn = getEl("confirm-domain-descriptions-delete-btn");
 
+    const subdomainsModal = getEl("subdomains-modal");
+    const closeSubdomainsModal = getEl("close-subdomains-modal");
+    const subdomainsForm = getEl("subdomains-form");
+    const subdomainsModalTitle = getEl("subdomains-modal-title");
+    const submitSubdomainsBtn = getEl("submit-subdomains-btn");
+    const subdomainsDeleteModal = getEl("subdomains-delete-modal");
+    const closeSubdomainsDeleteModalBtn = getEl("close-subdomains-delete-modal");
+    const cancelSubdomainsDeleteBtn = getEl("cancel-subdomains-delete-btn");
+    const confirmSubdomainsDeleteBtn = getEl("confirm-subdomains-delete-btn");
+    const subdomainsDeleteModalText = getEl("subdomains-delete-modal-text");
+
     const seoTabButtons = document.querySelectorAll(".seo-tab-btn");
 
     const providerFeaturesModal = getEl("provider-features-modal");
@@ -109,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentDeletingId = null;
     let loadedMetaProviders = [];
     let loadedMetaDomains = [];
+    let loadedSubdomains = [];
     let loadedProviderDescriptions = [];
     let loadedDomainDescriptions = [];
     let loadedProviderFeatures = [];
@@ -434,6 +446,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (!isSilent) hideLoading();
+            loadedSubdomains = result.data.subdomains;
+            currentPage = page;
             renderSubdomainsTable(result.data.subdomains);
             renderPagination(result.data.pagination);
             showTab("disposable-subdomains-content");
@@ -450,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!tbody) return;
 
         if (subdomains.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center !important; padding: 40px; color: #737373;">No disposable subdomains found.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center !important; padding: 40px; color: #737373;">No disposable subdomains found.</td></tr>`;
             return;
         }
 
@@ -466,9 +480,137 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td>${s.domain || '-'}</td>
                     <td>${s.subdomain || '-'}</td>
                     <td>${date}</td>
+                    <td class="text-left">
+                        <div class="action-btn-container">
+                            <button class="action-btn" data-id="${s._id}">
+                                <img src="/assets/icons/more-vert.svg" alt="More" />
+                            </button>
+                            <div class="action-dropdown" id="subdomains-dropdown-${s._id}">
+                                <button class="dropdown-item-edit" data-id="${s._id}">
+                                    <img src="/assets/icons/edit-outline.svg" alt="" />
+                                    <span>Edit Record</span>
+                                </button>
+                                <div class="dropdown-divider"></div>
+                                <button class="dropdown-item-remove" data-id="${s._id}">
+                                    <img src="/assets/icons/delete.svg" alt="" />
+                                    <span>Remove Record</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             `;
         }).join("");
+
+        attachSubdomainsEventListeners();
+    }
+
+    function attachSubdomainsEventListeners() {
+        console.log('[SUBDOMAINS] Attaching event listeners...');
+
+        const editBtns = document.querySelectorAll("#disposable-subdomains-content .dropdown-item-edit");
+        console.log(`[SUBDOMAINS] Found ${editBtns.length} edit buttons`);
+
+        editBtns.forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                const id = btn.dataset.id;
+                console.log(`[SUBDOMAINS] Edit button clicked for ID: ${id}`);
+                handleSubdomainEdit(id);
+                document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+            };
+        });
+
+        const deleteBtns = document.querySelectorAll("#disposable-subdomains-content .dropdown-item-remove");
+        console.log(`[SUBDOMAINS] Found ${deleteBtns.length} delete buttons`);
+
+        deleteBtns.forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                const id = btn.dataset.id;
+                console.log(`[SUBDOMAINS] Delete button clicked for ID: ${id}`);
+                handleSubdomainDelete(id);
+                document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+            };
+        });
+
+        const actionBtns = document.querySelectorAll("#disposable-subdomains-content .action-btn");
+        console.log(`[SUBDOMAINS] Found ${actionBtns.length} action buttons`);
+
+        actionBtns.forEach(btn => {
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.id;
+                console.log(`[SUBDOMAINS] Action button clicked for ID: ${id}`);
+                const dropdown = document.getElementById(`subdomains-dropdown-${id}`);
+                console.log(`[SUBDOMAINS] Dropdown element: ${dropdown ? 'FOUND' : 'NOT FOUND'}`);
+                document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));
+                if (dropdown) {
+                    dropdown.classList.add("show");
+                    console.log(`[SUBDOMAINS] Dropdown opened`);
+                } else {
+                    console.log(`[SUBDOMAINS] ERROR: Dropdown not found with ID: subdomains-dropdown-${id}`);
+                }
+            };
+        });
+    }
+
+    function handleSubdomainEdit(id) {
+        console.log(`[SUBDOMAINS EDIT] Starting edit for ID: ${id}`);
+        console.log(`[SUBDOMAINS EDIT] loadedSubdomains:`, loadedSubdomains);
+        console.log(`[SUBDOMAINS EDIT] subdomainsModal:`, subdomainsModal);
+
+        const record = loadedSubdomains.find(r => r._id === id);
+        console.log(`[SUBDOMAINS EDIT] Found record:`, record);
+
+        if (!record) {
+            console.log(`[SUBDOMAINS EDIT] ERROR: Record not found for ID: ${id}`);
+            return;
+        }
+
+        currentEditingId = id;
+        getEl("subdomains-provider").value = record.provider || "";
+        getEl("subdomains-domain").value = record.domain || "";
+        getEl("subdomains-subdomain").value = record.subdomain || "";
+        getEl("subdomains-id").value = id;
+
+        if (subdomainsModalTitle) subdomainsModalTitle.textContent = "Edit Subdomain";
+        if (submitSubdomainsBtn) submitSubdomainsBtn.textContent = "Update Record";
+
+        if (subdomainsModal) {
+            console.log(`[SUBDOMAINS EDIT] Adding active class to modal`);
+            subdomainsModal.classList.add("active");
+            console.log(`[SUBDOMAINS EDIT] Modal class list:`, subdomainsModal.className);
+        } else {
+            console.log(`[SUBDOMAINS EDIT] ERROR: subdomainsModal is null or undefined`);
+        }
+    }
+
+    function handleSubdomainDelete(id) {
+        console.log(`[SUBDOMAINS DELETE] Starting delete for ID: ${id}`);
+        console.log(`[SUBDOMAINS DELETE] loadedSubdomains:`, loadedSubdomains);
+        console.log(`[SUBDOMAINS DELETE] subdomainsDeleteModal:`, subdomainsDeleteModal);
+
+        const record = loadedSubdomains.find(r => r._id === id);
+        console.log(`[SUBDOMAINS DELETE] Found record:`, record);
+
+        if (!record) {
+            console.log(`[SUBDOMAINS DELETE] ERROR: Record not found for ID: ${id}`);
+            return;
+        }
+
+        currentDeletingId = id;
+        if (subdomainsDeleteModalText) {
+            subdomainsDeleteModalText.textContent = `Are you sure you want to remove this subdomain record? (${record.subdomain}@${record.domain}) This action cannot be undone.`;
+        }
+
+        if (subdomainsDeleteModal) {
+            console.log(`[SUBDOMAINS DELETE] Adding is-active class to delete modal`);
+            subdomainsDeleteModal.classList.add("is-active");
+            console.log(`[SUBDOMAINS DELETE] Delete modal class list:`, subdomainsDeleteModal.className);
+        } else {
+            console.log(`[SUBDOMAINS DELETE] ERROR: subdomainsDeleteModal is null or undefined`);
+        }
     }
 
     // --- META PROVIDER FUNCTIONS ---
@@ -1688,6 +1830,141 @@ document.addEventListener("DOMContentLoaded", () => {
             } finally {
                 submitMetaDomainsBtn.disabled = false;
                 submitMetaDomainsBtn.innerHTML = originalBtnHTML;
+            }
+        };
+    }
+
+    // --- DISPOSABLE SUBDOMAINS MODAL LISTENERS ---
+    if (closeSubdomainsModal) {
+        closeSubdomainsModal.onclick = () => {
+            if (subdomainsModal) subdomainsModal.classList.remove("active");
+        };
+    }
+
+    if (closeSubdomainsDeleteModalBtn) {
+        closeSubdomainsDeleteModalBtn.onclick = () => {
+            if (subdomainsDeleteModal) subdomainsDeleteModal.classList.remove("is-active");
+        };
+    }
+
+    if (cancelSubdomainsDeleteBtn) {
+        cancelSubdomainsDeleteBtn.onclick = () => {
+            if (subdomainsDeleteModal) subdomainsDeleteModal.classList.remove("is-active");
+        };
+    }
+
+    // Form submission for subdomains
+    if (subdomainsForm) {
+        subdomainsForm.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const provider = getEl("subdomains-provider").value;
+            const domain = getEl("subdomains-domain").value;
+            const subdomain = getEl("subdomains-subdomain").value;
+
+            const originalBtnHTML = submitSubdomainsBtn.innerHTML;
+            submitSubdomainsBtn.disabled = true;
+            submitSubdomainsBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Updating...`;
+
+            try {
+                const result = await apiFetch(`/programmatic-seo/disposable-subdomains/${currentEditingId}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        provider,
+                        domain,
+                        subdomain
+                    })
+                });
+
+                if (result?.message === "success" || result?.message === "Success") {
+                    if (subdomainsModal) subdomainsModal.classList.remove("active");
+                    subdomainsForm.reset();
+
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.success({
+                            title: 'Success',
+                            message: 'Subdomain record updated successfully.',
+                            position: 'topRight'
+                        });
+                    }
+
+                    loadDisposableSubdomains(currentPage);
+                } else {
+                    const desc = result?.description || 'Failed to update record.';
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.error({
+                            title: 'Error',
+                            message: desc,
+                            position: 'topRight'
+                        });
+                    }
+                }
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({
+                        title: 'Network Error',
+                        message: error.message,
+                        position: 'topRight'
+                    });
+                }
+            } finally {
+                submitSubdomainsBtn.disabled = false;
+                submitSubdomainsBtn.innerHTML = originalBtnHTML;
+            }
+        };
+    }
+
+    // Subdomains delete confirmation
+    if (confirmSubdomainsDeleteBtn) {
+        confirmSubdomainsDeleteBtn.onclick = async () => {
+            const originalBtnHTML = confirmSubdomainsDeleteBtn.innerHTML;
+            confirmSubdomainsDeleteBtn.disabled = true;
+            confirmSubdomainsDeleteBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> Removing...`;
+
+            try {
+                const result = await apiFetch(`/programmatic-seo/disposable-subdomains/${currentDeletingId}`, {
+                    method: "DELETE"
+                });
+
+                if (result?.message === "success" || result?.message === "Success") {
+                    if (subdomainsDeleteModal) {
+                        subdomainsDeleteModal.classList.add("is-exiting");
+                        setTimeout(() => {
+                            subdomainsDeleteModal.classList.remove("is-active", "is-exiting");
+                        }, 300);
+                    }
+
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.success({
+                            title: 'Success',
+                            message: 'Subdomain record removed successfully.',
+                            position: 'topRight'
+                        });
+                    }
+
+                    loadDisposableSubdomains(currentPage);
+                } else {
+                    const desc = result?.description || 'Failed to remove record.';
+                    if (typeof iziToast !== 'undefined') {
+                        iziToast.error({
+                            title: 'Error',
+                            message: desc,
+                            position: 'topRight'
+                        });
+                    }
+                }
+            } catch (error) {
+                if (typeof iziToast !== 'undefined') {
+                    iziToast.error({
+                        title: 'Network Error',
+                        message: error.message,
+                        position: 'topRight'
+                    });
+                }
+            } finally {
+                confirmSubdomainsDeleteBtn.disabled = false;
+                confirmSubdomainsDeleteBtn.innerHTML = originalBtnHTML;
+                currentDeletingId = null;
             }
         };
     }

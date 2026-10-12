@@ -21,9 +21,9 @@ class DisposableEmailProvidersController {
       // - 'domains' (Tier 2 Provider Domains)
       // - 'providers' (Tier 1 Provider Directory)
       let activeView: "providers" | "domains" | "domain" = "providers";
-      if (domain || req.path.includes("domain-inte")) {
+      if (domain || req.path.includes("/domain/")) {
         activeView = "domain";
-      } else if (provider || req.path.includes("provider")) {
+      } else if (provider || req.path.includes("/provider/")) {
         activeView = "domains";
       }
 
@@ -38,16 +38,20 @@ class DisposableEmailProvidersController {
         subdomainPage,
       });
 
-      const selectedProvider = provider || null;  // Only use explicitly requested provider, not the default
-      const selectedDomain = domain || null;  // Only use explicitly requested domain, not the default
+      if (pageData === "NOT_FOUND") {
+        return next();
+      }
+
+      const selectedProvider = provider || null;
+      const selectedDomain = domain || null;
 
       // Build canonical URL for pagination
-      let canonicalUrl = 'https://stopreg.com/disposable-email-providers';
+      let canonicalUrl = 'https://stopreg.com/providers';
       if (selectedDomain) {
-        canonicalUrl = `https://stopreg.com/disposable-email-providers/domain-inteligence/${selectedDomain}`;
+        canonicalUrl = `https://stopreg.com/domain/${selectedDomain}`;
         if (subdomainPage > 1) canonicalUrl += `?subdomainPage=${subdomainPage}`;
       } else if (selectedProvider) {
-        canonicalUrl = `https://stopreg.com/disposable-email-providers/provider/${selectedProvider}`;
+        canonicalUrl = `https://stopreg.com/provider/${selectedProvider}`;
         if (domainPage > 1) canonicalUrl += `?domainPage=${domainPage}`;
       } else {
         if (page > 1) canonicalUrl += `?page=${page}`;
@@ -78,8 +82,13 @@ class DisposableEmailProvidersController {
 
       if (selectedDomain) {
         // TIER 3: Domain Details Page
-        metaTitle = `${selectedDomain} - ${selectedProvider || 'Disposable Email'} Domain | StopReg`;
-        metaDescription = `Explore ${selectedDomain} disposable email domain. Browse DNS records, subdomains, MX infrastructure and classification tracked by StopReg.`;
+        if (subdomainPage === 1) {
+          metaTitle = `${selectedDomain} Disposable Email Domain | StopReg`;
+          metaDescription = `Learn about ${selectedDomain}, a disposable email domain associated with temporary email addresses. Check its classification and assess the risk of fake signups and trial abuse.`;
+        } else {
+          metaTitle = `${selectedDomain} Disposable Email Subdomains Page ${subdomainPage} | StopReg`;
+          metaDescription = `Browsing page ${subdomainPage} of discovered subdomains for ${selectedDomain}. temporary email addresses and domains associated with this provider.`;
+        }
       } else if (selectedProvider) {
         // TIER 2: Provider Domains Page
         if (domainPage === 1) {

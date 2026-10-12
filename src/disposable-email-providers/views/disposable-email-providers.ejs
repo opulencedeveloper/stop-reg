@@ -7,7 +7,7 @@
   <title><%= typeof metaTitle !== 'undefined' && metaTitle ? metaTitle : 'StopReg Programmatic SEO Directory' %></title>
   <meta name="description"
     content="<%= typeof metaDescription !== 'undefined' && metaDescription ? metaDescription : 'Explore email providers, disposable email domains, domain intelligence and subdomain data with StopReg.' %>">
-  <link rel="canonical" href="<%= typeof canonicalUrl !== 'undefined' && canonicalUrl ? canonicalUrl : 'https://stopreg.com/disposable-email-providers' %>" />
+  <link rel="canonical" href="<%= typeof canonicalUrl !== 'undefined' && canonicalUrl ? canonicalUrl : 'https://stopreg.com/providers' %>" />
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
@@ -102,7 +102,7 @@
       <!-- TIER 1 -->
       <section id="providers"
         class="page <%= (typeof activeView !== 'undefined' && activeView === 'providers') ? 'active' : '' %>">
-        <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><span>Providers</span>
+        <div class="breadcrumb"><a href="/providers">StopReg</a><span>/</span><span>Providers</span>
         </div>
         <div class="hero">
           <h1>Disposable Email Providers</h1>
@@ -136,7 +136,7 @@
                   <% if (typeof providers !=='undefined' && providers && providers.length> 0) { %>
                     <% providers.forEach(function(item) { %>
                       <tr data-search="<%= (item.provider || '').toLowerCase() %>">
-                        <td><a href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>">
+                        <td><a href="/provider/<%= encodeURIComponent(item.provider) %>">
                             <div class="primarytext">
                               <%= item.provider %>
                             </div>
@@ -155,7 +155,7 @@
                           <%= item.updatedAt ? new Date(item.updatedAt).toLocaleDateString() : 'Active' %>
                         </td>
                         <td><a class="arrow"
-                            href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>">View
+                            href="/provider/<%= encodeURIComponent(item.provider) %>">View
                             →</a></td>
                       </tr>
                       <% }); %>
@@ -173,7 +173,7 @@
           <div id="providers-grid" class="gridview hidden">
             <% if (typeof providers !=='undefined' && providers && providers.length> 0) { %>
               <% providers.forEach(function(item) { %>
-                <a class="itemcard" href="/disposable-email-providers/provider/<%= encodeURIComponent(item.provider) %>"
+                <a class="itemcard" href="/provider/<%= encodeURIComponent(item.provider) %>"
                   data-search="<%= (item.provider || '').toLowerCase() %>">
                   <div class="itemtop">
                     <div class="itemicon">
@@ -215,7 +215,7 @@
             <div class="pages">
               <% if (typeof pagination !=='undefined' && pagination && pagination.page> 1) { %>
                 <button
-                  data-href="/disposable-email-providers?page=<%= pagination.page - 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
+                  data-href="/providers?page=<%= pagination.page - 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
                   onclick="window.location.href=this.dataset.href">Previous</button>
                 <% } else { %>
                   <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
@@ -223,7 +223,7 @@
                     <% if (typeof pagination !=='undefined' && pagination && pagination.page < pagination.totalPages) {
                       %>
                       <button
-                        data-href="/disposable-email-providers?page=<%= pagination.page + 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
+                        data-href="/providers?page=<%= pagination.page + 1 %><% if (typeof searchQuery !== 'undefined' && searchQuery) { %>&search=<%= encodeURIComponent(searchQuery) %><% } %>"
                         onclick="window.location.href=this.dataset.href">Next</button>
                       <% } else { %>
                         <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
@@ -243,8 +243,8 @@
       <!-- TIER 2 -->
       <section id="domains"
         class="page <%= (typeof activeView !== 'undefined' && activeView === 'domains') ? 'active' : '' %>">
-        <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><a
-            href="/disposable-email-providers">Providers</a>
+        <div class="breadcrumb"><a href="/providers">StopReg</a><span>/</span><a
+            href="/providers">Providers</a>
           <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %><span>/</span><span>
               <%= selectedProvider %>
             </span><span>/ Domains</span>
@@ -295,7 +295,7 @@
                     <% providerDomains.forEach(function(d) { %>
                       <tr data-search="<%= (d.domain || '').toLowerCase() %>">
                         <td><a
-                            href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>">
+                            href="/domain/<%= encodeURIComponent(d.domain) %>">
                             <div class="primarytext">
                               <%= d.domain %>
                             </div>
@@ -314,7 +314,7 @@
                           <%= d.createdAt ? new Date(d.createdAt).toLocaleDateString() : 'Active' %>
                         </td>
                         <td><a class="arrow"
-                            href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>">View
+                            href="/domain/<%= encodeURIComponent(d.domain) %>">View
                             →</a></td>
                       </tr>
                       <% }); %>
@@ -332,7 +332,7 @@
             <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length> 0) { %>
               <% providerDomains.forEach(function(d) { %>
                 <a class="itemcard"
-                  href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"
+                  href="/domain/<%= encodeURIComponent(d.domain) %>"
                   data-search="<%= (d.domain || '').toLowerCase() %>">
                   <div class="itemtop">
                     <div><span class="eyebrow">DOMAIN</span>
@@ -372,7 +372,7 @@
             <div class="pages">
               <% if (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.page> 1) { %>
                 <button
-                  data-href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page - 1 %>"
+                  data-href="/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page - 1 %>"
                   onclick="window.location.href=this.dataset.href">Previous</button>
                 <% } else { %>
                   <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
@@ -380,7 +380,7 @@
                     <% if (typeof providerDomainsPagination !=='undefined' && providerDomainsPagination.page <
                       providerDomainsPagination.totalPages) { %>
                       <button
-                        data-href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page + 1 %>"
+                        data-href="/provider/<%= encodeURIComponent(selectedProvider || '') %>?domainPage=<%= providerDomainsPagination.page + 1 %>"
                         onclick="window.location.href=this.dataset.href">Next</button>
                       <% } else { %>
                         <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
@@ -408,10 +408,10 @@
       <!-- TIER 3 -->
       <section id="domain"
         class="page <%= (typeof activeView !== 'undefined' && activeView === 'domain') ? 'active' : '' %>">
-        <div class="breadcrumb"><a href="/disposable-email-providers">StopReg</a><span>/</span><a
-            href="/disposable-email-providers">Providers</a>
+        <div class="breadcrumb"><a href="/providers">StopReg</a><span>/</span><a
+            href="/providers">Providers</a>
           <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %><span>/</span><a
-              href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">
+              href="/provider/<%= encodeURIComponent(selectedProvider) %>">
               <%= selectedProvider %>
             </a>
             <% } %>
@@ -478,6 +478,9 @@
                 <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.classification &&
                   domainDetails.classification.is_free_subdomain===true) ? 'Yes' : 'No' %>
               </strong></div>
+            <div><span>Provider</span><strong>
+                <%= (typeof domainDetails !=='undefined' && domainDetails && domainDetails.provider) ? domainDetails.provider : 'N/A' %>
+              </strong></div>
           </div>
         </div>
 
@@ -540,8 +543,24 @@
           </div>
 
           <div id="subdomains-grid" class="gridview hidden">
-            <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered.
-            </div>
+            <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
+              <% subdomains.forEach(function(sub) { %>
+                <a class="itemcard" href="#subdomain" data-search="<%= (sub.subdomain || '').toLowerCase() %>">
+                  <div class="itemtop">
+                    <div><span class="eyebrow">SUBDOMAIN</span>
+                      <h3 style="margin-top:8px">
+                        <%= sub.subdomain %>
+                      </h3>
+                    </div><span class="badge red">Disposable</span>
+                  </div>
+                  <p>Root: <%= sub.domain || selectedDomain || 'N/A' %></p>
+                  <div class="itemmeta"><span><%= sub.flagged_date ? new Date(sub.flagged_date).toLocaleDateString() : '-' %></span></div>
+                </a>
+              <% }); %>
+            <% } else { %>
+              <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered for <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
+              </div>
+            <% } %>
           </div>
           <div class="pagination">
             <span class="muted">Showing <%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination) ?
@@ -672,7 +691,7 @@
                     providerDomains.filter(function(d) { return d.domain !==selectedDomain; }).slice(0, 6) : []; %>
                     <% if (otherDomains.length> 0) { %>
                       <% otherDomains.forEach(function(d) { %>
-                        <a href="/disposable-email-providers/domain-inteligence/<%= encodeURIComponent(d.domain) %>"><strong>
+                        <a href="/domain/<%= encodeURIComponent(d.domain) %>"><strong>
                             <%= d.domain %>
                           </strong></a>
                         <% }); %>
@@ -683,9 +702,13 @@
                 </div>
                 <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
                   <a class="related-view-all"
-                    href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View all
+                    href="/provider/<%= encodeURIComponent(selectedProvider) %>">View all
                     domains
                     from this provider →</a>
+                  <% } else if (domainDetails && domainDetails.provider) { %>
+                    <a class="related-view-all"
+                      href="/provider/<%= encodeURIComponent(domainDetails.provider) %>">View all <%= (providerDomainsPagination && providerDomainsPagination.total) ? providerDomainsPagination.total.toLocaleString() : '' %> domains
+                      from this provider →</a>
                   <% } %>
               </div>
             </div>
@@ -716,19 +739,23 @@
                 </tr>
               </thead>
               <tbody id="mx-records-tbody">
-                <!-- Shimmer placeholders (will be replaced by client-side JS) -->
-                <tr class="shimmer-row">
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 40px;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 100%;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 100%;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 50px;"></span></td>
-                </tr>
-                <tr class="shimmer-row">
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 40px;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 100%;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 100%;"></span></td>
-                  <td><span class="shimmer" style="display: block; height: 16px; width: 50px;"></span></td>
-                </tr>
+                <% const mxRecords = (typeof dnsData !== 'undefined' && dnsData && dnsData.mxRecords) ? dnsData.mxRecords : []; %>
+                <% if (mxRecords.length > 0) { %>
+                  <% mxRecords.forEach(function(mx) { %>
+                    <tr>
+                      <td><%= mx.priority %></td>
+                      <td><%= mx.hostname %></td>
+                      <td><%= (mx.ips && mx.ips.length > 0) ? mx.ips[0] : 'N/A' %></td>
+                      <td>N/A</td>
+                    </tr>
+                  <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="4" style="text-align:center; padding:25px; color:var(--muted)">
+                      No MX records found for <%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
+                    </td>
+                  </tr>
+                <% } %>
               </tbody>
             </table>
           </div>
@@ -833,15 +860,16 @@
             <a class="btn" href="/check-disposable-email">Go to Disposable Email Checker</a>
           </div>
 
-          <% if (typeof selectedProvider !=='undefined' && selectedProvider) { %>
+          <% const providerName = selectedProvider || (typeof domainDetails !== 'undefined' && domainDetails && domainDetails.provider) || null; %>
+          <% if (providerName) { %>
             <div class="tier3-provider-side">
               <div class="card">
                 <h2 style="margin-top:0">
-                  <%= selectedProvider %>
+                  <%= providerName %>
                 </h2>
-                <p>This root domain is associated with <%= selectedProvider %>.</p>
+                <p>This root domain is associated with <%= providerName %>.</p>
                 <a class="btn"
-                  href="/disposable-email-providers/provider/<%= encodeURIComponent(selectedProvider) %>">View Provider
+                  href="/provider/<%= encodeURIComponent(providerName) %>">View Provider
                   →</a>
               </div>
             </div>

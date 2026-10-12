@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dnsRecordsGrid = document.querySelector('.dns-records-grid');
 
     // Extract domain from URL path
-    // URL format: /disposable-email-providers/domain-inteligence/lhba5510.com
+    // URL format: /domain/lhba5510.com
     const pathParts = window.location.pathname.split('/').filter(part => part.length > 0);
     if (pathParts.length > 0) {
         const lastPart = pathParts[pathParts.length - 1];
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const result = await response.json();
                 const dnsData = result?.data || {};
-                renderMxTable(dnsData.mxRecords || [], domain);
+                // renderMxTable(dnsData.mxRecords || [], domain);
                 renderDnsCards(dnsData);
             } else {
                 renderErrorState(() => fetchDnsRecords(domain));
@@ -54,29 +54,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderMxTable(mxRecords, domain) {
-        if (!mxTableBody) return;
-
-        if (!mxRecords || mxRecords.length === 0) {
-            mxTableBody.innerHTML = `
-                <tr>
-                    <td colspan="4" style="text-align:center; padding:25px; color:var(--muted)">
-                        No MX records found for ${domain}.
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        mxTableBody.innerHTML = mxRecords.map(mx => `
-            <tr>
-                <td>${mx.priority || '10'}</td>
-                <td>${mx.host || mx.exchange || 'N/A'}</td>
-                <td>${mx.exchange || mx.host || 'N/A'}</td>
-                <td>${mx.ttl || '300'}</td>
-            </tr>
-        `).join('');
-    }
+    // function renderMxTable(mxRecords, domain) {
+    //     if (!mxTableBody) return;
+    //
+    //     if (!mxRecords || mxRecords.length === 0) {
+    //         mxTableBody.innerHTML = `
+    //             <tr>
+    //                 <td colspan="4" style="text-align:center; padding:25px; color:var(--muted)">
+    //                     No MX records found for ${domain}.
+    //                 </td>
+    //             </tr>
+    //         `;
+    //         return;
+    //     }
+    //
+    //     mxTableBody.innerHTML = mxRecords.map(mx => `
+    //         <tr>
+    //             <td>${mx.priority || '10'}</td>
+    //             <td>${mx.host || mx.exchange || 'N/A'}</td>
+    //             <td>${mx.exchange || mx.host || 'N/A'}</td>
+    //             <td>${mx.ttl || '300'}</td>
+    //         </tr>
+    //     `).join('');
+    // }
 
     function renderDnsCards(dnsData) {
         const spfRecords = dnsData.spfRecords || [];

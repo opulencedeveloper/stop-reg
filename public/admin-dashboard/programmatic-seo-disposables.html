@@ -272,6 +272,7 @@
                       <th>Domain</th>
                       <th>Subdomain</th>
                       <th>Flagged Date</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody id="subdomains-tbody">
@@ -1064,6 +1065,62 @@
       <div class="domain-descriptions-delete-modal-actions">
         <button class="btn-cancel" id="cancel-domain-descriptions-delete-btn">Cancel</button>
         <button class="btn-confirm-remove" id="confirm-domain-descriptions-delete-btn">Remove this record</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disposable Subdomains Add/Edit Modal -->
+  <div class="subdomains-modal-overlay" id="subdomains-modal">
+    <div class="subdomains-modal-container">
+      <div class="subdomains-modal-header">
+        <h3 id="subdomains-modal-title">Edit Subdomain</h3>
+        <button class="subdomains-modal-close" id="close-subdomains-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+
+      <form class="subdomains-modal-form" id="subdomains-form">
+        <input type="hidden" id="subdomains-id" value="">
+
+        <div class="form-group">
+          <label for="subdomains-provider">Provider</label>
+          <input type="text" id="subdomains-provider" placeholder="Enter provider name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="subdomains-domain">Domain</label>
+          <input type="text" id="subdomains-domain" placeholder="Enter domain name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="subdomains-subdomain">Subdomain</label>
+          <input type="text" id="subdomains-subdomain" placeholder="Enter subdomain name" required />
+        </div>
+
+        <button type="submit" class="subdomains-submit-btn" id="submit-subdomains-btn">Update Record</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Disposable Subdomains Delete Confirmation Modal -->
+  <div class="subdomains-delete-modal-overlay" id="subdomains-delete-modal">
+    <div class="subdomains-delete-modal-container">
+      <div class="subdomains-delete-modal-header">
+        <div class="delete-icon-wrapper">
+          <img src="/assets/icons/delete.svg" alt="Delete" />
+        </div>
+        <button class="subdomains-delete-modal-close" id="close-subdomains-delete-modal">
+          <img src="/assets/icons/close.svg" alt="Close" />
+        </button>
+      </div>
+      <div class="subdomains-delete-modal-content">
+        <h3>Remove this record?</h3>
+        <p id="subdomains-delete-modal-text">Are you sure you want to remove this subdomain record? This action
+          cannot be undone.</p>
+      </div>
+      <div class="subdomains-delete-modal-actions">
+        <button class="btn-cancel" id="cancel-subdomains-delete-btn">Cancel</button>
+        <button class="btn-confirm-remove" id="confirm-subdomains-delete-btn">Remove this record</button>
       </div>
     </div>
   </div>
