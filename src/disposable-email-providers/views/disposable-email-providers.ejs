@@ -858,7 +858,7 @@
                 <h2 style="margin-top:0">
                   <%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>
                 </h2>
-                <p>This root domain is associated with <%= providerName %>.</p>
+                <p>This disposable domain is associated with <%= providerName %>.</p>
                 <a class="btn"
                   href="/provider/<%= encodeURIComponent(providerName) %>">View Provider
                   →</a>
@@ -1009,7 +1009,9 @@
                 <a href="/about.html" class="foot-link">About</a>
                 <a href="/blogs.html" class="foot-link">Blog</a>
                 <a href="/documentation.html" class="foot-link">Guides</a>
-                <a href="/check-disposable-email.html" class="foot-link">Disposable Email Checker</a>
+                <a href="/check-disposable-email" class="foot-link">Disposable Email Checker</a>
+
+<a href="/providers" class="foot-link">Disposable Email Address Providers</a>
               </div>
             </div>
 
@@ -1050,8 +1052,8 @@
   <script id="zsiqscript"
     src="https://salesiq.zohopublic.com/widget?wc=siqb661b287ac7cb906ea5ab7727e759477068b9f96d2ed573eb669fee432ac11a1"
     defer></script>
-  <% if (typeof providerDomains !=='undefined' && providerDomains && providerDomains.length> 0) { %>
-    <script src="/assets/js/disposable-email-providers.js" defer></script>
+  <script src="/assets/js/disposable-email-providers.js" defer></script>
+  <% if (typeof activeView !=='undefined' && activeView === 'domains') { %>
     <script type="module" src="/assets/js/mx-status.js" defer></script>
     <% } %>
       <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %>
