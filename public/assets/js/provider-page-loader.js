@@ -14,7 +14,7 @@ class ProviderPageLoader {
   async loadProviderData() {
     try {
       const path = window.location.pathname;
-      const providerMatch = path.match(/^\/provider\/([^/]+)$/);
+      const providerMatch = path.match(/^\/(?:disposable-email-provider|provider)\/([^/]+)$/);
 
       if (!providerMatch) {
         return;
@@ -222,6 +222,7 @@ class ProviderPageLoader {
     content.innerHTML = '';
 
     if (!dnsData.mailServerInfo) {
+      content.innerHTML = `<p class="dns-mail-record-text">No MAIL SERVER INFO found</p>`;
       return;
     }
 
