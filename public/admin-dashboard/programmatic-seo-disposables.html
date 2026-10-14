@@ -228,6 +228,7 @@
               <button class="seo-tab-btn" data-tab="provider-features">Provider Features</button>
               <button class="seo-tab-btn" data-tab="provider-sitemaps">Provider Site Maps</button>
               <button class="seo-tab-btn" data-tab="domain-sitemaps">Domain Site Maps</button>
+              <button class="seo-tab-btn" data-tab="domain-intelligence">Domain Intelligence</button>
               <button class="seo-tab-btn" data-tab="unpublished-providers">Unpublished Providers</button>
             </div>
           </div>
@@ -357,8 +358,8 @@
                   <thead>
                     <tr>
                       <th>Overview</th>
-                      <th>About</th>
-                      <th>How DEA Was Discovered</th>
+                      <!-- <th>About</th> -->
+                      <!-- <th>How DEA Was Discovered</th> -->
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -456,14 +457,34 @@
                       <th>Meta Title</th>
                       <th>Meta Description</th>
                       <th>Overview</th>
-                      <th>About</th>
-                      <th>How DEA Was Discovered</th>
+                      <!-- <th>About</th> -->
+                      <!-- <th>How DEA Was Discovered</th> -->
                       <th>Published URL</th>
                       <th>Date Published</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody id="domain-sitemaps-tbody">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Domain Intelligence Tab Content -->
+            <div class="tab-content" id="domain-intelligence-content">
+              <div class="subdomains-table-wrapper">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Domain</th>
+                      <th>Meta Title</th>
+                      <th>Meta Description</th>
+                      <th>Domain Overview</th>
+                      <th>Created</th>
+                    </tr>
+                  </thead>
+                  <tbody id="domain-intelligence-tbody">
                     <!-- Dynamic Rows -->
                   </tbody>
                 </table>
@@ -699,7 +720,7 @@
             required></textarea>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="disposable-domain-descriptions-about">About DEA</label>
           <textarea id="disposable-domain-descriptions-about" placeholder="Enter about DEA" rows="4"
             required></textarea>
@@ -709,7 +730,7 @@
           <label for="disposable-domain-descriptions-discovered">How DEA Discovered</label>
           <textarea id="disposable-domain-descriptions-discovered" placeholder="Enter how DEA was discovered" rows="4"
             required></textarea>
-        </div>
+        </div> -->
 
         <button type="submit" class="disposable-domain-descriptions-submit-btn"
           id="submit-disposable-domain-descriptions-btn">Continue</button>
@@ -760,7 +781,7 @@
           <textarea id="domain-descriptions-overview" placeholder="Enter overview" rows="4" required></textarea>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="domain-descriptions-about">About</label>
           <textarea id="domain-descriptions-about" placeholder="Enter about description" rows="4" required></textarea>
         </div>
@@ -769,7 +790,7 @@
           <label for="domain-descriptions-discovered">How DEA Was Discovered</label>
           <textarea id="domain-descriptions-discovered" placeholder="Enter how it was discovered" rows="4"
             required></textarea>
-        </div>
+        </div> -->
 
         <button type="submit" class="domain-descriptions-submit-btn"
           id="submit-domain-descriptions-btn">Continue</button>
@@ -819,7 +840,7 @@
           <textarea id="domain-sitemaps-overview" placeholder="Enter overview" rows="4" required></textarea>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="domain-sitemaps-about">About</label>
           <textarea id="domain-sitemaps-about" placeholder="Enter about information" rows="4" required></textarea>
         </div>
@@ -828,7 +849,7 @@
           <label for="domain-sitemaps-discovered">How DEA Was Discovered</label>
           <textarea id="domain-sitemaps-discovered" placeholder="Enter how DEA was discovered" rows="4"
             required></textarea>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="domain-sitemaps-url">Published URL</label>

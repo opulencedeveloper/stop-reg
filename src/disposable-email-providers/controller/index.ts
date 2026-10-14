@@ -83,10 +83,13 @@ class DisposableEmailProvidersController {
       if (selectedDomain) {
         // TIER 3: Domain Details Page
         if (subdomainPage === 1) {
-          metaTitle = `${selectedDomain} Disposable Email Domain | StopReg`;
-          metaDescription = `Learn about ${selectedDomain}, a disposable email domain associated with temporary email addresses. Check its classification and assess the risk of fake signups and trial abuse.`;
+          // metaTitle = `${selectedDomain} Disposable Email Domain | StopReg`;
+          // metaDescription = `Learn about ${selectedDomain}, a disposable email domain associated with temporary email addresses. Check its classification and assess the risk of fake signups and trial abuse.`;
+          metaTitle = pageData?.domainIntelligence?.metaTitle || "";
+          metaDescription = pageData?.domainIntelligence?.metaDescription || "";
         } else {
-          metaTitle = `${selectedDomain} Disposable Email Subdomains Page ${subdomainPage} | StopReg`;
+          // metaTitle = `${selectedDomain} Disposable Email Subdomains Page ${subdomainPage} | StopReg`;
+          metaTitle = `${pageData?.domainIntelligence?.metaTitle || ""} - Page ${subdomainPage}`;
           metaDescription = `Browsing page ${subdomainPage} of discovered subdomains for ${selectedDomain}. temporary email addresses and domains associated with this provider.`;
         }
       } else if (selectedProvider) {
@@ -143,6 +146,7 @@ class DisposableEmailProvidersController {
         // Tier 3 Data
         selectedDomain,
         domainDetails: pageData?.domainDetails || null,
+        domainOverview: pageData?.domainIntelligence?.domainOverview || "",
         domainAge,
         classification,
         dnsData: pageData?.dnsData || null,

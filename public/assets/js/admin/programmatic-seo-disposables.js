@@ -417,12 +417,77 @@ document.addEventListener("DOMContentLoaded", () => {
                         loadProviderSitemaps(currentPage);
                     } else if (currentTab === "domain-sitemaps") {
                         loadDomainSitemaps(currentPage);
+                    } else if (currentTab === "domain-intelligence") {
+                        loadDomainIntelligence(currentPage, currentSearch);
                     } else if (currentTab === "unpublished-providers") {
                         loadUnpublishedProviders(currentPage, currentSearch);
                     }
                 }
             };
         });
+    }
+
+    // --- DOMAIN INTELLIGENCE FUNCTIONS ---
+    async function loadDomainIntelligence(page = 1, search = "", isSilent = false) {
+        if (isApiLoading) {
+            return;
+        }
+
+        isApiLoading = true;
+        if (!isSilent) {
+            showLoading();
+        }
+        try {
+            const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+            const result = await apiFetch(`/programmatic-seo/domain-intelligence?page=${page}&limit=${currentLimit}${searchParam}`);
+            if (!result || result.message === "error") {
+                throw new Error(result?.description || "Failed to fetch domain intelligence.");
+            }
+            if (!result.data) {
+                throw new Error("API returned no data field");
+            }
+
+            if (!isSilent) hideLoading();
+            currentPage = page;
+            renderDomainIntelligenceTable(result.data.records);
+            renderPagination(result.data.pagination);
+            showTab("domain-intelligence-content");
+        } catch (error) {
+            renderSectionError(error.message, () => loadDomainIntelligence(page, search));
+        } finally {
+            isApiLoading = false;
+        }
+    }
+
+    function renderDomainIntelligenceTable(records) {
+        const tbody = getEl("domain-intelligence-tbody");
+        if (!tbody) return;
+
+        if (records.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center !important; padding: 40px; color: #737373;">No domain intelligence records found.</td></tr>`;
+            return;
+        }
+
+        const escapeHtml = (text) => String(text || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const truncate = (text, max) => {
+            const value = text || "";
+            return value.length > max ? value.substring(0, max) + "..." : value || "-";
+        };
+
+        tbody.innerHTML = records.map(r => {
+            const created = new Date(r.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            return `<tr>` +
+                `<td>${escapeHtml(r.domain)}</td>` +
+                `<td>${escapeHtml(truncate(r.metaTitle, 40))}</td>` +
+                `<td>${escapeHtml(truncate(r.metaDescription, 60))}</td>` +
+                `<td>${escapeHtml(truncate(r.domainOverview, 60))}</td>` +
+                `<td>${created}</td>` +
+                `</tr>`;
+        }).join("");
     }
 
     // --- DISPOSABLE SUBDOMAINS FUNCTIONS ---
@@ -1212,7 +1277,8 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         tbody.innerHTML = sitemaps.map(s => {
             const key = `${s.providerName}/${s.domainName}`;
-            return `<tr><td>${s.providerName || '-'}</td><td>${s.domainName || '-'}</td><td>${s.metaDomainPageTitle ? s.metaDomainPageTitle.substring(0, 25) + (s.metaDomainPageTitle.length > 25 ? '...' : '') : '-'}</td><td>${s.metaDomainPageDescription ? s.metaDomainPageDescription.substring(0, 25) + (s.metaDomainPageDescription.length > 25 ? '...' : '') : '-'}</td><td>${s.deaOverview ? s.deaOverview.substring(0, 25) + (s.deaOverview.length > 25 ? '...' : '') : '-'}</td><td>${s.aboutDea ? s.aboutDea.substring(0, 25) + (s.aboutDea.length > 25 ? '...' : '') : '-'}</td><td>${s.howDeaDiscovered ? s.howDeaDiscovered.substring(0, 25) + (s.howDeaDiscovered.length > 25 ? '...' : '') : '-'}</td><td><a href="${s.publishedUrl}" target="_blank" style="color: #1570EF; text-decoration: none;">View</a></td><td>${formatDate(s.createdAt)}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-key="${key}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dsm-dropdown-${key.replace(/\//g, '-')}"><button class="dropdown-item-edit" data-key="${key}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-key="${key}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`;
+            // return `<tr><td>${s.providerName || '-'}</td><td>${s.domainName || '-'}</td><td>${s.metaDomainPageTitle ? s.metaDomainPageTitle.substring(0, 25) + (s.metaDomainPageTitle.length > 25 ? '...' : '') : '-'}</td><td>${s.metaDomainPageDescription ? s.metaDomainPageDescription.substring(0, 25) + (s.metaDomainPageDescription.length > 25 ? '...' : '') : '-'}</td><td>${s.deaOverview ? s.deaOverview.substring(0, 25) + (s.deaOverview.length > 25 ? '...' : '') : '-'}</td><td>${s.aboutDea ? s.aboutDea.substring(0, 25) + (s.aboutDea.length > 25 ? '...' : '') : '-'}</td><td>${s.howDeaDiscovered ? s.howDeaDiscovered.substring(0, 25) + (s.howDeaDiscovered.length > 25 ? '...' : '') : '-'}</td><td><a href="${s.publishedUrl}" ...
+            return `<tr><td>${s.providerName || '-'}</td><td>${s.domainName || '-'}</td><td>${s.metaDomainPageTitle ? s.metaDomainPageTitle.substring(0, 25) + (s.metaDomainPageTitle.length > 25 ? '...' : '') : '-'}</td><td>${s.metaDomainPageDescription ? s.metaDomainPageDescription.substring(0, 25) + (s.metaDomainPageDescription.length > 25 ? '...' : '') : '-'}</td><td>${s.deaOverview ? s.deaOverview.substring(0, 25) + (s.deaOverview.length > 25 ? '...' : '') : '-'}</td><td><a href="${s.publishedUrl}" target="_blank" style="color: #1570EF; text-decoration: none;">View</a></td><td>${formatDate(s.createdAt)}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-key="${key}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dsm-dropdown-${key.replace(/\//g, '-')}"><button class="dropdown-item-edit" data-key="${key}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-key="${key}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`;
         }).join("");
         document.querySelectorAll("#domain-sitemaps-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainSitemapsEdit(btn.dataset.key); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#domain-sitemaps-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainSitemapsDelete(btn.dataset.key); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
@@ -1228,8 +1294,8 @@ document.addEventListener("DOMContentLoaded", () => {
         getEl("domain-sitemaps-meta-title").value = record.metaDomainPageTitle || "";
         getEl("domain-sitemaps-meta-description").value = record.metaDomainPageDescription || "";
         getEl("domain-sitemaps-overview").value = record.deaOverview || "";
-        getEl("domain-sitemaps-about").value = record.aboutDea || "";
-        getEl("domain-sitemaps-discovered").value = record.howDeaDiscovered || "";
+        // getEl("domain-sitemaps-about").value = record.aboutDea || "";
+        // getEl("domain-sitemaps-discovered").value = record.howDeaDiscovered || "";
         getEl("domain-sitemaps-url").value = record.publishedUrl || "";
         getEl("domain-sitemaps-id").value = key;
         getEl("domain-sitemaps-provider-hidden").value = record.providerName;
@@ -1280,7 +1346,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        tbody.innerHTML = descriptions.map(d => `<tr><td>${d.deaOverview ? d.deaOverview.substring(0, 40) + (d.deaOverview.length > 40 ? '...' : '') : '-'}</td><td>${d.aboutDea ? d.aboutDea.substring(0, 40) + (d.aboutDea.length > 40 ? '...' : '') : '-'}</td><td>${d.howDeaDiscovered ? d.howDeaDiscovered.substring(0, 40) + (d.howDeaDiscovered.length > 40 ? '...' : '') : '-'}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-id="${d._id}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dd-dropdown-${d._id}"><button class="dropdown-item-edit" data-id="${d._id}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-id="${d._id}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
+        // tbody.innerHTML = descriptions.map(d => `<tr><td>${d.deaOverview ? d.deaOverview.substring(0, 40) + (d.deaOverview.length > 40 ? '...' : '') : '-'}</td><td>${d.aboutDea ? d.aboutDea.substring(0, 40) + (d.aboutDea.length > 40 ? '...' : '') : '-'}</td><td>${d.howDeaDiscovered ? d.howDeaDiscovered.substring(0, 40) + (d.howDeaDiscovered.length > 40 ? '...' : '') : '-'}</td><td class="text-left"> ...
+        // tbody.innerHTML = descriptions.map(d => `<tr><td>${d.deaOverview ? d.deaOverview.substring(0, 40) + (d.deaOverview.length > 40 ? '...' : '') : '-'}</td><td class="text-left"> ...
+        tbody.innerHTML = descriptions.map(d => `<tr><td>${d.deaOverview ? d.deaOverview.substring(0, 130) + (d.deaOverview.length > 130 ? '...' : '') : '-'}</td><td class="text-left"><div class="action-btn-container"><button class="action-btn" data-id="${d._id}"><img src="/assets/icons/more-vert.svg" alt="More" /></button><div class="action-dropdown" id="dd-dropdown-${d._id}"><button class="dropdown-item-edit" data-id="${d._id}"><img src="/assets/icons/edit-outline.svg" alt="" /><span>Edit</span></button><div class="dropdown-divider"></div><button class="dropdown-item-remove" data-id="${d._id}"><img src="/assets/icons/delete.svg" alt="" /><span>Remove</span></button></div></div></td></tr>`).join("");
         document.querySelectorAll("#domain-descriptions-content .dropdown-item-edit").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsEdit(btn.dataset.id); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#domain-descriptions-content .dropdown-item-remove").forEach(btn => {btn.onclick = (e) => {e.preventDefault(); handleDomainDescriptionsDelete(btn.dataset.id); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show"));};});
         document.querySelectorAll("#domain-descriptions-content .action-btn").forEach(btn => {btn.onclick = (e) => {e.stopPropagation(); const id = btn.dataset.id; const dropdown = document.getElementById(`dd-dropdown-${id}`); document.querySelectorAll(".action-dropdown.show").forEach(d => d.classList.remove("show")); if (dropdown) dropdown.classList.add("show");};});
@@ -1293,8 +1361,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (domainDescriptionsModalTitle) domainDescriptionsModalTitle.textContent = "Edit Domain Description";
         if (submitDomainDescriptionsBtn) submitDomainDescriptionsBtn.textContent = "Update Record";
         getEl("domain-descriptions-overview").value = record.deaOverview || "";
-        getEl("domain-descriptions-about").value = record.aboutDea || "";
-        getEl("domain-descriptions-discovered").value = record.howDeaDiscovered || "";
+        // getEl("domain-descriptions-about").value = record.aboutDea || "";
+        // getEl("domain-descriptions-discovered").value = record.howDeaDiscovered || "";
         getEl("domain-descriptions-id").value = id;
         if (domainDescriptionsModal) domainDescriptionsModal.classList.add("active");
     }
@@ -1389,7 +1457,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (searchInput) {
                 searchInput.value = "";
                 // Show search input for disposables, disposable-subdomains, provider-features, sitemap tabs, and unpublished-providers
-                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "unpublished-providers") {
+                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-features" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "domain-intelligence" || tab === "unpublished-providers") {
                     searchInput.parentElement.style.display = "flex";
                 } else {
                     searchInput.parentElement.style.display = "none";
@@ -1399,7 +1467,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Show pagination select for disposables, disposable-subdomains, provider-features, and sitemaps tabs
             const paginationSelectContainer = document.querySelector(".pagination-select-container");
             if (paginationSelectContainer) {
-                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "provider-features") {
+                if (tab === "disposables" || tab === "disposable-subdomains" || tab === "provider-sitemaps" || tab === "domain-sitemaps" || tab === "domain-intelligence" || tab === "provider-features") {
                     paginationSelectContainer.style.display = "inline-block";
                 } else {
                     paginationSelectContainer.style.display = "none";
@@ -1427,6 +1495,9 @@ document.addEventListener("DOMContentLoaded", () => {
             else if (tab === "domain-sitemaps") {
                 loadDomainSitemaps(currentPage, currentSearch);
             }
+            else if (tab === "domain-intelligence") {
+                loadDomainIntelligence(currentPage, currentSearch);
+            }
             else if (tab === "unpublished-providers") {
                 loadUnpublishedProviders(currentPage, currentSearch);
             }
@@ -1452,6 +1523,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     loadProviderSitemaps(currentPage, currentSearch, false);
                 } else if (currentTab === "domain-sitemaps") {
                     loadDomainSitemaps(currentPage, currentSearch, false);
+                } else if (currentTab === "domain-intelligence") {
+                    loadDomainIntelligence(currentPage, currentSearch, isSilent);
                 } else if (currentTab === "unpublished-providers") {
                     loadUnpublishedProviders(currentPage, currentSearch, false);
                 }
@@ -1487,6 +1560,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 loadProviderSitemaps(currentPage);
             } else if (currentTab === "domain-sitemaps") {
                 loadDomainSitemaps(currentPage, currentSearch);
+            } else if (currentTab === "domain-intelligence") {
+                loadDomainIntelligence(currentPage, currentSearch);
             } else if (currentTab === "unpublished-providers") {
                 loadUnpublishedProviders(currentPage, currentSearch);
             }
@@ -2216,15 +2291,16 @@ document.addEventListener("DOMContentLoaded", () => {
         domainDescriptionsForm.onsubmit = async (e) => {
             e.preventDefault();
             const deaOverview = getEl("domain-descriptions-overview").value;
-            const aboutDea = getEl("domain-descriptions-about").value;
-            const howDeaDiscovered = getEl("domain-descriptions-discovered").value;
+            // const aboutDea = getEl("domain-descriptions-about").value;
+            // const howDeaDiscovered = getEl("domain-descriptions-discovered").value;
             const originalBtnHTML = submitDomainDescriptionsBtn.innerHTML;
             submitDomainDescriptionsBtn.disabled = true;
             submitDomainDescriptionsBtn.innerHTML = `<span class="stopreg-btn-spinner"></span> ${currentEditingId ? 'Updating...' : 'Adding...'}`;
             try {
                 const method = currentEditingId ? "PUT" : "POST";
                 const endpoint = currentEditingId ? `/programmatic-seo/disposable-domain-descriptions/${currentEditingId}` : "/programmatic-seo/disposable-domain-descriptions";
-                const body = {deaOverview, aboutDea, howDeaDiscovered};
+                // const body = {deaOverview, aboutDea, howDeaDiscovered};
+                const body = {deaOverview};
                 const result = await apiFetch(endpoint, {
                     method: method,
                     body: JSON.stringify(body)
@@ -2303,8 +2379,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const metaDomainPageTitle = getEl("domain-sitemaps-meta-title").value;
             const metaDomainPageDescription = getEl("domain-sitemaps-meta-description").value;
             const deaOverview = getEl("domain-sitemaps-overview").value;
-            const aboutDea = getEl("domain-sitemaps-about").value;
-            const howDeaDiscovered = getEl("domain-sitemaps-discovered").value;
+            // const aboutDea = getEl("domain-sitemaps-about").value;
+            // const howDeaDiscovered = getEl("domain-sitemaps-discovered").value;
             const publishedUrl = getEl("domain-sitemaps-url").value;
             const originalBtnHTML = submitDomainSitemapsBtn.innerHTML;
             submitDomainSitemapsBtn.disabled = true;
@@ -2312,7 +2388,8 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const result = await apiFetch(`/programmatic-seo/domain-sitemaps/${providerName}/${domainName}`, {
                     method: "PUT",
-                    body: JSON.stringify({metaDomainPageTitle, metaDomainPageDescription, deaOverview, aboutDea, howDeaDiscovered, publishedUrl})
+                    // body: JSON.stringify({metaDomainPageTitle, metaDomainPageDescription, deaOverview, aboutDea, howDeaDiscovered, publishedUrl})
+                    body: JSON.stringify({metaDomainPageTitle, metaDomainPageDescription, deaOverview, publishedUrl})
                 });
                 if (result?.message === "success" || result?.message === "Success") {
                     if (domainSitemapsModal) domainSitemapsModal.classList.remove("active");

@@ -445,7 +445,7 @@
           <h2 style="margin-top:9px">About <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
               : 'Domain' %>
           </h2>
-          <p>
+          <!-- <p>
             <% if (typeof selectedDomain !=='undefined' && selectedDomain) { %><strong>
                 <%= selectedDomain %>
               </strong> is a disposable email domain<% if (typeof selectedProvider !=='undefined' && selectedProvider) {
@@ -456,7 +456,8 @@
                     to
                     help websites recognize and manage registrations using temporary email addresses.<% } else { %>No
                       domain selected.<% } %>
-          </p>
+          </p> -->
+          <p><%= domainOverview %></p>
           <div class="overview-meta">
             <div><span>Domain Age</span><strong>
                 <%= (typeof domainAge !== 'undefined') ? domainAge : 'N/A' %>

@@ -56,6 +56,7 @@ export interface IDisposablePageData {
   dnsData?: any;
   subdomains?: any[];
   subdomainsPagination?: IPagination;
+  domainIntelligence?: { metaTitle?: string; metaDescription?: string; domainOverview?: string } | null;
 }
 
 class DisposableEmailProvidersService {
