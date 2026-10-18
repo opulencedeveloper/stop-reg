@@ -591,14 +591,14 @@
     "domain": "<%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>"
   },
   "domain": {
-    "root": "<%= (typeof selectedDomain !== 'undefined' && selectedDomain) ? selectedDomain : '' %>",
-    "is_subdomain": false,
-    "email_provider": "<%= (typeof selectedProvider !== 'undefined' && selectedProvider) ? selectedProvider : ((typeof domainDetails !== 'undefined' && domainDetails && domainDetails.provider) ? domainDetails.provider : 'unknown') %>"
+    "root": "<%= domainDetails?.root %>",
+    "is_subdomain": <%= domainDetails?.is_subdomain %>,
+    "email_provider": <%= JSON.stringify((typeof selectedProvider !== 'undefined' && selectedProvider) ? selectedProvider : ((typeof domainDetails !== 'undefined' && domainDetails && domainDetails.provider) ? domainDetails.provider : null)) %>
   },
   "mail_server": {
     "mx_found": <%= (typeof dnsData !== 'undefined' && dnsData && dnsData.mxRecords && dnsData.mxRecords.length > 0) ? 'true' : 'false' %>,
     "mx_records": <%- JSON.stringify((typeof dnsData !== 'undefined' && dnsData && dnsData.mxRecords) ? dnsData.mxRecords : [], null, 4) %>,
-    "mx_provider": []
+    "mx_provider": <%- JSON.stringify(domainDetails?.mx_provider) %>
   },
   "classification": {
     "is_disposable": <%= (typeof classification !== 'undefined' && classification && classification.is_disposable === true) ? 'true' : 'false' %>,

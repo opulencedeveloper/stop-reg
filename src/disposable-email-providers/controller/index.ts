@@ -153,7 +153,7 @@ class DisposableEmailProvidersController {
         subdomains: pageData?.subdomains || [],
         subdomainsPagination: pageData?.subdomainsPagination || {
           page: subdomainPage,
-          limit: 15,
+          limit: domain ? 50 : 15,
           total: 0,
           totalPages: 0,
         },
