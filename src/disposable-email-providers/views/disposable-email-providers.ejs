@@ -302,7 +302,7 @@
                         </td>
                         <td><span class="badge gray mx-status" data-mx-domain="<%= d.domain %>">Checking…</span></td>
                         <td>
-                          <%= d.createdAt ? new Date(d.createdAt).toLocaleDateString() : 'Active' %>
+                          <%= timeAgo(d.updatedAt) %>
                         </td>
                         <td><a class="arrow"
                             href="/domain/<%= encodeURIComponent(d.domain) %>">View
@@ -476,103 +476,7 @@
           </div>
         </div>
 
-        <div class="card">
-          <div class="cardhead">
-            <div><span class="eyebrow">SUBDOMAIN DIRECTORY</span>
-              <h2 style="margin-top:9px">Subdomains of <%= (typeof selectedDomain !=='undefined' && selectedDomain) ?
-                  selectedDomain : 'Domain' %>
-              </h2>
-              <p>Discovered subdomains associated with this root domain.</p>
-            </div><span class="badge gray"><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %> discovered</span>
-          </div>
-          <div class="subdomain-toolbar">
-            <div class="subdomain-count"><span>Total subdomains</span><strong><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %></strong></div>
-            <div class="controls">
-              <div class="viewtoggle"><button class="active"
-                  onclick="setView('subdomains','table',this)">Table</button><button
-                  onclick="setView('subdomains','grid',this)">Grid</button></div>
-            </div>
-          </div>
-
-          <div id="subdomains-table" class="tableview">
-            <div class="tablewrap">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Subdomain</th>
-                    <th>Root Domain</th>
-                    <th>Last checked</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
-                    <% subdomains.forEach(function(sub) { %>
-                      <tr>
-                        <td>
-                          <%= sub.subdomain || 'N/A' %>
-                        </td>
-                        <td>
-                          <%= sub.domain || selectedDomain || 'N/A' %>
-                        </td>
-                        <td>
-                          <%= sub.flagged_date ? new Date(sub.flagged_date).toLocaleDateString() : '-' %>
-                        </td>
-                      </tr>
-                      <% }); %>
-                        <% } else { %>
-                          <tr>
-                            <td colspan="3" style="text-align:center;padding:30px;color:var(--muted)">No subdomains
-                              discovered
-                              for
-                              <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
-                                : 'this domain' %>.
-                            </td>
-                          </tr>
-                          <% } %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div id="subdomains-grid" class="gridview hidden">
-            <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
-              <% subdomains.forEach(function(sub) { %>
-                <a class="itemcard" href="#subdomain" data-search="<%= (sub.subdomain || '').toLowerCase() %>">
-                  <div class="itemtop">
-                    <div><span class="eyebrow">SUBDOMAIN</span>
-                      <h3 style="margin-top:8px">
-                        <%= sub.subdomain %>
-                      </h3>
-                    </div><span class="badge red">Disposable</span>
-                  </div>
-                  <p>Root: <%= sub.domain || selectedDomain || 'N/A' %></p>
-                  <div class="itemmeta"><span><%= sub.flagged_date ? new Date(sub.flagged_date).toLocaleDateString() : '-' %></span></div>
-                </a>
-              <% }); %>
-            <% } else { %>
-              <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered for <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
-              </div>
-            <% } %>
-          </div>
-          <div class="pagination">
-            <span class="muted">Showing <%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination) ?
-                subdomainsPagination.total : 0 %> subdomains</span>
-            <div class="pages">
-              <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.page> 1)
-                { %>
-                <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page - 1 %>)">Previous</button>
-                <% } else { %>
-                  <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
-                  <% } %>
-                    <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination &&
-                      subdomainsPagination.page < subdomainsPagination.totalPages) { %>
-                      <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page + 1 %>)">Next</button>
-                      <% } else { %>
-                        <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
-                        <% } %>
-            </div>
-          </div>
-        </div>
+     
 
         <div class="tier3-conversion-layout">
           <div class="tier3-validation-column">
@@ -869,7 +773,103 @@
         </div>
 
 
+   <div class="card">
+          <div class="cardhead">
+            <div><span class="eyebrow">SUBDOMAIN DIRECTORY</span>
+              <h2 style="margin-top:9px">Subdomains of <%= (typeof selectedDomain !=='undefined' && selectedDomain) ?
+                  selectedDomain : 'Domain' %>
+              </h2>
+              <p>Discovered subdomains associated with this root domain.</p>
+            </div><span class="badge gray"><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %> discovered</span>
+          </div>
+          <div class="subdomain-toolbar">
+            <div class="subdomain-count"><span>Total subdomains</span><strong><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %></strong></div>
+            <div class="controls">
+              <div class="viewtoggle"><button class="active"
+                  onclick="setView('subdomains','table',this)">Table</button><button
+                  onclick="setView('subdomains','grid',this)">Grid</button></div>
+            </div>
+          </div>
 
+          <div id="subdomains-table" class="tableview">
+            <div class="tablewrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Subdomain</th>
+                    <th>Root Domain</th>
+                    <th>Last seen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
+                    <% subdomains.forEach(function(sub) { %>
+                      <tr>
+                        <td>
+                          <%= sub.subdomain || 'N/A' %>
+                        </td>
+                        <td>
+                          <%= sub.domain || selectedDomain || 'N/A' %>
+                        </td>
+                        <td>
+                          <%= timeAgo(sub.flagged_date) %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="3" style="text-align:center;padding:30px;color:var(--muted)">No subdomains
+                              discovered
+                              for
+                              <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain
+                                : 'this domain' %>.
+                            </td>
+                          </tr>
+                          <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="subdomains-grid" class="gridview hidden">
+            <% if (typeof subdomains !=='undefined' && subdomains && subdomains.length> 0) { %>
+              <% subdomains.forEach(function(sub) { %>
+                <a class="itemcard" href="#subdomain" data-search="<%= (sub.subdomain || '').toLowerCase() %>">
+                  <div class="itemtop">
+                    <div><span class="eyebrow">SUBDOMAIN</span>
+                      <h3 style="margin-top:8px">
+                        <%= sub.subdomain %>
+                      </h3>
+                    </div><span class="badge red">Disposable</span>
+                  </div>
+                  <p>Root: <%= sub.domain || selectedDomain || 'N/A' %></p>
+                  <div class="itemmeta"><span><%= timeAgo(sub.flagged_date) %></span></div>
+                </a>
+              <% }); %>
+            <% } else { %>
+              <div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--muted)">No subdomains discovered for <%= (typeof selectedDomain !=='undefined' && selectedDomain) ? selectedDomain : 'this domain' %>.
+              </div>
+            <% } %>
+          </div>
+          <div class="pagination">
+            <span class="muted">Showing <%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination) ?
+                subdomainsPagination.total : 0 %> subdomains</span>
+            <div class="pages">
+              <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.page> 1)
+                { %>
+                <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page - 1 %>)">Previous</button>
+                <% } else { %>
+                  <button disabled style="opacity:0.5;cursor:not-allowed">Previous</button>
+                  <% } %>
+                    <% if (typeof subdomainsPagination !=='undefined' && subdomainsPagination &&
+                      subdomainsPagination.page < subdomainsPagination.totalPages) { %>
+                      <button onclick="navigateSubdomainPage(<%= subdomainsPagination.page + 1 %>)">Next</button>
+                      <% } else { %>
+                        <button disabled style="opacity:0.5;cursor:not-allowed">Next</button>
+                        <% } %>
+            </div>
+          </div>
+        </div>
 
       </section>
 

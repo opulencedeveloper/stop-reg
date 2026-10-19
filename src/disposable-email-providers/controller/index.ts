@@ -3,6 +3,31 @@ import path from "path";
 import fs from "fs";
 import { disposableEmailProvidersService } from "../service";
 
+const TIME_UNITS: [string, number][] = [
+  ["year", 31536000],
+  ["month", 2592000],
+  ["week", 604800],
+  ["day", 86400],
+  ["hour", 3600],
+  ["minute", 60],
+  ["second", 1],
+];
+
+const timeAgo = (value?: string | Date | null): string => {
+  if (!value) return "-";
+  const time = new Date(value).getTime();
+  if (isNaN(time)) return "-";
+
+  const seconds = Math.max(0, Math.floor((Date.now() - time) / 1000));
+  for (const [unit, size] of TIME_UNITS) {
+    if (seconds >= size) {
+      const count = Math.floor(seconds / size);
+      return `${count} ${unit}${count === 1 ? "" : "s"} ago`;
+    }
+  }
+  return "Just now";
+};
+
 class DisposableEmailProvidersController {
   public renderPage = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -121,6 +146,8 @@ class DisposableEmailProvidersController {
       }
 
       return res.render(viewPath, {
+        timeAgo,
+
         // SEO Meta Tags
         metaTitle,
         metaDescription,
@@ -153,7 +180,7 @@ class DisposableEmailProvidersController {
         subdomains: pageData?.subdomains || [],
         subdomainsPagination: pageData?.subdomainsPagination || {
           page: subdomainPage,
-          limit: domain ? 50 : 15,
+          limit: domain ? 40 : 15,
           total: 0,
           totalPages: 0,
         },

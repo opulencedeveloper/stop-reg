@@ -1843,9 +1843,9 @@ p+.btn-group,
 #providers-table tbody tr:nth-child(n+16),
 #providers-grid .itemcard:nth-child(n+16),
 #domains-table tbody tr:nth-child(n+16),
-#domains-grid .itemcard:nth-child(n+16),
-#subdomains-table tbody tr:nth-child(n+16),
-#subdomains-grid .itemcard:nth-child(n+16) {
+#domains-grid .itemcard:nth-child(n+16) {
+/* #subdomains-table tbody tr:nth-child(n+16),
+#subdomains-grid .itemcard:nth-child(n+16) { */
   display: none !important;
 }
 
