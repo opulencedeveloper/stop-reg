@@ -773,15 +773,24 @@
         </div>
 
 
+   <% const hasSubdomains = typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total > 0; %>
    <div class="card">
           <div class="cardhead">
             <div><span class="eyebrow">SUBDOMAIN DIRECTORY</span>
               <h2 style="margin-top:9px">Subdomains of <%= (typeof selectedDomain !=='undefined' && selectedDomain) ?
                   selectedDomain : 'Domain' %>
               </h2>
+              <% if (hasSubdomains) { %>
               <p>Discovered subdomains associated with this root domain.</p>
-            </div><span class="badge gray"><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %> discovered</span>
+              <% } else { %>
+              <p class="subdomains-empty">No subdomains have been identified for this domain.</p>
+              <% } %>
+            </div>
+            <% if (hasSubdomains) { %>
+            <span class="badge gray"><%= subdomainsPagination.total %> discovered</span>
+            <% } %>
           </div>
+          <% if (hasSubdomains) { %>
           <div class="subdomain-toolbar">
             <div class="subdomain-count"><span>Total subdomains</span><strong><%= (typeof subdomainsPagination !=='undefined' && subdomainsPagination && subdomainsPagination.total) ? subdomainsPagination.total : 0 %></strong></div>
             <div class="controls">
@@ -869,6 +878,7 @@
                         <% } %>
             </div>
           </div>
+          <% } %>
         </div>
 
       </section>

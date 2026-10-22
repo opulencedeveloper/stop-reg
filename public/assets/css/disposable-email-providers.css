@@ -2377,3 +2377,8 @@ p+.btn-group,
 
 
 
+
+/* Tier 3: empty subdomain directory message */
+.subdomains-empty {
+  color: var(--muted);
+}
